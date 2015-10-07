@@ -1,0 +1,42 @@
+\ProvidesPackage{fancychap}
+\RequirePackage{color}
+\RequirePackage{colortbl}
+\RequirePackage{textfit}
+
+\def\@makechapterhead#1{%
+  \begingroup
+  \vspace*{50\p@}%
+  \sffamily\Huge
+  \noindent\hrulefill
+  \begin{tabular}{|c|}
+        \rowcolor{black}\color{white} \large \scshape \@chapapp \\
+        \vspace{-2ex}\\ %coloquei para aumentar o espaço entre o título e o número
+        \Huge \slshape \scaletoheight{1cm}{\thechapter} \\ \hline
+    \end{tabular}
+  \\
+  {\Huge\bfseries}
+  \flushright
+    #1
+  \\
+  \hfill\rule{.8\textwidth}{0.5pt}\\
+    \vskip-32pt
+  \hfill\rule{.8\textwidth}{2pt}\\
+    \vskip 4.5ex
+  \endgroup
+}
+
+\def\@makeschapterhead#1{%
+  \begingroup
+  \vspace*{50\p@}%
+  \sffamily\Huge
+  {\Huge\bfseries}
+  \flushright
+  \noindent\hrulefill
+    #1
+  \\
+  \hfill\rule{.8\textwidth}{0.5pt}\\
+    \vskip-26pt
+  \hfill\rule{.8\textwidth}{2pt}\\
+    \vskip 4.5ex
+  \endgroup
+}
