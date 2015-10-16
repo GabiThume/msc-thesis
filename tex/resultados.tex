@@ -1,8 +1,5 @@
-\chapter{Resultados Preliminares}
-\label{chap:resultadospreliminares}
-
 \meutodo{
-  Experimentos: 
+  Experimentos:
   - Descrição das bases
   - Descrição das ferramentas/técnicas/pacotes
   - Descrição do protocolo
@@ -28,7 +25,7 @@ Este capítulo apresenta os resultados preliminares obtidos. Primeiramente, é a
 
 Algumas pesquisas sobre os efeitos da sobreamostragem e geração de exemplos artificiais em dados de aprendizado de máquina já foram realizadas~\cite{Kuncheva2004,Chawla2002}. O método mais divulgado na literatura é conhecido como SMOTE (\textit{Synthetic Minority Over-sampling Technique}). Este método propõe a geração de exemplos artificiais a partir dos vetores de características originais das classes minoritárias. Não há registro conhecido de um estudo dessas técnicas em dados de informação visual para o rebalanceamento de classes.
 
-\enlargethispage{-\baselineskip}
+% \enlargethispage{-\baselineskip}
 
 Assim, foi proposta a geração de novas imagens a partir de operações como adição de ruído, borramento, mistura e combinação das imagens originais. Tais operações estão exemplificadas na Figura~\ref{fig:ArtificialImages}, utilizando a classe ``praia'' da base de imagens naturais COREL-1000. A partir das imagens originais --- primeira linha da figura --- são geradas imagens artificiais por meio das operações citadas, resultando nas imagens da segunda linha da figura.
 
@@ -57,7 +54,7 @@ Assim, foi proposta a geração de novas imagens a partir de operações como ad
 \vspace{25pt}
 
 
-Os descritores de características utilizados para os resultados foram apresentados na Seção \ref{sec:extracao}. \todo{qual experimento anterior? explicar!} Considerando que em um experimento anterior o melhor resultado foi atribuído à quantização com o método de Intensidade para o extrator Haralick e MSB para os outros, apenas esses testes foram aprofundados (tópico anteriormente discutido na Seção \ref{sec:quantizacao}). Neste experimento, o classificador KNN foi utilizado, com $K=1$. Inicialmente o classificador Naive Bayes foi explorado, apresentando melhora na acurácia ao apenas replicar as imagens. Esse comportamento não é desejado em um classificador para a avaliação de rebalanceamento de classes. O código desenvolvido para esses resultados preliminares está disponível em \url{https://bitbucket.org/moacirponti/imagefeatureextraction/overview}. 
+Os descritores de características utilizados para os resultados foram apresentados na Seção \ref{sec:extracao}. \todo{qual experimento anterior? explicar!} Considerando que em um experimento anterior o melhor resultado foi atribuído à quantização com o método de Intensidade para o extrator Haralick e MSB para os outros, apenas esses testes foram aprofundados (tópico anteriormente discutido na Seção \ref{sec:quantizacao}). Neste experimento, o classificador KNN foi utilizado, com $K=1$. Inicialmente o classificador Naive Bayes foi explorado, apresentando melhora na acurácia ao apenas replicar as imagens. Esse comportamento não é desejado em um classificador para a avaliação de rebalanceamento de classes. O código desenvolvido para esses resultados preliminares está disponível em \url{https://bitbucket.org/moacirponti/imagefeatureextraction/overview}.
 
 
 %--------------------------------------------------------------------------------
@@ -90,7 +87,7 @@ As etapas para a geração das imagens artificiais, passo \ref{item} da seção 
 \item Particionar a classe minoritária em conjuntos de treino e teste;
 \item Selecionar uma imagem aleatoriamente do conjunto de treino;
 \item Selecionar uma operação aleatória entre: borramento, adição de ruído, \textit{unsharp mask}, mistura ou composição;
-\begin{enumerate}[\theenumi.\arabic{enumii}.]
+\begin{enumerate}
 \item Caso seja selecionada a composição: encontrar uma outra imagem aleatória, selecionar um quadrante dessa imagem e novamente uma operação entre: borramento, adição de ruído, \textit{unsharp mask} ou mistura;
 \end{enumerate}
 \item Aplicar essa operação na imagem previamente selecionada e adicionar essa imagem gerada ao conjunto de treino;
@@ -115,21 +112,21 @@ Este estudo preliminar apresentou evidências experimentais de que, em problemas
 
 \vspace{10pt}
 
-% \begin{figure}[!hbpt]
-%  \begin{center}
-% \begin{subfigure}{\textwidth}
-%   \centering
-%   \includegraphics[width=\linewidth]{\detokenize {figuras/resultado-melhor4.png}}
-%   \caption{Original}
-% \end{subfigure}
-% \begin{subfigure}{\textwidth}
-%   \centering
-%   \includegraphics[width=\linewidth]{\detokenize {figuras/resultado-pior1.png}}
-%   \caption{\textit{Unsharp masking}}
-%   \label{fig:unsharp}
-% \end{subfigure}
-%  \end{center}
-% \end{figure}
+\begin{figure}[!hbpt]
+ \begin{center}
+\begin{subfigure}{\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize {figuras/resultado-melhor4.png}}
+  \caption{Original}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize {figuras/resultado-pior1.png}}
+  \caption{\textit{Unsharp masking}}
+  \label{fig:unsharp}
+\end{subfigure}
+ \end{center}
+\end{figure}
 
 \begin{figure}[htb]
  \begin{center}
@@ -150,7 +147,7 @@ Também foi possível notar que algumas operações não provocaram a melhora da
  \caption[Piores resultados, obtidos com a adição de ruído.]{Piores resultados, obtidos com a adição de ruído. Apresenta-se a relação da medida-F com a taxa de balanceamento utilizando as imagens originais, o SMOTE e as imagens artificiais geradas. \textit{Fonte:~Elaborado pelo autor.}}
  \label{fig:resultpior}
 \end{figure}
-  
+
 Após a realização dos testes, as operações que melhor se destacaram foram: utilizar todas as operações, apenas mistura e apenas composição. E as operações que resultaram em uma classificação pior do que o uso do SMOTE foram: utilizar apenas borramento, ruído ou \textit{unsharp masking}. Com o teste estatístico de Friedman foi possível verificar que o ACC foi o extrator que melhor se beneficiou das características geradas; e CCV e GCH os menos beneficiados. \enlargethispage{-\baselineskip} A Tabela \ref{tab:result} apresenta os \textit{rankings} encontrados por este teste para todas as execuções das melhores operações. O p-valor computado corresponde a $4.24E^{-11}$, assim a hipótese nula de que não há diferença entre as execuções foi rejeitada. Vale destacar que para algumas execuções, o teste de Friedman retornou o \textit{ranking}: geração artificial (1), SMOTE (2) e imagens originais (3), ou seja, sem que SMOTE e a geração artificial concorressem pela mesma posição, diferente da tabela apresentada.
 
 \begin{table}[htb]

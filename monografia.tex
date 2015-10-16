@@ -1,144 +1,315 @@
-\documentclass[12pt,a4paper,twoside]{icmc}
-%\includeonly{sdl-pr} %para compilar apenas o cap1
+% \documentclass[12pt,a4paper,twoside]{icmc}
+% %\includeonly{sdl-pr} %para compilar apenas o cap1
+%
+% \usepackage[top=30mm,bottom=35mm,left=25mm,right=25mm,twoside]{geometry}
+% \usepackage{syntax}
+% \usepackage{ae}
+% \usepackage{amssymb}
+% \usepackage{setspace}
+% \usepackage{ifthen}
+% \usepackage{longtable}
+% \usepackage{tabularx}
+% \usepackage[dvips]{graphicx}
+% % \usepackage{subfigure}
+% \usepackage{natbib} % reimplementation of the \cite command
+% % \usepackage{cite} % should not be used with natbib
+% \usepackage{verbatim}
+% \usepackage{enumerate}
+% \usepackage{caption}
+% \usepackage{colortbl}
+% \usepackage{color}
+% \usepackage{textfit}
+% \usepackage{bibentry}
+% \usepackage{hlundef}
+% \usepackage{slashbox}
+% \usepackage{multirow}
+% \usepackage[nottoc,notlof,notlot]{tocbibind}
+% \usepackage{url}                  %% usa pacote "url"
+% \usepackage{fancychap}
+% \usepackage[hidelinks]{hyperref}
+% \usepackage{amsmath}
+% \usepackage{pdfpages}
+% %\usepackage{titlesec}
+% \let\oldurl=\url
+% \def\url{\protect\oldurl}
+% \usepackage[brazil]{babel}
+% \usepackage[utf8]{inputenc}
+% \usepackage{hyphenat}
+% \usepackage{subcaption}
+% \usepackage{xargs}                      % Use more than one optional parameter in a new commands
+% \usepackage[pdftex,dvipsnames]{xcolor}  % Coloured text etc.
+% \usepackage{indentfirst}
+% \usepackage[colorinlistoftodos,prependcaption, textwidth=25mm, textsize=footnotesize]{todonotes}
+% \newcommandx{\meutodo}[2][1=]{\todo[inline, linecolor=blue,backgroundcolor=red!25,bordercolor=red,#1]{\color{red}{\bf{#2}}}}
+%
+% \definecolor{cinza}{rgb}{0.5,0.5,0.5}
+% \newcommand{\y}{\color{black}\rule{20pt}{7pt}}
+% \newcommand{\x}{\hspace*{20pt}}
+% \renewcommand{\r}{\color{cinza}\rule{20pt}{7pt}}
+% % \definecolor{G6}{rgb}{0.7,0.7,0.7}
+% % \newcommand{\fc}{\cellcolor{G6}}
+%
+% \let\cite=\citep
+% \clubpenalty=10000 \widowpenalty=10000 \exhyphenpenalty=10000
+% \hyphenpenalty=1000
+%
+% \nobibliography*
+% \newcommand{\apud}[2]{(\@apud#1,#2\@endapud)}
+% \def\@apud#1,#2\@endapud{%
+%    \citet{#1} \textbf{apud} \citet{#2}}%
+% %}
+%
+% %\pdfcompresslevel=9 \pdfoutput=1  %% diminui tamanho do PDF
+% %\urlstyle{tt}                     %% fonte das URLs será "typewriter"
+% %\def\UrlNoBreaks{\do\(\do\[\do\{\do\<\do\:} %% define quebras de linha
+%
+% \newtheorem{definicao}{Definição}[chapter]
+% \newtheorem{teorema}{Teorema}[chapter]
+%
+% \hyphenation{pré-pro-ces-sa-men-to over-sam-pling}
+% \captionsetup{justification=centerlast}
+%
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+% ICMC: Modelo de Trabalho Acadêmico (tese de doutorado, dissertação de
+% mestrado e trabalhos monográficos em geral) em conformidade com
+% ABNT NBR 14724:2011: Informação e documentação - Trabalhos acadêmicos -
+% Apresentação
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
 
-\usepackage[top=30mm,bottom=35mm,left=25mm,right=25mm,twoside]{geometry}
-\usepackage{syntax}
-\usepackage{ae}
-\usepackage{amssymb}
-\usepackage{setspace}
-\usepackage{ifthen}
-\usepackage{longtable}
-\usepackage{tabularx}
-\usepackage[dvips]{graphicx}
-% \usepackage{subfigure}
-\usepackage{natbib} % reimplementation of the \cite command
-% \usepackage{cite} % should not be used with natbib
-\usepackage{verbatim}
-\usepackage{enumerate}
-\usepackage{caption}
-\usepackage{colortbl}
-\usepackage{color}
-\usepackage{textfit}
-\usepackage{bibentry}
-\usepackage{hlundef}
-\usepackage{slashbox}
-\usepackage{multirow}
-\usepackage[nottoc,notlof,notlot]{tocbibind}
-\usepackage{url}                  %% usa pacote "url"
-\usepackage{fancychap}
-\usepackage[hidelinks]{hyperref}
-\usepackage{amsmath}
-\usepackage{pdfpages}
-%\usepackage{titlesec}
-\let\oldurl=\url
-\def\url{\protect\oldurl}
-\usepackage[brazil]{babel}
-\usepackage[utf8]{inputenc}
-\usepackage{hyphenat}
+% Opções:
+%   Qualificação         = qualificacao
+%   Curso                = doutorado/mestrado
+%   Situação do trabalho = pre-defesa/pos-defesa (exceto para qualificação)
+% -- opções do pacote babel --
+% Idioma padrão = brazil
+	%english,			% idioma adicional para hifenização
+	%brazil				% o último idioma é o principal do documento
+\documentclass[mestrado, pre-defesa, english, brazil]{packages/icmc}
+\renewcommand{\bf}{\textbf}
 \usepackage{subcaption}
 \usepackage{xargs}                      % Use more than one optional parameter in a new commands
-\usepackage[pdftex,dvipsnames]{xcolor}  % Coloured text etc.
-\usepackage{indentfirst}
+% \usepackage[pdftex,dvipsnames]{xcolor}  % Coloured text etc.
+% \usepackage{indentfirst}
 \usepackage[colorinlistoftodos,prependcaption, textwidth=25mm, textsize=footnotesize]{todonotes}
 \newcommandx{\meutodo}[2][1=]{\todo[inline, linecolor=blue,backgroundcolor=red!25,bordercolor=red,#1]{\color{red}{\bf{#2}}}}
 
-\definecolor{cinza}{rgb}{0.5,0.5,0.5}
-\newcommand{\y}{\color{black}\rule{20pt}{7pt}}
-\newcommand{\x}{\hspace*{20pt}}
-\renewcommand{\r}{\color{cinza}\rule{20pt}{7pt}}
+% \definecolor{cinza}{rgb}{0.5,0.5,0.5}
+% \newcommand{\y}{\color{black}\rule{20pt}{7pt}}
+% \newcommand{\x}{\hspace*{20pt}}
+% \renewcommand{\r}{\color{cinza}\rule{20pt}{7pt}}
 % \definecolor{G6}{rgb}{0.7,0.7,0.7}
 % \newcommand{\fc}{\cellcolor{G6}}
 
-\let\cite=\citep
-\clubpenalty=10000 \widowpenalty=10000 \exhyphenpenalty=10000
-\hyphenpenalty=1000
+% \hyphenation{pré-pro-ces-sa-men-to over-sam-pling}
+% \captionsetup{justification=centerlast}
 
-\nobibliography*
-\newcommand{\apud}[2]{(\@apud#1,#2\@endapud)}
-\def\@apud#1,#2\@endapud{%
-   \citet{#1} \textbf{apud} \citet{#2}}%
-%}
+% ---
+% Pacotes Opcionais
+% ---
+\usepackage{rotating}           % Usado para rotacionar o texto
+\usepackage[all,knot,arc,import,poly]{xy}   % Pacote para desenhos gráficos
+% Este pacote pode conflitar com outros pacotes gráficos como o ``pictex''
+% Então é necessário usar apenas um dos pacotes conflitantes
 
-%\pdfcompresslevel=9 \pdfoutput=1  %% diminui tamanho do PDF
-%\urlstyle{tt}                     %% fonte das URLs será "typewriter"
-%\def\UrlNoBreaks{\do\(\do\[\do\{\do\<\do\:} %% define quebras de linha
+\newcommand{\VerbL}{0.52\textwidth}
+\newcommand{\LatL}{0.42\textwidth}
 
-\newtheorem{definicao}{Definição}[chapter]
-\newtheorem{teorema}{Teorema}[chapter]
+% ---
+% Informações de dados para CAPA e FOLHA DE ROSTO
+% ---
+% Tanto na capa quanto nas folhas de rosto apenas a primeira letra da primeira palavra (ou nomes próprios) devem estar em letra maiúscula, todas as demais devem ser em letra minúscula.
+\tituloPT{Geração de imagens artificiais e extração de características latentes aplicadas à classificação de imagens}
+\tituloEN{Model of theses and dissertations in LaTeX of the ICMC}
+\autor[Thumé, G. S.]{Gabriela Salvador Thumé}
+\genero{F} % Gênero do autor (M = Masculino / F = Feminino)
+\orientador[Orientador]{Prof. Dr.}{Moacir Antonelli Ponti}
+%\coorientador{Prof. Dr.}{Fulano de Tal}
+\curso{CCMC}
+\data{1}{1}{2016} % Data do depósito
+% ---
 
-\hyphenation{pré-pro-ces-sa-men-to over-sam-pling}
-\captionsetup{justification=centerlast}
 
+% ---
+% RESUMOS
+% ---
+
+% Resumo em PORTUGUÊS
+% conter no máximo 500 palavras
+% conter no mínimo 1 e no máximo 5 palavras-chave
+\textoresumo[brazil]{
+A sequência canônica de etapas de processamento de imagens inclui aquisição, pré-processamento, segmentação, extração de características (ou representação e descrição), transformação e reconhecimento. Apesar da grande variedade de métodos disponíveis, a classificação de imagens é comumente tratada apenas considerando um subconjunto destas etapas, em especial a extração de características e o reconhecimento, sendo as demais muitas vezes negligenciadas. Enquanto isso, alguns estudos encontraram evidências de que a preparação das imagens, por meio da especificação cuidadosa da aquisição, pré-processamento e segmentação, pode impactar significativamente o resultado final da classificação. Imagens obtidas de diferentes fontes, como câmeras pessoais, microscopia, telescopia e tomografia, possuem características que podem ser exploradas para melhorar a descrição dos objetos de interesse. Assim, é proposta a melhoria da classificação de imagens utilizando métodos de pré-processamento. Entre as possibilidades de melhorias estão: o uso de realce e restauração para a extração de características latentes, isto é, características não visíveis na imagem original; aprendizagem das características latentes por meio de redes neurais de convolução e máquinas de Boltzmann restritas; e o uso de geração de imagens aleatórias, de forma a promover o balanceamento de bases de dados cujo número de exemplos de cada classe é desbalanceado. Esta dissertação possui resultados preliminares que demonstram o potencial da pesquisa e pretende contribuir com a área, investigando métodos que permitam obter melhores espaços de características.
+
+\meutodo{
+	Porque deep leaning?
+	Mais descritores de forma e textura (dependentes da base)
+	Explicar melhor o comportamento do SMOTE x ACC
+	Bases maiores
+	Algoritmos genéticos para geração de imagens artificiais?
+}
+}{Modelo, Monografia de qualificação, Dissertação, Tese, Latex}
+
+
+% resumo em INGLÊS
+% conter no máximo 500 palavras
+% conter no mínimo 1 e no máximo 5 palavras-chave
+\textoresumo[english]{
+\meutodo{melhorar muito o abstract}
+The canonical steps of digital image processing can be summarized as acquisition, preprocessing, segmentation, feature extraction, transformation and recognition. Althought the large number of methods available for image classification, only a subset of those steps are explored, specially related to feature extraction and recognition. The remaining steps are generally neglected. Meanwhile, some studies found evidence that image preparation --- by means of an accurate specification of the acquisition, preprocessing and segmentation steps --- can improve the classification results. Images captured from different kinds of sources like personal cameras, microscope, telescope and tomography, have features that can be explored to extend the description of objects. Therefore, we propose to improve image classification by using preprocessing methods. Among the possibilities for improvements we can highlight: using both image enhancement and restoration to extract latent features --- non-visible characteristics in the original image; latent features learning by means of convolutional neural networks and restricted Boltzmann machines; and synthesis of random artificial images, to be used for database balancing when the number of samples from each class is originally unbalanced. This research has preliminary results which points to its potential. It aims to contribute to the research area by investigating methods to improve image classification while obtaining better feature spaces.
+}{Template, Qualification monograph, Dissertation, Thesis, Latex}
+
+% ---
+% Configurações de aparência do PDF final
+% ---
+% alterando o aspecto da cor azul
+\definecolor{blue}{RGB}{41,5,195}
+
+% informações do PDF
+\makeatletter
+\hypersetup{
+     	pagebackref=true,
+		pdftitle={\@title},
+		pdfauthor={\@author},
+    	pdfsubject={\imprimirpreambulo},
+	    pdfcreator={LaTeX with abnTeX2/ICMC-USP},
+		pdfkeywords={\palavraschave},
+		colorlinks=true,       		% false: boxed links; true: colored links
+    	linkcolor=blue,          	% color of internal links
+    	citecolor=blue,        		% color of links to bibliography
+    	filecolor=magenta,      	% color of file links
+		urlcolor=blue,
+		bookmarksdepth=4
+}
+\makeatother
+% ---
+
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ----------------------------------------------------------
+
+% Inserir a ficha catalográfica
+%\incluifichacatalografica*{tex/fichaCatalografica.pdf}
+\incluifichacatalografica{634} % Código Cutter: número atribuído ao sobrenome do autor. Para obtê-lo, consulte a tabela Cutter Sanborn (em http://www.davignon.qc.ca/cutter1.html), procure pelo sobrenome ou forma mais próxima ao sobrenome completo e coloque o número indicado como parâmetro.
+
+
+% DEDICATÓRIA / AGRADECIMENTO / EPÍGRAFE
+\textodedicatoria*{tex/pre-textual/dedicatoria}
+\textoagradecimentos*{tex/pre-textual/agradecimentos}
+\textoepigrafe*{tex/pre-textual/epigrafe}
+
+% Inclui a lista de figuras
+\incluilistadefiguras
+
+% Inclui a lista de tabelas
+\incluilistadetabelas
+
+% Inclui a lista de quadros
+\incluilistadequadros
+
+% Inclui a lista de algoritmos
+\incluilistadealgoritmos
+
+% Inclui a lista de códigos
+\incluilistadecodigos
+
+% Inclui a lista de siglas e abreviaturas
+\incluilistadesiglas
+
+% Inclui a lista de símbolos
+\incluilistadesimbolos
+
+% ----
+% Início do documento
+% ----
 \begin{document}
+% ----------------------------------------------------------
+% ELEMENTOS TEXTUAIS
+% ----------------------------------------------------------
+\textual
 
-\title{Geração de imagens artificiais e extração de características latentes aplicadas à classificação de imagens}
+\chapter{Introdução}
+\label{chapter:introducao}
+\input{tex/introducao}
 
-\author{Gabriela Salvador Thumé}
+\chapter{Fundamentos}
+\label{chapter:fundamentos}
+\input{tex/fundamentos}
 
-\titulation{\hyphenpenalty=10000 Monografia apresentada ao Instituto
-de Ciências Matemáticas e de Computação -- ICMC/USP, para o Exame de
-Qualificação, como parte dos requisitos para a obtenção do título de
-Mestre na Área de Ciências de Computação e Matemática Computacional.} 
-\advisor{Prof. Dr. Moacir Pereira Ponti Junior}
-\address{USP -- São Carlos/SP}
-\date{Fevereiro/2015}
+\chapter{Método}
+\label{chapter:metodo}
+\input{tex/metodo}
 
-\begingroup
-% \maketitle
+\chapter{Resultados}
+\label{chapter:resultados}
+\input{tex/resultados}
 
-\includepdf[pages={1}]{capa.pdf}
-\mbox{}
-\thispagestyle{empty}
-\newpage
-\includepdf[pages={2}]{capa.pdf}
-\mbox{}
-\thispagestyle{empty}
+\chapter{Conclusões}
+\label{chapter:conclusões}
+\input{tex/conclusoes}
 
-\thispagestyle{empty}  %<__ deixa a página sem numeração
-\vfill \vfill \vfill  %<-- divide a página três vezes
-%\hspace*{7cm}\box{Texto que voce quer colocar}
+% ---
+% Finaliza a parte no bookmark do PDF, para que se inicie o bookmark na raiz
+% ---
+\bookmarksetup{startatroot}%
+% ---
 
-\hspace*{7cm}
-% \box{One picture is worth more than then thousand words}
-\frontmatter \pagestyle{plain}
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------
+\postextual
 
-\floatplacement{table}{!ht}
-
-\include{resumo}
-\include{abstract}
-
-\listoffigures
-
-\include{siglas}
-
-\tableofcontents 
-\clearpage{\pagestyle{plain}\clearpage}
-
-\endgroup
-
-\mainmatter
-
-\renewcommand{\chaptermark}[1]{%
-
-\markboth{\chaptername
-\ \thechapter.\ #1}{}}  %Chapter 2. Do it now
-
-\renewcommand{\sectionmark}[1]{%
- \markright{\thesection.\ #1}}
-
-\include{intro}
-\include{revisao}
-\include{proposta}
-\include{resultados}
-% \include{conclusoes}
-
-%\appendix
-
-\bibliographystyle{icmc2}
+% ----------------------------------------------------------
+% Referências bibliográficas
+% ----------------------------------------------------------
 \bibliography{referencias}
 
-%\appendix
+% ---------------------------------------------------------------------
+% GLOSSÁRIO
+% ---------------------------------------------------------------------
 
-%\include{apendices}
+% Arquivo que contém as definições que vão aparecer no glossário
+\input{tex/glossario}
+% Comando para incluir todas as definições do arquivo glossario.tex
+\glsaddall
+% Impressão do glossário
+\printglossaries
+
+% ----------------------------------------------------------
+% Apêndices
+% ----------------------------------------------------------
+
+% ---
+% Inicia os apêndices
+% ---
+% \begin{apendicesenv}
+%
+%     \chapter{Documento básico usando a classe \textit{icmc}}
+%     \label{chapter:documento-basico}
+%     \input{tex/appendix/documento-basico}
+%
+%     \chapter{Configuração do programa JabRef}
+%     \label{chapter:configuracao-jabref}
+%     \input{tex/appendix/configuracao-jabref}
+%
+% \end{apendicesenv}
+% ---
+
+
+% ----------------------------------------------------------
+% Anexos
+% ----------------------------------------------------------
+
+% ---
+% Inicia os anexos
+% ---
+% \begin{anexosenv}
+%
+%     \chapter{Páginas interessantes na Internet}
+%     \label{chapter:paginas-interessantes}
+%     \input{tex/annex/paginas-interessantes}
+%
+% \end{anexosenv}
+% ---
 
 \end{document}

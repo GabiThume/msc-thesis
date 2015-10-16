@@ -1,8 +1,4 @@
-\chapter{Introdução}
-
-\meutodo{}
-
-A tarefa de classificação de imagens consiste em predizer corretamente uma imagem como pertencente a uma classe previamente determinada. 
+A tarefa de classificação de imagens consiste em predizer corretamente uma imagem como pertencente a uma classe previamente determinada.
 Um exemplo prático é a classificação da imagem de um \textit{oceano} como parte de uma classe denominada \textit{praia}.
 Uma das formas de definir que certa imagem pertence à uma classe é especificar todas as regras que a caracterizam. Porém, na maioria dos casos isso é impossível. Considere imagens coloridas, com três canais de cores e de tamanho $256\times256$ pixels. Cada um desses 65536 pixels pode ser representado por $256^3$ combinações discretas de cores. Essa complexidade pode ser reduzida ao utilizar métodos de extração de características, os quais visam representar uma imagem com um número menor de valores vetoriais. Utilizando-se tal representação, pode-se desenvolver programas de computador que consigam definir e identificar a qual classe pertence uma imagem, sem a necessidade de se codificar todas as regras possíveis, por meio de algoritmos de aprendizado de máquina.
 
@@ -28,33 +24,33 @@ Atualmente, o estado da arte de extração e classificação de imagens correspo
 
 O desbalanceamento de classes também se apresenta como um obstáculo para que a classificação de imagens seja satisfatória. Esse problema é caracterizado pela diferença entre o número de exemplos disponíveis para cada classe. Muitos métodos de transformação do espaço de características e de classificação assumem que as classes da base estão balanceadas, o que nem sempre é verdade. Portanto, além de realizar pré\hyp{}processamento para a extração de características latentes, também é proposto o uso de geração de imagens artificiais com o objetivo de rebalancear a base de imagens, possivelmente melhorando o modelo criado para a classificação.
 
-De maneira sumária, {\bf esta pesquisa busca melhorar a classificação de imagens, utilizando métodos de processamento com foco na extração de características latentes e no rebalanceamento de classes.} Os resultados preliminares obtidos, posteriormente apresentados na Seção \ref{sec:resultadospreliminares}, demonstram o potencial deste trabalho.
+De maneira sumária, {\textbf esta pesquisa busca melhorar a classificação de imagens, utilizando métodos de processamento com foco na extração de características latentes e no rebalanceamento de classes.} Os resultados preliminares obtidos, posteriormente apresentados na Seção \ref{sec:resultadospreliminares}, demonstram o potencial deste trabalho.
 
 %--------------------------------------------------------------------------------
 \section{Contextualização}
 
-O grupo de pesquisa em Visualização, Imagens e Computação Gráfica (VICG), do Instituto de Ciências Matemáticas e de Computação (ICMC), tem atuado nas áreas de apoio para a classificação de coleções de imagens. Os trabalhos do grupo estão relacionados à visualização de informação com projeções multidimensionais e árvores~\cite{Joia2011}, assim como à extração de características e classificação de coleções de imagens~\cite{Paiva2011}. No que tange o processamento de imagens digitais, \citet{Picon2011} e \citet{Ponti2013} focaram no pré-processamento para obter melhores resultados de classificação. 
+O grupo de pesquisa em Visualização, Imagens e Computação Gráfica (VICG), do Instituto de Ciências Matemáticas e de Computação (ICMC), tem atuado nas áreas de apoio para a classificação de coleções de imagens. Os trabalhos do grupo estão relacionados à visualização de informação com projeções multidimensionais e árvores~\cite{Joia2011}, assim como à extração de características e classificação de coleções de imagens~\cite{Paiva2011}. No que tange o processamento de imagens digitais, \citeonline{Picon2011} e \citeonline{Ponti2013} focaram no pré-processamento para obter melhores resultados de classificação.
 
-\citet{Paiva2011} mostraram que os espaços de características formados por cor e textura podem ser melhorados, porém há um limite até o qual as características podem ser transformadas, ou selecionadas, de forma a garantir a discriminação entre as classes. Tal projeto atua na investigação de métodos que permitam gerar espaços de características com maior discriminação entre as classes, facilitando a classificação. 
+\citeonline{Paiva2011} mostraram que os espaços de características formados por cor e textura podem ser melhorados, porém há um limite até o qual as características podem ser transformadas, ou selecionadas, de forma a garantir a discriminação entre as classes. Tal projeto atua na investigação de métodos que permitam gerar espaços de características com maior discriminação entre as classes, facilitando a classificação.
 
 Em outros dois trabalhos relacionados é possível ver a diferença na performance para problemas de classificação de imagens. No primeiro, os autores atingem acurácia acima de 98\% na classificação de frutas após investigar alterações nos parâmetros de aquisição, realizar pré-processamento e obter a segmentação \cite{Rocha2010}. No segundo, os autores indicam que o método utilizado para obter a imagem em escala de cinza (comumente utilizada por algoritmos de extração), pode impactar significativamente a classificação final de diversas bases de imagens~\cite{Kanan2012}.
 
-Recentemente, \citet{Ponti2014} demonstraram que o uso de algoritmos de pré\hyp{}processamento permite ao mesmo tempo obter vetores de características mais compactos e com maior capacidade de discriminação entre classes. Esta pesquisa pretende dar continuidade a esse trabalho, ao analisar técnicas de \textit{deep learning}. Essas técnicas realizam múltiplas operações sobre imagens de entrada de forma a aprender quais operações permitem gerar características capazes de discriminar as classes \cite{bengio2009}.
+Recentemente, \citeonline{Ponti2014} demonstraram que o uso de algoritmos de pré\hyp{}processamento permite ao mesmo tempo obter vetores de características mais compactos e com maior capacidade de discriminação entre classes. Esta pesquisa pretende dar continuidade a esse trabalho, ao analisar técnicas de \textit{deep learning}. Essas técnicas realizam múltiplas operações sobre imagens de entrada de forma a aprender quais operações permitem gerar características capazes de discriminar as classes \cite{bengio2009}.
 
 
-% \meutodo{Na literatura \citet{Peng2014} exploraram a geração de imagens artificiais a partir de modelos 3D CAD}
+% \meutodo{Na literatura \citeonline{Peng2014} exploraram a geração de imagens artificiais a partir de modelos 3D CAD}
 
 %--------------------------------------------------------------------------------
 \section{Relevância e hipóteses}
 
-Conforme anteriormente mencionado, muitos aspectos influenciam a performance da classificação de coleções de imagens. É comum encontrar bases cuja extração de características é considerada difícil, onde algoritmos canônicos de extração não conseguem extrair características que diferenciem bem as classes, prejudicando sua posterior classificação. Normalmente, tenta-se lidar com as particularidades das características extraídas através de transformações no espaço de atributos ou mesmo projetando classificadores mais elaborados. Acredita-se que, ao invés disso, é importante investigar métodos de processamento e preparação de imagens antes da extração das características. Por isso, {\bf uma das hipóteses desse trabalho é que o uso desses métodos possa revelar características latentes -- não visíveis nas imagens originais -- que podem melhorar a acurácia da classificação.}
+Conforme anteriormente mencionado, muitos aspectos influenciam a performance da classificação de coleções de imagens. É comum encontrar bases cuja extração de características é considerada difícil, onde algoritmos canônicos de extração não conseguem extrair características que diferenciem bem as classes, prejudicando sua posterior classificação. Normalmente, tenta-se lidar com as particularidades das características extraídas através de transformações no espaço de atributos ou mesmo projetando classificadores mais elaborados. Acredita-se que, ao invés disso, é importante investigar métodos de processamento e preparação de imagens antes da extração das características. Por isso, {\textbf uma das hipóteses desse trabalho é que o uso desses métodos possa revelar características latentes -- não visíveis nas imagens originais -- que podem melhorar a acurácia da classificação.}
 
 
-Além disso, 
-% uma ampla variedade de classificadores e de transformações assume que as classes da base estão balanceadas. 
+Além disso,
+% uma ampla variedade de classificadores e de transformações assume que as classes da base estão balanceadas.
 o desbalanceamento de classes é um obstáculo para uma classificação satisfatória, e por isso também será estudado.
-% Outro fator de impacto em tal acurácia é o desbalanceamento de classes nas bases de dados para pesquisa. 
-Em bases médicas, por exemplo, a quantidade de imagens relacionadas com uma doença rara é menor do que as imagens de pacientes sem a doença. Nessas situações, em que as imagens representam eventos importantes porém menos frequentes, o sistema de classificação pode ter problemas para lidar com a classe minoritária. {\bf A hipótese, nesse caso, é que a geração de imagens artificiais como preparação para a extração de características pode melhorar a acurácia da classificação, quando comparada à geração de exemplos artificiais no espaço de atributos.} Ou seja, gerar novas imagens artificiais — que serão posteriormente reduzidas a atributos — pode apresentar melhores resultados para a classificação do que o \textit{bootstrap} de atributos artificiais.
+% Outro fator de impacto em tal acurácia é o desbalanceamento de classes nas bases de dados para pesquisa.
+Em bases médicas, por exemplo, a quantidade de imagens relacionadas com uma doença rara é menor do que as imagens de pacientes sem a doença. Nessas situações, em que as imagens representam eventos importantes porém menos frequentes, o sistema de classificação pode ter problemas para lidar com a classe minoritária. {\textbf A hipótese, nesse caso, é que a geração de imagens artificiais como preparação para a extração de características pode melhorar a acurácia da classificação, quando comparada à geração de exemplos artificiais no espaço de atributos.} Ou seja, gerar novas imagens artificiais — que serão posteriormente reduzidas a atributos — pode apresentar melhores resultados para a classificação do que o \textit{bootstrap} de atributos artificiais.
 
 %--------------------------------------------------------------------------------
 \section{Objetivos}
@@ -107,8 +103,5 @@ O conteúdo desta dissertação está estruturado como segue.
 \item [Capítulo~\ref{chap:proposta}:] descreve-se a metodologia de pesquisa, assim como os resultados esperados. O cronograma, com suas respectivas atividades e o tempo previsto para conclusão desta pesquisa, é destacado em seguida.
 
 \item [Capítulo~\ref{chap:resultadospreliminares}:] apresenta e discute os resultados preliminares, ressaltando quais são os próximos passos.
-% a proposta é retomada ao indicar como será resolvido o problema do desbalanceamento e a melhoria das imagens com base nas suas características latentes. 
+% a proposta é retomada ao indicar como será resolvido o problema do desbalanceamento e a melhoria das imagens com base nas suas características latentes.
 \end{description}
-
-
-

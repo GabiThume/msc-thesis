@@ -21,3 +21,11 @@
 *.mtc
 *.mtc1
 *.out
+*.brf
+*.glsdefs
+*.loa
+*.lol
+*.loq
+*.los
+*.mw
+*.nlo
