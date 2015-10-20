@@ -1,58 +1,337 @@
 \section{Considerações iniciais}
 % Neste capítulo está descrita a proposta de pesquisa desse mestrado. Primeiramente, a metodologia para o estudo e implementação da proposta é descrita. A seção de resultados esperados ressalta quais são os resultados que essa pesquisa almeja e, por fim, as atividades que essa dissertação engloba e seu respectivo cronograma são elencados.
 
+%  \begin{figure}[hbpt]
+%  \begin{center}
+%    \includegraphics[width=1\linewidth]{\detokenize {figuras/geral.pdf}}
+%  \end{center}
+%   \caption[]{\textit{Fonte: Elaborado pela autora.}}
+%  \label{fig:geral}
+% \end{figure}
 
-\section{Métodos}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Borramento}
+% \begin{espacosimples}
 
- \begin{figure}[hbpt]
+\begin{figure}
  \begin{center}
-   \includegraphics[width=1\linewidth]{\detokenize {figuras/geral.pdf}}
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/blur-a.png}}
+  \caption{Original}
+\end{subfigure}
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/blur-b.png}}
+  \caption{Gerada}
+\end{subfigure}
  \end{center}
-  \caption[]{\textit{Fonte: Elaborado pela autora.}}
- \label{fig:geral}
+ \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
+ \label{fig:blend}
 \end{figure}
 
-\section{Método: Borramento}
-\subsection{Parâmetros}
-\subsection{Variações}
-\subsection{Algorítimo}
+Borramento, ou filtro de suavização, é uma operação de pré-processamento
+comumente utilizada com o objetivo de reduzir ruído em uma imagem. Normalmente
+esse tipo de filtro acarreta no borramento das bordas, como pode ser observado na
+Figura \ref{fig:blur}. Esse comportamento não é esperado quando devemos gerar novas imagens,
+pois dessa forma há informação relevante que será removida.
+
+Assim, a operação de borramento utilizada é a de filtro bilateral. Ela substitui
+o valor do pixel $x$ com uma média dos pixeis de intensidade similar na imagem e dos pixeis
+vizinhos \cite{Tomasi1998}.
+
+\vspace{0.5cm}
+\begin{algorithm}[H]
+  \caption{Algoritmo de borramento com filtro bilateral}
+  \label{alg:blur}
+  \SetAlgoLined
+  \Entrada{Imagem colorida $I$ em formato BGR}
+  \Entrada{Diâmetro $d$ de pixinhança de pixels}
+  \Entrada{Sigma do espaço de cor}
+  \Entrada{Sigma do espaço de coordenadas}
+
+  \Saida{Imagem gerada $G$}
+  %
+  % \ParaCada{centroide $C_k = (L_k, a_k, b_k, x_k, y_k)$}{
+  %   $C_k \gets$ uma posição $k$ de uma malha com espaçamento $S$
+  % }
+  % \ParaCada{pixel $p$}{
+  %   $\text{rótulo}(p) \gets -1$\;
+  %   $\text{distância}(p) \gets \infty$
+  % }
+  %
+  % \Enqto{não atingir a iteração máxima $t$}{
+  %   \ParaCada{centroide $C_k$}{
+  %     \ParaCada{para cada pixel $p$ em uma região $2S \times 2S$ em torno de
+  %       $C_k$}{
+  %       $D \gets$ distância entre $p$ e $C_k$\;
+  %       \Se{$D \le \text{distância}(p)$}{
+  %         $\text{distância}(p) \gets D$
+  %         $\text{rótulo}(p) \gets k$\;
+  %       }
+  %     }
+  %   }
+  %
+  %   \ParaCada{centroide $C_k$}{
+  %     $C_k \gets$ ponto médio considerando os pixels da região
+  %   }
+  % }
+\end{algorithm}
+\vspace{0.5cm}
+
+\begin{description}
+  \item[Parâmetros] Diâmetro $d$ de pixinhança de pixels
+Sigma do espaço de cor
+Sigma do espaço de coordenadas
+
+\item[Variações]
+Os parâmetros dependem das propriedades das imagens e dos resultados pretendidos.
+Dessa forma, o tamanho do filtro é um valor escolhido arbitrariamente para cada
+aplicação em específico \cite{Tomasi1998}. Como o nosso objetivo com a geração das
+imagens não foi especializar no comportamento de uma classe de imagens específica,
+um valor foi escolhido aleatoriamente e a partir dele os parâmetros de entrada
+foram definidos.
 
 
-\section{Método: Mistura ponderada}
-\begin{figure}[hbpt]
-\begin{center}
-  \includegraphics[width=1\linewidth]{\detokenize {figuras/geracao/mistura.png}}
-\end{center}
- \caption[]{\textit{Fonte: Elaborado pela autora.}}
-\label{fig:mistura}
+\item[Limitações]
+\item[Métodos relacionados]
+\end{description}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Mistura ponderada}
+
+\begin{figure}
+ \begin{center}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/blend-a.png}}
+  \caption{Original}
+\end{subfigure}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/blend-b.png}}
+  \caption{Original}
+\end{subfigure}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/blend-c.png}}
+  \caption{Gerada}
+\end{subfigure}
+ \end{center}
+ \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
+ \label{fig:blend}
 \end{figure}
 
 
-\section{Método: Aguçamento}
-\section{Método: Composição}
+Calcula a soma ponderada de duas imagens \ref{fig:blend}.
 
-\section{Método: Mistura limiarizada}
-\begin{figure}[hbpt]
-\begin{center}
-  \includegraphics[width=1\linewidth]{\detokenize {figuras/geracao/threshold.png}}
-\end{center}
- \caption[]{\textit{Fonte: Elaborado pela autora.}}
-\label{fig:threshold}
+\vspace{0.5cm}
+\begin{algorithm}[H]
+  \caption{Algoritmo de mistura ponderada}
+  \label{alg:blend}
+  \SetAlgoLined
+  \Entrada{Primeira imagem colorida $I$ em formato BGR}
+  \Entrada{Peso $\alpha$ da primeira imagem na composição final}
+  \Entrada{Segunda imagem colorida $I$ em formato BGR}
+  \Entrada{Peso $\beta$ da segunda imagem na composição final}
+
+  \Saida{Imagem gerada $G$}
+\end{algorithm}
+\vspace{0.5cm}
+
+\begin{description}
+\item[Parâmetros]
+\item[Variações]
+\item[Limitações]
+\item[Métodos relacionados]
+\end{description}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Aguçamento}
+
+\begin{figure}
+ \begin{center}
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/unsharp-a.png}}
+  \caption{Original}
+\end{subfigure}
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/unsharp-b.png}}
+  \caption{Gerada}
+\end{subfigure}
+ \end{center}
+ \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
+ \label{fig:blend}
 \end{figure}
 
-\section{Método: Mistura saliente}
-\begin{figure}[hbpt]
-\begin{center}
-  \includegraphics[width=1\linewidth]{\detokenize {figuras/geracao/saliencia.png}}
-\end{center}
- \caption[]{\textit{Fonte: Elaborado pela autora.}}
-\label{fig:saliencia}
+Borra a imagem com um filtro Gaussiano, calcula a diferença entre a imagem original
+e a imagem borrada e adiciona essa diferença na imagem original.
+
+\vspace{0.5cm}
+\begin{algorithm}[H]
+  \caption{Algoritmo de aguçamento}
+  \label{alg:blend}
+  \SetAlgoLined
+  \Entrada{Imagem colorida $I$ em formato BGR}
+  % \Entrada{Peso $\alpha$ da primeira imagem na composição final}
+  % \Entrada{Segunda imagem colorida $I$ em formato BGR}
+  % \Entrada{Peso $\beta$ da segunda imagem na composição final}
+
+  \Saida{Imagem gerada $G$}
+
+  \ParaCada{pixel $p$}{
+    $\text{diferença} \gets I(p) - borrada(p)$\;
+    $\text{G}(p) \gets I(p) + \text{diferença}$\;
+  }
+\end{algorithm}
+\vspace{0.5cm}
+
+\begin{description}
+\item[Parâmetros]
+\item[Variações]
+\item[Limitações]
+\item[Métodos relacionados]
+\end{description}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Composição}
+
+\begin{figure}
+ \begin{center}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/composition.png}}
+ \end{center}
+ \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
+ \label{fig:blend}
 \end{figure}
 
-\section{Método: SMOTE visual}
-\section{Método: Adição de ruído}
+\vspace{0.5cm}
 
-%--------------------------------------------------------------------------------
+\begin{description}
+\item[Parâmetros]
+\item[Variações]
+\item[Limitações]
+\item[Métodos relacionados]
+\end{description}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Mistura limiarizada}
+
+\begin{figure}
+ \begin{center}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/threshold-a.png}}
+  \caption{Original}
+\end{subfigure}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/threshold-b.png}}
+  \caption{Original}
+\end{subfigure}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/threshold-c.png}}
+  \caption{Gerada}
+\end{subfigure}
+ \end{center}
+ \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
+ \label{fig:blend}
+\end{figure}
+
+Combinação de ``thresholds'' \ref{fig:threshold}.
+
+\vspace{0.5cm}
+
+\begin{description}
+\item[Parâmetros]
+\item[Variações]
+\item[Limitações]
+\item[Métodos relacionados]
+\end{description}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Mistura saliente}
+
+\begin{figure}
+ \begin{center}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/saliency-a.png}}
+  \caption{Original}
+\end{subfigure}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/saliency-b.png}}
+  \caption{Original}
+\end{subfigure}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/saliency-c.png}}
+  \caption{Gerada}
+\end{subfigure}
+ \end{center}
+ \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
+ \label{fig:blend}
+\end{figure}
+
+Combinação de regiões salientes \ref{fig:saliencia}.
+
+
+\vspace{0.5cm}
+
+\begin{description}
+\item[Parâmetros]
+\item[Variações]
+\item[Limitações]
+\item[Métodos relacionados]
+\end{description}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{SMOTE visual}
+
+\begin{figure}
+ \begin{center}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/smote-a.png}}
+  \caption{Original}
+\end{subfigure}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/smote-b.png}}
+  \caption{Original}
+\end{subfigure}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/smote-c.png}}
+  \caption{Gerada}
+\end{subfigure}
+ \end{center}
+ \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
+ \label{fig:blend}
+\end{figure}
+
+Conforme visto na seção x, o SMOTE é um método de rebalanceamento aplicado após
+a extração de características. A ideia dessa geração é imitar esse funcionamento
+mas no nível de pixels.
+
+\vspace{0.5cm}
+
+\begin{description}
+\item[Parâmetros]
+\item[Variações]
+\item[Limitações]
+\item[Métodos relacionados]
+\end{description}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Adição de ruído}
+
+\vspace{0.5cm}
+
+\begin{description}
+\item[Parâmetros]
+\item[Variações]
+\item[Limitações]
+\item[Métodos relacionados]
+\end{description}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \section{Metodologia}
 %
 % \begin{description}

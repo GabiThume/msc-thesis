@@ -116,12 +116,18 @@
 \newcommand{\VerbL}{0.52\textwidth}
 \newcommand{\LatL}{0.42\textwidth}
 
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+%\usepackage{algorithm}
+\usepackage{algpseudocode}
+\SetKwFor{Para}{para}{fa\c{c}a}{fim}
+\SetKwFor{ParaCada}{para cada}{fa\c{c}a}{fim}
+
 % ---
 % Informações de dados para CAPA e FOLHA DE ROSTO
 % ---
 % Tanto na capa quanto nas folhas de rosto apenas a primeira letra da primeira palavra (ou nomes próprios) devem estar em letra maiúscula, todas as demais devem ser em letra minúscula.
 \tituloPT{Geração de imagens artificiais e extração de características latentes aplicadas à classificação de imagens}
-\tituloEN{Model of theses and dissertations in LaTeX of the ICMC}
+\tituloEN{Artificial images generation and latent feature extraction applied to image classification task}
 \autor[Thumé, G. S.]{Gabriela Salvador Thumé}
 \genero{F} % Gênero do autor (M = Masculino / F = Feminino)
 \orientador[Orientador]{Prof. Dr.}{Moacir Antonelli Ponti}
@@ -236,7 +242,7 @@ The canonical steps of digital image processing can be summarized as acquisition
 \label{chapter:fundamentos}
 \input{tex/fundamentos}
 
-\chapter{Geração Artificial}
+\chapter{Geração Artificial de Imagens}
 \label{chapter:metodo}
 \input{tex/metodo}
 

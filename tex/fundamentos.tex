@@ -206,16 +206,15 @@ A maioria dos métodos de extração de características utiliza imagens de entr
 
 Em um trabalho recente \cite{Ponti2014}, com participação da autora desta dissertação, quatro métodos de quantização foram investigados. Foi constatado que os melhores métodos de conversão para escala de cinza antes da utilização dos descritores de características a serem mencionados na Seção \ref{sec:extracao} são:
 
-\begin{itemize}
-\item Intensidade: método mais simples, consiste em computar a média entre os canais RGB da imagem a partir de
+\begin{description}
+\item [Intensidade:] método mais simples, consiste em computar a média entre os canais RGB da imagem a partir de
 \begin{equation*}
 	Q_{Intensidade} = \frac{1}{3}(R + G + B)
 \end{equation*}
 \noindent e então realizar a correção por \textit{gamma}.
 
-\item Bits mais significativos (MSB): ao invés de realizar uma combinação linear dos canais de cores, ordena os bits dos canais coloridos em um único canal. Computa quantos bits de cada canal de cor contribuem para a imagem final e extrai os bits do código binário dos canais originais \cite{Ponti-Jr2013}.
-
-\end{itemize}
+\item [Bits mais significativos (MSB):] ao invés de realizar uma combinação linear dos canais de cores, ordena os bits dos canais coloridos em um único canal. Computa quantos bits de cada canal de cor contribuem para a imagem final e extrai os bits do código binário dos canais originais \cite{Ponti-Jr2013}.
+\end{description}
 
 A Figura \ref{fig:quantizacao} apresenta a conversão na escala de cinza obtida com o uso destes métodos.
 
