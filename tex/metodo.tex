@@ -1,5 +1,12 @@
 \section{Considerações iniciais}
-% Neste capítulo está descrita a proposta de pesquisa desse mestrado. Primeiramente, a metodologia para o estudo e implementação da proposta é descrita. A seção de resultados esperados ressalta quais são os resultados que essa pesquisa almeja e, por fim, as atividades que essa dissertação engloba e seu respectivo cronograma são elencados.
+Neste capítulo os métodos de geração artificial são descritos.
+
+Foram realizados experimentos que são posteriormente descritos no Capítulo \ref{cap:resultados} ao gerar essas imagens
+utilizando borramento, mistura ponderada, unsharp masking, composição, combinação de
+thresholds, combinação com saliência, SMOTE visual e adição de ruído.
+Tendo quantas imagens são necessárias para rebalancear, foram geradas imagens de
+cada método e também uma versão de todos eles.
+
 
 %  \begin{figure}[hbpt]
 %  \begin{center}
@@ -23,17 +30,17 @@
 \begin{subfigure}{.45\textwidth}
   \centering
   \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/blur-b.png}}
-  \caption{Gerada}
+  \caption{Imagem artificial}
 \end{subfigure}
  \end{center}
  \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
- \label{fig:blend}
+ \label{fig:gen:blur}
 \end{figure}
 
 Borramento, ou filtro de suavização, é uma operação de pré-processamento
 comumente utilizada com o objetivo de reduzir ruído em uma imagem. Normalmente
 esse tipo de filtro acarreta no borramento das bordas, como pode ser observado na
-Figura \ref{fig:blur}. Esse comportamento não é esperado quando devemos gerar novas imagens,
+Figura \ref{fig:gren:blur}. Esse comportamento não é esperado quando devemos gerar novas imagens,
 pois dessa forma há informação relevante que será removida.
 
 Assim, a operação de borramento utilizada é a de filtro bilateral. Ela substitui
@@ -51,31 +58,6 @@ vizinhos \cite{Tomasi1998}.
   \Entrada{Sigma do espaço de coordenadas}
 
   \Saida{Imagem gerada $G$}
-  %
-  % \ParaCada{centroide $C_k = (L_k, a_k, b_k, x_k, y_k)$}{
-  %   $C_k \gets$ uma posição $k$ de uma malha com espaçamento $S$
-  % }
-  % \ParaCada{pixel $p$}{
-  %   $\text{rótulo}(p) \gets -1$\;
-  %   $\text{distância}(p) \gets \infty$
-  % }
-  %
-  % \Enqto{não atingir a iteração máxima $t$}{
-  %   \ParaCada{centroide $C_k$}{
-  %     \ParaCada{para cada pixel $p$ em uma região $2S \times 2S$ em torno de
-  %       $C_k$}{
-  %       $D \gets$ distância entre $p$ e $C_k$\;
-  %       \Se{$D \le \text{distância}(p)$}{
-  %         $\text{distância}(p) \gets D$
-  %         $\text{rótulo}(p) \gets k$\;
-  %       }
-  %     }
-  %   }
-  %
-  %   \ParaCada{centroide $C_k$}{
-  %     $C_k \gets$ ponto médio considerando os pixels da região
-  %   }
-  % }
 \end{algorithm}
 \vspace{0.5cm}
 
@@ -95,10 +77,10 @@ foram definidos.
 
 \item[Limitações]
 \item[Métodos relacionados]
+\item[Visualização]
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Mistura ponderada}
-
 \begin{figure}
  \begin{center}
 \begin{subfigure}{.3\textwidth}
@@ -114,15 +96,15 @@ foram definidos.
 \begin{subfigure}{.3\textwidth}
   \centering
   \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/blend-c.png}}
-  \caption{Gerada}
+  \caption{Imagem artificial}
 \end{subfigure}
  \end{center}
  \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
- \label{fig:blend}
+ \label{fig:gen:blend}
 \end{figure}
 
 
-Calcula a soma ponderada de duas imagens \ref{fig:blend}.
+Calcula a soma ponderada de duas imagens \ref{fig:gen:blend}.
 
 \vspace{0.5cm}
 \begin{algorithm}[H]
@@ -130,19 +112,27 @@ Calcula a soma ponderada de duas imagens \ref{fig:blend}.
   \label{alg:blend}
   \SetAlgoLined
   \Entrada{Primeira imagem colorida $I$ em formato BGR}
-  \Entrada{Peso $\alpha$ da primeira imagem na composição final}
-  \Entrada{Segunda imagem colorida $I$ em formato BGR}
-  \Entrada{Peso $\beta$ da segunda imagem na composição final}
+  \Entrada{Segunda imagem colorida $I_2$ em formato BGR}
 
   \Saida{Imagem gerada $G$}
-\end{algorithm}
+
+  {$\alpha \gets \text{número aletatório entre 10 e 80}$\;}
+  {$\beta \gets 100 - \alpha$\;}
+
+  \ParaCada{pixel $p$}{
+    $\text{G}(p) \gets \beta.I(p) + \alpha.I_2$\;
+  }
+  \end{algorithm}
 \vspace{0.5cm}
 
 \begin{description}
 \item[Parâmetros]
+$\alpha$ e $\beta$
 \item[Variações]
+
 \item[Limitações]
 \item[Métodos relacionados]
+\item[Visualização]
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Aguçamento}
@@ -157,15 +147,16 @@ Calcula a soma ponderada de duas imagens \ref{fig:blend}.
 \begin{subfigure}{.45\textwidth}
   \centering
   \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/unsharp-b.png}}
-  \caption{Gerada}
+  \caption{Imagem artificial}
 \end{subfigure}
  \end{center}
  \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
- \label{fig:blend}
+ \label{fig:gen:unsharp}
 \end{figure}
 
 Borra a imagem com um filtro Gaussiano, calcula a diferença entre a imagem original
 e a imagem borrada e adiciona essa diferença na imagem original.
+\ref{fig:gen:unsharp}
 
 \vspace{0.5cm}
 \begin{algorithm}[H]
@@ -173,12 +164,7 @@ e a imagem borrada e adiciona essa diferença na imagem original.
   \label{alg:blend}
   \SetAlgoLined
   \Entrada{Imagem colorida $I$ em formato BGR}
-  % \Entrada{Peso $\alpha$ da primeira imagem na composição final}
-  % \Entrada{Segunda imagem colorida $I$ em formato BGR}
-  % \Entrada{Peso $\beta$ da segunda imagem na composição final}
-
   \Saida{Imagem gerada $G$}
-
   \ParaCada{pixel $p$}{
     $\text{diferença} \gets I(p) - borrada(p)$\;
     $\text{G}(p) \gets I(p) + \text{diferença}$\;
@@ -191,19 +177,36 @@ e a imagem borrada e adiciona essa diferença na imagem original.
 \item[Variações]
 \item[Limitações]
 \item[Métodos relacionados]
+\item[Visualização]
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Composição}
 
+\vspace{0.5cm}
 \begin{figure}
  \begin{center}
   \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/composition.png}}
+  \includegraphics[width=0.5\linewidth]{\detokenize{figuras/geracao/composition.png}}
  \end{center}
  \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
- \label{fig:blend}
+ \label{fig:gen:composition}
 \end{figure}
+\vspace{0.5cm}
 
+Essa geração pretende considerar agrupar informações de várias imagens em uma única.
+Acreditamos que o término brusco de uma imagem para início da outra ao formar a grade de imagens
+tenha efeitos colaterais de inserção de textura que não excedam a vantagem de compor
+uma mesma imagem com várias cores, texturas e formas das imagens originais.
+\ref{fig:gen:composition}
+
+\vspace{0.5cm}
+\begin{algorithm}[H]
+  \caption{Algoritmo de aguçamento}
+  \label{alg:blend}
+  \SetAlgoLined
+  \Entrada{Imagem colorida $I$ em formato BGR}
+  \Saida{Imagem gerada $G$}
+\end{algorithm}
 \vspace{0.5cm}
 
 \begin{description}
@@ -211,6 +214,7 @@ e a imagem borrada e adiciona essa diferença na imagem original.
 \item[Variações]
 \item[Limitações]
 \item[Métodos relacionados]
+\item[Visualização]
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Mistura limiarizada}
@@ -230,15 +234,25 @@ e a imagem borrada e adiciona essa diferença na imagem original.
 \begin{subfigure}{.3\textwidth}
   \centering
   \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/threshold-c.png}}
-  \caption{Gerada}
+  \caption{Imagem artificial}
 \end{subfigure}
  \end{center}
  \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
- \label{fig:blend}
+ \label{fig:gen:threshold}
 \end{figure}
 
-Combinação de ``thresholds'' \ref{fig:threshold}.
+A ideia da combinação de ``thresholds'' \ref{fig:gen:threshold} é compor uma nova
+imagem que tenha como fundo (\textit{background}) uma imagem e como objeto de cena
+(\textit{foreground}) de outra imagem.
 
+\vspace{0.5cm}
+\begin{algorithm}[H]
+  \caption{Algoritmo de aguçamento}
+  \label{alg:blend}
+  \SetAlgoLined
+  \Entrada{Imagem colorida $I$ em formato BGR}
+  \Saida{Imagem gerada $G$}
+\end{algorithm}
 \vspace{0.5cm}
 
 \begin{description}
@@ -246,6 +260,7 @@ Combinação de ``thresholds'' \ref{fig:threshold}.
 \item[Variações]
 \item[Limitações]
 \item[Métodos relacionados]
+\item[Visualização]
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Mistura saliente}
@@ -265,16 +280,25 @@ Combinação de ``thresholds'' \ref{fig:threshold}.
 \begin{subfigure}{.3\textwidth}
   \centering
   \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/saliency-c.png}}
-  \caption{Gerada}
+  \caption{Imagem artificial}
 \end{subfigure}
  \end{center}
  \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
- \label{fig:blend}
+ \label{fig:gen:saliency}
 \end{figure}
 
-Combinação de regiões salientes \ref{fig:saliencia}.
+Combinação de regiões salientes \ref{fig:gen:saliency}, muito similar com o método
+anterior, porém, utilizando um algorítmo mais robuscado que detecta a saliência
+da imagem.
 
-
+\vspace{0.5cm}
+\begin{algorithm}[H]
+  \caption{Algoritmo de aguçamento}
+  \label{alg:blend}
+  \SetAlgoLined
+  \Entrada{Imagem colorida $I$ em formato BGR}
+  \Saida{Imagem gerada $G$}
+\end{algorithm}
 \vspace{0.5cm}
 
 \begin{description}
@@ -282,6 +306,7 @@ Combinação de regiões salientes \ref{fig:saliencia}.
 \item[Variações]
 \item[Limitações]
 \item[Métodos relacionados]
+\item[Visualização]
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{SMOTE visual}
@@ -301,17 +326,37 @@ Combinação de regiões salientes \ref{fig:saliencia}.
 \begin{subfigure}{.3\textwidth}
   \centering
   \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/smote-c.png}}
-  \caption{Gerada}
+  \caption{Imagem artificial}
 \end{subfigure}
  \end{center}
  \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
- \label{fig:blend}
+ \label{fig:gen:smotevisual}
 \end{figure}
 
 Conforme visto na seção x, o SMOTE é um método de rebalanceamento aplicado após
-a extração de características. A ideia dessa geração é imitar esse funcionamento
-mas no nível de pixels.
+a extração de características. A ideia dessa geração, chamada de SMOTE visual,
+é imitar esse funcionamento no nível de pixels. A diferença é que não é feito
+entre as imagens mais próximas, mas sim entre duas imagens escolhidas de forma
+aleatória do conjunto de treinamento da classe minoritária.
+\ref{fig:gen:smotevisual}
 
+\vspace{0.5cm}
+\begin{algorithm}[H]
+  \caption{Algoritmo da geração com SMOTE visual}
+  \label{alg:blur}
+  \SetAlgoLined
+  \Entrada{Imagem colorida $I$ em formato BGR}
+  \Entrada{Imagem colorida $I_2$ em formato BGR}
+
+  \Saida{Imagem gerada $G$}
+
+  \ParaCada{pixel $p$}{
+    $\text{diferença} \gets absoluto(I(p) - I_2(p))$\;
+    $\text{gap} \gets \text{número aleatório entre 0 e 1}$\;
+    $\text{G}(p) \gets I(p) + gap*\text{diferença}$\;
+  }
+
+\end{algorithm}
 \vspace{0.5cm}
 
 \begin{description}
@@ -319,10 +364,59 @@ mas no nível de pixels.
 \item[Variações]
 \item[Limitações]
 \item[Métodos relacionados]
+\item[Visualização]
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Adição de ruído}
 
+\begin{figure}
+ \begin{center}
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/noise-a.png}}
+  \caption{Original}
+\end{subfigure}
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/noise-a.png}}
+  \caption{Imagem artificial}
+\end{subfigure}
+ \end{center}
+ \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
+ \label{fig:gen:noise}
+\end{figure}
+
+O ruído de Poisson ocorre na contagem de fótons de dispositivos ópticos. Segue a distribuição
+de Poisson que expressa a probabilidade de um certo número de eventos que ocorrem em um
+intervalo fixo de tempo e/ou espaço se esses eventos ocorem com uma taxa média conhecida.
+\ref{fig:gen:noise}
+% \begin{equation}
+% P_\mi)(n) = (e^(-\mi)\mi^(n))/(n!), n >= 0
+% \end{equation}
+
+\vspace{0.5cm}
+\begin{algorithm}[H]
+  \caption{Algoritmo da geração com ruído de Poisson}
+  \label{alg:blur}
+  \SetAlgoLined
+  \Entrada{Imagem colorida $I$ em formato BGR}
+
+  \Saida{Imagem gerada $G$}
+
+  \ParaCada{pixel $p$}{
+    $L \gets exp(-I(p))$\;
+    $p \gets 1$\;
+    $k \gets 0$\;
+    {
+    $k \gets k + 1$\;
+    $p \gets p * \text{número aleatório entre 0 e 1}$\;
+
+    } \Enqto {$p > L$}
+
+    $\text{G}(p) \gets k - 1$\;
+  }
+
+\end{algorithm}
 \vspace{0.5cm}
 
 \begin{description}
@@ -330,6 +424,7 @@ mas no nível de pixels.
 \item[Variações]
 \item[Limitações]
 \item[Métodos relacionados]
+\item[Visualização]
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \section{Metodologia}
