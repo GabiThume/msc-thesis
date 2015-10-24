@@ -1,12 +1,17 @@
 \section{Considerações iniciais}
-Neste capítulo os métodos de geração artificial são descritos.
+Neste capítulo os métodos de geração artificial para o rebalanceamento de classes
+de imagens são descritos.
 
-Foram realizados experimentos que são posteriormente descritos no Capítulo \ref{cap:resultados} ao gerar essas imagens
-utilizando borramento, mistura ponderada, unsharp masking, composição, combinação de
-thresholds, combinação com saliência, SMOTE visual e adição de ruído.
-Tendo quantas imagens são necessárias para rebalancear, foram geradas imagens de
-cada método e também uma versão de todos eles.
+Foram realizados experimentos que são posteriormente descritos no Capítulo
+\ref{cap:resultados} utilizando borramento, mistura ponderada, unsharp masking,
+composição, combinação de thresholds, combinação com saliência, visual SMOTE e adição de ruído.
 
+Dada a quantidade de imagens necessárias para rebalancear a base de imagens, foram geradas imagens utilizando
+cada método, além de uma versão combinando todos eles (ou seja, algumas imagens de cada).
+
+Pode-se verificar na imagem x que dado o conjunto de treinamento da classe (ou classes)
+com menor número total de imagens, é realizado o rebalanceamento ao aplicar os
+métodos descritos nesse capítulo e usar as imagens resultantes como treinamento.
 
 %  \begin{figure}[hbpt]
 %  \begin{center}
@@ -58,26 +63,35 @@ vizinhos \cite{Tomasi1998}.
   \Entrada{Sigma do espaço de coordenadas}
 
   \Saida{Imagem gerada $G$}
+
+  \meutodo{Algoritmo de filtro bilateral}
 \end{algorithm}
 \vspace{0.5cm}
 
 \begin{description}
-  \item[Parâmetros] Diâmetro $d$ de pixinhança de pixels
-Sigma do espaço de cor
-Sigma do espaço de coordenadas
+  \item[Parâmetros e suas variações] Conforme descrito no Algoritmo \ref{alg:blur},
+os parâmetros para essa geração são: o diâmetro $d$ de pixinhança de pixels, o
+$\sigma$ do espaço de cor e o $\sigma$ do espaço de coordenadas.
 
-\item[Variações]
-Os parâmetros dependem das propriedades das imagens e dos resultados pretendidos.
+Esses parâmetros dependem das propriedades das imagens e dos resultados pretendidos.
 Dessa forma, o tamanho do filtro é um valor escolhido arbitrariamente para cada
 aplicação em específico \cite{Tomasi1998}. Como o nosso objetivo com a geração das
 imagens não foi especializar no comportamento de uma classe de imagens específica,
 um valor foi escolhido aleatoriamente e a partir dele os parâmetros de entrada
 foram definidos.
 
-
 \item[Limitações]
+
 \item[Métodos relacionados]
+São diversos os métodos de borramento descritos na literatura, como a filtragem
+Gaussiana e a de mediana.
+
 \item[Visualização]
+É interessante notar na Figura x o comportamento da adição de rúido para rebalanceamento
+em classes bem descritas pela propriedade da cor.
+
+\meutodo{colocar aqui alguma figura do espaço}
+
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Mistura ponderada}
@@ -104,7 +118,8 @@ foram definidos.
 \end{figure}
 
 
-Calcula a soma ponderada de duas imagens \ref{fig:gen:blend}.
+Esse método calcula a soma ponderada de duas imagens e seu efeito pode ser visto na Figura \ref{fig:gen:blend}.
+
 
 \vspace{0.5cm}
 \begin{algorithm}[H]
@@ -126,13 +141,22 @@ Calcula a soma ponderada de duas imagens \ref{fig:gen:blend}.
 \vspace{0.5cm}
 
 \begin{description}
-\item[Parâmetros]
-$\alpha$ e $\beta$
-\item[Variações]
+\item[Parâmetros e suas variações]
+Os parâmetros $\alpha$ e $\beta$ são escolhidos de forma aleatória. Um valor entre
+10\% e 80\% é escolhido para $\alpha$ e o $\beta$ é o restante para completar 100\%.
 
 \item[Limitações]
+Não foi testado uma porcentagem fixa para verificar se existe algum ganho em utilizar
+uma ponderação específica.
+
 \item[Métodos relacionados]
+É um método de combinação de imagens primitivo. Algoritmos similares são muito mais
+complexos, como os de threshold e combinação descritos a seguir.
+
 \item[Visualização]
+Pode-se ver como o espaço de características se comporta na Figura \ref{} ao
+rebalancear classes com esse método.
+
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Aguçamento}
@@ -153,15 +177,16 @@ $\alpha$ e $\beta$
  \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
  \label{fig:gen:unsharp}
 \end{figure}
-
 Borra a imagem com um filtro Gaussiano, calcula a diferença entre a imagem original
-e a imagem borrada e adiciona essa diferença na imagem original.
-\ref{fig:gen:unsharp}
+e a imagem borrada e adiciona essa diferença na imagem original (Ver Algoritmo
+\ref{alg:unsharp}). A imagem resultante (Figura \ref{fig:gen:unsharp}) é uma versão
+realçada da imagem original, dado que soma à imagem justamente o que seria removido
+com um filtro de suavização.
 
 \vspace{0.5cm}
 \begin{algorithm}[H]
   \caption{Algoritmo de aguçamento}
-  \label{alg:blend}
+  \label{alg:unsharp}
   \SetAlgoLined
   \Entrada{Imagem colorida $I$ em formato BGR}
   \Saida{Imagem gerada $G$}
@@ -173,8 +198,7 @@ e a imagem borrada e adiciona essa diferença na imagem original.
 \vspace{0.5cm}
 
 \begin{description}
-\item[Parâmetros]
-\item[Variações]
+\item[Parâmetros e suas variações]
 \item[Limitações]
 \item[Métodos relacionados]
 \item[Visualização]
@@ -202,7 +226,7 @@ uma mesma imagem com várias cores, texturas e formas das imagens originais.
 \vspace{0.5cm}
 \begin{algorithm}[H]
   \caption{Algoritmo de aguçamento}
-  \label{alg:blend}
+  \label{alg:composition}
   \SetAlgoLined
   \Entrada{Imagem colorida $I$ em formato BGR}
   \Saida{Imagem gerada $G$}
@@ -210,8 +234,7 @@ uma mesma imagem com várias cores, texturas e formas das imagens originais.
 \vspace{0.5cm}
 
 \begin{description}
-\item[Parâmetros]
-\item[Variações]
+\item[Parâmetros e suas variações]
 \item[Limitações]
 \item[Métodos relacionados]
 \item[Visualização]
@@ -248,7 +271,7 @@ imagem que tenha como fundo (\textit{background}) uma imagem e como objeto de ce
 \vspace{0.5cm}
 \begin{algorithm}[H]
   \caption{Algoritmo de aguçamento}
-  \label{alg:blend}
+  \label{alg:threshold}
   \SetAlgoLined
   \Entrada{Imagem colorida $I$ em formato BGR}
   \Saida{Imagem gerada $G$}
@@ -256,8 +279,7 @@ imagem que tenha como fundo (\textit{background}) uma imagem e como objeto de ce
 \vspace{0.5cm}
 
 \begin{description}
-\item[Parâmetros]
-\item[Variações]
+\item[Parâmetros e suas variações]
 \item[Limitações]
 \item[Métodos relacionados]
 \item[Visualização]
@@ -294,7 +316,7 @@ da imagem.
 \vspace{0.5cm}
 \begin{algorithm}[H]
   \caption{Algoritmo de aguçamento}
-  \label{alg:blend}
+  \label{alg:saliency}
   \SetAlgoLined
   \Entrada{Imagem colorida $I$ em formato BGR}
   \Saida{Imagem gerada $G$}
@@ -302,8 +324,7 @@ da imagem.
 \vspace{0.5cm}
 
 \begin{description}
-\item[Parâmetros]
-\item[Variações]
+\item[Parâmetros e suas variações]
 \item[Limitações]
 \item[Métodos relacionados]
 \item[Visualização]
@@ -343,7 +364,7 @@ aleatória do conjunto de treinamento da classe minoritária.
 \vspace{0.5cm}
 \begin{algorithm}[H]
   \caption{Algoritmo da geração com SMOTE visual}
-  \label{alg:blur}
+  \label{alg:smotevisual}
   \SetAlgoLined
   \Entrada{Imagem colorida $I$ em formato BGR}
   \Entrada{Imagem colorida $I_2$ em formato BGR}
@@ -360,8 +381,6 @@ aleatória do conjunto de treinamento da classe minoritária.
 \vspace{0.5cm}
 
 \begin{description}
-\item[Parâmetros]
-\item[Variações]
 \item[Limitações]
 \item[Métodos relacionados]
 \item[Visualização]
@@ -397,7 +416,7 @@ intervalo fixo de tempo e/ou espaço se esses eventos ocorem com uma taxa média
 \vspace{0.5cm}
 \begin{algorithm}[H]
   \caption{Algoritmo da geração com ruído de Poisson}
-  \label{alg:blur}
+  \label{alg:noise}
   \SetAlgoLined
   \Entrada{Imagem colorida $I$ em formato BGR}
 
@@ -420,8 +439,7 @@ intervalo fixo de tempo e/ou espaço se esses eventos ocorem com uma taxa média
 \vspace{0.5cm}
 
 \begin{description}
-\item[Parâmetros]
-\item[Variações]
+\item[Parâmetros e suas variações]
 \item[Limitações]
 \item[Métodos relacionados]
 \item[Visualização]
