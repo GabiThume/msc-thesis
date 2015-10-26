@@ -1,8 +1,16 @@
 \section{Considerações iniciais}
-Neste capítulo os métodos de geração artificial para o rebalanceamento de classes
-de imagens são descritos.
+O processo de manipular imagens para que elas sejam mais satisfatórias para um
+determinado objetivo depende do domínio em que está aplicado. Ou seja, não
+existe uma teoria geral para melhorar imagens \cite{gonzalez}. Um método que processa melhor
+uma imagem que é melhor definida pelas suas cores, difere do processamento de
+imagens que possuam muitas texturas, as quais um processamento sobre a intensidade
+da imagem pode causar perda da textura. Nessa dissertação usam-se 8 métodos
+de geração artificial que são aplicados nas imagens minoritárias originais a fim
+de adicionar informações já contidas nessas imagens para melhorar a classificação
+de alguma técnica de aprendizado de máquina.
 
-Foram realizados experimentos que são posteriormente descritos no Capítulo
+Neste capítulo os métodos de geração artificial para o rebalanceamento de classes
+de imagens são descritos. Foram realizados experimentos que são posteriormente descritos no Capítulo
 \ref{cap:resultados} utilizando borramento, mistura ponderada, unsharp masking,
 composição, combinação de thresholds, combinação com saliência, visual SMOTE e adição de ruído.
 
@@ -12,6 +20,7 @@ cada método, além de uma versão combinando todos eles (ou seja, algumas image
 Pode-se verificar na imagem x que dado o conjunto de treinamento da classe (ou classes)
 com menor número total de imagens, é realizado o rebalanceamento ao aplicar os
 métodos descritos nesse capítulo e usar as imagens resultantes como treinamento.
+
 
 %  \begin{figure}[hbpt]
 %  \begin{center}
@@ -43,10 +52,11 @@ métodos descritos nesse capítulo e usar as imagens resultantes como treinament
 \end{figure}
 
 Borramento, ou filtro de suavização, é uma operação de pré-processamento
-comumente utilizada com o objetivo de reduzir ruído em uma imagem. Normalmente
-esse tipo de filtro acarreta no borramento das bordas, como pode ser observado na
-Figura \ref{fig:gren:blur}. Esse comportamento não é esperado quando devemos gerar novas imagens,
-pois dessa forma há informação relevante que será removida.
+comumente utilizada com o objetivo de filtrar as baixas frequências de uma imagem,
+removendo ruídos e detalhes não relevantes. Normalmente esse tipo de filtro provoca
+também um certo borramento das bordas, como pode ser observado na Figura \ref{fig:gren:blur}.
+Esse comportamento não é esperado quando devemos gerar novas imagens, pois dessa
+forma há informação relevante que será removida.
 
 Assim, a operação de borramento utilizada é a de filtro bilateral. Ela substitui
 o valor do pixel $x$ com uma média dos pixeis de intensidade similar na imagem e dos pixeis
@@ -134,8 +144,8 @@ Esse método calcula a soma ponderada de duas imagens e seu efeito pode ser vist
   {$\alpha \gets \text{número aletatório entre 10 e 80}$\;}
   {$\beta \gets 100 - \alpha$\;}
 
-  \ParaCada{pixel $p$}{
-    $\text{G}(p) \gets \beta.I(p) + \alpha.I_2$\;
+  \ParaCada{pixel $(x,y)$}{
+    $\text{G}(x,y) \gets \beta.I(x,y) + \alpha.I_2(x,y)$\;
   }
   \end{algorithm}
 \vspace{0.5cm}
@@ -177,8 +187,10 @@ rebalancear classes com esse método.
  \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
  \label{fig:gen:unsharp}
 \end{figure}
-Borra a imagem com um filtro Gaussiano, calcula a diferença entre a imagem original
-e a imagem borrada e adiciona essa diferença na imagem original (Ver Algoritmo
+
+O aguçamento visa enfatizar as transições de intensidade. Um processo bem conhecido
+para atingir tal objetivo é utilizar unsharp mask. Ele borra a imagem, subtrai a
+imagem borrada da original e adiciona essa diferença na imagem original (Ver Algoritmo
 \ref{alg:unsharp}). A imagem resultante (Figura \ref{fig:gen:unsharp}) é uma versão
 realçada da imagem original, dado que soma à imagem justamente o que seria removido
 com um filtro de suavização.
@@ -190,9 +202,10 @@ com um filtro de suavização.
   \SetAlgoLined
   \Entrada{Imagem colorida $I$ em formato BGR}
   \Saida{Imagem gerada $G$}
-  \ParaCada{pixel $p$}{
-    $\text{diferença} \gets I(p) - borrada(p)$\;
-    $\text{G}(p) \gets I(p) + \text{diferença}$\;
+  $borrada \gets \text{filtro de suavização}(I)$
+  \ParaCada{pixel $(x,y)$}{
+    $\text{diferença} \gets I(x,y) - borrada(x,y)$\;
+    $\text{G}(x,y) \gets I(x,y) + \text{diferença}$\;
   }
 \end{algorithm}
 \vspace{0.5cm}
@@ -200,7 +213,10 @@ com um filtro de suavização.
 \begin{description}
 \item[Parâmetros e suas variações]
 \item[Limitações]
+É possível que existam pixels com valor negativo no resultado final. Isso pode
+causar o aparecimento de uma áurea em volta das bordas \cite{gonzalez}.
 \item[Métodos relacionados]
+Outros algortimos de aguçamento conhecidos são: utilizar primeira derivada (grandiente) ou a segunda derivada da imagem (Laplaciano).
 \item[Visualização]
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
