@@ -1,71 +1,3 @@
-% \documentclass[12pt,a4paper,twoside]{icmc}
-% %\includeonly{sdl-pr} %para compilar apenas o cap1
-%
-% \usepackage[top=30mm,bottom=35mm,left=25mm,right=25mm,twoside]{geometry}
-% \usepackage{syntax}
-% \usepackage{ae}
-% \usepackage{amssymb}
-% \usepackage{setspace}
-% \usepackage{ifthen}
-% \usepackage{longtable}
-% \usepackage{tabularx}
-% \usepackage[dvips]{graphicx}
-% % \usepackage{subfigure}
-% \usepackage{natbib} % reimplementation of the \cite command
-% % \usepackage{cite} % should not be used with natbib
-% \usepackage{verbatim}
-% \usepackage{enumerate}
-% \usepackage{caption}
-% \usepackage{colortbl}
-% \usepackage{color}
-% \usepackage{textfit}
-% \usepackage{bibentry}
-% \usepackage{hlundef}
-% \usepackage{slashbox}
-% \usepackage{multirow}
-% \usepackage[nottoc,notlof,notlot]{tocbibind}
-% \usepackage{url}                  %% usa pacote "url"
-% \usepackage{fancychap}
-% \usepackage[hidelinks]{hyperref}
-% \usepackage{amsmath}
-% \usepackage{pdfpages}
-% %\usepackage{titlesec}
-% \let\oldurl=\url
-% \def\url{\protect\oldurl}
-% \usepackage[brazil]{babel}
-% \usepackage[utf8]{inputenc}
-% \usepackage{hyphenat}
-% \usepackage{subcaption}
-% \usepackage{xargs}                      % Use more than one optional parameter in a new commands
-% \usepackage[pdftex,dvipsnames]{xcolor}  % Coloured text etc.
-% \usepackage{indentfirst}
-% \usepackage[colorinlistoftodos,prependcaption, textwidth=25mm, textsize=footnotesize]{todonotes}
-% \newcommandx{\meutodo}[2][1=]{\todo[inline, linecolor=blue,backgroundcolor=red!25,bordercolor=red,#1]{\color{red}{\bf{#2}}}}
-%
-% \definecolor{cinza}{rgb}{0.5,0.5,0.5}
-% \newcommand{\y}{\color{black}\rule{20pt}{7pt}}
-% \newcommand{\x}{\hspace*{20pt}}
-% \renewcommand{\r}{\color{cinza}\rule{20pt}{7pt}}
-% % \definecolor{G6}{rgb}{0.7,0.7,0.7}
-% % \newcommand{\fc}{\cellcolor{G6}}
-%
-% \let\cite=\citep
-% \clubpenalty=10000 \widowpenalty=10000 \exhyphenpenalty=10000
-% \hyphenpenalty=1000
-%
-% \nobibliography*
-% \newcommand{\apud}[2]{(\@apud#1,#2\@endapud)}
-% \def\@apud#1,#2\@endapud{%
-%    \citet{#1} \textbf{apud} \citet{#2}}%
-% %}
-%
-% %\pdfcompresslevel=9 \pdfoutput=1  %% diminui tamanho do PDF
-% %\urlstyle{tt}                     %% fonte das URLs será "typewriter"
-% %\def\UrlNoBreaks{\do\(\do\[\do\{\do\<\do\:} %% define quebras de linha
-%
-% \newtheorem{definicao}{Definição}[chapter]
-% \newtheorem{teorema}{Teorema}[chapter]
-%
 % \hyphenation{pré-pro-ces-sa-men-to over-sam-pling}
 % \captionsetup{justification=centerlast}
 %
@@ -95,16 +27,6 @@
 \usepackage[colorinlistoftodos,prependcaption, textwidth=25mm, textsize=footnotesize]{todonotes}
 \newcommandx{\meutodo}[2][1=]{\todo[inline, linecolor=blue,backgroundcolor=red!25,bordercolor=red,#1]{\color{red}{\bf{#2}}}}
 
-% \definecolor{cinza}{rgb}{0.5,0.5,0.5}
-% \newcommand{\y}{\color{black}\rule{20pt}{7pt}}
-% \newcommand{\x}{\hspace*{20pt}}
-% \renewcommand{\r}{\color{cinza}\rule{20pt}{7pt}}
-% \definecolor{G6}{rgb}{0.7,0.7,0.7}
-% \newcommand{\fc}{\cellcolor{G6}}
-
-% \hyphenation{pré-pro-ces-sa-men-to over-sam-pling}
-% \captionsetup{justification=centerlast}
-
 % ---
 % Pacotes Opcionais
 % ---
@@ -121,6 +43,7 @@
 \usepackage{algpseudocode}
 \SetKwFor{Para}{para}{fa\c{c}a}{fim}
 \SetKwFor{ParaCada}{para cada}{fa\c{c}a}{fim}
+\SetKwRepeat{DoWhile}{faça}{enquanto}
 
 % ---
 % Informações de dados para CAPA e FOLHA DE ROSTO
@@ -235,23 +158,23 @@ The canonical steps of digital image processing can be summarized as acquisition
 \textual
 
 \chapter{Introdução}
-\label{chapter:introducao}
+\label{cap:introducao}
 \input{tex/introducao}
 
 \chapter{Fundamentos}
-\label{chapter:fundamentos}
+\label{cap:fundamentos}
 \input{tex/fundamentos}
 
 \chapter{Geração Artificial de Imagens}
-\label{chapter:metodo}
+\label{cap:metodo}
 \input{tex/metodo}
 
 \chapter{Resultados}
-\label{chapter:resultados}
+\label{cap:resultados}
 \input{tex/resultados}
 
 \chapter{Conclusões}
-\label{chapter:conclusões}
+\label{cap:conclusões}
 \input{tex/conclusoes}
 
 % ---

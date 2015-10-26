@@ -1,66 +1,77 @@
 \section{Considerações iniciais}
-O processo de manipular imagens para que elas sejam mais satisfatórias para um
-determinado objetivo depende do domínio em que está aplicado. Ou seja, não
-existe uma teoria geral para melhorar imagens \cite{gonzalez}. Um método que processa melhor
-uma imagem que é melhor definida pelas suas cores, difere do processamento de
-imagens que possuam muitas texturas, as quais um processamento sobre a intensidade
-da imagem pode causar perda da textura. Nessa dissertação usam-se 8 métodos
-de geração artificial que são aplicados nas imagens minoritárias originais a fim
-de adicionar informações já contidas nessas imagens para melhorar a classificação
-de alguma técnica de aprendizado de máquina.
 
-Neste capítulo os métodos de geração artificial para o rebalanceamento de classes
-de imagens são descritos. Foram realizados experimentos que são posteriormente descritos no Capítulo
-\ref{cap:resultados} utilizando borramento, mistura ponderada, unsharp masking,
+O processo de manipular imagens para que elas se tornem mais satisfatórias para um
+determinado objetivo depende do domínio em que está aplicado. Ou seja, não
+existe uma teoria geral para melhorar imagens \cite{Gonzalez2007}. Um método que processa melhor
+uma imagem que é bem definida pelas suas cores, difere do processamento de
+imagens que possuam muitas texturas, as quais um processamento sobre a intensidade
+da imagem pode causar perda da textura. Nesta pesquisa 8 métodos de geração artificial
+são aplicados nas imagens minoritárias originais a fim de realçar informações
+laentes para melhorar a classificação de alguma técnica de aprendizado de máquina.
+
+Neste capítulo esses métodos de geração artificial para o rebalanceamento de classes
+de imagens são descritos. Os experimentos posteriormente descritos no Capítulo
+\ref{cap:resultados} foram realizados utilizando borramento, mistura ponderada, unsharp masking,
 composição, combinação de thresholds, combinação com saliência, visual SMOTE e adição de ruído.
 
-Dada a quantidade de imagens necessárias para rebalancear a base de imagens, foram geradas imagens utilizando
-cada método, além de uma versão combinando todos eles (ou seja, algumas imagens de cada).
+\begin{figure}[htbp]
+\begin{center}
+  \includegraphics[width=1\linewidth]{\detokenize {figuras/rebalance.pdf}}
+\end{center}
+\caption[]{\textit{Fonte: Elaborado pela autora.}}
+\label{fig:escolha}
+\end{figure}
 
-Pode-se verificar na imagem x que dado o conjunto de treinamento da classe (ou classes)
-com menor número total de imagens, é realizado o rebalanceamento ao aplicar os
-métodos descritos nesse capítulo e usar as imagens resultantes como treinamento.
+Dada a quantidade de imagens necessárias para rebalancear a base de imagens,
+foram geradas imagens utilizando cada método, além de uma versão combinando todos
+eles (ou seja, algumas imagens de cada). Pode-se verificar na Figura~\ref{fig:escolha} que dado
+o conjunto de treinamento da classe (ou classes) com menor número total de imagens,
+é realizado o rebalanceamento ao aplicar os métodos descritos nesse capítulo e
+posteriormente essas imagens resultantes são utilizadas como treinamento.
 
+
+% Não foi testado uma porcentagem fixa para verificar se existe algum ganho em utilizar
+% uma ponderação específica.
 
 %  \begin{figure}[hbpt]
 %  \begin{center}
 %    \includegraphics[width=1\linewidth]{\detokenize {figuras/geral.pdf}}
 %  \end{center}
 %   \caption[]{\textit{Fonte: Elaborado pela autora.}}
-%  \label{fig:geral}
+%  \label{fig:escolha}
 % \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Borramento}
-% \begin{espacosimples}
 
-\begin{figure}
+Borramento, ou filtro de suavização, é uma operação de pré-processamento
+comumente utilizada com o objetivo de filtrar as baixas frequências de uma imagem,
+removendo ruídos e detalhes não relevantes. Normalmente esse tipo de filtro provoca
+também um certo borramento das bordas, como pode ser observado na Figura~\ref{fig:blur}.
+Esse comportamento não é esperado quando devemos gerar novas imagens, pois dessa
+forma há informação relevante que será removida.
+
+\begin{figure}[htbp]
  \begin{center}
-\begin{subfigure}{.45\textwidth}
+\begin{subfigure}{.4\textwidth}
   \centering
   \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/blur-a.png}}
   \caption{Original}
 \end{subfigure}
-\begin{subfigure}{.45\textwidth}
+\hspace{0.1\textwidth}
+\begin{subfigure}{.4\textwidth}
   \centering
   \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/blur-b.png}}
   \caption{Imagem artificial}
 \end{subfigure}
  \end{center}
- \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
+ \caption[Geração artificial utilizando borramento com filtro bilateral.]{Geração artificial utilizando borramento com filtro bilateral. \textit{Fonte:~Elaborado pela autora.}}
  \label{fig:gen:blur}
 \end{figure}
 
-Borramento, ou filtro de suavização, é uma operação de pré-processamento
-comumente utilizada com o objetivo de filtrar as baixas frequências de uma imagem,
-removendo ruídos e detalhes não relevantes. Normalmente esse tipo de filtro provoca
-também um certo borramento das bordas, como pode ser observado na Figura \ref{fig:gren:blur}.
-Esse comportamento não é esperado quando devemos gerar novas imagens, pois dessa
-forma há informação relevante que será removida.
-
 Assim, a operação de borramento utilizada é a de filtro bilateral. Ela substitui
 o valor do pixel $x$ com uma média dos pixeis de intensidade similar na imagem e dos pixeis
-vizinhos \cite{Tomasi1998}.
+vizinhos \cite{Tomasi1998}. Ou seja, é uma média ponderada das intensidades.
 
 \vspace{0.5cm}
 \begin{algorithm}[H]
@@ -79,11 +90,10 @@ vizinhos \cite{Tomasi1998}.
 \vspace{0.5cm}
 
 \begin{description}
-  \item[Parâmetros e suas variações] Conforme descrito no Algoritmo \ref{alg:blur},
+  \item[Parâmetros e suas variações] Conforme descrito no Algoritmo~\ref{alg:blur},
 os parâmetros para essa geração são: o diâmetro $d$ de pixinhança de pixels, o
-$\sigma$ do espaço de cor e o $\sigma$ do espaço de coordenadas.
-
-Esses parâmetros dependem das propriedades das imagens e dos resultados pretendidos.
+$\sigma$ do espaço de cor e o $\sigma$ do espaço de coordenadas. Esses parâmetros
+dependem das propriedades das imagens e dos resultados pretendidos.
 Dessa forma, o tamanho do filtro é um valor escolhido arbitrariamente para cada
 aplicação em específico \cite{Tomasi1998}. Como o nosso objetivo com a geração das
 imagens não foi especializar no comportamento de uma classe de imagens específica,
@@ -91,21 +101,28 @@ um valor foi escolhido aleatoriamente e a partir dele os parâmetros de entrada
 foram definidos.
 
 \item[Limitações]
+Esse filtro tende a remover texturas e a criar novos contornos. Dependendo dos
+valores, pode gerar uma imagem ``cartoonizada''.
 
 \item[Métodos relacionados]
 São diversos os métodos de borramento descritos na literatura, como a filtragem
-Gaussiana e a de mediana.
+Gaussiana, a de mediana e a de médias.
 
 \item[Visualização]
-É interessante notar na Figura x o comportamento da adição de rúido para rebalanceamento
-em classes bem descritas pela propriedade da cor.
+É interessante notar na Figura x o comportamento da adição de imagens borradas
+para o rebalanceamento de classes bem descritas pela propriedade da cor.
 
 \meutodo{colocar aqui alguma figura do espaço}
 
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Mistura ponderada}
-\begin{figure}
+
+Esse método calcula a soma ponderada de duas imagens, de acordo com o
+Algoritmo~\ref{alg:blend}. O efeito dessa mistura pode ser visto na
+Figura~\ref{fig:gen:blend}.
+
+\begin{figure}[htbp]
  \begin{center}
 \begin{subfigure}{.3\textwidth}
   \centering
@@ -123,13 +140,9 @@ em classes bem descritas pela propriedade da cor.
   \caption{Imagem artificial}
 \end{subfigure}
  \end{center}
- \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
+ \caption[Geração artificial utilizando uma mistura ponderada de duas imagens.]{Geração artificial utilizando uma mistura ponderada de duas imagens. \textit{Fonte:~Elaborado pela autora.}}
  \label{fig:gen:blend}
 \end{figure}
-
-
-Esse método calcula a soma ponderada de duas imagens e seu efeito pode ser visto na Figura \ref{fig:gen:blend}.
-
 
 \vspace{0.5cm}
 \begin{algorithm}[H]
@@ -156,44 +169,44 @@ Os parâmetros $\alpha$ e $\beta$ são escolhidos de forma aleatória. Um valor 
 10\% e 80\% é escolhido para $\alpha$ e o $\beta$ é o restante para completar 100\%.
 
 \item[Limitações]
-Não foi testado uma porcentagem fixa para verificar se existe algum ganho em utilizar
-uma ponderação específica.
+Assim como todas as gerações artificiais que envolvem uma mistura de imagens,
+efeitos são adicionados às imagens originais. Dependendo da combinação dos métodos
+de descrição, quantização e classificação, pode piorar a acurácia da classificação.
 
 \item[Métodos relacionados]
 É um método de combinação de imagens primitivo. Algoritmos similares são muito mais
 complexos, como os de threshold e combinação descritos a seguir.
 
 \item[Visualização]
-Pode-se ver como o espaço de características se comporta na Figura \ref{} ao
-rebalancear classes com esse método.
 
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Aguçamento}
 
-\begin{figure}
+O processamento de aguçamento procura enfatizar as transições de intensidade.
+Um processo bem conhecido para atingir tal objetivo é o \textit{unsharp mask}.
+Ele borra a imagem, subtrai a imagem borrada da original e adiciona essa diferença
+na imagem original (Ver Algoritmo \ref{alg:unsharp}). A imagem resultante
+(Figura \ref{fig:gen:unsharp}) é uma versão realçada da imagem original,
+dado que soma à imagem justamente o que é removido com um filtro de suavização.
+
+\begin{figure}[htbp]
  \begin{center}
-\begin{subfigure}{.45\textwidth}
+\begin{subfigure}{.4\textwidth}
   \centering
   \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/unsharp-a.png}}
   \caption{Original}
 \end{subfigure}
-\begin{subfigure}{.45\textwidth}
+\hspace{0.1\textwidth}
+\begin{subfigure}{.4\textwidth}
   \centering
   \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/unsharp-b.png}}
   \caption{Imagem artificial}
 \end{subfigure}
  \end{center}
- \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
+ \caption[Geração artificial utilizando unsharp masking.]{Geração artificial utilizando unsharp masking. \textit{Fonte:~Elaborado pela autora.}}
  \label{fig:gen:unsharp}
 \end{figure}
-
-O aguçamento visa enfatizar as transições de intensidade. Um processo bem conhecido
-para atingir tal objetivo é utilizar unsharp mask. Ele borra a imagem, subtrai a
-imagem borrada da original e adiciona essa diferença na imagem original (Ver Algoritmo
-\ref{alg:unsharp}). A imagem resultante (Figura \ref{fig:gen:unsharp}) é uma versão
-realçada da imagem original, dado que soma à imagem justamente o que seria removido
-com um filtro de suavização.
 
 \vspace{0.5cm}
 \begin{algorithm}[H]
@@ -205,60 +218,100 @@ com um filtro de suavização.
   $borrada \gets \text{filtro de suavização}(I)$
   \ParaCada{pixel $(x,y)$}{
     $\text{diferença} \gets I(x,y) - borrada(x,y)$\;
-    $\text{G}(x,y) \gets I(x,y) + \text{diferença}$\;
+    $\text{G}(x,y) \gets I(x,y) + k*\text{diferença}$\;
   }
 \end{algorithm}
 \vspace{0.5cm}
 
 \begin{description}
 \item[Parâmetros e suas variações]
+Pode-se variar o parâmetro $k$ de forma a ponderar essa diferença. Para a geração
+das imagens da classe minoritária, foi utilizado $k = 1$.
+
 \item[Limitações]
 É possível que existam pixels com valor negativo no resultado final. Isso pode
-causar o aparecimento de uma áurea em volta das bordas \cite{gonzalez}.
+causar o aparecimento de uma áurea em volta das bordas \cite{Gonzalez2007}.
+
 \item[Métodos relacionados]
 Outros algortimos de aguçamento conhecidos são: utilizar primeira derivada (grandiente) ou a segunda derivada da imagem (Laplaciano).
+
 \item[Visualização]
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Composição}
 
-\vspace{0.5cm}
-\begin{figure}
+Essa geração pretende compor informações de diversas imagens em uma única imagem
+(Figura~\ref{fig:gen:composition}).
+
+\begin{figure}[htbp]
  \begin{center}
   \centering
-  \includegraphics[width=0.5\linewidth]{\detokenize{figuras/geracao/composition.png}}
+  \includegraphics[width=0.4\linewidth]{\detokenize{figuras/geracao/composition.png}}
  \end{center}
- \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
+ \caption[Geração artificial utilizando uma composição de imagens.]{Geração artificial utilizando uma composição de imagens. \textit{Fonte:~Elaborado pela autora.}}
  \label{fig:gen:composition}
 \end{figure}
-\vspace{0.5cm}
-
-Essa geração pretende considerar agrupar informações de várias imagens em uma única.
-Acreditamos que o término brusco de uma imagem para início da outra ao formar a grade de imagens
-tenha efeitos colaterais de inserção de textura que não excedam a vantagem de compor
-uma mesma imagem com várias cores, texturas e formas das imagens originais.
-\ref{fig:gen:composition}
 
 \vspace{0.5cm}
 \begin{algorithm}[H]
-  \caption{Algoritmo de aguçamento}
+  \caption{Algoritmo de composição}
   \label{alg:composition}
   \SetAlgoLined
-  \Entrada{Imagem colorida $I$ em formato BGR}
   \Saida{Imagem gerada $G$}
+  \Enqto{total < \text{número de quadrados $q$}}{
+    $I \gets \text{imagem aleatória do conjunto de treinamento}$\;
+    $\text{operação} \gets 1 + (rand() \% 3 )$\;
+    \Selec{\text{operação}} {
+      \uCaso{1} {
+        $I \gets borramento(I)$\;
+      }
+      \uCaso{2} {
+        $I \gets \text{mistura ponderada}(I)$\;
+      }
+      \uCaso{3} {
+        $I \gets \text{aguçamento}(I)$\;
+      }
+      \uCaso{4} {
+        $I \gets \text{visual SMOTE}(I)$\;
+      }
+    }
+
+    $x \gets \text{posição aleatória em x de I}$\;
+    $y \gets \text{posição aleatória em y de I}$\;
+
+    $qx \gets \text{posição atual para o quadrado em x de G}$\;
+    $qy \gets \text{posição atual para o quadrado em y de G}$\;
+
+    $G(qx, qy) \gets I(x,y)$\;
+
+    $total++$\;
+  }
+
+
 \end{algorithm}
 \vspace{0.5cm}
 
 \begin{description}
 \item[Parâmetros e suas variações]
-\item[Limitações]
+O parâmetro $q$ controla quantos quadrados serão criados na nova imagem. Nesta
+pesquisa foram realizados testes com 4 e 16.
+
+\item[Limitações] O término brusco de uma imagem para início da outra ao formar a grade de imagens
+tenha efeitos colaterais de inserção de textura que não excedam a vantagem de compor
+uma mesma imagem com várias cores, texturas e formas das imagens originais.
 \item[Métodos relacionados]
 \item[Visualização]
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Mistura limiarizada}
 
-\begin{figure}
+A combinação de \textit{thresholds} é uma composição do fundo (\textit{background}) de uma imagem e do objeto de cena
+(\textit{foreground}) de outra imagem. A Figura~\ref{fig:gen:threshold} mostra
+a mistura dos \textit{thresholds} de duas imagens originais para compor uma nova
+imagem. O Algoritmo~\ref{alg:threshold} descreve as operações necessarias para
+realizar tal processamento.
+
+\begin{figure}[htbp]
  \begin{center}
 \begin{subfigure}{.3\textwidth}
   \centering
@@ -276,21 +329,27 @@ uma mesma imagem com várias cores, texturas e formas das imagens originais.
   \caption{Imagem artificial}
 \end{subfigure}
  \end{center}
- \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
+ \caption[Geração artificial utilizando uma mistura limiarizada de duas imagens.]{Geração artificial utilizando uma mistura limiarizada de duas imagens. \textit{Fonte:~Elaborado pela autora.}}
  \label{fig:gen:threshold}
 \end{figure}
 
-A ideia da combinação de ``thresholds'' \ref{fig:gen:threshold} é compor uma nova
-imagem que tenha como fundo (\textit{background}) uma imagem e como objeto de cena
-(\textit{foreground}) de outra imagem.
-
 \vspace{0.5cm}
 \begin{algorithm}[H]
-  \caption{Algoritmo de aguçamento}
+  \caption{Algoritmo de mistura limiarizada}
   \label{alg:threshold}
   \SetAlgoLined
   \Entrada{Imagem colorida $I$ em formato BGR}
+  \Entrada{Imagem colorida $I_2$ em formato BGR}
   \Saida{Imagem gerada $G$}
+
+  $I_{cinza} \gets \text{escala de cinza}(I)$\;
+  $I_{threshold} \gets OTSU(I_{cinza})$\;
+  $I_{morfologica} \gets \text{abertura e dilatação} (I_{threshold})$\;
+  $I_{foreground} \gets \text{aplica máscara}(I_{morfologica}, I) $\;
+  $I_{morfologica} \gets \text{oposto}(I_{morfologica})$\;
+  $I_{background} \gets \text{aplica máscara}(I_{morfologica}, I_2) $\;
+  $G \gets I_{background} + I_{foreground}$\;
+
 \end{algorithm}
 \vspace{0.5cm}
 
@@ -303,7 +362,13 @@ imagem que tenha como fundo (\textit{background}) uma imagem e como objeto de ce
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Mistura saliente}
 
-\begin{figure}
+A combinação de regiões salientes é muito similar com o método
+anterior de combinação de \textit{thresholds}, porém, utiliza um algorítmo mais
+robuscado que detecta a saliência da imagem a partir do método SLIC. A Figura~\ref{fig:gen:saliency}
+mostra a combinação da região salienta da imagem original à esquerda com a imagem
+central, resultando na imagem combinada à direita.
+
+\begin{figure}[htbp]
  \begin{center}
 \begin{subfigure}{.3\textwidth}
   \centering
@@ -321,34 +386,52 @@ imagem que tenha como fundo (\textit{background}) uma imagem e como objeto de ce
   \caption{Imagem artificial}
 \end{subfigure}
  \end{center}
- \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
+ \caption[Geração artificial utilizando uma mistura de duas imagens a partir da saliência da primeira imagem.]{Geração artificial utilizando uma mistura de duas imagens a partir da saliência da primeira imagem. \textit{Fonte:~Elaborado pela autora.}}
  \label{fig:gen:saliency}
 \end{figure}
 
-Combinação de regiões salientes \ref{fig:gen:saliency}, muito similar com o método
-anterior, porém, utilizando um algorítmo mais robuscado que detecta a saliência
-da imagem.
-
 \vspace{0.5cm}
 \begin{algorithm}[H]
-  \caption{Algoritmo de aguçamento}
+  \caption{Algoritmo de mistura saliente}
   \label{alg:saliency}
   \SetAlgoLined
   \Entrada{Imagem colorida $I$ em formato BGR}
+  \Entrada{Imagem colorida $I_2$ em formato BGR}
   \Saida{Imagem gerada $G$}
+
+  $I_{\text{rotulada por segmento}} \gets SLIC(I)$\;
+  $I_{\text{mapa de saliência}} \gets \text{rotulação por conectividade}(I_{\text{rotulada por segmento}})$\;
+  $I_{threshold} \gets OTSU(I_{\text{mapa de saliência}})$\;
+  $I_{morfologica} \gets \text{abertura e dilatação} (I_{threshold})$\;
+  $I_{foreground} \gets \text{aplica máscara}(I_{morfologica}, I) $\;
+  $I_{morfologica} \gets \text{oposto}(I_{morfologica})$\;
+  $I_{background} \gets \text{aplica máscara}(I_{morfologica}, I_2) $\;
+  $G \gets I_{background} + I_{foreground}$\;
 \end{algorithm}
 \vspace{0.5cm}
 
 \begin{description}
-\item[Parâmetros e suas variações]
-\item[Limitações]
+\item[Parâmetros e suas variações] No âmbito desta pesquisa, os parâmetros estão
+fixos, mas é possível modificar o tamanho dos elementos estruturantes que fazem
+operações de abertura e dilação para remover pequenas regiões.
+
+\item[Limitações] Não é garantido que o algoritmo de saliência consiga extrair
+a melhor região, ou mesmo que sempre haja uma região.
+
 \item[Métodos relacionados]
 \item[Visualização]
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{SMOTE visual}
 
-\begin{figure}
+Conforme visto na seção x, o SMOTE é um método de rebalanceamento aplicado após
+a extração de características. A ideia dessa geração, chamada de SMOTE visual,
+é imitar esse funcionamento no nível de pixels. A diferença é que não é feito
+entre as imagens mais próximas, mas sim entre duas imagens escolhidas de forma
+aleatória do conjunto de treinamento da classe minoritária.
+\ref{fig:gen:smotevisual}
+
+\begin{figure}[htbp]
  \begin{center}
 \begin{subfigure}{.3\textwidth}
   \centering
@@ -357,7 +440,7 @@ da imagem.
 \end{subfigure}
 \begin{subfigure}{.3\textwidth}
   \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/smote-b.png}}
+  \includegraphics[width=0.65\linewidth]{\detokenize{figuras/geracao/smote-b.png}}
   \caption{Original}
 \end{subfigure}
 \begin{subfigure}{.3\textwidth}
@@ -366,16 +449,9 @@ da imagem.
   \caption{Imagem artificial}
 \end{subfigure}
  \end{center}
- \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
+ \caption[Geração artificial utilizando o método SMOTE no espaço visual.]{Geração artificial utilizando o método SMOTE no espaço visual. \textit{Fonte:~Elaborado pela autora.}}
  \label{fig:gen:smotevisual}
 \end{figure}
-
-Conforme visto na seção x, o SMOTE é um método de rebalanceamento aplicado após
-a extração de características. A ideia dessa geração, chamada de SMOTE visual,
-é imitar esse funcionamento no nível de pixels. A diferença é que não é feito
-entre as imagens mais próximas, mas sim entre duas imagens escolhidas de forma
-aleatória do conjunto de treinamento da classe minoritária.
-\ref{fig:gen:smotevisual}
 
 \vspace{0.5cm}
 \begin{algorithm}[H]
@@ -387,10 +463,22 @@ aleatória do conjunto de treinamento da classe minoritária.
 
   \Saida{Imagem gerada $G$}
 
-  \ParaCada{pixel $p$}{
-    $\text{diferença} \gets absoluto(I(p) - I_2(p))$\;
+  \ParaCada{pixel $(x,y)$}{
+    $\text{diferença} \gets I(x,y) - I_2(x,y)$\;
     $\text{gap} \gets \text{número aleatório entre 0 e 1}$\;
-    $\text{G}(p) \gets I(p) + gap*\text{diferença}$\;
+    $\text{G}(x,y) \gets I(x,y) + gap*\text{diferença}$\;
+  }
+
+  $\text{mínimo} \gets \text{menor valor de G}$\;
+
+  $\text{máximo} \gets \text{maior valor de G}$\;
+
+  \ParaCada{pixel $(x,y)$}{
+    $\text{G}(x,y) \gets G(x,y) - \text{mínimo}$\;
+  }
+
+  \ParaCada{pixel $(x,y)$}{
+    $\text{G}(x,y) \gets G(x,y) * (255/(\text{máximo} - \text{mínimo}))$\;
   }
 
 \end{algorithm}
@@ -398,33 +486,36 @@ aleatória do conjunto de treinamento da classe minoritária.
 
 \begin{description}
 \item[Limitações]
+
 \item[Métodos relacionados]
 \item[Visualização]
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Adição de ruído}
 
-\begin{figure}
- \begin{center}
-\begin{subfigure}{.45\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/noise-a.png}}
-  \caption{Original}
-\end{subfigure}
-\begin{subfigure}{.45\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/noise-a.png}}
-  \caption{Imagem artificial}
-\end{subfigure}
- \end{center}
- \caption[...]{\textit{Fonte:~Elaborado pela autora.}}
- \label{fig:gen:noise}
-\end{figure}
-
 O ruído de Poisson ocorre na contagem de fótons de dispositivos ópticos. Segue a distribuição
 de Poisson que expressa a probabilidade de um certo número de eventos que ocorrem em um
 intervalo fixo de tempo e/ou espaço se esses eventos ocorem com uma taxa média conhecida.
 \ref{fig:gen:noise}
+
+\begin{figure}[htbp]
+ \begin{center}
+\begin{subfigure}{.4\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/noise-a.png}}
+  \caption{Original}
+\end{subfigure}
+\hspace{0.1\textwidth}
+\begin{subfigure}{.4\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/noise-b.png}}
+  \caption{Imagem artificial}
+\end{subfigure}
+ \end{center}
+ \caption[Geração artificial utilizando adição de ruído de Poisson.]{Geração artificial utilizando adição de ruído de Poisson. \textit{Fonte:~Elaborado pela autora.}}
+ \label{fig:gen:noise}
+\end{figure}
+
 % \begin{equation}
 % P_\mi)(n) = (e^(-\mi)\mi^(n))/(n!), n >= 0
 % \end{equation}
@@ -438,17 +529,16 @@ intervalo fixo de tempo e/ou espaço se esses eventos ocorem com uma taxa média
 
   \Saida{Imagem gerada $G$}
 
-  \ParaCada{pixel $p$}{
-    $L \gets exp(-I(p))$\;
+  \ParaCada{pixel $(x,y)$}{
+    $L \gets exp(-I(x,y))$\;
     $p \gets 1$\;
     $k \gets 0$\;
-    {
-    $k \gets k + 1$\;
-    $p \gets p * \text{número aleatório entre 0 e 1}$\;
+    \DoWhile{$p > L$}{
+      $k \gets k + 1$\;
+      $p \gets p * \text{número aleatório entre 0 e 1}$\;
+    }
 
-    } \Enqto {$p > L$}
-
-    $\text{G}(p) \gets k - 1$\;
+    $\text{G}(x,y) \gets k - 1$\;
   }
 
 \end{algorithm}
