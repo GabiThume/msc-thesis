@@ -544,7 +544,7 @@ O desbalanceamento de classes é identificado quando determinadas classes possue
 
 \meutodo{cuidado ao dizer que não é um problema}
 
-O desempenho de algorimos de Aprendizado de Máquina é prejudicado quando tratam de dados desbalanceados. Esses algoritmos tendem a favorecer a classificação de um novo objeto à classe majoritária. Considera-se, então, que o problema do desbalanceamento de classes é um obstáculo para a classificação satisfatória. Porém, como apontado por \citeonline{Batista2004}, o desbalanceamento não é o único responsável por reduzir o desempenho de algoritmos de aprendizagem. Eles sugerem que é possível haver uma ótima classificação mesmo contendo alto desbalanceamento na base de dados. Assim, a motivação do estudo de vários algoritmos para rebalanceamento não é apenas balancear os dados de treinamento, mas também remover elementos ruidosos para se obter uma melhor diferenciação entre as classes.
+O desempenho de algoritmos de Aprendizado de Máquina é prejudicado quando tratam de dados desbalanceados. Esses algoritmos tendem a favorecer a classificação de um novo objeto à classe majoritária. Considera-se, então, que o problema do desbalanceamento de classes é um obstáculo para a classificação satisfatória. Porém, como apontado por \citeonline{Batista2004}, o desbalanceamento não é o único responsável por reduzir o desempenho de algoritmos de aprendizagem. Eles sugerem que é possível haver uma ótima classificação mesmo contendo alto desbalanceamento na base de dados. Assim, a motivação do estudo de vários algoritmos para rebalanceamento não é apenas balancear os dados de treinamento, mas também remover elementos ruidosos para se obter uma melhor diferenciação entre as classes.
 
 Os autores concluíram que o desbalanceamento por si só não é um problema, mas quando em conjunto com a sobreposição de classes pode diminuir significativamente a acurácia da classificação da classe minoritária. Os resultados também mostram que a poda de árvores de decisão raramente levou a alguma melhora na classificação. Em geral, os melhores resultados foram obtidos por algoritmos de \textit{over-sampling}, os quais normalmente também levam a um maior número de regras de indução do que os dados originais.
 
@@ -563,6 +563,24 @@ O SMOTE (\textit{Synthetic Minority Over-sampling Technique}) é uma técnica de
 Dessa forma, o SMOTE provê mais elementos para o classificador aprender, ao contrário da replicação de dados. Como trabalhos futuros, \citeonline{Chawla2002} apontam que diferentes estratégias para criar esses exemplos sintéticos podem melhorar a performance da classificação. Inclusive salientando exemplos que foram errôneamente classificados.
 
 Uma variação desse algoritmo, denominada Borderline-SMOTE1 \cite{Han2005}, considera que elementos fora da linha de borda de cada classe pouco contribuem para a classificação. Por isso, propôe a geração de elementos sintéticos utilizando apenas elementos de borda. Considera que se os vizinhos mais próximos são da classe majoritária, o exemplo é ruído, e se há mais vizinhos da classe majoritária do que da minoritária, considera esse elemento como sendo de borda. Como trabalho futuro, destacam a necessidade de considerar diferentes estratégias para definir em quais elementos realizar o over-sampling.
+
+\begin{algorithm}[H]
+  \caption{Algoritmo do SMOTE}
+  \label{alg:smote}
+  \SetAlgoLined
+  \Entrada{Imagem colorida $I$ em formato BGR}
+  \Saida{Exemplos sintéticos}
+  $N \gets \text{vizinhos(minoritária)}$\;
+  \ParaCada{exemplo $sample$}{
+    $nn \gets \text{vizinho aleatório de N}$
+    \ParaCada{\text{característica} $(x,y)$}{
+      $\text{diferença} \gets nn(x,y) - sample(x,y)$\;
+      $\text{gap} \gets \text{número aleatório entre 0 e 1}$\;
+      $\text{G}(x,y) \gets sample(x,y) + gap*\text{diferença}$\;
+    }
+    $S \gets S U G$\;
+  }
+\end{algorithm}
 
 \subsection{Subamostragem}
 
@@ -594,6 +612,18 @@ Métodos para remoção de exemplos da classe majoritária normalmente apresenta
 % Primeiramente, na fase de treinamento, o algoritmo memoriza os exemplos rotulados do conjunto de dados de treinamento. Quando recebe um novo exemplo, cuja classe é desconhecida, calcula a distância entre os vetores de características do novo exemplo e dos já rotulados. O novo exemplo é classificado como sendo da classe do exemplo de treinamento com menor distância. \cite{Faceli2011}
 
 % O ponto fraco desse algoritmo de classificação é que, apesar da fase de treinamento ser simples, a fase de predição pode ser muito custosa, já que depende de calcular a distância de um novo exemplo a todos os objetos de treinamento.
+%--------------------------------------------------------------------------------
+\section{Projeção Multidimensional}
+\label{cap:vis}
+
+A visualização do espaço de características obtido após a geração artificial de imagens pode ajudar a inferir se as novas imagens melhoram a definição da classe minoritária em relação ao espaço original. Ou seja, se o método utilizado revelou características latentes.
+Considerando que um vetor de características extraído com os descritores da seção x pode possuir entre 6 e 300x características, a visualização de um exemplo requer que seja realizado o mapeamento desses valores em apenas duas dimensões.
+
+
+\subsection{Análise de componentes principais}
+
+O PCA (Análise de componentes principais) é uma técnica para reduzir a dimensionalidade dos dados com a maior variância possível. Dessa forma cada imagem pode ser representada por apenas dois valores, o que permite a projeção dessas imagens no espaço de características.
+
 
 
 %--------------------------------------------------------------------------------
