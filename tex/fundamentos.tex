@@ -602,7 +602,12 @@ Métodos para remoção de exemplos da classe majoritária normalmente apresenta
 
 % \noindent onde $P(A|B)$ é a probabilidade de um exemplo $B$ pertencer à classe $A$; $P(A)$ a probabilidade ``a priori'' da classe e $P(B)$ que pode ser estimado pela frequência com que um novo exemplo ocorre, que pode ser ignorado por ser o mesmo para todas as classes \cite{Faceli2011}.
 
-% \subsection{Algoritmo 1-Vizinho Mais Próximo}
+\subsection{Algoritmo 1-Vizinho Mais Próximo}
+
+
+O algoritmo k-NN é um classificador supervisionado que condidera a proximidade entre os dados para realizar as predições. Baseia-se na premissa de que os objetos do mesmo conceito são semelhantes. A métrica mais comum para avaliar essa proximidade é a distância euclidiana.
+
+Na fase de treinamento, apenas armazena os exemplos rotulados do conjunto de dados de treinamento. Quando um novo exemplo deve ser classificado, calcula a distância entre os vetores de características do novo exemplo e dos já rotulados. O novo exemplo é então classificado como sendo da classe do exemplo de treinamento com menor distância.
 
 % Esse algoritmo condidera a proximidade entre os dados para realizar predições. De acordo com \cite{Faceli2011}, é o algoritmo mais simples de Aprendizado de Máquina e baseia-se na premissa de que os objetos do mesmo conceito são semelhantes. Ou seja, dados similares tendem a estar próximos no espaço de entrada. A métrica mais comum para avaliar essa proximidade é a distância euclidiana, que é dada por:
 % \begin{equation}
@@ -620,9 +625,47 @@ A visualização do espaço de características obtido após a geração artific
 Considerando que um vetor de características extraído com os descritores da seção x pode possuir entre 6 e 300x características, a visualização de um exemplo requer que seja realizado o mapeamento desses valores em apenas duas dimensões.
 
 
+\section{Projeção multidimensional}
+% http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=4368165
+
+A visualização do espaço de características obtido após a geração artificial de imagens pode ajudar a inferir se as novas imagens melhoram a definição da classe minoritária em relação ao espaço original. Ou seja, se o método utilizado revelou características latentes.
+Considerando que um vetor de características extraído com os descritores da seção x pode possuir entre 6 e 300x características, a visualização de um exemplo requer que seja realizado o mapeamento desses valores em apenas duas dimensões.
+
+Uma projeção multimensional mapeia os dados de m dimensões para um espaço 1D, 2D ou 3D. A partir desses novos dados, pode ser criada alguma representação visual que tenta manter a relação de distância entre os novos e os originais \cite{paulovich}. Ou seja, se os dados originais são parecidos de acordo com alguma métrica, deveriam estar ``perto'' na visualização.
+
+
 \subsection{Análise de componentes principais}
 
-O PCA (Análise de componentes principais) é uma técnica para reduzir a dimensionalidade dos dados com a maior variância possível. Dessa forma cada imagem pode ser representada por apenas dois valores, o que permite a projeção dessas imagens no espaço de características.
+% http://sebastianraschka.com/Articles/2014_pca_step_by_step.html
+% http://arxiv.org/pdf/1404.1100v1.pdf
+
+O PCA (Análise de componentes principais) é uma técnica para reduzir a dimensionalidade dos dados com a máxima variância possível. Dessa forma cada imagem originalmente representada por $N$ pode ser representada por apenas dois valores, o que permite a projeção dessas imagens no espaço de características.
+
+O objetivo é extrair as informações mais importantes e representá-las como um conjunto de variáveis ortogonais chamadas de componentes principais \cite{Abdi2010}
+
+
+% Esse método calcula a matriz de covariância das imagens originais e sua matriz de transformação $W$ com colunas ortonormais.
+
+% As matrizes de transformação que projetam a matriz original é então dada por:
+
+% \begin{eqnarray}
+%     W_{PCA} &=& \operatorname{arg\,max}_{W} |W^T S_T W| \\
+% \end{eqnarray}
+
+% Para conseguir tal resultado, o algoritmo começa por centrar todos os atributos em zero. Isso é feito, subtraindo, de cada atributo de cada instância, a média do atributo no conjunto de dados. Também é comum, embora não obrigatório, dividir cada atributo de cada instância pelo desvio padrão do atributo no conjunto de dados.
+
+Calcula a matriz de covariância e seus autovetores e autovalores. Então, os autovetores são ordenados de forma decrescente de acordo com seus autovalores correspondentes.
+
+utilizando um limiar de variância ou escolhendo-se um número de autovetores a serem mantidos (esse número será a quantidade de dimensões do novo espaço de atributos). Os autovetores mantidos serão sempre aqueles que correspondem aos maiores autovalores. Com esses autovetores pode-se construir uma matriz $M$, na qual cada coluna é um autovetor. O novo espaço de atributos pode ser encontrado multiplicando a transposta dessa matriz pela transposta dos atributos originais.
+
+\begin{itemize}
+\item Computa um vector de médias com $n$ dimensões
+\item Computa a matriz de covariância
+\item Computa os autovalores e autovetores
+\item Ordena os autovetores pelos autovalores e escolhe os k autovetores com maiores autovalores para formar uma matriz W de dimensão $n*k$, onde cada coluna representa um autovetor
+\item Usa essa matriz para transformar os dados para um novo subspaço, de acordo com a equação y = WTxX, onde x representa o vetor de características original de uma imagem e y é esse vetor transformado para o novo subespaço.
+\end{itemize}
+
 
 
 
