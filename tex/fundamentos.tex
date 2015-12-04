@@ -558,7 +558,7 @@ Os autores concluíram que o desbalanceamento por si só não é um problema, ma
 
 Realizar uma sobreamostragem em um determinado conjunto de dados significa aumentar, utilizando alguma estratégia, o número de elementos desse conjunto. Em \citeonline{Chawla2002}, a simples replicação de exemplos já existentes na classe minoritária não melhorou a classificação. Isso se deve ao reconhecimento de regiões muito específicas, causando \textit{overfitting}.
 
-O SMOTE (\textit{Synthetic Minority Over-sampling Technique}) é uma técnica desenvolvida por \citeonline{Chawla2002} para rebalancear classes ao gerar artificialmente novos elementos, ao invés de apenas replicá-los. A ideia principal é formar uma nova classe minoritária ao interpolar vários exemplos do espaço de características, e não no espaço dos dados. A diferença entre o vetor de características de um elemento e do seu vizinho mais próximo é multiplicada por um número aleatório entre zero e um. Esse valor é adicionado ao vetor original, criando um novo elemento. Essa abordagem provoca a geração de um elemento entre os dois vetores originais. Os exemplos sintéticos forçam uma região de decisão maior e mais geral para serem aprendidas como exemplos da classe minoritária.
+O SMOTE (\textit{Synthetic Minority Over-sampling Technique}) é uma técnica desenvolvida por \citeonline{Chawla2002} para rebalancear classes ao gerar artificialmente novos elementos, ao invés de apenas replicá-los. A ideia é formar uma nova classe minoritária ao interpolar vários exemplos do espaço de características, e não no espaço dos dados. O funcionamento desse algoritmo está descrito no Algoritmo~\ref{alg:smote}. A diferença entre o vetor de características de um elemento e do seu vizinho mais próximo é multiplicada por um número aleatório entre zero e um. Esse valor é adicionado ao vetor original, criando um novo elemento. Essa abordagem provoca a geração de um elemento entre os dois vetores originais. Os exemplos sintéticos forçam uma região de decisão maior e mais geral para serem aprendidas como exemplos da classe minoritária.
 
 \begin{algorithm}[H]
   \caption{Algoritmo do SMOTE}
@@ -577,6 +577,7 @@ O SMOTE (\textit{Synthetic Minority Over-sampling Technique}) é uma técnica de
     $S \gets S U G$\;
   }
 \end{algorithm}
+
 
 Dessa forma, o SMOTE provê mais elementos para o classificador aprender, ao contrário da replicação de dados. Como trabalhos futuros, os autores \citeonline{Chawla2002} apontam que diferentes estratégias para criar esses exemplos sintéticos podem melhorar a performance da classificação. Inclusive salientando exemplos que foram errôneamente classificados.
 
