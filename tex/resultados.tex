@@ -11,29 +11,70 @@
 %   Variação gradual de parâmetros para identificar o que causa perdas/ganhos
 % }
 
-\section{Experimento: Classes Elefante e Cavalo da COREL-1000}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Experimento}
 
-\subsection{Base de Imagens}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Base de Imagens}
 
-\subsection{Ferramentas/Técnicas}
+ Os resultados foram obtidos utilizando a base de imagens COREL\footnote{Disponível em http://wang.ist.psu.edu/docs/related/}, composta por fotografias que representam as classes: tribos africanas, praia, construções, ônibus, dinossauros, elefantes, flores, cavalos, montanhas e tipos de comidas. São 10 classes balanceadas com 100 imagens cada. Para fins de exemplificação, foram selecionadas imagens que representam essas classes na Figura \ref{fig:corel}.
 
-\subsection{Protocolo}
+ \begin{figure}[hbpt]
+ \begin{center}
+   \includegraphics[width=1\linewidth]{\detokenize {figuras/exemplos_corel.png}}
+ \end{center}
+  \caption[Base de imagens COREL-1000.]{Base de imagens COREL-1000 utilizada. Estão representadas as 10 classes da base. \textit{Fonte: Elaborado pela autora.}}
+ \label{fig:corel}
+\end{figure}
 
-\subsection{Resultados e Discussão}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Ferramentas/Técnicas}
+Bokeh
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Protocolo}
+\begin{itemize}
+\item Classes elefante e cavalo da COREL-1000;
+\item 50\% de teste/treino;
+\item \textbf{Geração artificial}: mistura;
+\item \textbf{Quantização}: Intensidade;
+\item \textbf{Extração de características}: BIC;
+\item \textbf{Classificação} com KNN (K=1);
+\item \textbf{Projeção multidimensional}: Redução de dimensionalidade - PCA.
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Resultados e Discussão}
 
-\subsubsection{Espaço de características}
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{subfigure}{.32\linewidth}
+      \centering
+      \includegraphics[width=\linewidth]{\detokenize{figuras/cavalo-original.png}}
+    \caption{Original}
+    \end{subfigure}
+    \begin{subfigure}{.32\linewidth}
+      \centering
+      \includegraphics[width=\linewidth]{\detokenize{figuras/cavalo-original2.png}}
+    \caption{Original}
+    \end{subfigure}
+    \begin{subfigure}{.32\linewidth}
+      \centering
+      \includegraphics[width=\linewidth]{\detokenize{figuras/cavalo-blend.png}}
+    \caption{Mistura}
+  \end{subfigure}
+  \end{center}
+\end{figure}
 
 Na Figura~\ref{fig:desbalanceado} está ilustrada a remoção de 50\% das imagens de treino da classe Cavalo, originalmente balanceada. Essa e as próximas projeções do espaço de características foram obtidas com a técnica para redução de dimensionalidade PCA, descrita na Seção~\ref{sec:pca}.
 
 \begin{figure}[htbp]
   \begin{center}
-    \begin{subfigure}{.45\textwidth}
+    \begin{subfigure}{.49\linewidth}
       \centering
-      \includegraphics[width=\linewidth]{\detokenize{original.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/original.png}}
     \end{subfigure}
-    \begin{subfigure}{.45\textwidth}
+    \begin{subfigure}{.49\linewidth}
       \centering
-      \includegraphics[width=\linewidth]{\detokenize{desbalanceado.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/desbalanceado-fixed.png}}
     \end{subfigure}
   \end{center}
   \caption{Remoção de 50\% das imagens de treino da classe Cavalo.}
@@ -44,30 +85,30 @@ Para esse experimento o \textit{f-score} da geração artificial de imagens teve
 
 \begin{figure}[htbp]
   \begin{center}
-    \begin{subfigure}{.45\textwidth}
+    \begin{subfigure}{.49\linewidth}
       \centering
-      \includegraphics[width=\linewidth]{\detokenize{smote-treino.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/smote-treino-fixed.png}}
     \end{subfigure}
-    \begin{subfigure}{.45\textwidth}
+    \begin{subfigure}{.49\linewidth}
       \centering
-      \includegraphics[width=\linewidth]{\detokenize{geracao-treino.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao-treino-fixed.png}}
     \end{subfigure}
   \end{center}
   \caption{Comparação da geração com SMOTE versus campo visual.}
   \label{fig:compara_vis_treino}
 \end{figure}
 
-Após o treinamento realizado com as novas imagens e exemplos, o conjunto de teste foi dado ao classificação 1-NN e na Figura~\ref{compara_vis_teste} o resultado está ilustrado. O interior dos quadrados representa a classe real dos exemplos, e a borda representa a classe predita pelo classificador. Nota-se que a melhoria na classificação com a geração de imagens fica visível e corresponde ao aumento do \texit{f-score}.
+Após o treinamento realizado com as novas imagens e exemplos, o conjunto de teste foi dado ao classificação 1-NN e na Figura~\ref{fig:compara_vis_teste} o resultado está ilustrado. O interior dos quadrados representa a classe real dos exemplos, e a borda representa a classe predita pelo classificador. Nota-se que a melhoria na classificação com a geração de imagens fica visível e corresponde ao aumento do \texit{f-score}.
 
 \begin{figure}[htbp]
   \begin{center}
-    \begin{subfigure}{.45\textwidth}
+    \begin{subfigure}{.49\linewidth}
       \centering
-      \includegraphics[width=\linewidth]{\detokenize{smote-teste.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/smote-teste-fixed.png}}
     \end{subfigure}
-    \begin{subfigure}{.45\textwidth}
+    \begin{subfigure}{.49\linewidth}
       \centering
-      \includegraphics[width=\linewidth]{\detokenize{geracao-teste.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao-teste-fixed.png}}
     \end{subfigure}
   \end{center}
   \caption{Comparação da geração com SMOTE versus campo visual.}
@@ -78,53 +119,55 @@ De uma forma geral, parece que a geração de imagens melhorou a definição da 
 
 \begin{figure}[htbp]
   \begin{center}
-    \begin{subfigure}{.32\textwidth}
+    \begin{subfigure}{.49\linewidth}
       \centering
-      \includegraphics[width=\linewidth]{\detokenize{desbalanceado-treino.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/smote-treino.png}}
     \end{subfigure}
-    \begin{subfigure}{.32\textwidth}
+    \begin{subfigure}{.49\linewidth}
       \centering
-      \includegraphics[width=\linewidth]{\detokenize{smote-treino.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao-treino.png}}
     \end{subfigure}
-    \begin{subfigure}{.32\textwidth}
+    \begin{subfigure}{.49\linewidth}
       \centering
-      \includegraphics[width=\linewidth]{\detokenize{geracao-treino.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/desbalanceado-treino.png}}
     \end{subfigure}
   \end{center}
+  \caption{}
+  \label{}
 \end{figure}
 
 É válido também visualizar a região de decisão para ver suas modificações frente aos métodos. E o que pode ser observado é que ambas técnicas a região da classe minoritária ficou melhor representada. Além disso, é possivel verificar que o SMOTE ocasionou uma certa invasão do espaço de características da classe majoritária.
 
 \begin{figure}[htbp]
   \begin{center}
-    \begin{subfigure}{.32\textwidth}
+    \begin{subfigure}{.49\linewidth}
       \centering
-      \includegraphics[width=\linewidth]{\detokenize{desbalanceado-region.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/smote-teste-region.png}}
     \end{subfigure}
-    \begin{subfigure}{.32\textwidth}
+    \begin{subfigure}{.49\linewidth}
       \centering
-      \includegraphics[width=\linewidth]{\detokenize{smote-region.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao-teste-region.png}}
     \end{subfigure}
-    \begin{subfigure}{.32\textwidth}
+    \begin{subfigure}{.49\linewidth}
       \centering
-      \includegraphics[width=\linewidth]{\detokenize{geracao-region.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/desbalanceado-teste-region.png}}
     \end{subfigure}
   \end{center}
   \caption{Região de decisão com K-NN (K = 1)}
+  \label{fig:region}
 \end{figure}
 
 Na Figura~\ref{fig:vis_images} as imagens foram utilizadas como marcadores e ficou nítido o impacto da etapa de extração de características na separação das classes.
 
 \begin{figure}[htbp]
   \begin{center}
-      \includegraphics[scale=0.2]{\detokenize{vis-images.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/vis-images.png}}
   \end{center}
   \caption{Visualização do impacto do descritor de características.}
   \label{fig:vis_images}
 \end{figure}
 
 A projeção forneceu uma análise intuitiva sobre o comportamento das técnicas que não é facilmente analisando quando olhado apenas os valores de acurácia ou \textit{f-score}.
-
 %--------------------------------------------------------------------------------
 % \section{Considerações iniciais}
 %

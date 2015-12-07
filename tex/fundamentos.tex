@@ -606,24 +606,25 @@ Métodos para remoção de exemplos da classe majoritária normalmente apresenta
 
 \subsection{Algoritmo k-Vizinhos Mais Próximos}
 
-O k-NN é um classificador supervisionado que condidera a proximidade entre os dados para realizar as predições. Baseia-se na premissa de que os objetos do mesmo conceito são semelhantes. A métrica mais comum para avaliar essa proximidade é a distância euclidiana.
+K-NN é um classificador supervisionado que condidera a proximidade entre os dados para realizar predições. Baseia-se na premissa de que os objetos do mesmo conceito são semelhantes. A métrica mais comum para avaliar essa proximidade é a distância euclidiana.
 
 Na fase de treinamento, apenas armazena os exemplos rotulados do conjunto de dados de treinamento. Quando um novo exemplo deve ser classificado, calcula a distância entre os vetores de características do novo exemplo e dos já rotulados. O novo exemplo é então classificado como sendo da classe do exemplo de treinamento com menor distância.
+
 
 %-------------------------------------------------------------------------------
 \section{Redução de dimensionalidade}
 \label{sec:vis}
-
 % http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=4368165
 
-A visualização do espaço de características obtido após a geração artificial de imagens pode ajudar a inferir se as novas imagens melhoram a definição da classe minoritária em relação ao espaço original (antes de imagens serem removidas para provocar o desbalanceamento). Ou seja, se o método utilizado revelou características latentes. E ao projetar os novos vetores no espaço das imagens originais é possível analisar qual método (entre SMOTE ou geração de imagens no campo visual) mais se assemelha à distribuição original dos dados.
+A visualização do espaço de características obtido após a geração artificial de imagens pode ajudar a verificar se as novas imagens melhoram a definição da classe minoritária em relação ao espaço original (antes de imagens serem removidas para provocar o desbalanceamento). Ou seja, se o método utilizado revelou características latentes. E ao projetar os novos vetores no espaço das imagens originais é possível analisar qual método (entre SMOTE ou geração de imagens no campo visual) mais se assemelha à distribuição original dos dados.
 
 Considerando que um vetor de características extraído com os descritores da Seção~\ref{sec:extracao} possui entre 6 e 300 características, a visualização de uma instância requer que seja realizado o mapeamento desses valores em apenas duas dimensões.
 
 Para isso, uma projeção multimensional utilizando redução de dimensionalidade mapeia os dados de $m$ dimensões para um espaço 1D, 2D ou 3D. A partir desses novos dados, pode ser criada alguma representação visual que tenta manter a relação de distância entre os novos e os originais \cite{paulovich}.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Análise de componentes principais}
-\label{subsec:pca}
+\label{sec:pca}
 
 % http://sebastianraschka.com/Articles/2014_pca_step_by_step.html
 % http://arxiv.org/pdf/1404.1100v1.pdf
@@ -631,23 +632,27 @@ Para isso, uma projeção multimensional utilizando redução de dimensionalidad
 O PCA (Análise de componentes principais) é uma técnica que pode ser utilizada para reduzir a dimensionalidade dos dados com a máxima variância possível. Cada imagem, originalmente representada por um vetor com $N$ características, pode então ser representada por apenas dois valores. Essa redução permite a projeção dessas imagens no espaço de características.
 
 O objetivo é extrair as informações mais importantes dos dados e representá-las como um conjunto de variáveis ortogonais chamadas de componentes principais.
-Para isso encontra uma outra base, que é uma combinação linear da base original, que melhor representa os dados ao assumir que as direções das maiores variâncias são as mais importantes. Ou seja, a variância associada com cada direção quantifica o quão principal é aquela direção \cite{Abdi2010}.
+Para isso encontra uma outra base, que é uma combinação linear da base original, que melhor representa os dados ao assumir que as direções das maiores variâncias são as mais importantes. Ou seja, a variância associada com cada direção quantifica o quão principal é aquela direção \cite{Abdi2010}. Pode-se, portanto, enumerar os passos necessários para o PCA como:
 
-\begin{itemize}
-\item Primeiramente, centraliza todos os atributos em zero ao subtrair a média de cada dimensão;
-\item Calcula a matriz de covariância $C_x$ dada por $C_x tres= 1/n X X^T$;
-\item Encontra os autovalores e autovetores de $C_x$. Um autovetor $u$ de uma matriz $A$ pode ser definido por $Au = \lambda u$, onde \lambda é um autovalor escalar associado ao autovetor. Um vetor $u$ é um autovetor da matriz A se o tamanho do vetor, e não sua direção, é modificado quando multiplicado por A.
+\begin{enumerate}
+\item Centraliza todos os atributos em zero ao subtrair a média de cada dimensão;
+\item Calcula a matriz de covariância $C_x$ dada por
+\begin{equation}
+    C_x \equiv \frac{1}{n} X X^T,
+\end{equation}
 
-Os autovalores podem ser representados na diagonal de uma matriz $\lambda$ (com outros valores como zero) e o conjunto dos autovetores de $A$ em uma matriz $U$. Assim: \cite{Abdi2010}
+\noindent onde $X$ é a matriz de dados original e $X^T$ sua transposta.
 
-\begin{eqnarray}
-    A &=& U \lambda U^T \\
-\end{eqnarray}
+\item Encontra os autovalores e autovetores de $C_x$. Um autovetor $u$ de uma matriz $A$ pode ser definido por $Au = \lambda u$, onde $\lambda$ é um autovalor escalar associado ao autovetor. Um vetor $u$ é um autovetor da matriz $A$ se o tamanho do vetor -- e não sua direção -- é modificado quando multiplicado por $A$. Os autovalores podem ser representados na diagonal de uma matriz $\lambda$ (com outros valores como zero) e o conjunto dos autovetores de $A$ em uma matriz $U$. Assim,
 
-\item Então, os autovetores são ordenados de forma decrescente de acordo com seus autovalores correspondentes e escolhe os $k$ principais autovetores (maiores autovalores) para formar uma matriz $P$ de dimensão $n*k$, onde cada coluna representa um autovetor. Esse valor $k$ será a quantidade de dimensões do novo espaço de atributos.
+\begin{equation}
+    A = U \lambda U^T.
+\end{equation}
+
+\item Então, os autovetores são ordenados de forma decrescente de acordo com seus autovalores correspondentes e escolhe-se os $k$ principais autovetores (i.e.\ maiores autovalores) para formar uma matriz $P$ de dimensão $n \times k$, onde cada coluna representa um autovetor. Esse valor $k$ será a quantidade de dimensões do novo espaço de atributos.
  % O novo espaço de atributos pode ser encontrado multiplicando a transposta dessa matriz pela transposta dos atributos originais. - caso seja svd
-\item O novo subespaço pode ser encontrado multiplicando essa matriz $P$ pela matriz original, de acordo com a equação $Y = PX$, onde $X$ representa o conjunto de dados original, Y é uma nova representação desses dados e P a matriz ortonormal que transforma X em Y. As linhas de $P$ são os componentes principais de X.
-\end{itemize}
+\item O novo subespaço pode ser encontrado multiplicando essa matriz $P$ pela matriz original, de acordo com a equação $Y = PX$, onde $X$ representa o conjunto de dados original, $Y$ é uma nova representação desses dados e $P$ a matriz ortonormal que transforma $X$ em $Y$. As linhas de $P$ são os componentes principais de $X$.
+\end{enumerate}
 
 %--------------------------------------------------------------------------------
 \section{Considerações finais}
