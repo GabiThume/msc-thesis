@@ -17,7 +17,7 @@ Essa seção descreve os resultados encontrados, com foco na análise do espaço
 
 \begin{figure}[thpb]
 \centering
-\includegraphics[scale=0.8]{flow_main.pdf}
+\includegraphics[scale=0.8]{\detokenize{figuras/flow_main.pdf}}
 \caption{Fluxo de operações do experimento realizado.}
 \label{fig:fluxo}
 \end{figure}
@@ -63,11 +63,11 @@ As classes Elefante e Cavalo possuem 100 imagens cada. O primeiro passo é remov
   \begin{center}
     \begin{subfigure}{.49\linewidth}
       \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/original.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/original.png}}
     \end{subfigure}
     \begin{subfigure}{.49\linewidth}
       \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/desbalanceado-fixed.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/desbalanceado-fixed.png}}
     \end{subfigure}
   \end{center}
   \caption{Remoção de 50\% das imagens de treino da classe Cavalo.}
@@ -80,11 +80,11 @@ A classificação dos três experimentos utilizando KNN reportou que o \textit{f
   \begin{center}
     \begin{subfigure}{.49\linewidth}
       \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/smote-treino-fixed.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/smote-treino-fixed.png}}
     \end{subfigure}
     \begin{subfigure}{.49\linewidth}
       \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao-treino-fixed.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/geracao-treino-fixed.png}}
     \end{subfigure}
   \end{center}
   \caption{Comparação dos examplos de treinamento da geração com SMOTE e no campo visual. Em laranja estão representados os novos exemplos, projetados no plano da base original balanceada.}
@@ -97,11 +97,11 @@ Após o treinamento realizado com as novas imagens e exemplos, o conjunto de tes
   \begin{center}
     \begin{subfigure}{.49\linewidth}
       \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/smote-teste-fixed.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/smote-teste-fixed.png}}
     \end{subfigure}
     \begin{subfigure}{.49\linewidth}
       \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao-teste-fixed.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/geracao-teste-fixed.png}}
     \end{subfigure}
   \end{center}
   \caption{Resultado do teste da classificação com 1-NN após o treinamento realizado com as bases rebalanceadas. A cor no interior dos marcadores quadrados representa a classe real dos exemplos e a borda representa a classe predita pelo classificador.}
@@ -116,15 +116,15 @@ De uma forma geral, pode-se dizer que a geração de imagens melhorou a definiç
   \begin{center}
     \begin{subfigure}{.49\linewidth}
       \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/smote-teste-region.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/smote-teste-region.png}}
     \end{subfigure}
     \begin{subfigure}{.49\linewidth}
       \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao-teste-region.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/geracao-teste-region.png}}
     \end{subfigure}
     \begin{subfigure}{.49\linewidth}
       \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/desbalanceado-teste-region.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/desbalanceado-teste-region.png}}
     \end{subfigure}
   \end{center}
   \caption{Região de decisão com K-NN (K = 1)}
@@ -137,15 +137,15 @@ Nas figuras anteriores os exemplos foram projetados no plano criado pelas suas c
   \begin{center}
     \begin{subfigure}{.49\linewidth}
       \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/smote-treino.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/smote-treino.png}}
     \end{subfigure}
     \begin{subfigure}{.49\linewidth}
       \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao-treino.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/geracao-treino.png}}
     \end{subfigure}
     \begin{subfigure}{.49\linewidth}
       \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/desbalanceado-treino.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/desbalanceado-treino.png}}
     \end{subfigure}
   \end{center}
   \caption{Melhores subespaços encontrados após a geração de novos exemplos para o SMOTE e para a geração artificial de imagens, e após a remoção de imagens para a projeção dos dados desbalanceados.}
@@ -156,7 +156,7 @@ Como relatado no início dessa seção, o extrator de características utilizado
 
 \begin{figure}[htbp]
   \begin{center}
-      \includegraphics[width=\linewidth]{\detokenize{figuras/vis-images.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/vis-images.png}}
   \end{center}
   \caption{Visualização do impacto do descritor de características.}
   \label{fig:vis_images}

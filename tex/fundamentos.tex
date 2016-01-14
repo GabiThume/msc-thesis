@@ -549,14 +549,14 @@ Em conjuntos de dados desbalanceados, determinadas classes possuem um número mu
 
 Realizar uma sobreamostragem (\textit{over-sampling}) em um determinado conjunto de dados significa aumentar -- utilizando alguma estratégia -- o número de elementos desse conjunto. Em \cite{Chawla2002}, a simples replicação de exemplos pertencentes à classe minoritária não melhorou a classificação. Isso se deve ao reconhecimento de regiões muito específicas, causando \textit{overfitting}.
 
-O SMOTE (\textit{Synthetic Minority Over-sampling Technique}) é um método desenvolvido por \cite{Chawla2002} para rebalancear classes ao gerar artificialmente novos elementos, ao invés de apenas replicá-los. É aplicado sobre os vetores de características previamente extraídos, com operações de perturbação dos dados de treino no espaço de características, e não no espaço dos dados. A diferença entre o vetor de características de um elemento e do seu vizinho mais próximo é multiplicada por um número $0 ≤ x ≤ 1$. Esse valor é adicionado ao vetor original, criando um novo elemento. Como pode ser visualizado na Figura~\ref{fig:smote}, essa abordagem provoca a geração de um elemento resultante da interpolação dos dois vetores originais. Os exemplos sintéticos forçam uma região de decisão maior e mais geral para serem aprendidas como exemplos da classe minoritária.
+O SMOTE (\textit{Synthetic Minority Over-sampling Technique}) é um método desenvolvido por \cite{Chawla2002} para rebalancear classes ao gerar artificialmente novos elementos, ao invés de apenas replicá-los. É aplicado sobre os vetores de características previamente extraídos, com operações de perturbação dos dados de treino no espaço de características, e não no espaço dos dados. A diferença entre o vetor de características de um elemento e do seu vizinho mais próximo é multiplicada por um número $0 \le  x \le 1$. Esse valor é adicionado ao vetor original, criando um novo elemento. Como pode ser visualizado na Figura~\ref{fig:smote}, essa abordagem provoca a geração de um elemento resultante da interpolação dos dois vetores originais. Os exemplos sintéticos forçam uma região de decisão maior e mais geral para serem aprendidas como exemplos da classe minoritária.
 
-\begin{figure}[thpb]
-\centering
-\includegraphics[scale=2.0]{smote}
-\caption{SMOTE: interpolação entre dois exemplos vizinhos no espaço de características.} % TODO fazer essa imagem
-\label{fig:smote}
-\end{figure}
+% \begin{figure}[thpb]
+% \centering
+% \includegraphics[width=0.7\linewidth]{figuras/smote}
+% \caption{SMOTE: interpolação entre dois exemplos vizinhos no espaço de características.} % TODO fazer essa imagem
+% \label{fig:smote}
+% \end{figure}
 
 \begin{algorithm}[H]
   \caption{Algoritmo do SMOTE}
