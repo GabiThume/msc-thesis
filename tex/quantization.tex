@@ -13,5 +13,13 @@ Cada imagem -- originalmente no espaço de cor RGB -- é convertida a um único 
 
 A configuração mais comum em sistemas de reconhecimento de imagens é usar uma imagem em níveis de cinza 8-bits com 256 cores para a exração de características. Ao aplicar a quantização na etapa de pré-processamento, é esperado reduzir a complexidade do vetor de características logo no ínicio, beneficiando todos os passos subsequentes.
 
+Cada método se comporta diferentemente para uma dada imagem RGB. Por exemplo, o método Intensidade mapeia todas as permutações dos mesmos valores em RBG para a mesma cor. Assim, produz um plano no cubo RBG conforme mostrado na Figura \ref{fig:plano}. O Gleam também é similar, mas spanning uma superfície curva, dada a natureza da função gamma. O mesmo efeito é alcançado utilizando Intensidade'. Em todos os casos, o resultado é o mapeamento de características cromáticas bem diferentes em valores de intensidades similares. O método Luminância tenta melhorar isso ao adicionar um peso na combinação linear dos canais.
+
+Um exemplo das imagens obtidas após os métodos de quantização apresentados anteriormente pode ser visto na Figura \ref{fig:quantizacoes}. Nesse caso é possível notar que tanto Luminância quanto MSB conseguem melhor discriminar cores. Além disso, o mapa de cores MSB obteve um maior número de cores únicas. A barra de gradientes abaixo da imagem dos pinceis demonstra como os métodos de quantização se comportam dada a variação de cor.
+
+A Tabela \ref{tab:quantizacao} apresenta alguns examplos numéricos, com a saída de cada método. Nesse caso, as entradas são tuplas de valores $(R, G, B)$. Note que a correção \textit{gamma} deve ser computada em um intervalo de valores reais $0-1$, que depois é mapeado para o intervalo $0-255$.
+
+Na Figura \ref{fig:avioes} é demonstrado um exemplo de redução de cores utilizando o método MSB para um par de imagens da base de dados Caltech-101. Importante destacar que há preservação das cores, especialmente entre 64 e 256. Ao utilizar apenas 32 cores, as imagens ainda são satisfatórias mas há uma perda de informação considerável. 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Considerações finais}
