@@ -49,14 +49,14 @@
 % Informações de dados para CAPA e FOLHA DE ROSTO
 % ---
 % Tanto na capa quanto nas folhas de rosto apenas a primeira letra da primeira palavra (ou nomes próprios) devem estar em letra maiúscula, todas as demais devem ser em letra minúscula.
-\tituloPT{Geração de imagens artificiais e extração de características latentes aplicadas à classificação de imagens}
-\tituloEN{Artificial images generation and latent feature extraction applied to image classification task}
+\tituloPT{Geração de imagens artificiais e quantização de imagens aplicadas à classificação de imagens}
+\tituloEN{Artificial images generation and image quantization applied to image classification task}
 \autor[Thumé, G. S.]{Gabriela Salvador Thumé}
 \genero{F} % Gênero do autor (M = Masculino / F = Feminino)
 \orientador[Orientador]{Prof. Dr.}{Moacir Antonelli Ponti}
-%\coorientador{Prof. Dr.}{Fulano de Tal}
+\coorientador{Prof. Dr.}{João do Espirito Santo Batista Neto}
 \curso{CCMC}
-\data{1}{1}{2016} % Data do depósito
+\data{30}{2}{2016} % Data do depósito
 % ---
 
 
@@ -68,15 +68,7 @@
 % conter no máximo 500 palavras
 % conter no mínimo 1 e no máximo 5 palavras-chave
 \textoresumo[brazil]{
-Cada imagem pode ser representada como uma combinação de diversas características, como por exemplo o histograma de intensidades de cor ou propriedades de textura da imagem. Essas características compõe um vetor multidimensional que representa a imagem. É comum esse vetor ser dado como entrada para um método de classificação de padrões que, após aprender através de diversos exemplos, pode indicar o quão bem separadas as classes de imagens estão. Estudos sugerem evidências de que a preparação das imagens -- por meio da especificação cuidadosa da aquisição, pré-processamento e segmentação -- pode impactar significativamente a classificação. Além da falta de tratamento das imagens antes da extração de características, o desbalanceamento de classes também se apresenta como um obstáculo para que a classificação seja satisfatória. Imagens possuem características que podem ser exploradas para melhorar a descrição dos objetos de interesse. Entre as possibilidades de melhorias estão: a redução do número de cores das imagens antes da extração de características ao invés de métodos de quantização no vetor já extraído; e a geração de imagens a partir das imagens originais, de forma a promover o balanceamento de bases de dados cujo número de exemplos de cada classe é desbalanceado. Portanto, a proposta desta dissertação é melhorar da classificação utilizando métodos de processamento de imagens antes da extração de características. Busca-se assim estudar a influência de promover o balanceamento de bases de dados e da quantização na classificação. Esse estudo analisa ainda a visualização do espaço de características após os métodos de geração artificial de imagens e de interpolação das características extraídas das imagens originais (SMOTE), contracenando com o espaço original. A ênfase dessa visualização se dá na facilidade de observação da importância do rebalanceamento das classes quando comparado com valores de métricas estatísticas, como a acurácia da classificação. Esta dissertação possui resultados que demonstram o potencial da pesquisa e pretende contribuir com a área, investigando métodos que permitam obter melhores espaços de características.
-
-	\meutodo{
-		Porque deep leaning?
-		Mais descritores de forma e textura (dependentes da base)
-		Explicar melhor o comportamento do SMOTE x ACC
-		Bases maiores
-		Algoritmos genéticos para geração de imagens artificiais?
-	}
+Cada imagem pode ser representada como uma combinação de diversas características, como por exemplo o histograma de intensidades de cor ou propriedades de textura da imagem. Essas características compõe um vetor multidimensional que representa a imagem. É comum esse vetor ser dado como entrada para um método de classificação de padrões que, após aprender através de diversos exemplos, pode indicar o quão bem separadas as classes de imagens estão. Estudos sugerem evidências de que a preparação das imagens -- por meio da especificação cuidadosa da aquisição, pré-processamento e segmentação -- pode impactar significativamente a classificação. Além da falta de tratamento das imagens antes da extração de características, o desbalanceamento de classes também se apresenta como um obstáculo para que a classificação seja satisfatória. Imagens possuem características que podem ser exploradas para melhorar a descrição dos objetos de interesse. Entre as possibilidades de melhorias estão: a redução do número de cores das imagens antes da extração de características ao invés de métodos de quantização no vetor já extraído; e a geração de imagens a partir das imagens originais, de forma a promover o balanceamento de bases de dados cujo número de exemplos de cada classe é desbalanceado. Portanto, a proposta desta dissertação é melhorar da classificação utilizando métodos de processamento de imagens antes da extração de características. Busca-se assim estudar a influência de promover o balanceamento de bases de dados e da quantização na classificação. Esse estudo analisa ainda a visualização do espaço de características após os métodos de geração artificial de imagens e de interpolação das características extraídas das imagens originais (SMOTE), contracenando com o espaço original. A ênfase dessa visualização se dá na facilidade de observação da importância do rebalanceamento das classes quando comparado com valores de métricas estatísticas, como a acurácia da classificação.  Os resultados indicam que a quantização simplifica as imagens antes da extração de características e posterior redução de dimensionalidade, produzindo vetores mais compactos. Esta dissertação possui resultados que demonstram o potencial da pesquisa e pretende contribuir com a área, investigando métodos que permitam obter melhores espaços de características.
 }{Processamento de imagens, bases de dados desbalanceados, classificação de imagens.}
 
 
@@ -136,13 +128,13 @@ An image can be represented as a combination of several features like histograms
 \incluilistadealgoritmos
 
 % Inclui a lista de códigos
-\incluilistadecodigos
+% \incluilistadecodigos
 
 % Inclui a lista de siglas e abreviaturas
 \incluilistadesiglas
 
 % Inclui a lista de símbolos
-\incluilistadesimbolos
+% \incluilistadesimbolos
 
 % ----
 % Início do documento
@@ -158,8 +150,12 @@ An image can be represented as a combination of several features like histograms
 \input{tex/introducao}
 
 \chapter{Fundamentos}
-\label{cap:fundamentos}
+\label{cap:revisao}
 \input{tex/fundamentos}
+
+\chapter{Quantização de Imagens}
+\label{cap:quantization}
+\input{tex/quantization}
 
 \chapter{Geração Artificial de Imagens}
 \label{cap:metodo}
@@ -170,7 +166,7 @@ An image can be represented as a combination of several features like histograms
 \input{tex/resultados}
 
 \chapter{Conclusões}
-\label{cap:conclusões}
+\label{cap:conclusoes}
 \input{tex/conclusoes}
 
 % ---

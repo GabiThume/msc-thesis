@@ -1,6 +1,5 @@
 \section{Considerações iniciais}
 
-
 O processo de manipular imagens para que elas se tornem mais satisfatórias para um determinado objetivo depende do domínio de aplicação. Ou seja, não existe uma teoria geral para melhorar qualquer tipo de imagem \cite{Gonzalez2007}: um método que processa melhor uma imagem bem definida pelas suas cores difere do processamento de imagens texturizadas, às quais um processamento sobre a intensidade dos pixels da imagem -- como uma operação de borramento -- pode ocasionar perda da textura. Assim, justifica-se a exploração de um vasto número de métodos de processamento de imagens e bases.
 
 Nesta pesquisa oito métodos de processamento de imagens são aplicados nas imagens minoritárias originais, gerando imagens artificiais. Isso é realizado a fim de permitir a extração de informações latentes com o objetivo de melhorar a classificação com alguma técnica de Aprendizado de Máquina, o que reflete a melhora da diferenciação entre as classes. Dada a quantidade de imagens necessárias para rebalancear a base original, são geradas imagens utilizando cada um dos métodos, além de uma versão combinando todos eles (ou seja, compondo um conjunto com algumas imagens processadas por cada método) e outra apenas replicando as imagens como \textit{baseline}. Como demonstrado na Figura~\ref{fig:escolha}, dado o conjunto de treinamento da classe (ou classes) com menor número total de imagens, é realizado o rebalanceamento ao aplicar os métodos descritos neste capítulo e posteriormente essas imagens resultantes são utilizadas como treinamento.
@@ -569,7 +568,7 @@ Para cada quadrado a ser preenchido sorteia uma imagem do conjunto de treinament
 %
 % \end{description}
 %
-% %--------------------------------------------------------------------------------
+% %-------------------------------------------------------------------------------
 % \section{Resultados esperados}
 % \label{sec:resultados}
 %
@@ -583,7 +582,7 @@ Para cada quadrado a ser preenchido sorteia uma imagem do conjunto de treinament
 % Em ambos os casos pretende-se melhorar a classificação, validando-a através do cálculo da medida-F1. A análise das características aprendidas por uma rede neural de convolução será realizada ao executar o treinamento com bases específicas que destaquem propriedades como cor, textura e forma. Além disso, os resultados serão obtidos a partir da escolha de quais imagens adicionam informação ao conjunto de treino. As redes RBM serão utilizadas para este fim. Bases naturalmente não balanceadas serão testadas e seus resultados avaliados.
 
 
-%--------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 \section{Considerações finais}
 
 % A proposta desta pesquisa foi apresentada, descrevendo a sua metodologia. Foi dado destaque aos resultados esperados e à forma de avaliação, descrevendo as medidas estatísticas a serem utilizadas. O cronograma previsto para a realização deste mestrado foi destacado, elencando as atividades e suas respetivas durações. O próximo capítulo apresentará os resultados preliminares.

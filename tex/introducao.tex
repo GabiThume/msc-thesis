@@ -9,7 +9,6 @@ O reconhecimento de padrões em imagens possui aspectos particulares para cada a
 
 Considerando que é comum realizar a extração de características a partir da imagem original, sem preocupação com a preparação da imagem, o enfoque desse estudo é na etapa de pré-processamento, destacada na Figura~\ref{fig:fluxo}. Esta ilustra as etapas canônicas do reconhecimento de padrões desde a aquisição da imagem até sua posterior classificação. As etapas de pré-processamento e segmentação --- apresentadas em destaque --- são normalmente pouco exploradas, quando comparadas com as etapas posteriores.
 
-Atualmente, o estado da arte de extração e classificação de imagens corresponde ao uso de redes neurais de convolução, conhecidas por CNN \cite{Schmidhuber2014}. Essas redes são compostas por camadas de neurônios que têm por objetivo aprender quais são as melhores características que diferenciam as classes de imagens. O aprendizado, nesse caso, corresponde ao ajuste dos parâmetros para reduzir a diferença entre a saída esperada -- classe verdadeira -- e a produzida. Dessa forma, tais redes aprendem quais são as características latentes nas imagens de entrada. As redes neurais são discutidas na Seção \ref{sec:deeplearning}, onde as máquinas de Boltzmann restritas (RBM) também são apresentadas. A representação das imagens de entrada, aprendida pela etapa de treinamento da RBM, será utilizada para definir quais imagens são relevantes para o aprendizado ou não. De certa forma essas técnicas produzem versões processadas das imagens de entrada, indicando que os filtros aprendidos são os que melhor diferenciam as classes de imagens.
 
 \begin{figure}[!ht]
  \begin{center}
@@ -23,7 +22,7 @@ Atualmente, o estado da arte de extração e classificação de imagens correspo
 
 O desbalanceamento de classes também se apresenta como um obstáculo para que a classificação de imagens seja satisfatória. Esse problema é caracterizado pela diferença entre o número de exemplos disponíveis para cada classe da base de imagens. Muitos métodos de transformação do espaço de características e de classificação assumem que as classes da base estão balanceadas, o que nem sempre é verdade. Portanto, é proposto a geração de imagens artificiais a partir do processamento das imagens originais, com o objetivo de rebalancear a base de imagens e consequentemente o modelo criado para a classificação. De maneira sumária, {\textbf esta pesquisa busca melhorar a classificação de imagens, utilizando métodos de processamento com foco na extração de características latentes e no rebalanceamento de classes.} Esse método foi comparado com o SMOTE, técnica de sobreamostragem dos vetores de características ao interpolar os exemplos mais próximos.
 
-Os resultados obtidos, posteriormente apresentados na Seção \ref{sec:resultados}, demonstram o potencial da geração de imagens artificiais. A visualização do espaço de características após o rebalanceamento das classes é crucial para analisar se as novas características extraídas são relevantes, ou seja, se adicionaram informações que estavam latentes ao aprendizado. De maneira sumária, {\textbf esta pesquisa busca melhorar a classificação de imagens, utilizando métodos de processamento com foco na extração de características latentes e no rebalanceamento de classes.} Os resultados preliminares obtidos, posteriormente apresentados na Seção \ref{sec:resultadospreliminares}, demonstram o potencial deste trabalho.
+Os resultados obtidos, posteriormente apresentados na Seção \ref{sec:resultados}, demonstram o potencial da geração de imagens artificiais. A visualização do espaço de características após o rebalanceamento das classes é crucial para analisar se as novas características extraídas são relevantes, ou seja, se adicionaram informações que estavam latentes ao aprendizado. De maneira sumária, {\textbf esta pesquisa busca melhorar a classificação de imagens, utilizando métodos de processamento com foco na extração de características latentes e no rebalanceamento de classes.}
 
 %--------------------------------------------------------------------------------
 \section{Contextualização}
@@ -34,7 +33,7 @@ O grupo de pesquisa em Visualização, Imagens e Computação Gráfica (VICG), d
 
 Em outros dois trabalhos relacionados é possível ver a diferença na performance para problemas de classificação de imagens. No primeiro, os autores atingem acurácia acima de 98\% na classificação de frutas após investigar alterações nos parâmetros de aquisição, realizar pré-processamento e obter a segmentação \cite{Rocha2010}. No segundo, os autores indicam que o método utilizado para obter a imagem em escala de cinza (comumente utilizada por algoritmos de extração), pode impactar significativamente a classificação final de diversas bases de imagens~\cite{Kanan2012}.
 
-Recentemente, \citeonline{Ponti2014} demonstraram que o uso de algoritmos de pré\hyp{}processamento permite ao mesmo tempo obter vetores de características mais compactos e com maior capacidade de discriminação entre classes. Esta pesquisa pretende dar continuidade a esse trabalho, ao analisar técnicas de \textit{deep learning}. Essas técnicas realizam múltiplas operações sobre imagens de entrada de forma a aprender quais operações permitem gerar características capazes de discriminar as classes \cite{bengio2009}.
+Recentemente, \citeonline{Ponti2014} demonstraram que o uso de algoritmos de pré\hyp{}processamento permite ao mesmo tempo obter vetores de características mais compactos e com maior capacidade de discriminação entre classes.
 
 
 % \meutodo{Na literatura \citeonline{Peng2014} exploraram a geração de imagens artificiais a partir de modelos 3D CAD}
@@ -51,13 +50,6 @@ o desbalanceamento de classes é um obstáculo para uma classificação satisfat
 % Outro fator de impacto em tal acurácia é o desbalanceamento de classes nas bases de dados para pesquisa.
 Em bases médicas, por exemplo, a quantidade de imagens relacionadas com uma doença rara é menor do que as imagens de pacientes sem a doença. Nessas situações, em que as imagens representam eventos importantes porém menos frequentes, o sistema de classificação pode ter problemas para lidar com a classe minoritária. {\textbf A hipótese, nesse caso, é que a geração de imagens artificiais como preparação para a extração de características pode melhorar a acurácia da classificação, quando comparada à geração de exemplos artificiais no espaço de atributos.} Ou seja, gerar novas imagens artificiais — que serão posteriormente reduzidas a atributos — pode apresentar melhores resultados para a classificação do que o \textit{bootstrap} de atributos artificiais.
 
-%--------------------------------------------------------------------------------
-\section{Objetivos}
-
-\meutodo{Destacar as contribuições}
-
-O objetivo desta pesquisa é explorar as etapas de processamento de imagens com o intuito de melhorar a discriminação entre classes de uma coleção de imagens. As hipóteses são:
-
 \meutodo{hipóteses repetidas?}
 
 \begin{itemize}
@@ -65,9 +57,12 @@ O objetivo desta pesquisa é explorar as etapas de processamento de imagens com 
 \item O uso de métodos de pré-processamento permite a extração de características latentes que aumentem a variância entre as classes, sem aumentar, no entanto, a variância intra-classe. Melhorando, assim, a classificação.
 \end{itemize}
 
-Com o objetivo de confirmar tais hipóteses, uma das propostas é analisar as características aprendidas por uma rede neural de convolução (CNN). Essa rede permite encontrar as características mais relevantes da base de imagens, que os extratores de características canônicos não capturam. Isso porque ela possui uma hierarquia de camadas, desde a imagem original até uma etapa de classificação, com o objetivo de aprender qual o melhor processamento para as imagens de modo a melhor discriminar as classes.
+%--------------------------------------------------------------------------------
+\section{Contribuições}
 
-Após gerar as imagens artificiais, somente as imagens relevantes serão incluidas no treinamento. Para definir quais são as imagens que acrescentam informações na base, primeiramente será treinada uma máquina de Boltzmann restrita (RBM). A partir da matriz de características aprendida (memória associativa), é possível verificar se uma imagem acrescenta informações à base ou não. Por fim, conforme descrito na Seção \ref{sec:resultadospreliminares} de resultados preliminares, será possível analisar operações simples e canônicas de pré-processamento de imagens.
+O objetivo desta pesquisa é explorar as etapas de processamento de imagens com o intuito de melhorar a discriminação entre classes de uma coleção de imagens.
+
+Após gerar as imagens artificiais, somente as imagens relevantes serão incluidas no treinamento. Por fim, conforme descrito na Seção \ref{sec:resultadospreliminares} de resultados preliminares, será possível analisar operações simples e canônicas de pré-processamento de imagens.
 
 Dados tais aspectos, pode-se então diferenciar os objetivos gerais e específicos:
 
@@ -79,13 +74,13 @@ Investigar os métodos de pré-processamento de imagens de forma a preparar uma 
 \item[Específicos] \
 
   \begin{itemize}
-      \item Analisar o impacto da utilização de métodos canônicos de pré-processamento, como filtragem, adição de ruído e mistura, na classificação de bases de imagens. Investigar, também, o aprendizado de redes neurais de convolução, com o objetivo de observar quais são as características relevantes ao treiná-la com bases de imagens bem discriminadas em termos de cor, textura e forma;
+      \item Analisar o impacto da utilização de métodos canônicos de pré-processamento, como filtragem, adição de ruído e mistura, na classificação de bases de imagens.
 
       % obter alterações na imagem que permitam extrair as características latentes, que não são visíveis nem diretamente passíveis de extração, na imagem original;
 
       \item Modificar a base de imagens original de forma a tornar as características latentes visíveis. Com isso, pretende-se aumentar a variância entre as classes -- antes da extração de características e classificação -- com o auxílio dos métodos canônicos e CNN;
 
-      \item Gerar imagens artificiais a partir das imagens pertencentes às classes minoritárias, compensando o desbalanceamento. Parte dessa tarefa já foi realizada e está descrita na Seção \ref{sec:resultadospreliminares}. O próximo passo é utilizar a matriz de características aprendida por máquinas de Boltzmann restritas para verificar se as imagens artificialmente geradas são relevantes para o aprendizado ou não, além de melhor escolher as imagens originais para a geração dessas imagens.
+      \item Gerar imagens artificiais a partir das imagens pertencentes às classes minoritárias, compensando o desbalanceamento.
   \end{itemize}
 \end{description}
 
@@ -97,10 +92,15 @@ Considerando os objetivos aqui descritos, os resultados esperados desta pesquisa
 O conteúdo desta dissertação está estruturado como segue.
 
 \begin{description}
-\item [Capítulo~\ref{chap:revisao}:] são conceituados os principais fundamentos necessários para o desenvolvimento desta pesquisa: pré-processamento de imagens, redes neurais de convolução, máquinas de Boltzmann restritas, extração de características e desbalanceamento de classes.
+\item [Capítulo~\ref{cap:revisao}:] são conceituados os principais fundamentos necessários para o desenvolvimento desta pesquisa: pré-processamento de imagens, extração de características e desbalanceamento de classes.
 
-\item [Capítulo~\ref{chap:proposta}:] descreve-se a metodologia de pesquisa, assim como os resultados esperados. O cronograma, com suas respectivas atividades e o tempo previsto para conclusão desta pesquisa, é destacado em seguida.
+\item [Capítulo~\ref{cap:quantization}:] a redução do número de intensidades de cor antes da extração de características é descrita.
 
-\item [Capítulo~\ref{chap:resultadospreliminares}:] apresenta e discute os resultados preliminares, ressaltando quais são os próximos passos.
+\item [Capítulo~\ref{cap:metodo}:] descreve-se os métodos para a geração artificial de imagens com o objetivo de rebalancear classes.
+
+\item [Capítulo~\ref{cap:resultados}:] apresenta e discute os resultados.
 % a proposta é retomada ao indicar como será resolvido o problema do desbalanceamento e a melhoria das imagens com base nas suas características latentes.
+
+\item [Capítulo~\ref{cap:conclusoes}:]
+
 \end{description}

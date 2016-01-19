@@ -1,0 +1,17 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Considerações iniciais}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Quantização de imagens}
+
+O pipeline comum de reconhecimento envolve um passo de converter imagens coloridas em imagens com apenas um canal, obtendo uma imagem quantizada que pode ser então processada por métodos de extração de características.
+
+Para estudar o impacto da utilização de diferentes parâmetros de quantização e diversas características, são utilizados quatro extratores de cor e um de textura. Esses extratores foram escolhidos de acordo com os resultados apresentados por \citeonline{Penatti2012}.
+
+Cada imagem -- originalmente no espaço de cor RGB -- é convertida a um único canal com $C$ níveis de intensidade. Após, são utilizados os métodos apresentados em \ref{} para extrair as características.
+
+A configuração mais comum em sistemas de reconhecimento de imagens é usar uma imagem em níveis de cinza 8-bits com 256 cores para a exração de características. Ao aplicar a quantização na etapa de pré-processamento, é esperado reduzir a complexidade do vetor de características logo no ínicio, beneficiando todos os passos subsequentes.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Considerações finais}

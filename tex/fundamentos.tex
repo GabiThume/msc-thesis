@@ -1,8 +1,11 @@
 \section{Considerações iniciais}
 
-Neste capítulo são destacados os tópicos mais relevantes para a compreensão do estado da arte de processamento de imagens, com foco na preparação das imagens para a extração de características. O problema do desbalanceamento de classes e seu efeito na classificação satisfatória também são abordados, assim como a extração de características para compreender as propriedades extraídas das imagens. A área de \textit{deep learning} é definida e as redes de convolução e máquinas de Boltzmann restritas são contextualizadas no âmbito desta pesquisa. Alguns trabalhos relacionados são utilizados como exemplo, com o objetivo de elucidar tais tópicos.
+Neste capítulo são destacados os tópicos mais relevantes para a compreensão do estado da arte de processamento de imagens, com foco na preparação das imagens para a extração de características. O problema do desbalanceamento de classes e seu efeito na classificação satisfatória também são abordados, assim como a extração de características para compreender as propriedades extraídas das imagens. Alguns trabalhos relacionados são utilizados como exemplo, com o objetivo de elucidar tais tópicos.
 
-Inicialmente, a Seção~\ref{sec:preprocessamento} apresenta alguns dos principais métodos utilizados para o pré-processamento de imagens (i.e.\ remoção de ruído, realce de imagens e convolução), relevantes para o desenvolvimento desta pesquisa. Tendo como proposta melhor compreender o que são as características latentes, a Seção~\ref{sec:latentes} exemplifica as operações de pré-processamento utilizadas para visualizar tais características em uma aplicação específica. A seção seguinte (\ref{sec:deeplearning}) destaca o uso de \textit{deep learning} para o aprendizado de características e a Seção~\ref{sec:rbm} aborda as máquinas de Boltzmann restritas como método para aprendizado da distribuição das imagens de entrada. A extração de características é brevemente definida na Seção~\ref{sec:extracao}. Por fim, o problema do desbalanceamento de classes é apresentado na Seção~\ref{cap:desbalanceamento}. Nessa seção, além de caracterizar o problema, são apresentadas duas vertentes para solucioná-lo: sobreamostragem e subamostragem. Esses conceitos são necessários para a compreensão do capítulo de proposta desta dissertação.
+Inicialmente, a Seção~\ref{sec:preprocessamento} apresenta alguns dos principais métodos utilizados para o pré-processamento de imagens (i.e.\ remoção de ruído, realce de imagens e convolução), relevantes para o desenvolvimento desta pesquisa. Tendo como proposta melhor compreender o que são as características latentes, a Seção~\ref{sec:latentes} exemplifica as operações de pré-processamento utilizadas para visualizar tais características em uma aplicação específica. A extração de características é brevemente definida na Seção~\ref{sec:extracao}. Por fim, o problema do desbalanceamento de classes é apresentado na Seção~\ref{cap:desbalanceamento}. Nessa seção, além de caracterizar o problema, são apresentadas duas vertentes para solucioná-lo: sobreamostragem e subamostragem. Esses conceitos são necessários para a compreensão do capítulo de proposta desta dissertação.
+
+% A área de \textit{deep learning} é definida e as redes de convolução e máquinas de Boltzmann restritas são contextualizadas no âmbito desta pesquisa.
+% A seção seguinte (\ref{sec:deeplearning}) destaca o uso de \textit{deep learning} para o aprendizado de características e a Seção~\ref{sec:rbm} aborda as máquinas de Boltzmann restritas como método para aprendizado da distribuição das imagens de entrada.
 
 %--------------------------------------------------------------------------------
 \section{Pré-processamento de imagens}
@@ -395,144 +398,144 @@ A Figura~\ref{fig:caracteristicas} demonstra uma possível execução de filtrag
 
 A imagem \ref{fig:algaa} é uma imagem original segmentada de alga. As próximas colunas são imagens resultantes da deconvolução da imagem (coluna 2), filtragem Gaussiana (coluna 3) e filtragem Gaussiana seletiva (coluna 4). As modificações apresentadas na primeira linha geram informações em diferentes planos axiais da imagem de microscopia. Imagens na segunda coluna representam uma versão deconvoluída das imagens originais, ressaltando a textura na superfície das algas, resultantes da diferença de Gaussianas. Já a terceira linha demonstra imagens binárias obtidas por limiarização das imagens da segunda linha, realçando as características da base da célula.
 
-Acredita-se que ao manipular as imagens através de técnicas de pré-processamento, pode-se gerar imagens artificiais com características latentes realçadas, melhorando a extração de características. As redes neurais, que aprendem automaticamente essas características, estão descritas nas próximas seções.
+Acredita-se que ao manipular as imagens através de técnicas de pré-processamento, pode-se gerar imagens artificiais com características latentes realçadas, melhorando a extração de características.
 
 %--------------------------------------------------------------------------------
-\section{Deep learning}
-\label{sec:deeplearning}
-
-% O cérebro humano está em constante aprendizado. Suponha que uma determinada pessoa nunca tenha visto um \textit{drone}. Ela então lê uma pesquisa recente sobre esses veículos aéreos contendo uma foto de um exemplar. Enquanto isso, essa tecnologia acaba se tornando mais acessível e surgem várias publicações na mídia sobre eles. Após tê-los visto algumas vezes, essa pessoa será capaz de reconhecer visualmente um \textit{drone} em imagens, vídeos e até mesmo de diferentes cores e tamanhos em relação às imagens que tinha visto anteriormente.
-
-% Dessa forma, ao se expor a alguns padrões, ela aprendeu a reconhecê-los. Essa capacidade dos sistemas de aprendizado (como o cérebro humano) de reconhecer novos padrões está diretamente relacionada com a capacidade de generalização. Nesse sentido, generalizar é como ter visto um \textit{drone} de cor preta medindo 1 metro e ao ver um outro de cor branca de 20 metros, classificá-lo como sendo um \textit{drone} também, porque aprendeu as principais características.
-
-A habilidade humana de reconhecimento de padrões em imagens é surpreendente. Os algoritmos de aprendizado de máquina e de reconhecimento de padrões tentam habilitar os computadores a aprender, baseando-se no modelo de aprendizado de seres humanos \cite{thesisDeep}. Considerando que existem milhões de neurônios em cada córtex visual e que o cérebro humano é composto por cinco desses córtex que evoluíram durante milhões de anos, pode-se afirmar que a tarefa de algoritmos de reconhecimento de padrões em imagens não é simples \cite{neuralNielsen}.
-
-A capacidade humana de reconhecer novos padrões está diretamente relacionada com a capacidade de generalização, que para tal, utiliza hierarquias \cite{thesisDeep}. Nessa linha, o aprendizado profundo ou \textit{deep learning} é caracterizado por explorar o aprendizado ao simular o funcionamento do cérebro humano. Essa área está diretamente relacionada com aprendizado de máquina e inteligência artificial e lida com o aprendizado através de múltiplas camadas.
-
-Explicitar quais são as regras para aprender um determinado conceito pode se tornar impossível. No caso de um avião, por exemplo, ``voar'' pode ser uma regra decomposta em ``possuir largura maior que altura'' e ``ser aerodinâmico''. Essas subdivisões geram múltiplos níveis que possuem maior complexidade e abstração, de maneira similar ao aprendizado por camadas. Uma rede neural artificial utiliza imagens como treinamento para automaticamente inferir quais são as regras para o reconhecimento. São chamadas de redes neurais profundas ou \textit{deep neural networks} as redes que possuem uma estrutura de muitas camadas -- duas ou mais ocultas \cite{neuralNielsen}. Assim, dada uma imagem como entrada, o problema é subdividido em problemas mais simples de serem resolvidos, podendo chegar ao nível de pixels isolados.
-
-As redes neurais artificiais consistem em um método para solucionar problemas de forma a simular o comportamento do cérebro humano. Ao tentar uma determinada solução e errar, essas redes aprendem e podem tentar novamente. Ou seja, adquirem conhecimento através da experiência. Elas contém neurônios de entrada, ocultos e de saída. Aprender nesse contexto significa encontrar os pesos que fazem com que a rede neural exiba o comportamento esperado \cite{Schmidhuber2014}.
-
-% Hubel e Wiesel publicaram em 1962 uma pesquisa relacionada ao estudo do córtex visual primário de gatos. Eles identificaram células simples, similares aos layers de bancos de filtros de uma ConvNet e células complexas similares aos layers de pooling.
-
-A simulação desse modelo inspirado biologicamente utilizada hoje é de \citeonline{lecun1998} e chama-se Rede Neural de Convolução (CNN ou ConvNet). Eles simplificaram tal arquitetura para utilizar um algoritmo de retropropagação para o treino. Desde então, essas redes vêm sendo utilizadas para detecção, reconhecimento, restauração, remoção de ruído e segmentação de imagens e vídeos, além de sua aplicação em áudio. Um exemplo de utilização dessa rede inspirada no modelo de LeCun foi desenvolvida pela empresa Google, com o objetivo de detectar faces e placas de carros para proteger a privacidade nas imagens de StreetView \cite{google09}.
-
-% \meutodo{Figura da visualização do resultado dos filtros}
-
-Apesar de redes profundas representarem o estado da arte em visão computacional, um bom entendimento das suas propriedades ainda está faltando. Alguns artigos recentes como \citeonline{Mahendran2014}, \citeonline{Zeiler2011} \citeonline{Zeiler2013} e \citeonline{Simonyan2013} introduzem técnicas utilizadas para analisar o comportamento e operações internas dessas redes ao visualizá-las. Esta pesquisa situa-se nesse viés, ao analisar as características latentes extraídas por uma rede neural de convolução.
-
-Para o uso em bases desbalanceadas, as imagens utilizadas para o rebalanceamento de forma visual podem ser geradas após o estudo das características latentes, encontradas no treinamento da classe minoritária em uma CNN. Essas características também podem ser realçadas de forma a melhorar a classificação de imagens.
-
-%--------------------------------------------------------------------------------
-\subsection{Redes de convolução}
-% As redes de convolução são modelos que podem aprender características, e são compostas por diversas camadas.
-
-São um tipo de rede neural que utiliza uma operação chamada de convolução, previamente descrita na Seção \ref{sec:convolucao}. Pode ser entendida como sendo várias multiplições de um filtro espacial pela imagem de entrada, resultando em um mapa de características ativadas. Esse filtro é um vetor de parâmetros capaz de aprender. Cada imagem possui seu conjunto de mapas de características, mas os filtros são comuns a todas as imagens. Dependendo dos valores do filtro, as características ativadas são diferentes. Nesse contexto, a camada de convolução consiste em muitas aplicações de convolução em paralelo, dado que um filtro é capaz de extrair apenas um tipo de característica \cite{Bengio-et-al-2014-Book}.
-
-Basicamente, uma CNN é uma arquitetura que pode aprender características invariantes. Com múltiplas camadas, ela pode aprender multiníveis de características \cite{lecun2010}. Ou seja, permite ao computador criar conceitos complexos a partir de conceitos simples. Como o conceito de \textit{deep learning} enfatiza o uso de variáveis latentes, sugere que algoritmo de treinamento pode inventar os conceitos que precisa para representar determinada base de dados \cite{Bengio-et-al-2014-Book}.
-
-Cada camada é composta de três estágios~\citeonline{lecun2010}, representados na Figura~\ref{fig:cnn}:
-
-\begin{description}
-\item [Estágio de convolução:] várias convoluções em paralelo para produzir um conjunto de ativações pré-sinápticas;
-\item [Estágio de detecção:] função de ativação, como a unidade linear retificada ou a sigmoide;
-\item [Estágio de \textit{pooling}:] retorna uma representação invariante a pequenas translações da entrada. Um exemplo é utilizar o valor máximo entre vizinhos (conhecido como \textit{max-pooling}). %Essa operação é de pós-processamento.
-\end{description}
-\begin{figure}[htbp]
- \begin{center}
-   \includegraphics[width=1\linewidth]{figuras/convlayer.png}
- \end{center}
- \caption[Componentes típicos de uma camada de uma rede neural de convolução.]{Componentes típicos de uma camada de uma rede neural de convolução. Nessa terminologia a rede possui camadas complexas que possuem estágios \cite{Bengio-et-al-2014-Book}. \textit{Fonte:~Elaborado pela autora.}}
- \label{fig:cnn}
-\end{figure}
-
-% Normalmente o kernel é muito menor que a imagem, o que resulta em menos parâmetros a serem armazenados, o que reduz o uso de memória e melhorando a eficiência.
-% Cada membro do kernel é usado em todas as posições da entrada, provocando invariância a translação. Por isso só é interessante usar uma camada de convolução quando o que é para ser aprendido é invariante a translação. Em alguns casos, como detecção de faces, não é tão interessante -- deve procurar a sombrancelha em cima e o queixo embaixo.
-% Ao processar dados temporais, o resultado de séries de convoluções produzem uma espécie de timeline ou mapa que mostra quando e aonde características diferentes aparecem na entrada.
-% Não é invariante a escala e a rotação.
-% É possível aprender invariâncias utilizando pool sobre as saídas das convoluções. Essa etapa sumiariza as respostas sobre uma vizinhança inteira, assim é possível utiilizar menos unidades de pooling do que unidades de detecção, resultando em um downsampling.
-% Uma característica essencial na implementação é o método escolhido para adição de zeros nas bordas da imagem. Sem isso o tamanho da representação diminui a kernel-1 a cada camada.
-% % Se pensarmos na convolução como uma multiplicação por uma matriz esparsa que possui cada elemento do kernel copiado várias vezes, a multiplicação da imagem de entrada pela transposta dessa matriz permite backpropagar os erros.
-% Para termos aprendizagem, é preciso computar o gradiente a respeito do kernal, dado o gradiente das saídas.
-
-De acordo com \citeonline{Bengio-et-al-2014-Book}, durante a propagação são realizadas as convoluções e propagadas pelo resto da rede para então computar uma função de perda, que mede quão bem o sistema de aprendizado funcionou para cada exemplo. Na retropropagação, recebe-se um gradiente para atualizar os pesos. O gradiente descendente estocástico atualiza o sistema de aprendizagem com base no erro medido para um único exemplo. Apesar de a convergência ser mais ruidosa do que calcular a média sobre todos os erros, diminui-se um custo constante do calculo de custo.
-
-Normalmente, o classificador é a última camada totalmente conectada, que computa o produto de um vetor de características \cite{Bengio-et-al-2014-Book}. \citeonline{Mahendran2014} reportam que as camadas inteiramente conectadas podem ser invertidas a uma imagem resultante da composição de partes similares às encontradas na imagem original, mas não idênticas. Enfatizam também que todas as camadas de convolução mantém uma representação fiel da imagem. Essa característica permite a análise de quais atributos são relevantes para o aprendizado da base de imagens, tarefa crucial para esta pesquisa.
-
-
-% % --------------------------------------------------------------------------------
-% \subsection{Redes de deconvolução}
-
-\citeonline{Zeiler2011} propuseram uma rede de deconvolução para a visualização das camadas, que pode ser vista como o caminho inverso de uma rede de convolução. Dessa forma, ao invés de mapear pixels em características, faz-se o contrário, permitindo a construção não supervisionada de representação de imagens hierárquicas, que podem, por exemplo, ser usadas para redução de ruído \cite{Zeiler2013}. Tenta gerar o sinal de entrada dada a soma das convoluções dos mapas de características com os filtros aprendidos. Apesar de destacar que, dado o mapa de características latentes, é possível sintetizar uma imagem, o artigo de \citeonline{Zeiler2011} não discorre sobre essa síntese.
-
-
-% Em \citeonline{Zeiler2013}, eles reverteram as computações para identificar quais pedaços das imagens eram responsáveis por certas ativações neurais. Olham sobre como certos outputs são obtidos
-% Mas nesse artigo: http://arxiv.org/pdf/1412.0035v1.pdf eles reconstroem as imagens. Dessa forma, eles mostram que as CNN retêm inforações fotograficamente precisas sobre a imagem, com diferentes graus de invariância.
-% Qual informação é preservada pela saída da rede.
-% A representação aprendida pode então ser utilizada para síntese. Em \cite{Zeiler?} um exemplo de redução de ruído é apresentado. Ao utilizar as características latentes da segunda camada para reconstruir a imagem, o ruído foi reduzido de 13.84dB para 18.01dB.
-
-% A operação de reconstrução pode ser definida como:
-
+% \section{Deep learning}
+% \label{sec:deeplearning}
+%
+% % O cérebro humano está em constante aprendizado. Suponha que uma determinada pessoa nunca tenha visto um \textit{drone}. Ela então lê uma pesquisa recente sobre esses veículos aéreos contendo uma foto de um exemplar. Enquanto isso, essa tecnologia acaba se tornando mais acessível e surgem várias publicações na mídia sobre eles. Após tê-los visto algumas vezes, essa pessoa será capaz de reconhecer visualmente um \textit{drone} em imagens, vídeos e até mesmo de diferentes cores e tamanhos em relação às imagens que tinha visto anteriormente.
+%
+% % Dessa forma, ao se expor a alguns padrões, ela aprendeu a reconhecê-los. Essa capacidade dos sistemas de aprendizado (como o cérebro humano) de reconhecer novos padrões está diretamente relacionada com a capacidade de generalização. Nesse sentido, generalizar é como ter visto um \textit{drone} de cor preta medindo 1 metro e ao ver um outro de cor branca de 20 metros, classificá-lo como sendo um \textit{drone} também, porque aprendeu as principais características.
+%
+% A habilidade humana de reconhecimento de padrões em imagens é surpreendente. Os algoritmos de aprendizado de máquina e de reconhecimento de padrões tentam habilitar os computadores a aprender, baseando-se no modelo de aprendizado de seres humanos \cite{thesisDeep}. Considerando que existem milhões de neurônios em cada córtex visual e que o cérebro humano é composto por cinco desses córtex que evoluíram durante milhões de anos, pode-se afirmar que a tarefa de algoritmos de reconhecimento de padrões em imagens não é simples \cite{neuralNielsen}.
+%
+% A capacidade humana de reconhecer novos padrões está diretamente relacionada com a capacidade de generalização, que para tal, utiliza hierarquias \cite{thesisDeep}. Nessa linha, o aprendizado profundo ou \textit{deep learning} é caracterizado por explorar o aprendizado ao simular o funcionamento do cérebro humano. Essa área está diretamente relacionada com aprendizado de máquina e inteligência artificial e lida com o aprendizado através de múltiplas camadas.
+%
+% Explicitar quais são as regras para aprender um determinado conceito pode se tornar impossível. No caso de um avião, por exemplo, ``voar'' pode ser uma regra decomposta em ``possuir largura maior que altura'' e ``ser aerodinâmico''. Essas subdivisões geram múltiplos níveis que possuem maior complexidade e abstração, de maneira similar ao aprendizado por camadas. Uma rede neural artificial utiliza imagens como treinamento para automaticamente inferir quais são as regras para o reconhecimento. São chamadas de redes neurais profundas ou \textit{deep neural networks} as redes que possuem uma estrutura de muitas camadas -- duas ou mais ocultas \cite{neuralNielsen}. Assim, dada uma imagem como entrada, o problema é subdividido em problemas mais simples de serem resolvidos, podendo chegar ao nível de pixels isolados.
+%
+% As redes neurais artificiais consistem em um método para solucionar problemas de forma a simular o comportamento do cérebro humano. Ao tentar uma determinada solução e errar, essas redes aprendem e podem tentar novamente. Ou seja, adquirem conhecimento através da experiência. Elas contém neurônios de entrada, ocultos e de saída. Aprender nesse contexto significa encontrar os pesos que fazem com que a rede neural exiba o comportamento esperado \cite{Schmidhuber2014}.
+%
+% % Hubel e Wiesel publicaram em 1962 uma pesquisa relacionada ao estudo do córtex visual primário de gatos. Eles identificaram células simples, similares aos layers de bancos de filtros de uma ConvNet e células complexas similares aos layers de pooling.
+%
+% A simulação desse modelo inspirado biologicamente utilizada hoje é de \citeonline{lecun1998} e chama-se Rede Neural de Convolução (CNN ou ConvNet). Eles simplificaram tal arquitetura para utilizar um algoritmo de retropropagação para o treino. Desde então, essas redes vêm sendo utilizadas para detecção, reconhecimento, restauração, remoção de ruído e segmentação de imagens e vídeos, além de sua aplicação em áudio. Um exemplo de utilização dessa rede inspirada no modelo de LeCun foi desenvolvida pela empresa Google, com o objetivo de detectar faces e placas de carros para proteger a privacidade nas imagens de StreetView \cite{google09}.
+%
+% % \meutodo{Figura da visualização do resultado dos filtros}
+%
+% Apesar de redes profundas representarem o estado da arte em visão computacional, um bom entendimento das suas propriedades ainda está faltando. Alguns artigos recentes como \citeonline{Mahendran2014}, \citeonline{Zeiler2011} \citeonline{Zeiler2013} e \citeonline{Simonyan2013} introduzem técnicas utilizadas para analisar o comportamento e operações internas dessas redes ao visualizá-las. Esta pesquisa situa-se nesse viés, ao analisar as características latentes extraídas por uma rede neural de convolução.
+%
+% Para o uso em bases desbalanceadas, as imagens utilizadas para o rebalanceamento de forma visual podem ser geradas após o estudo das características latentes, encontradas no treinamento da classe minoritária em uma CNN. Essas características também podem ser realçadas de forma a melhorar a classificação de imagens.
+%
+% %--------------------------------------------------------------------------------
+% \subsection{Redes de convolução}
+% % As redes de convolução são modelos que podem aprender características, e são compostas por diversas camadas.
+%
+% São um tipo de rede neural que utiliza uma operação chamada de convolução, previamente descrita na Seção \ref{sec:convolucao}. Pode ser entendida como sendo várias multiplições de um filtro espacial pela imagem de entrada, resultando em um mapa de características ativadas. Esse filtro é um vetor de parâmetros capaz de aprender. Cada imagem possui seu conjunto de mapas de características, mas os filtros são comuns a todas as imagens. Dependendo dos valores do filtro, as características ativadas são diferentes. Nesse contexto, a camada de convolução consiste em muitas aplicações de convolução em paralelo, dado que um filtro é capaz de extrair apenas um tipo de característica \cite{Bengio-et-al-2014-Book}.
+%
+% Basicamente, uma CNN é uma arquitetura que pode aprender características invariantes. Com múltiplas camadas, ela pode aprender multiníveis de características \cite{lecun2010}. Ou seja, permite ao computador criar conceitos complexos a partir de conceitos simples. Como o conceito de \textit{deep learning} enfatiza o uso de variáveis latentes, sugere que algoritmo de treinamento pode inventar os conceitos que precisa para representar determinada base de dados \cite{Bengio-et-al-2014-Book}.
+%
+% Cada camada é composta de três estágios~\citeonline{lecun2010}, representados na Figura~\ref{fig:cnn}:
+%
+% \begin{description}
+% \item [Estágio de convolução:] várias convoluções em paralelo para produzir um conjunto de ativações pré-sinápticas;
+% \item [Estágio de detecção:] função de ativação, como a unidade linear retificada ou a sigmoide;
+% \item [Estágio de \textit{pooling}:] retorna uma representação invariante a pequenas translações da entrada. Um exemplo é utilizar o valor máximo entre vizinhos (conhecido como \textit{max-pooling}). %Essa operação é de pós-processamento.
+% \end{description}
+% \begin{figure}[htbp]
+%  \begin{center}
+%    \includegraphics[width=1\linewidth]{figuras/convlayer.png}
+%  \end{center}
+%  \caption[Componentes típicos de uma camada de uma rede neural de convolução.]{Componentes típicos de uma camada de uma rede neural de convolução. Nessa terminologia a rede possui camadas complexas que possuem estágios \cite{Bengio-et-al-2014-Book}. \textit{Fonte:~Elaborado pela autora.}}
+%  \label{fig:cnn}
+% \end{figure}
+%
+% % Normalmente o kernel é muito menor que a imagem, o que resulta em menos parâmetros a serem armazenados, o que reduz o uso de memória e melhorando a eficiência.
+% % Cada membro do kernel é usado em todas as posições da entrada, provocando invariância a translação. Por isso só é interessante usar uma camada de convolução quando o que é para ser aprendido é invariante a translação. Em alguns casos, como detecção de faces, não é tão interessante -- deve procurar a sombrancelha em cima e o queixo embaixo.
+% % Ao processar dados temporais, o resultado de séries de convoluções produzem uma espécie de timeline ou mapa que mostra quando e aonde características diferentes aparecem na entrada.
+% % Não é invariante a escala e a rotação.
+% % É possível aprender invariâncias utilizando pool sobre as saídas das convoluções. Essa etapa sumiariza as respostas sobre uma vizinhança inteira, assim é possível utiilizar menos unidades de pooling do que unidades de detecção, resultando em um downsampling.
+% % Uma característica essencial na implementação é o método escolhido para adição de zeros nas bordas da imagem. Sem isso o tamanho da representação diminui a kernel-1 a cada camada.
+% % % Se pensarmos na convolução como uma multiplicação por uma matriz esparsa que possui cada elemento do kernel copiado várias vezes, a multiplicação da imagem de entrada pela transposta dessa matriz permite backpropagar os erros.
+% % Para termos aprendizagem, é preciso computar o gradiente a respeito do kernal, dado o gradiente das saídas.
+%
+% De acordo com \citeonline{Bengio-et-al-2014-Book}, durante a propagação são realizadas as convoluções e propagadas pelo resto da rede para então computar uma função de perda, que mede quão bem o sistema de aprendizado funcionou para cada exemplo. Na retropropagação, recebe-se um gradiente para atualizar os pesos. O gradiente descendente estocástico atualiza o sistema de aprendizagem com base no erro medido para um único exemplo. Apesar de a convergência ser mais ruidosa do que calcular a média sobre todos os erros, diminui-se um custo constante do calculo de custo.
+%
+% Normalmente, o classificador é a última camada totalmente conectada, que computa o produto de um vetor de características \cite{Bengio-et-al-2014-Book}. \citeonline{Mahendran2014} reportam que as camadas inteiramente conectadas podem ser invertidas a uma imagem resultante da composição de partes similares às encontradas na imagem original, mas não idênticas. Enfatizam também que todas as camadas de convolução mantém uma representação fiel da imagem. Essa característica permite a análise de quais atributos são relevantes para o aprendizado da base de imagens, tarefa crucial para esta pesquisa.
+%
+%
+% % % --------------------------------------------------------------------------------
+% % \subsection{Redes de deconvolução}
+%
+% \citeonline{Zeiler2011} propuseram uma rede de deconvolução para a visualização das camadas, que pode ser vista como o caminho inverso de uma rede de convolução. Dessa forma, ao invés de mapear pixels em características, faz-se o contrário, permitindo a construção não supervisionada de representação de imagens hierárquicas, que podem, por exemplo, ser usadas para redução de ruído \cite{Zeiler2013}. Tenta gerar o sinal de entrada dada a soma das convoluções dos mapas de características com os filtros aprendidos. Apesar de destacar que, dado o mapa de características latentes, é possível sintetizar uma imagem, o artigo de \citeonline{Zeiler2011} não discorre sobre essa síntese.
+%
+%
+% % Em \citeonline{Zeiler2013}, eles reverteram as computações para identificar quais pedaços das imagens eram responsáveis por certas ativações neurais. Olham sobre como certos outputs são obtidos
+% % Mas nesse artigo: http://arxiv.org/pdf/1412.0035v1.pdf eles reconstroem as imagens. Dessa forma, eles mostram que as CNN retêm inforações fotograficamente precisas sobre a imagem, com diferentes graus de invariância.
+% % Qual informação é preservada pela saída da rede.
+% % A representação aprendida pode então ser utilizada para síntese. Em \cite{Zeiler?} um exemplo de redução de ruído é apresentado. Ao utilizar as características latentes da segunda camada para reconstruir a imagem, o ruído foi reduzido de 13.84dB para 18.01dB.
+%
+% % A operação de reconstrução pode ser definida como:
+%
+% % % \begin{equation}
+% % % Ŷ_1 = (F_1)(U_(s_1))...(F_L)(U_(s_L)) = (R_l)(z_L)
+% % % \end{equation}
+%
+% % % Com $ŷ_1$ sendo a imagem reconstruída, F a convolução, U unpool, z o mapa de características, s os switches de pooling e L o número de camadas.
+%
+% %--------------------------------------------------------------------------------
+% \section{Máquinas de Boltzmann restritas}
+% \label{sec:rbm}
+%
+% Uma máquina de Boltzmann restrita (RBM) é uma rede neural estocástica que treina um modelo a partir dos vetores de entrada. Ela aprende os parâmetros que definem a distribuição sobre um conjunto de observações sem retropropagação e baseando-se em energia \cite{Fischer2014}.
+%
+% Diferente de uma rede de Hopfield, ela agrega probabilidades e encontra a mínima energia global. Faz isso através do arrefecimento simulado (\textit{simulated annealing}), ou seja: em um primeiro momento, quando possui energia alta, aceita configurações piores; e conforme a energia é reduzida, detêm-se a uma região e a explora melhor, até o equilíbrio térmico \cite{Hinton2006}.
+%
+% Possuindo uma arquitetura muito mais simples que a CNN, é composta por duas camadas de neurônios: uma visível e outra oculta. Os pixels correspondem às unidades visíveis e os detectores de características às unidades ocultas. A sua restritividade se deve ao fato da falta de conectividade entre os neurônios de uma mesma camada, mas cada unidade visível é conectada a todas as unidades ocultas. Assim, a camada oculta, de detectores de características, modela a correlação entre os pixels.
+%
+% A aprendizagem de uma RBM começa em um estado aleatório e atualiza seus pesos até encontrar uma distribuição que esteja em equilíbrio. Essa convergência ocorre quando o erro entre os exemplos treinados -- fase positiva -- e suas reconstruções -- fase negativa -- é menor que um certo limiar. Dessa forma, a cada iteração, um novo exemplo é treinado ao repetir iterativamente esses dois estágios e atualizar seus pesos \cite{Hinton2006}.
+%
+% \begin{description}
+% \item [Fase positiva:] fixa a camada visível e computa o valor dos neurônios ocultos. A probabilidade de um neurônio oculto ser ativado (se torne igual a 1) é dada pela função
+% \begin{equation}
+% p(h_j = 1) = \frac{1}{1+e^{-(b_j+\sum_{i\epsilon vis}{v_iw_{ij}})}},
+% \label{eq:prob}
+% \end{equation}
+% \noindent onde $p(h_{j})$ é a probabilidade do neurônio $h_j$ ser ativado, utilizando uma função de ativação sigmóide, e $w_{ij}$ o peso entre a entrada $i$ e o neurônio $j$.
+%
+% A contribuição da fase positiva é computada para cada par de unidades $a_{ij}$, ao conferir se os dois neurônios ($x_i$ e $x_j$) estão ativados por meio de
+% \begin{equation*}
+% Fase_{+}(a_{ij}) = x_i . x_j
+% \end{equation*}
+%
+% \item [Fase negativa:] a partir dos valores computados na fase positiva, os neurônios visíveis são ``reconstruídos'' ($p(v_i)$) e os ocultos novamente computados ($p(h_{j'})$) a partir da função de probabilidade da Equação \eqref{eq:prob}.
+%
 % % \begin{equation}
-% % Ŷ_1 = (F_1)(U_(s_1))...(F_L)(U_(s_L)) = (R_l)(z_L)
+% % p(h_i = 1) = \frac{1}{1+e^{-(b_i+\sum_{j\epsilon vis}{v_jw_{ji}})}}
+% % \label{eq:phi}
 % % \end{equation}
-
-% % Com $ŷ_1$ sendo a imagem reconstruída, F a convolução, U unpool, z o mapa de características, s os switches de pooling e L o número de camadas.
-
-%--------------------------------------------------------------------------------
-\section{Máquinas de Boltzmann restritas}
-\label{sec:rbm}
-
-Uma máquina de Boltzmann restrita (RBM) é uma rede neural estocástica que treina um modelo a partir dos vetores de entrada. Ela aprende os parâmetros que definem a distribuição sobre um conjunto de observações sem retropropagação e baseando-se em energia \cite{Fischer2014}.
-
-Diferente de uma rede de Hopfield, ela agrega probabilidades e encontra a mínima energia global. Faz isso através do arrefecimento simulado (\textit{simulated annealing}), ou seja: em um primeiro momento, quando possui energia alta, aceita configurações piores; e conforme a energia é reduzida, detêm-se a uma região e a explora melhor, até o equilíbrio térmico \cite{Hinton2006}.
-
-Possuindo uma arquitetura muito mais simples que a CNN, é composta por duas camadas de neurônios: uma visível e outra oculta. Os pixels correspondem às unidades visíveis e os detectores de características às unidades ocultas. A sua restritividade se deve ao fato da falta de conectividade entre os neurônios de uma mesma camada, mas cada unidade visível é conectada a todas as unidades ocultas. Assim, a camada oculta, de detectores de características, modela a correlação entre os pixels.
-
-A aprendizagem de uma RBM começa em um estado aleatório e atualiza seus pesos até encontrar uma distribuição que esteja em equilíbrio. Essa convergência ocorre quando o erro entre os exemplos treinados -- fase positiva -- e suas reconstruções -- fase negativa -- é menor que um certo limiar. Dessa forma, a cada iteração, um novo exemplo é treinado ao repetir iterativamente esses dois estágios e atualizar seus pesos \cite{Hinton2006}.
-
-\begin{description}
-\item [Fase positiva:] fixa a camada visível e computa o valor dos neurônios ocultos. A probabilidade de um neurônio oculto ser ativado (se torne igual a 1) é dada pela função
-\begin{equation}
-p(h_j = 1) = \frac{1}{1+e^{-(b_j+\sum_{i\epsilon vis}{v_iw_{ij}})}},
-\label{eq:prob}
-\end{equation}
-\noindent onde $p(h_{j})$ é a probabilidade do neurônio $h_j$ ser ativado, utilizando uma função de ativação sigmóide, e $w_{ij}$ o peso entre a entrada $i$ e o neurônio $j$.
-
-A contribuição da fase positiva é computada para cada par de unidades $a_{ij}$, ao conferir se os dois neurônios ($x_i$ e $x_j$) estão ativados por meio de
-\begin{equation*}
-Fase_{+}(a_{ij}) = x_i . x_j
-\end{equation*}
-
-\item [Fase negativa:] a partir dos valores computados na fase positiva, os neurônios visíveis são ``reconstruídos'' ($p(v_i)$) e os ocultos novamente computados ($p(h_{j'})$) a partir da função de probabilidade da Equação \eqref{eq:prob}.
-
-% \begin{equation}
-% p(h_i = 1) = \frac{1}{1+e^{-(b_i+\sum_{j\epsilon vis}{v_jw_{ji}})}}
-% \label{eq:phi}
-% \end{equation}
-
-A contribuição da fase negativa é calculada da mesma forma que a contribuição positiva, com
-\begin{equation*}
-Fase_{-}(a_{ij}) = x_i . x_j
-\end{equation*}
-
-\item [Atualização dos pesos:] os pesos $w_{ij}$ são ajustados considerando a diferença entre os neurônios visíveis reconstruídos e os valores fornecidos de entrada inicialmente (etapa conhecida como \textit{contrastive divergence}):
-\begin{equation*}
-w_{ij} = w_{ij} + L (Fase_{+}(a_{ij}) - Fase_{-}(a_{ij})),
-\end{equation*}
-\noindent onde $L$ é a taxa de aprendizado. Quanto menor esse valor, melhor o treinamento e maior tempo até a convergência.
-\end{description}
-
-
-
-% Hinton e Seynowsky, em 1983, estenderam o modelo de Hopfield com a incorporação de dinâmica estocástica. Este modelo de rede neural passou a ser conhecido como Máquina de Boltzmann.
-
-% \begin{equation}
-% E(v,h) = - \sum{iEvisivel}{a_i v_i} - \sum{jEoculta}{b_j h_j} - \sum{i, j}{v_i h_j W_ijs}
-% \end{equation}
-
-% onde $v_i$ é o estado binário da unidade visível, $h_j$ estado binário da unidade oculta, $a_i$ e $b_j$ seus biases e $w_ij$ o peso entre eles.
-Essas redes também podem ser usadas como classificadores, ao treiná-las para modelar a relação entre a distribuição de entrada e seus respectivos rótulos \cite{Fischer2014}. Devido à capacidade das máquinas de Boltzmann restritas de aprender representações das imagens, pode-se utilizá-las para identificar se uma imagem é relevante para o aprendizado. Pode-se, por exemplo, utilizar apenas um neurônio, com a matriz de pesos representando uma memória associativa, para entender quais imagens são mais relevantes dentro de uma classe arbitrária. Dessa forma, também é possível avaliar a relevância da informação contida em uma imagem artificialmente gerada.
+%
+% A contribuição da fase negativa é calculada da mesma forma que a contribuição positiva, com
+% \begin{equation*}
+% Fase_{-}(a_{ij}) = x_i . x_j
+% \end{equation*}
+%
+% \item [Atualização dos pesos:] os pesos $w_{ij}$ são ajustados considerando a diferença entre os neurônios visíveis reconstruídos e os valores fornecidos de entrada inicialmente (etapa conhecida como \textit{contrastive divergence}):
+% \begin{equation*}
+% w_{ij} = w_{ij} + L (Fase_{+}(a_{ij}) - Fase_{-}(a_{ij})),
+% \end{equation*}
+% \noindent onde $L$ é a taxa de aprendizado. Quanto menor esse valor, melhor o treinamento e maior tempo até a convergência.
+% \end{description}
+%
+%
+%
+% % Hinton e Seynowsky, em 1983, estenderam o modelo de Hopfield com a incorporação de dinâmica estocástica. Este modelo de rede neural passou a ser conhecido como Máquina de Boltzmann.
+%
+% % \begin{equation}
+% % E(v,h) = - \sum{iEvisivel}{a_i v_i} - \sum{jEoculta}{b_j h_j} - \sum{i, j}{v_i h_j W_ijs}
+% % \end{equation}
+%
+% % onde $v_i$ é o estado binário da unidade visível, $h_j$ estado binário da unidade oculta, $a_i$ e $b_j$ seus biases e $w_ij$ o peso entre eles.
+% Essas redes também podem ser usadas como classificadores, ao treiná-las para modelar a relação entre a distribuição de entrada e seus respectivos rótulos \cite{Fischer2014}. Devido à capacidade das máquinas de Boltzmann restritas de aprender representações das imagens, pode-se utilizá-las para identificar se uma imagem é relevante para o aprendizado. Pode-se, por exemplo, utilizar apenas um neurônio, com a matriz de pesos representando uma memória associativa, para entender quais imagens são mais relevantes dentro de uma classe arbitrária. Dessa forma, também é possível avaliar a relevância da informação contida em uma imagem artificialmente gerada.
 
 %--------------------------------------------------------------------------------
 \section{Desbalanceamento de classes}
@@ -644,11 +647,18 @@ O PCA (Análise de Componentes Principais) é uma técnica não supervisionada q
 \item O novo subespaço pode ser encontrado multiplicando essa matriz $P$ pela matriz original, de acordo com a equação $Y = PX$, onde $X$ representa o conjunto de dados original, $Y$ é uma nova representação desses dados e $P$ a matriz ortonormal que transforma $X$ em $Y$. As linhas de $P$ são os componentes principais de $X$.
 \end{enumerate}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\textit{Locality Preserving Projection}}
+\label{sec:lpp}
+
+
 %--------------------------------------------------------------------------------
 \section{Considerações finais}
 
 Deu-se destaque à discussão das etapas de pré-processamento e realce de características latentes, ambas foco deste estudo, assim como a geração de imagens artificiais para o balanceamento de classes. Este capítulo apresentou diversos métodos para exemplificação, além de trabalhos similares.
 
-A extração de características foi abordada, apresentando os principais descritores utilizados nesta pesquisa. A lacuna destacada é que existem características não passíveis de extração por descritores convencionais. Para isso, as redes de convolução são apresentadas, pois possuem capacidade de aprender as características relevantes das imagens de entrada. Justificando, assim, seu uso para análise das propriedades das bases de imagens. Podem também indicar possíveis operações para auxiliar na geração de imagens artificiais. Ainda, a memória associativa aprendida por máquinas de Boltzmann restritas pode ser indicadora de quais imagens geradas adicionam informações ao aprendizado. A geração dessas imagens visa rebalancear classes que diferem em número de imagens, e detalhes sobre esse problema também foram fundamentados nesse capítulo.
+A extração de características foi abordada, apresentando os principais descritores utilizados nesta pesquisa. A lacuna destacada é que existem características não passíveis de extração por descritores convencionais.
+% Para isso, as redes de convolução são apresentadas, pois possuem capacidade de aprender as características relevantes das imagens de entrada. Justificando, assim, seu uso para análise das propriedades das bases de imagens. Podem também indicar possíveis operações para auxiliar na geração de imagens artificiais. Ainda, a memória associativa aprendida por máquinas de Boltzmann restritas pode ser indicadora de quais imagens geradas adicionam informações ao aprendizado.
+A geração dessas imagens visa rebalancear classes que diferem em número de imagens, e detalhes sobre esse problema também foram fundamentados nesse capítulo.
 
 Esses fundamentos permitem compreender em que contexto esta dissertação de mestrado está inserida. O próximo capítulo abrangerá a proposta deste trabalho.
