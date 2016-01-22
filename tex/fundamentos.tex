@@ -206,7 +206,7 @@ v(i)= \sum_{j \in I} w(i, j)v(j),
 
 A maioria dos métodos de extração de características utiliza imagens de entrada em escala de cinza. Isso ocorre porque a complexidade de lidar com um pixel representado em três dimensões é muito maior do que em apenas uma dimensão. Assim, os métodos de quantização visam, de alguma forma, reduzir os canais de cores (24 bits) em apenas um (8 bits). \citeonline{Kanan2012} demonstraram que os métodos para a quantização (conversão de uma imagem colorida para escala de cinza) influenciam a performance no reconhecimento de imagens. Eles também salientam que o método utilizado deveria estar claramente descrito nas publicações da área.
 
-Em um trabalho recente \cite{Ponti2014}, com participação da autora desta dissertação, quatro métodos de quantização foram investigados. Foi constatado que os melhores métodos de conversão para escala de cinza antes da utilização dos descritores de características a serem mencionados na Seção \ref{sec:extracao} são:
+% Em um trabalho recente \cite{Ponti2016}, com participação da autora desta dissertação, quatro métodos de quantização foram investigados. Foi constatado que os melhores métodos de conversão para escala de cinza antes da utilização dos descritores de características a serem mencionados na Seção \ref{sec:extracao} são:
 
 \begin{description}
 \item [Intensidade:] método mais simples, consiste em computar a média entre os canais RGB da imagem a partir de
@@ -217,6 +217,8 @@ Em um trabalho recente \cite{Ponti2014}, com participação da autora desta diss
 
 \item [Bits mais significativos (MSB):] ao invés de realizar uma combinação linear dos canais de cores, ordena os bits dos canais coloridos em um único canal. Computa quantos bits de cada canal de cor contribuem para a imagem final e extrai os bits do código binário dos canais originais \cite{Ponti-Jr2013}.
 \end{description}
+
+\meutodo{Adicionar aqui os métodos de quantização utilizados no paper}
 
 A Figura \ref{fig:quantizacao} apresenta a conversão na escala de cinza obtida com o uso destes métodos.
 
@@ -282,7 +284,7 @@ O objetivo da extração de características é descrever as informações visua
 \item [Cor:] considera a distribuição espacial de cores na imagem. O histograma de uma imagem pode descrever essa configuração de forma global.
 \end{description}
 
-Exemplos de métodos conhecidos capazes de descrever forma e outras características são: histogramas de orientação de gradiente~\cite{Wang2009}, curvatura, descritores de Fourier, métodos baseados na detecção de SUSAN~\cite{Smith1997}, Harris-Affine~\cite{Han2005b} e diferença de Gaussianas~\cite{Lowe2004a}. Os descritores utilizados para a obtenção dos resultados preliminares da Seção~\ref{sec:resultadospreliminares} e que vão ser utilizados no desenvolvimento desta pesquisa estão abaixo descritos.
+Exemplos de métodos conhecidos capazes de descrever forma e outras características são: histogramas de orientação de gradiente~\cite{Wang2009}, curvatura, descritores de Fourier, métodos baseados na detecção de SUSAN~\cite{Smith1997}, Harris-Affine~\cite{Han2005b} e diferença de Gaussianas~\cite{Lowe2004a}. Os descritores utilizados no desenvolvimento desta pesquisa para a obtenção dos resultados da Seção~\ref{cap:resultados} estão abaixo descritos.
 
 \begin{description}
 \item[Histograma global de cor (GCH):] calcula o histograma global dos níveis de intensidade da imagem. É a alternativa mais simples para representar as informações de uma imagem~\cite{Gonzalez2007}. Produz um vetor de $N$ dimensões, sendo $N$ o número de intensidades.
@@ -557,9 +559,11 @@ O SMOTE (\textit{Synthetic Minority Over-sampling Technique}) é um método dese
 % \begin{figure}[thpb]
 % \centering
 % \includegraphics[width=0.7\linewidth]{figuras/smote}
-% \caption{SMOTE: interpolação entre dois exemplos vizinhos no espaço de características.} % TODO fazer essa imagem
+% \caption{SMOTE: interpolação entre dois exemplos vizinhos no espaço de características.} %
 % \label{fig:smote}
 % \end{figure}
+
+\meutodo{fazer a imagem do smote}
 
 \begin{algorithm}[H]
   \caption{Algoritmo do SMOTE}
@@ -606,7 +610,15 @@ Métodos para remoção de exemplos da classe majoritária normalmente apresenta
 
 \subsection{Algoritmo k-Vizinhos Mais Próximos}
 
-K-NN é um classificador supervisionado que considera a proximidade entre os dados para realizar predições. Baseia-se na premissa de que os objetos do mesmo conceito são semelhantes. Na fase de treinamento, apenas armazena os exemplos rotulados do conjunto de dados de treinamento. Quando um novo exemplo deve ser classificado, calcula a distância entre os vetores de características do novo exemplo e aqueles já rotulados. O novo exemplo é então classificado como sendo da classe do exemplo de treinamento com menor distância \cite{knn}.
+K-NN é um classificador supervisionado que considera a proximidade entre os dados para realizar predições. Baseia-se na premissa de que os objetos do mesmo conceito são semelhantes. Na fase de treinamento, apenas armazena os exemplos rotulados do conjunto de dados de treinamento. Quando um novo exemplo deve ser classificado, calcula a distância entre os vetores de características do novo exemplo e aqueles já rotulados. O novo exemplo é então classificado como sendo da classe do exemplo de treinamento com menor distância~\cite{Boiman2008}.
+
+\begin{enumerate}
+\item Escolhe o valor de $k$ e uma métrica de distância;
+\item Encontra os $k$ vizinhos mais próximos do exemplo que queremos classificar;
+\item Rotula o sample como pertencente à classe que recebeu mais votos.
+\end{enumerate}
+
+\meutodo{figura aqui}
 
 Esse classificador foi utilizado por ser suscetível à diferenciação entre as classes. Com $K = 1$, a predição da classe corresponde ao exemplo mais próximo.
 %-------------------------------------------------------------------------------
@@ -616,7 +628,7 @@ Esse classificador foi utilizado por ser suscetível à diferenciação entre as
 
 A visualização do espaço de características obtido após a geração artificial de imagens pode ajudar a verificar se as novas imagens melhoram a definição da classe minoritária em relação ao espaço original (inclusive antes de imagens serem removidas para provocar o desbalanceamento). Ou seja, se o método utilizado revelou características latentes. Dessa forma, ao projetar os novos vetores no espaço das imagens originais, é possível analisar qual método (entre SMOTE ou geração de imagens no campo visual) mais se assemelha à distribuição original dos dados.
 
-Considerando que um vetor de características extraído com extratores comuns pode possuir entre 6 (e.g.\ Haralick) e 512 (e.g.\ BIC) características, a visualização de um exemplo requer que seja realizado o mapeamento desses valores em apenas duas dimensões. Para isso, uma redução de dimensionalidade mapeia os dados de $N$ dimensões para um espaço 1D, 2D ou 3D. A partir desses novos dados, pode então ser criada alguma representação visual que tente manter a relação de distância entre os novos e os originais~\cite{paulovich}.
+Considerando que um vetor de características extraído com extratores comuns pode possuir entre 6 (e.g.\ Haralick) e 512 (e.g.\ BIC) características, a visualização de um exemplo requer que seja realizado o mapeamento desses valores em apenas duas dimensões. Para isso, uma redução de dimensionalidade mapeia os dados de $N$ dimensões para um espaço 1D, 2D ou 3D. A partir desses novos dados, pode então ser criada alguma representação visual que tente manter a relação de distância entre os novos e os originais~\cite{Paulovich2007}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Análise de componentes principais}
@@ -625,7 +637,7 @@ Considerando que um vetor de características extraído com extratores comuns po
 % http://sebastianraschka.com/Articles/2014_pca_step_by_step.html
 % http://arxiv.org/pdf/1404.1100v1.pdf
 
-O PCA (Análise de Componentes Principais) é uma técnica não supervisionada que pode ser utilizada para reduzir a dimensionalidade dos dados com a máxima variância possível. Cada imagem, originalmente representada por um vetor com $N$ características, pode então ser representada por apenas um ou mais valores. Essa redução permite a projeção dessas imagens no espaço de características. O objetivo é extrair as informações mais importantes dos dados e representá-las como um conjunto de variáveis ortogonais chamadas de componentes principais. Para isso encontra-se uma outra base: uma combinação linear da base original, que melhor representa os dados ao assumir que as direções das maiores variâncias são as mais importantes. Ou seja, a variância associada com cada direção quantifica o quão principal é aquela direção \cite{Abdi2010}. Pode-se, portanto, enumerar os passos necessários para o PCA como:
+O PCA (Análise de Componentes Principais) é uma técnica não supervisionada que pode ser utilizada para reduzir a dimensionalidade dos dados com a máxima variância possível. Cada imagem, originalmente representada por um vetor com $N$ características, pode então ser representada por apenas um ou mais valores. Essa redução permite a projeção dessas imagens no espaço de características. O objetivo é extrair as informações mais importantes dos dados e representá-las como um conjunto de variáveis ortogonais chamadas de componentes principais. Para isso encontra-se uma outra base: uma combinação linear da base original, que melhor representa os dados ao assumir que as direções das maiores variâncias são as mais importantes. Ou seja, a variância associada com cada direção quantifica o quão principal é aquela direção \cite{Abdi2010}. Pode-se, portanto, enumerar os passos necessários para o PCA sendo:
 
 \begin{enumerate}
 \item Centraliza todos os atributos em zero ao subtrair a média de cada dimensão;
@@ -634,23 +646,38 @@ O PCA (Análise de Componentes Principais) é uma técnica não supervisionada q
     C_x = X X^T,
 \end{equation}
 
-\noindent onde $X$ é a matriz de dados original e $X^T$ sua transposta.
+\noindent onde $X$ é a matriz de dados original e $X^T$ sua transposta;
 
 \item Encontra os autovalores e autovetores de $C_x$. Um autovetor $u$ de uma matriz $A$ pode ser definido por $Au = \lambda u$, onde $\lambda$ é um autovalor escalar associado ao autovetor. Um vetor $u$ é um autovetor da matriz $A$ se o tamanho do vetor -- e não sua direção -- é modificado quando multiplicado por $A$. Os autovalores podem ser representados na diagonal de uma matriz $\lambda$ (com outros valores como zero) e o conjunto dos autovetores de $A$ em uma matriz $U$. Assim,
 
 \begin{equation}
-    A = U \lambda U^T.
+    A = U \lambda U^T;
 \end{equation}
 
-\item Então, os autovetores são ordenados de forma decrescente de acordo com seus autovalores correspondentes e escolhe-se os $k$ principais autovetores (i.e.\ maiores autovalores) para formar uma matriz $P$ de dimensão $n \times k$, onde cada coluna representa um autovetor. Esse valor $k$ será a quantidade de dimensões do novo espaço de atributos.
+\item Então, os autovetores são ordenados de forma decrescente de acordo com seus autovalores correspondentes e escolhe-se os $k$ principais autovetores (i.e.\ maiores autovalores) para formar uma matriz $P$ de dimensão $n \times k$, onde cada coluna representa um autovetor. O valor $k$ será a quantidade de dimensões do novo espaço de atributos;
  % O novo espaço de atributos pode ser encontrado multiplicando a transposta dessa matriz pela transposta dos atributos originais. - caso seja svd
 \item O novo subespaço pode ser encontrado multiplicando essa matriz $P$ pela matriz original, de acordo com a equação $Y = PX$, onde $X$ representa o conjunto de dados original, $Y$ é uma nova representação desses dados e $P$ a matriz ortonormal que transforma $X$ em $Y$. As linhas de $P$ são os componentes principais de $X$.
 \end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{\textit{Locality Preserving Projection}}
+\subsection{\textit{Locality Preserving Projections}}
 \label{sec:lpp}
 
+LPP é um algoritmo linear de redução de dimensionalidade com propriedades de preservação da estrutura local dos dados. Não te a dificuldade dos algoritmos tradicionais (como PCA) de manter o manifold não linear dos dados originais \cite{Zhuo2014}. Embora o método mais utilizado para redução da dimensionalidade de forma não-supervisionada seja o PCA, métodos como esse produzem melhores projeções em termos de separação das classes. Em \cite{Zhuo2014} o LPP alcançou a melhor relação entre complexidade computacional e a redução da dimensionalidade, enquanto manteve a acurácia. Seu algoritmo segue três passos principais \cite{He2004}:
+
+\begin{enumerate}
+\item Constrói um grafo de adjacências. Os nós $i$ e $j$ possuem uma aresta entre eles se fazem parte do conjunto de $k$-vizinhos mais próximos de cada nó (sendo $k$ um parâmetro do algoritmo);
+
+\item Encontra os pesos: $W_ij = 1$ se os vértices $i$ e $j$ estão pertos, ou seja, conectados por uma aresta e $W_ij = 0$ caso contrário;
+
+\item Computa os autovalores e autovetores
+\begin{equation}
+    X L X^T a = \lambda X D X^T a,
+\end{equation}
+\noindent onde D é a matriz diagonal na qual a entrada são as somas das colunas de $W$
+\end{enumerate}
+
+A matriz de projeção corresponde aos autovetores, sendo os d menores autovalores.
 
 %--------------------------------------------------------------------------------
 \section{Considerações finais}
