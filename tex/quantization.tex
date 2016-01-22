@@ -1,6 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Considerações iniciais}
 
+\meutodo{Escrever esse capítulo}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Quantização de imagens}
@@ -9,7 +10,7 @@ O pipeline comum de reconhecimento envolve um passo de converter imagens colorid
 
 Para estudar o impacto da utilização de diferentes parâmetros de quantização e diversas características, são utilizados quatro extratores de cor e um de textura. Esses extratores foram escolhidos de acordo com os resultados apresentados por \citeonline{Penatti2012}.
 
-Cada imagem -- originalmente no espaço de cor RGB -- é convertida a um único canal com $C$ níveis de intensidade. Após, são utilizados os métodos apresentados em \ref{} para extrair as características.
+Cada imagem -- originalmente no espaço de cor RGB -- é convertida a um único canal com $C$ níveis de intensidade. Após, são utilizados os métodos apresentados na Seção \ref{sec:extracao} para extrair as características.
 
 A configuração mais comum em sistemas de reconhecimento de imagens é usar uma imagem em níveis de cinza 8-bits com 256 cores para a exração de características. Ao aplicar a quantização na etapa de pré-processamento, é esperado reduzir a complexidade do vetor de características logo no ínicio, beneficiando todos os passos subsequentes.
 
@@ -19,7 +20,7 @@ Um exemplo das imagens obtidas após os métodos de quantização apresentados a
 
 A Tabela \ref{tab:quantizacao} apresenta alguns examplos numéricos, com a saída de cada método. Nesse caso, as entradas são tuplas de valores $(R, G, B)$. Note que a correção \textit{gamma} deve ser computada em um intervalo de valores reais $0-1$, que depois é mapeado para o intervalo $0-255$.
 
-Na Figura \ref{fig:avioes} é demonstrado um exemplo de redução de cores utilizando o método MSB para um par de imagens da base de dados Caltech-101. Importante destacar que há preservação das cores, especialmente entre 64 e 256. Ao utilizar apenas 32 cores, as imagens ainda são satisfatórias mas há uma perda de informação considerável. 
+Na Figura \ref{fig:avioes} é demonstrado um exemplo de redução de cores utilizando o método MSB para um par de imagens da base de dados Caltech-101. Importante destacar que há preservação das cores, especialmente entre 64 e 256. Ao utilizar apenas 32 cores, as imagens ainda são satisfatórias mas há uma perda de informação considerável.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Considerações finais}
