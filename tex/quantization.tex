@@ -1,20 +1,28 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Considerações iniciais}
 
-\meutodo{Escrever esse capítulo}
+A configuração mais comum em sistemas de reconhecimento de imagens é utilizar uma imagem em níveis de cinza 8-bits com 256 cores para a extração de características. Ao aplicar a quantização (redução de cores) na etapa de pré-processamento, é esperado reduzir a complexidade do vetor de características logo no ínicio, beneficiando todos os passos subsequentes.
+
+Para analisar o impacto da utilização da quantização, são utilizados diferentes parâmetros de quantização combinados com quatro extratores de cor e um de textura. Esses extratores foram escolhidos de acordo com os resultados apresentados por \citeonline{Penatti2012}.
+
+Este capítulo trata dessa ideia de quantizar as imagens antes da extração de características, ligando com os métodos apresentados nos fundamentos.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Quantização de imagens}
 
 O pipeline comum de reconhecimento envolve um passo de converter imagens coloridas em imagens com apenas um canal, obtendo uma imagem quantizada que pode ser então processada por métodos de extração de características.
 
-Para estudar o impacto da utilização de diferentes parâmetros de quantização e diversas características, são utilizados quatro extratores de cor e um de textura. Esses extratores foram escolhidos de acordo com os resultados apresentados por \citeonline{Penatti2012}.
-
 Cada imagem -- originalmente no espaço de cor RGB -- é convertida a um único canal com $C$ níveis de intensidade. Após, são utilizados os métodos apresentados na Seção \ref{sec:extracao} para extrair as características.
 
-A configuração mais comum em sistemas de reconhecimento de imagens é usar uma imagem em níveis de cinza 8-bits com 256 cores para a exração de características. Ao aplicar a quantização na etapa de pré-processamento, é esperado reduzir a complexidade do vetor de características logo no ínicio, beneficiando todos os passos subsequentes.
+\begin{figure}[htbp]
+  \begin{center}
+    \centering
+    \includegraphics[width=0.25\linewidth]{\detokenize{figuras/quantizacao/quantizationFlow.png}}
+  \end{center}
+\end{figure}
 
-Cada método se comporta diferentemente para uma dada imagem RGB. Por exemplo, o método Intensidade mapeia todas as permutações dos mesmos valores em RBG para a mesma cor. Assim, produz um plano no cubo RBG conforme mostrado na Figura \ref{fig:quant:plano}. O Gleam também é similar, mas spanning uma superfície curva, dada a natureza da função gamma. O mesmo efeito é alcançado utilizando Intensidade'. Em todos os casos, o resultado é o mapeamento de características cromáticas bem diferentes em valores de intensidades similares. O método Luminância tenta melhorar isso ao adicionar um peso na combinação linear dos canais.
+
+Cada método de quantização se comporta diferentemente para uma dada imagem RGB. Por exemplo, o método Intensidade mapeia todas as permutações dos mesmos valores em RBG para a mesma cor. Assim, produz um plano no cubo RBG conforme mostrado na Figura \ref{fig:quant:plano}. O Gleam também é similar, mas spanning uma superfície curva, dada a natureza da função gamma. O mesmo efeito é alcançado utilizando Intensidade'. Em todos os casos, o resultado é o mapeamento de características cromáticas bem diferentes em valores de intensidades similares. O método Luminância tenta melhorar isso ao adicionar um peso na combinação linear dos canais.
 
 \begin{figure}[htbp]
   \begin{center}
@@ -24,7 +32,6 @@ Cada método se comporta diferentemente para uma dada imagem RGB. Por exemplo, o
   \caption[Plano computado pelo método de conversão para escala de cinza Intensidade, quando um dos canais de cor possui valor 255.]{Plano computado pelo método de conversão para escala de cinza Intensidade, quando um dos canais de cor possui valor 255. \textit{Fonte:~\cite{Ponti2016}.}}
   \label{fig:quant:plano}
 \end{figure}
-
 
 Um exemplo das imagens obtidas após os métodos de quantização apresentados anteriormente pode ser visto na Figura \ref{fig:quant:quantizacoes}. Nesse caso é possível notar que tanto Luminância quanto MSB conseguem melhor discriminar cores. Além disso, o mapa de cores MSB obteve um maior número de cores únicas. A barra de gradientes abaixo da imagem dos pinceis demonstra como os métodos de quantização se comportam dada a variação de cor.
 
