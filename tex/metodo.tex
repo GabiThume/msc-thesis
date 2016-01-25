@@ -30,7 +30,7 @@ Neste capítulo os métodos de geração artificial para o rebalanceamento de cl
 
 Também conhecido como filtro de suavização, o borramento é uma operação de processamento comumente utilizada com o objetivo de filtrar as baixas frequências de uma imagem, removendo ruídos e detalhes não relevantes. Normalmente esse tipo de filtro provoca também um certo borramento das bordas, como pode ser observado na Figura~\ref{fig:blur}.
 
-Esse comportamento não é esperado quando devemos gerar novas imagens, pois informações relevantes podem ser removidas. Dessa forma, a operação de borramento utilizada é a de filtro bilateral. Ela substitui o valor do pixel $(x,y)$ por uma média dos pixeis de intensidade similar na imagem e dos pixeis vizinhos \cite{Tomasi1998}. Ou seja, é uma média ponderada das intensidades. O Algoritmo~\ref{alg:blur} descreve os passos desse filtro e a Figura~\ref{fig:gen:blur} exemplifica o seu funcionamento: à esquerda está demonstrada a imagem original e à direita a imagem borrada.
+Esse comportamento não é esperado quando devemos gerar novas imagens, pois informações relevantes podem ser removidas. Dessa forma, a operação de borramento utilizada é a de filtro bilateral. Ela substitui o valor do pixel $(x,y)$ por uma média dos pixeis de intensidade similar na imagem e dos pixeis vizinhos \cite{Tomasi1998}. Ou seja, é uma média ponderada das intensidades. O Algoritmo~\ref{alg:blur} descreve os passos desse filtro na sua versão mais simples, de força bruta. A Figura~\ref{fig:gen:blur} exemplifica o seu funcionamento: à esquerda está demonstrada a imagem original e à direita a imagem borrada.
 
 \vspace{0.5cm}
 \begin{algorithm}[H]
@@ -42,9 +42,20 @@ Esse comportamento não é esperado quando devemos gerar novas imagens, pois inf
   \Entrada{Sigma do espaço de cor}
   \Entrada{Sigma do espaço de coordenadas}
 
-  \Saida{Imagem gerada $G$}
+  \Saida{Imagem gerada $BF$}
 
-  \meutodo{Algoritmo de filtro bilateral}
+  \ParaCada{pixel $(x,y)$}{
+    $\text{BF(x,y)} \gets 0$\;
+    $\text{W(x,y)} \gets 0$\;
+
+    \ParaCada{pixel $(i,j)$}{
+      $\text{w} \gets G_{\sigma_{s}} (\lVert(x,y) - (i,j)\rVert) G_{\sigma_{x}} (\lvert I(x,y) - I(i,j) \rvert) $\;
+      $\text{BF(x,y)} \gets BF(x,y) + w I(i,j)$\;
+      $\text{W(x,y)} \gets W(x,y) + w$\;
+    }
+    $\text{BF(x,y)} \gets I(x,y) / W(x,y)$\;
+  }
+  \meutodo{Conferir algoritmo}
 \end{algorithm}
 \vspace{0.5cm}
 
