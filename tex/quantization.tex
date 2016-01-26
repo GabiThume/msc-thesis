@@ -1,26 +1,25 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Considerações iniciais}
 
-A configuração mais comum em sistemas de reconhecimento de imagens é utilizar uma imagem em níveis de cinza 8-bits com 256 cores para a extração de características. Ao aplicar a quantização (redução de cores) na etapa de pré-processamento, é esperado reduzir a complexidade do vetor de características logo no ínicio, beneficiando todos os passos subsequentes.
+Sistemas de reconhecimento de imagens comumente utilizam uma imagem em níveis de cinza 8-bits com 256 intensidades para a extração de características. Ao aplicar a quantização (redução de cores) na etapa de pré-processamento, é esperada a redução da complexidade do vetor de características logo no ínicio, beneficiando todos os passos subsequentes.
 
-Para analisar o impacto da utilização da quantização, são utilizados diferentes parâmetros de quantização combinados com quatro extratores de cor e um de textura. Esses extratores foram escolhidos de acordo com os resultados apresentados por \citeonline{Penatti2012}.
+Para analisar o impacto da utilização da quantização, são utilizados diferentes parâmetros de quantização combinados com quatro métodos de extração de cor e um de textura. Esses extratores foram escolhidos de acordo com os resultados apresentados por \citeonline{Penatti2012}.
 
 Este capítulo trata dessa ideia de quantizar as imagens antes da extração de características, ligando com os métodos apresentados nos fundamentos.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Quantização de imagens}
 
-O pipeline comum de reconhecimento envolve um passo de converter imagens coloridas em imagens com apenas um canal, obtendo uma imagem quantizada que pode ser então processada por métodos de extração de características.
-
-Cada imagem -- originalmente no espaço de cor RGB -- é convertida a um único canal com $C$ níveis de intensidade. Após, são utilizados os métodos apresentados na Seção \ref{sec:extracao} para extrair as características.
+O pipeline de reconhecimento de imagens envolve um passo de converter imagens coloridas em imagens com apenas um canal, obtendo uma imagem quantizada que pode ser então processada por métodos de extração de características. Dessa forma, cada imagem -- originalmente no espaço de cor RGB -- é convertida a um único canal com $C$ níveis de intensidade. Após, são utilizados os métodos apresentados na Seção \ref{sec:extracao} para extrair as características.
+A Figura \ref{fig:quant:flow} ilustra esses passos, da aquisição até a classificação das imagens.
 
 \begin{figure}[htbp]
   \begin{center}
     \centering
     \includegraphics[width=0.25\linewidth]{\detokenize{figuras/quantizacao/quantizationFlow.png}}
   \end{center}
+  \label{fig:quant:flow}
 \end{figure}
-
 
 Cada método de quantização se comporta diferentemente para uma dada imagem RGB. Por exemplo, o método Intensidade mapeia todas as permutações dos mesmos valores em RBG para a mesma cor. Assim, produz um plano no cubo RBG conforme mostrado na Figura \ref{fig:quant:plano}. O Gleam também é similar, mas spanning uma superfície curva, dada a natureza da função gamma. O mesmo efeito é alcançado utilizando Intensidade'. Em todos os casos, o resultado é o mapeamento de características cromáticas bem diferentes em valores de intensidades similares. O método Luminância tenta melhorar isso ao adicionar um peso na combinação linear dos canais.
 
