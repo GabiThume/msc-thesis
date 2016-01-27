@@ -204,9 +204,7 @@ v(i)= \sum_{j \in I} w(i, j)v(j),
 \subsection{Quantização}
 \label{sec:quantizacao}
 
-Muitos métodos de extração de características são preparados para receber imagens de entrada em escala de cinza. Isso ocorre porque a complexidade de lidar com um pixel representado em três dimensões é muito maior do que em apenas uma dimensão. Assim, os métodos de quantização visam, de alguma forma, reduzir os canais de cores (24 bits) em apenas um (8 bits). \citeonline{Kanan2012} demonstraram que os métodos para a quantização (conversão de uma imagem colorida para escala de cinza) influenciam a performance no reconhecimento de imagens. Eles também salientam que o método utilizado deveria estar claramente descrito nas publicações da área.
-
-% Em um trabalho recente \cite{Ponti2016}, com participação da autora desta dissertação, quatro métodos de quantização foram investigados. Foi constatado que os melhores métodos de conversão para escala de cinza antes da utilização dos descritores de características a serem mencionados na Seção \ref{sec:extracao} são:
+Muitos métodos de extração de características são preparados para receber imagens de entrada em escala de cinza. Isso ocorre porque a complexidade de lidar com um pixel representado em três dimensões é muito maior do que em apenas uma dimensão. Assim, os métodos de quantização visam, de alguma forma, reduzir os canais de cores (24 bits) em apenas um (8 bits). \citeonline{Kanan2012} demonstraram que os métodos para a quantização (conversão de uma imagem colorida para escala de cinza) influenciam a performance no reconhecimento de imagens. Eles também salientam que o método utilizado deveria estar claramente descrito nas publicações da área. Os métodos de conversão para escala de cinza utilizados nessa dissertação foram escolhidos com base em \citeonline{Kanan2012}:
 
 \begin{description}
 \item [Intensidade:] método mais simples, consiste em computar a média entre os canais RGB da imagem a partir de
@@ -229,10 +227,10 @@ Muitos métodos de extração de características são preparados para receber i
 \end{equation*}
 \noindent e então realizar a correção por \textit{gamma}.
 
-\item [Luminosidade:] utilizado nas televisões de alta definição.
-
+\item [Luma:]  similar ao anterior, utilizado nas televisões de alta definição.
+\meutodo{achar referencia}
 \begin{equation*}
-	Q_{Luminosidade} = 0.2126R' + 0.7152G' + 0.0722B'.
+	Q_{Luma} = 0.2126R' + 0.7152G' + 0.0722B'.
 \end{equation*}
 
 \item [Bits Mais Significativos (MSB):] ao invés de realizar uma combinação linear dos canais de cores, ordena os bits dos canais coloridos em um único canal. Computa quantos bits de cada canal de cor contribuem para a imagem final e extrai os bits do código binário dos canais originais \cite{Ponti-Jr2013}.
@@ -269,7 +267,7 @@ A Figura \ref{fig:quantizacao} apresenta a conversão na escala de cinza obtida 
 \begin{subfigure}{.3\textwidth}
   \centering
   \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/Luma_gray.png}}
-  \caption{Luminosidade}
+  \caption{Luma}
   \label{fig:luma}
 \end{subfigure}
 \begin{subfigure}{.3\textwidth}
@@ -313,7 +311,7 @@ A Figura \ref{fig:quantizacao} apresenta a conversão na escala de cinza obtida 
 \section{Extração de características}
 \label{sec:extracao}
 
-O objetivo da extração de características é descrever as informações visuais relevantes em um vetor de características. Esse vetor pode ser utilizado como entrada para um algoritmo de classificação de padrões. Como por exemplo, em aplicações que envolvem a classificação de algas, uma informação muito importante para a discriminação entre classes é a forma \cite{Borges2013}. Essas características devem salientar as diferenças entre imagens de classes distintas e suavizar possíveis diferenças de imagens da mesma classe. Algumas características, segundo~\citeonline{Gonzalez2007}, são:
+O objetivo da extração de características é descrever as informações visuais relevantes em um vetor de características. Esse vetor pode ser utilizado como entrada para um algoritmo de classificação de padrões. Em aplicações que envolvem a classificação de algas, uma informação muito importante para a discriminação entre classes é a forma \cite{Borges2013}. Essas características devem salientar as diferenças entre imagens de classes distintas e suavizar possíveis diferenças de imagens da mesma classe. Algumas características, segundo~\citeonline{Gonzalez2007}, são:
 
 \begin{description}
 \item [Textura:] na sua descrição estatística, possui propriedades como: suavidade, aspereza e uniformidade. Um exemplo de medida para descrever a textura é a entropia.
@@ -328,12 +326,12 @@ Exemplos de métodos conhecidos capazes de descrever forma e outras característ
 
 \item[Vetor de coerência de cor (CCV):] captura informações sobre como as cores são organizadas em regiões conectadas, de acordo com um \textit{threshold}. Classifica os pixels da imagem em coerentes e incoerentes, computa os respectivos histogramas e os concatena \cite{ccv}. Dessa forma, o vetor de características produzido possui $2N$ dimensões.
 
-Um vetor de coerência de cor armazena o número de pixels coerentes e de incoerentes para cada cor. Pixels coerentes fazem parte de uma região contígua enquanto incoerentes não.
+O vetor de coerência de cor armazena o número de pixels coerentes e de incoerentes para cada cor. Pixels coerentes fazem parte de uma região contígua enquanto incoerentes não. Seu funcionamento pode ser resumido nos seguintes passos:
 
 \begin{enumerate}
   \item Borra levemente a imagem ao substituir os pixels pela média do pixel e seus oito vizinhança;
   \item Discretiza o espaço de cor de forma que a imagem contenha apenas $n$ cores distintas;
-  \item Classifica os pixels entre coerente e incoerente dependendo do tamanho do seu componente conectado em relação a um dado \textit{threshold};
+  \item Classifica os pixels entre coerentes e incoerentes: se o tamanho do seu componente conectado for maior ou igual um dado \textit{threshold} é \emph{coerente}; caso contrário, \emph{incoerente};
   \item Computa dois histogramas:
   \begin{itemize}
     \item Histograma de pixels coerentes;
@@ -342,39 +340,47 @@ Um vetor de coerência de cor armazena o número de pixels coerentes e de incoer
   \item Concatena os histogramas.
 \end{enumerate}
 
-\item[Classificação de pixels de borda e interior (BIC):] computa dois histogramas, um para pixels definidos como borda e outro como interior. Se um pixel possuir a mesma cor que seus vizinhos, é pixel de interior; caso contrário, será pixel de borda. Os histogramas são concatenados, gerando um vetor de $2N$ dimensões \cite{bic}.
+\item[Classificação de pixels de borda e interior (BIC):] computa dois histogramas, um para pixels definidos como borda e outro como interior. Se um pixel possuir a mesma cor que seus vizinhos, é pixel de interior; caso contrário, será pixel de borda. Os histogramas são concatenados, gerando um vetor de $2N$ dimensões \cite{bic}. Para computar tal vetor, as operações realizadas são:
 
 \begin{enumerate}
   \item Os pixels são classificados entre borda e interior:
   \begin{itemize}
-    \item Borda: se está na borda da imagem ou se ao menos um dos seus quatro vizinhos tem uma cor diferente do que o próprio pixel;
-    \item Interior: se seus quatro vizinhos possuem a mesma cor.
+    \item \emph{Borda:} se está na borda da imagem ou se ao menos um dos seus quatro vizinhos tem uma cor diferente do que o próprio pixel;
+    \item \emph{Interior:} se seus quatro vizinhos possuem a mesma cor.
   \end{itemize}
   \item Computa dois histogramas:
   \begin{itemize}
-    \item Histograma de borda;
-    \item Histograma de interior.
+    \item Histograma dos pixels classificados como borda;
+    \item Histograma dos pixels classificados como interior.
   \end{itemize}
   \item Concatena os histogramas.
 \end{enumerate}
 
-\item[Auto-correlograma de cor (ACC):] captura a correlação espacial entre cores idênticas. Computa a probabilidade de encontrar dois pixels com a mesma cor, a uma distância $d$ um do outro \cite{acc}. O vector resultante consiste na concatenação dos auto-correlogramas, um para cada distância. Neste estudo, são consideradas quatro distâncias: 1, 3, 5 e 7; resultando em um vetor com $4N$ características.
+\item[Auto-correlograma de cor (ACC):] captura a correlação espacial entre cores idênticas. Para tal, computa a probabilidade de encontrar dois pixels com a mesma cor, a uma distância $d$ um do outro \cite{acc}. O vector resultante consiste na concatenação dos auto-correlogramas, um para cada distância. Neste estudo, são consideradas quatro distâncias: 1, 3, 5 e 7; resultando em um vetor com $4N$ características.
 
-\item[Haralick-6:] descreve a textura das imagens, ou seja, diferenças locais em níveis de intensidade~\cite{Haralick1973}. Extrai seis características a partir uma matriz de coocorrência: entropia, homogeneidade, contraste, correlação, probabilidade máxima e uniformidade. O vetor resultante possui 6 dimensões.
+\item[Haralick-6:] descreve a textura das imagens, ou seja, diferenças locais em níveis de intensidade~\cite{Haralick1973}. O vetor resultante possui seis dimensões que representam as seguintes características:
 
 \begin{enumerate}
-  \item Probabilidade máxima: maior resposta na matriz de co-ocorrência. Intervalo:~$[0,1]$;
-  \item Correlação: descreve as correlações entre as linhas e colunas da matrix. Intervalo:~$[-1,1]$;
-  \item Contraste: mede as variações locais dos níveis de cinza da matriz. Intervalo:~$[0, (colors-1)^2]$;
-  \item Uniformidade: soma dos elementos quadrados. Também conhecido como energia ou segundo momento angular. Intervalo:~$[0,1]$;
-  \item Homogeneidade: mede a proximidade da distribuição dos elementos em relação à diagonal. Intervalo:~$[0,1]$;
-  \item Entropia: descreve a aleatoriedade. Intervalo:~$[0, 2*log_2 colors]$.
+  \item \emph{Probabilidade máxima:} maior resposta na matriz de co-ocorrência. Intervalo:~$[0,1]$;
+  \item \emph{Correlação:} descreve as correlações entre as linhas e colunas da matrix. Intervalo:~$[-1,1]$;
+  \item \emph{Contraste:} mede as variações locais dos níveis de cinza da matriz. Intervalo:~$[0, (colors-1)^2]$;
+  \item \emph{Uniformidade:} soma dos elementos quadrados. Também conhecido como energia ou segundo momento angular. Intervalo:~$[0,1]$;
+  \item \emph{Homogeneidade:} mede a proximidade da distribuição dos elementos em relação à diagonal. Intervalo:~$[0,1]$;
+  \item \emph{Entropia:} descreve a aleatoriedade. Intervalo:~$[0, 2*log_2 colors]$.
 \end{enumerate}
 
-\item [Histogram of Oriented Gradients (HOG):]
-\meutodo{escrever}
+\item [Histograma de Gradientes Orientados (HOG):]  \cite{Dalal2005}.
 
-\item [LBP utilizando padrões uniformes (LBP):] computa um histograma dos padrões locais binários em uma vizinhança da imagem. Essa é uma extensão ao LBP original.
+\begin{enumerate}
+  \item Divide a janela da imagem em células;
+  \item Computa os gradientes;
+  \item Cada pixel calcula uma ponderação para um canal do histograma de orientação de bordas baseado na orientação do gradiente do elemento em que esta centrado. Esses valores são acumulados em bins sobre as regiões espaciais de células e formam o histograma;
+  \item Os votos são interpolados bilinearmente entre os centros de vizinhança do bin em orientação e posição;
+  \item Normaliza o contraste dos blocos da janela que se sobrepõem. Dessa forma cada célula é normalizada em relação a diferentes blocos;
+  \item Concatena os histogramas de todas as células.
+\end{enumerate}
+
+\item [LBP utilizando padrões uniformes (LBP):] baseia-se em reconhecer que padrões de textura uniformes são propriedades fundamentais da textura local da imagen e o histograma da sua ocorrência provou-se um bom extrator de características. Computa um histograma de ocorrência dos padrões locais binários em uma vizinhança da imagem, detectando micro-estruturas cuja distribuição é estimada pelo histograma \cite{Ojala2002}.
 
 \begin{enumerate}
   \item Divide a janela da imagem em células;
@@ -389,6 +395,7 @@ Um vetor de coerência de cor armazena o número de pixels coerentes e de incoer
 %--------------------------------------------------------------------------------
 \section{Características latentes}
 \label{sec:latentes}
+\meutodo{Deixar essa seção?}
 
 Assim como o método de quantização se mostrou relevante na classificação, nesta dissertação são estudados diversos métodos de pré-processamento de imagens, como filtros de borramento e deconvolução, com o objetivo de obter imagens processadas que sejam mais bem caracterizadas para a etapa de classificação (ou seja, aumentando a variância entre as classes, sem aumentar a variância intra-classe). O enfoque está em como realçar determinadas características, como por exemplo cor, textura e forma. A esses atributos pode-se dar o nome de características latentes, não visíveis na imagem original. Identificar e realçar tais características é objetivo deste estudo. Essa abordagem se diferencia das técnicas multi-resolução, pois não pretende encontrar apenas características em versões de diferentes resoluções (convoluídas com filtros passa-baixa), e sim também em versões deconvoluídas ou transformadas por outros operadores.
 
