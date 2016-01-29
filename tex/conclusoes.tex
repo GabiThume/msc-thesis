@@ -15,6 +15,11 @@
 % - o que se pretende fazer daqui pra frente? o que é esperado como resultado?
 % }
 
+Ficou constatado que um vetor original de $D$ dimensões pode ser reduzido a $d \approx D/4$ modifcando apenas o parâmetro de quantização e produzindo bons resultados. Outra possibilidade é utilizar esse métodos como um primeiro passo de redução e então utilizar o LPP para obter apenas 100 características que melhor representam os dados, atingindo acurácias maiores ou similares.
+É importante ressaltar que realizar a quantização de imagens não requere treinamento e já faz parte de uma tarefa do pipeline de reconhecimento. Por esta razão, seu uso não aumenta o custo computacional do sistema, e ainda simplifica os passos subsequentes. Isso reduz a dimensão do vetor de características para os vetores de cor e o tempo de computação para os descritores de textura. Outra observação importante é que a quantização é usada especialmente para dados visuais, então não é um método geral de redução de dimensionalidade.
+
+
+
 Com os experimentos realizados foi possível notar que a geração de imagens artificiais pode gerar novas informações para a classificação das imagens. Assim a geração de elementos no espaço visual provou contribuir com o balanceamento entre classes (em se tratando de problemas de classes desbalanceadas), melhorando a acurácia de algoritmos de classificação, quando comparada à geração de exemplos artificiais no espaço de atributos (i.e.\ SMOTE).
 
 A visualização do espaço de características utilizando a técnica de análise de componentes principais (PCA) se mostrou crucial para confirmar visualmente que a melhora da acurácia da classificação se deve à melhor definição da classe minoritária.
@@ -29,6 +34,10 @@ Como extensão dos experimentos reportados pode ser feita a análise dos espaço
 \section{Publicações}
 
 \section{Trabalhos Futuros}
+
+Ao usar imagens com reduzido número de cores (quantizadas), os métodos de extração de características baseados em orientação (HoG, SIFT), \textit{bag of visual words} e \textit{Fisher vectors}, seriam provavelmente mais esparços.
+
+Em deep leraning, pode ser investigado se o uso de imagens quantizadas ajudaria o aprendizado de características.
 
 %--------------------------------------------------------------------------------
 % \section{Trabalhos futuros}

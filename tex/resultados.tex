@@ -20,26 +20,168 @@
 
 Diferentes métodos de quantização produzem diferentes resultados em termos de acurácia. Quando comparado com métodos mais complexos, esse procedimento permite uma redução de dimensionalidade significante, enquanto preserva ou melhora a acurácia do sistema.
 
+Na Figura \ref{fig:quant:flow} estão demonstrados o diagrama do fluxo das operações e os métodos utilizados nos experimentos. O objetivo dessa seção de resultados é mostrar os efeitos da etapa de quantização e como ela pode ser utilizada para reduzir a dimensionalidade do espaço de características.
+
 \begin{figure}[htbp]
   \begin{center}
     \centering
     \includegraphics[width=0.4\linewidth]{\detokenize{figuras/quantizacao/quantizationResult.png}}
   \end{center}
+  \label{fig:quant:flow}
 \end{figure}
+
+Inicialmente, as imagens são quantizadas em 256, 128, 64, 32 e 16 cores. Após, suas características são extraídas e dois tipos de experimentos são realizados:
+\begin{enumerate}
+  \item Experimentos com um método de extração de características, seguido pela classificação são seleção de características;
+  \item Experimentos com o vetor resultante da concatenação de todos os métodos de extração, seguido pela classificação com e sem seleção de características.
+\end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Base de Imagens}
 
+Três bases de imagens foram utilizadas nos experimentos, ilustradas na Figura~\ref{fig:quant:bases}:
+\begin{itemize}
+\item[] \textbf{Corel-1000}\footnote{Disponível em http://www.wang.ist.psu.edu/docs/related/}: consiste em dez classes balanceadas de imagens naturais, com algumas bem definidas e algumas não;
+\item[] \textbf{Caltech101-600}\footnote{Disponível em http://www.vision.caltech.edu/ImageDatasets/Caltech101/}: contém fotos e desenhos. Foram utilizados seis classes balanceadas: aviões, bonsais, candelabros, tartarugas, motocicletas e relógios;
+\item[] \textbf{Produce}\footnote{Disponível em ??} (também conhecido como base de vegetais e frutas tropicais): composta por imagens com fundo similar, mas mudanças na iluminação, no número de objetos e na escala. Apesar da oclusão parcial de objetos ser observada, essa classe possui dados bem comportados.
+\end{itemize}
+
+\begin{figure}[htbp]
+  \begin{center}
+  \begin{subfigure}{.8\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_Caltech101_dataset.jpg}}
+    \caption{Base de imagens Caltech101}
+  \end{subfigure}
+  \begin{subfigure}{.8\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_COREL_dataset.jpg}}
+    \caption{Base de imagens Caltech101}
+  \end{subfigure}
+  \begin{subfigure}{.8\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_Produce_dataset.jpg}}
+    \caption{Base de imagens Caltech101}
+  \end{subfigure}
+  \label{fig:quant:bases}
+  \end{center}
+  \caption[]{\textit{Fonte:~\cite{Ponti2016}.}}
+\end{figure}
+
+Considerando que esses experimentos possuem foco na redução na dimensionalidade e com a motivação de evitar o problema do desbalanceamento, as bases \textit{Produce} e \textit{Caltech101} foram modificadas. Para tal, as classes disponíveis foram balanceadas ao remover imagens das classes majoritárias.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Protocolo}
 
+O seguinte protocolo foi seguido para a obtenção dos resultados:
 
+\begin{enumerate}
+\item \textbf{Quantização}:
+
+\item \textbf{Extração de características}: os parâmetros para os métodos foram escolhidos com base nas recomendações dos artigos originais:
+  \begin{itemize}
+    \item ACC: utilizando um conjunto de quatro distâncias $D$ e a distância xadrez;
+    \item BIC: com uma vizinhança de quatro pixels;
+    \item CCV: adotando um valor de \textit{threshold} de 25 para a classificação dos pixels entre coerentes e incoerentes;
+    \item Haralick-6: o pixel vizinho para o qual computar a matriz de correlação foi definido como sendo o pixel a direita.
+  \end{itemize}
+\item \textbf{Redução da dimensionalidade}: a projeção LPP foi realizada com o parâmetro $k$ = 128, 64, 32 e 16 dimensões e 10 vizinhos. Esse parâmetro foi determinado empiricamente e não influencia consideravelmente a acurácia.
+\item \textbf{Classificação}: para essa tarefa foi utilizado o classificador SVM (\textit{Support Vector Machines}). Os parâmetros para tal foram encontrados utilizando uma \textit{grid search} no conjunto de treino.
+\end{enumerate}
+
+Os experimentos foram realizados com uma validação cruzada de \textit{10-fold}. Considerando que as bases estão balanceadas e que a seleção de exemplos para a validação cruzada é estratificada, a medida estatística de \textit{acurácia} foi utilizada para avaliar a performance da classificação.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Resultados e Discussão}
 
+A Figura \label{fig:quant:results} ilustra a acurácia média para o primeiro conjunto de experimentos. Para cada base de dados e método de extração, estão demonstrados seis resultados de acurácia, correspondendo a quantização para 256, 128, 64, 32, 16 e 8 cores. Com base nessa figura é possível identificar que o método para obter a imagem quantizada tem impacto significativo na acurácia da classificação. Uma importante observação é que a redução de 256 para um menor número de cores normalmente mantém as acurácias e pode em alguns casos até melhorar um pouco ela, especialmente para os níveis de 128 e 64.
 
+\begin{figure}[htbp]
+  \begin{center}
+    \centering
+    \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_results_individual.png}}
+  \end{center}
+  \caption[Resultados para Corel(a), Produce(b) e Caltech(c), com todos os métodos de quantização. Para cada método de extração de características a acurácia é resultante da sua aplicação utilizando 256, 128, 64, 32, 16 e 8 cores, da esquerda para a direita.]{Resultados para Corel(a), Produce(b) e Caltech(c), com todos os métodos de quantização. Para cada método de extração de características a acurácia é resultante da sua aplicação utilizando 256, 128, 64, 32, 16 e 8 cores, da esquerda para a direita.\textit{Fonte:~\cite{Ponti2016}.}}
+  \label{fig:quant:results}
+\end{figure}
 
+A partir dessa análise geral, uma análise mais específica foi realizada com a combinação dos métodos BIC e MSB; e Haralick e Luminância. Considerando que a utilização de apenas 16 e 8 cores resultou em uma acurácia muito inferior, para o restante dos resultados o número de cores ficou em 256, 128, 64 e 32.
+
+\meutodo{descrever o teste estatístico e o resultado}
+
+O teste estatístico ANOVA foi realizado para comparar as acurácias dos experimentos da Figura \ref{fig:quant:boxplotBIC} e \ref{fig:quant:boxplotHaralick}. O boxplot para 256, 128, 64 e 32 cores com os métodos BIC e MSB está demonstrado na Figura \ref{fig:quant:boxplotBIC}. De acordo com o teste estatístico representado, utilizar características de cor e níveis de quantização providos pelo método MSB demonstrou resultados melhores do que com 256 cores para as bases Corel (128, 64 e 32 cores) e Caltech (64 cores). O único resultado que piorou significativamente foi para 32 cores da base de imagens \textit{Produce}. Portanto, reduzir converter as imagens de 3 canais de cores para um e reduzir os 256 possíveis valores para apenas 64 provou uma boa escolha de processamento anterior a extração de características. Menores valores podem degradar os resultados em características de textura, como mostrado na Figura \ref{fig:quant:boxplotHaralick}.
+
+\begin{figure}[htbp]
+  \begin{center}
+    \centering
+    \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_results_individual_boxplotBIC.png}}
+  \end{center}
+  \label{fig:quant:boxplotBIC}
+  \caption[Resultados de acurácia para o método de quantização MSB considerando 256, 128, 64 e 32 cores com o descritor BIC. Os boxplots em cinza correspondem às significâncias estatísticas com $p \l 0.01$ quando comparado a acurácia de 256 cores.]{Resultados de acurácia para o método de quantização MSB considerando 256, 128, 64 e 32 cores com o descritor BIC. Os boxplots em cinza correspondem às significâncias estatísticas com $p \l 0.01$ quando comparado a acurácia de 256 cores. \textit{Fonte:~\cite{Ponti2016}.}}
+\end{figure}
+
+\begin{figure}[htbp]
+  \begin{center}
+    \centering
+    \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_results_individual_boxplotHaralick.png}}
+  \end{center}
+  \caption[Resultados de acurácia para o método de quantização Luminância considerando 256, 128, 64 e 32 cores com o descritor Haralick. Os boxplots em cinza correspondem às significâncias estatísticas com $p \l 0.01$ quando comparado a acurácia de 256 cores.]{Resultados de acurácia para o método de quantização Luminância considerando 256, 128, 64 e 32 cores com o descritor Haralick. Os boxplots em cinza correspondem às significâncias estatísticas com $p \l 0.01$ quando comparado a acurácia de 256 cores. \textit{Fonte:~\cite{Ponti2016}.}}
+  \label{fig:quant:boxplotHaralick}
+\end{figure}
+
+Outra comparação interessante é a redução de dimensionalidade obtida utilizando os métodos de quantização e LPP ilustrada na Figura \ref{fig:quant:boxplotMSBLPP}. A imagem de entrada foi quantizada com MSB para 256 cores. Essa imagem foi dada como entrada para o método de extração de características BIC que resultou em um vetor dado como entrada para o LPP. Esse último passo teve o objetivo de produzir versões reduzidas desse vetor para 256, 128 e 64 dimensões. As acurácias obtidas foram comparadas com a classificação dos vetores reduzidos apenas pela quantização. O método de quantização obteve valores de acurácia menores à utilização do LPP em três experimentos: de 256 dimensões com a base \textit{Corel} e com 256 e 64 na base \textit{Produce}. Para a base \textit{Caltech} a quantização foi melhor com 256 e 128 dimensões. O restante dos experimentos não apresentaram diferença estatística relevante. Apesar da perda de acurácia em alguns casos, é importante notar que -- se utilizado um número de cores correto -- é possível manter ou até mesmo melhorar as acurácias após a redução da dimensionalidade. Isso pode ser observado na Figura \ref{fig:quant:boxplotMSBLPP} referente à base de dados \textit{Caltech}.
+
+\begin{figure}[htbp]
+  \begin{center}
+    \centering
+    \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_results_individual_boxplotMSBLPP.png}}
+  \end{center}
+  \caption[Resultados de acurácia para os método MSB (quantização) e LPP para redução de dimensionalidade e BIC para a extração de características. A comparação foi realizada de forma par (LPP versus MSB) com a mesma dimensionalidade. Os boxplots em cinza correspondem às significâncias estatísticas com $p \l 0.01$ quando comparado a acurácia de 256 cores.]{Resultados de acurácia para os método MSB (quantização) e LPP para redução de dimensionalidade e BIC para a extração de características. A comparação foi realizada de forma par (LPP versus MSB) com a mesma dimensionalidade. Os boxplots em cinza correspondem às significâncias estatísticas com $p \l 0.01$ quando comparado a acurácia de 256 cores. \textit{Fonte:~\cite{Ponti2016}.}}
+  \label{fig:quant:boxplotMSBLPP}
+\end{figure}
+
+O problema da dimensionalidade de um vetor resultante de apenas um método de extração de características pode ser considerado baixo. Ainda mais que é comum extrair diversos descritores para uma situação, já que normalmente não está claro qual método deveria ser utilizado em cada caso. Por conta disso, os próximos experimentos utilizaram da concatenação de características.
+
+O objetivo desses experimento é verificar se a concatenação de todos os descritores pode melhorar os resultados. Além disso, comparar os resultados encontrados com os experimentos anteriores, afim de verificar se a quantização pode ser uma alternativa a redução da dimensionalidade com métodos convencionais (LPP, neste caso). A melhor configuração encontrada entre tamanho do vetor e acurácia foi utilizando 128 e 64 cores.
+
+O número de características em relação ao número de cores, concatenando todos os vetores resultantes dos métodos de extração de características, é: 256 cores -- 2310 características; 128 cores -- 1160 características; 64 cores -- 582 características; 32 cores --- 294 características; e 16 cores -- 150 características.
+
+Inicialmente, foi testada a configuração de um vetor $D=2310$ com LPP para redução de dimensionalidade com $d$ = 1160, 582, 294 e 150. Ou seja, produzindo vetores com o mesmo tamanho dos obtidos apenas com a quantização como redução da dimensão. A Figura \ref{fig:quant:resultsFull} mostra os resultados utilizando LPP. Note que o método de quantização MSB resultou em acurácias melhores que os outros métodos.
+
+\begin{figure}[htbp]
+  \begin{center}
+    \centering
+    \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_results_full.png}}
+  \end{center}
+  \caption[Comparação da acurácia alcançada com diferentes métodos de quantização: Gleam, Intensidade, Luminância e MSB. Inicialmente com $D=2310$ e então reduzindo com LPP para $d = 1160$, $582$, $294$ e $150$.]{Comparação da acurácia alcançada com diferentes métodos de quantização: Gleam, Intensidade, Luminância e MSB. Inicialmente com $D=2310$ e então reduzindo com LPP para $d = 1160$, $582$, $294$ e $150$. \textit{Fonte:~\cite{Ponti2016}.}}
+  \label{fig:quant:resultsFull}
+\end{figure}
+
+A utilização da concatenação de todos os vetores melhorou a acurácia em relação ao melhor descritor individual. A Figura \ref{fig:quant:resultsFullBoxplot} apresenta a comparação do espaço original com LPP e MSB para redução da dimensionalidade. O teste estatístico ANOVA foi realizado, seguido do teste da significância diferença honesta de Tukey. Os dois testes utilizaram $\alpha = 0.01$ como nível de significância. Os resultados que não mudaram significativamente as acurácias foram MSB com 582 características para a base de dados Corel e MSB com 1160 nas três bases. O único resultado de piora foi para 32 níveis da base Produce. Assim, 64 cores parece ser uma boa escolha de parâmetro de quantização.
+
+\begin{figure}[htbp]
+  \begin{center}
+    \centering
+    \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_results_full_boxplot.png}}
+  \end{center}
+  \caption[Comparação da acurácia com o uso da projeção LPP e o método MSB para quantização das imagens com o objetivo de redução de dimensionalidade.]{Comparação da acurácia com o uso da projeção LPP e o método MSB para quantização das imagens com o objetivo de redução de dimensionalidade. \textit{Fonte:~\cite{Ponti2016}.}}
+  \label{fig:quant:resultsFullBoxplot}
+\end{figure}
+
+Os resultados indicam que a quantização pode ser utilizada como redução da dimensão para dados visuais, especialmente com 128 e 64 cores. Como experimento, a Figura \ref{fig:quant:fullLPP} mostra os resultados da utilização do LPP sob o vetor obtido após a quantização com MSB utilizando 256 e 64 cores ($d=2310$ e $d=582$, respectivamente). É interessante notar que as projeções LPP em geral foram melhores com as imagens quantizadas em 64 cores com MSB ao invés da original em 256. A razão para isso deve estar no fato da quantização remover informações confusas: ela simplifica as imagens de forma que as cores restantes possam melhor descrever uma certa classe.
+
+\begin{figure}[htbp]
+  \begin{center}
+    \centering
+    \includegraphics[width=0.6\linewidth]{\detokenize{figuras/quantizacao/fig_results_full_LPP}}
+  \end{center}
+  \caption[Resultados para a projeção do LPP sobre o espaço de características produzido pelo método de quantização MSB utilizando 256 ($d = 2310$) e 64 cores ($d=582$)]{Resultados para a projeção do LPP sobre o espaço de características produzido pelo método de quantização MSB utilizando 256 ($d = 2310$) e 64 cores ($d=582$)\textit{Fonte:~\cite{Ponti2016}.}}
+  \label{fig:quant:fullLPP}
+\end{figure}
+
+O vetor concatenado com todos os descritores possui $9C + 6$ dimensões, onde $C$ é o número de cores da imagem de entrada. E o tempo de execução para a extração de todas as características é $f(N) = 42N + 6C^2$, onde $N$ é o número de pixels. Para cada imagem são necessárias $D^2 + kD + d^2$ operações para computar o vetor reduzido com LPP, onde $D$ é o tamanho do vetor original, $d$ o tamanho do vetor de saída e $k$ é o número de vizinhos utilizados no algoritmo.
+
+Considere o seguinte exemplo: 100 imagens com 256 cores demandam 231.6 milhões de instruções do computador para extrair as características e reduzir o vetor utilizando o método LPP (com $k = 10$ e $d = 50$). Se ao invés disso, fossem utilizadas 64 cores, esse número cairia para 58.7 milhões, o que corresponde a uma redução de 74,6\%. Dessa forma, independente de utilizar um método de seleção de características, ao escolher um método de quantização apropriado e seus parâmetros, é possível reduzir a dimensionalidade e acelerar computacionalmente as etapas que precedem o reconhecimento de imagens.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Geração de Imagens Artificiais}
@@ -57,7 +199,7 @@ Essa seção descreve os resultados encontrados ao rebalancear as classes de ima
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Base de Imagens}
 
- Os resultados foram obtidos utilizando a base de imagens COREL\footnote{Disponível em http://wang.ist.psu.edu/docs/related/}, composta por fotografias que representam classes variadas: tribos africanas, praia, construções, ônibus, dinossauros, elefantes, flores, cavalos, montanhas e tipos de comidas. São 10 classes balanceadas com 100 imagens cada. Para fins de exemplificação, são apresentadas amostras das imagens que representam essas classes na Figura \ref{fig:corel}.
+ Os resultados foram obtidos utilizando a base de imagens COREL-1000\footnote{Disponível em http://wang.ist.psu.edu/docs/related/}, composta por fotografias que representam classes variadas: tribos africanas, praia, construções, ônibus, dinossauros, elefantes, flores, cavalos, montanhas e tipos de comidas. São 10 classes balanceadas com 100 imagens cada. Para fins de exemplificação, são apresentadas amostras das imagens que representam essas classes na Figura \ref{fig:corel}.
 
  \begin{figure}[hbpt]
  \begin{center}
@@ -70,22 +212,22 @@ Essa seção descreve os resultados encontrados ao rebalancear as classes de ima
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Protocolo}
 
-O seguinte protocolo foi seguido para a obtenção dos resultados:
-
-\begin{enumerate}
-\item \textbf{Classes de imagens originais}: classes Elefante e Cavalo da COREL-1000;
-\item \textbf{Amostragem dos dados}: 50\% para treino e 50\% para teste de cada classe;
-\item \textbf{Desbalanceamento}: remoção de 50\% do conjunto de treino da classe Cavalo;
-\item \textbf{Método para geração artificial}: mistura de duas imagens originais, exemplificado na Figura~\ref{fig:mistura};
-\item \textbf{Quantização}: Intensidade. É o método mais simples de converter uma imagem colorida em tons de cinza. Consiste em computar a média entre os canais RGB da imagem a partir de
-\begin{equation}
-	Q_{Intensidade} = \frac{1}{3}(R + G + B)
-\end{equation}
-\noindent e então realizar uma correção por \textit{gamma};
-\item \textbf{Extração de características}: classificação de pixels de borda e interior (BIC). Computa dois histogramas, um para pixels definidos como borda e outro como interior. Se um pixel possuir a mesma cor que seus vizinhos, é considerado pixel de interior; caso contrário, será pixel de borda. Os histogramas são concatenados em um vetor de $2N$ dimensões, onde $N$ é o número de intensidades de cor da imagem \cite{bic};
-\item \textbf{Classificação}: classificador supervisionado K=NN com $K = 1$ (para mais detalhes ver Seção~\ref{sec:knn});
-\item \textbf{Projeção multidimensional}: projetados os dois componentes principais encontrados ao aplicar PCA nos vetores de características para redução de dimensionalidade (Seção~\ref{sec:pca}). A implementação desenvolvida para esta projeção pode ser encontrada em \url{https://github.com/GabiThume/msc-src/blob/master/visualization/plot.py}. Vale destacar que uma animação da adição de cada novo exemplo foi realizada para fim de visualizar o melhor subespaço gerado.
-\end{enumerate}
+% O seguinte protocolo foi seguido para a obtenção dos resultados:
+%
+% \begin{enumerate}
+% \item \textbf{Classes de imagens originais}: classes Elefante e Cavalo da COREL-1000;
+% \item \textbf{Amostragem dos dados}: 50\% para treino e 50\% para teste de cada classe;
+% \item \textbf{Desbalanceamento}: remoção de 50\% do conjunto de treino da classe Cavalo;
+% \item \textbf{Método para geração artificial}: mistura de duas imagens originais, exemplificado na Figura~\ref{fig:mistura};
+% \item \textbf{Quantização}: Intensidade. É o método mais simples de converter uma imagem colorida em tons de cinza. Consiste em computar a média entre os canais RGB da imagem a partir de
+% \begin{equation}
+% 	Q_{Intensidade} = \frac{1}{3}(R + G + B)
+% \end{equation}
+% \noindent e então realizar uma correção por \textit{gamma};
+% \item \textbf{Extração de características}: classificação de pixels de borda e interior (BIC). Computa dois histogramas, um para pixels definidos como borda e outro como interior. Se um pixel possuir a mesma cor que seus vizinhos, é considerado pixel de interior; caso contrário, será pixel de borda. Os histogramas são concatenados em um vetor de $2N$ dimensões, onde $N$ é o número de intensidades de cor da imagem \cite{bic};
+% \item \textbf{Classificação}: classificador supervisionado K=NN com $K = 1$ (para mais detalhes ver Seção~\ref{sec:knn});
+% \item \textbf{Projeção multidimensional}: projetados os dois componentes principais encontrados ao aplicar PCA nos vetores de características para redução de dimensionalidade (Seção~\ref{sec:pca}). A implementação desenvolvida para esta projeção pode ser encontrada em \url{https://github.com/GabiThume/msc-src/blob/master/visualization/plot.py}. Vale destacar que uma animação da adição de cada novo exemplo foi realizada para fim de visualizar o melhor subespaço gerado.
+% \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Resultados e Discussão}
 
@@ -119,7 +261,7 @@ A classificação dos três experimentos utilizando KNN reportou que o \textit{f
       \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/geracao-treino-fixed.png}}
     \end{subfigure}
   \end{center}
-  \caption{Comparação dos examplos de treinamento da geração com SMOTE e no campo visual. Em laranja estão representados os novos exemplos, projetados no plano da base original balanceada.}
+  \caption{Comparação dos exemplos de treinamento da geração com SMOTE e no campo visual. Em laranja estão representados os novos exemplos, projetados no plano da base original balanceada.}
   \label{fig:compara_vis_treino_fixed}
 \end{figure}
 
@@ -277,7 +419,7 @@ Como relatado no início dessa seção, o extrator de características utilizado
 % \section{Resultados}
 % \label{sec:resultadospreliminares}
 %
-% Este estudo preliminar apresentou evidências experimentais de que, em problemas de duas classes (apresentadas na Figura~\ref{fig:praiamontanha}), pode haver ganho estatístico da medida-F ao gerar imagens, quando comparado à geração de exemplos artificiais no espaço de atributos (ou seja, depois que as características já foram extraídas das imagens). Essa melhoria pode ser notada na Figura~\ref{fig:resultmelhor}, que apresenta a relação da medida-F com a taxa de balanceamento, utilizando: as imagens originais, a geração de exemplos com SMOTE e as imagens geradas. Para essa configuração, foi utilizado o descritor de características ACC com a conversão em escala de cinza por MSB e a operação de pré-processamento por combinação. As classes ``praia'' e ``montanha'' foram escolhidas por serem as classes que possuem maior dificultade de diferenciação, havendo alta taxa de sobreposição de intensidades de cores e texturas, conforme testes realizados.
+% Este estudo preliminar apresentou evidências experimentais de que, em problemas de duas classes (apresentadas na Figura~\ref{fig:praiamontanha}), pode haver ganho estatístico da medida-F ao gerar imagens, quando comparado à geração de exemplos artificiais no espaço de atributos (ou seja, depois que as características já foram extraídas das imagens). Essa melhoria pode ser notada na Figura~\ref{fig:resultmelhor}, que apresenta a relação da medida-F com a taxa de balanceamento, utilizando: as imagens originais, a geração de exemplos com SMOTE e as imagens geradas. Para essa configuração, foi utilizado o descritor de características ACC com a conversão em escala de cinza por MSB e a operação de pré-processamento por combinação. As classes ``praia'' e ``montanha'' foram escolhidas por serem as classes que possuem maior dificuldade de diferenciação, havendo alta taxa de sobreposição de intensidades de cores e texturas, conforme testes realizados.
 %
 % \vspace{20pt}
 %

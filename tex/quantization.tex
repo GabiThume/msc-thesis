@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Considerações iniciais}
 
-Sistemas de reconhecimento de imagens comumente utilizam uma imagem em níveis de cinza 8-bits com 256 intensidades para a extração de características. Ao aplicar a quantização (redução de cores) na etapa de pré-processamento, é esperada a redução da complexidade do vetor de características logo no ínicio, beneficiando todos os passos subsequentes.
+Sistemas de reconhecimento de imagens comumente utilizam uma imagem em níveis de cinza 8-bits com 256 intensidades para a extração de características. Ao aplicar a quantização (redução de cores) na etapa de pré-processamento, é esperada a redução da complexidade do vetor de características logo no início, beneficiando todos os passos subsequentes.
 
 Para analisar o impacto da utilização da quantização, são utilizados diferentes parâmetros de quantização combinados com quatro métodos de extração de cor e um de textura. Esses extratores foram escolhidos de acordo com os resultados apresentados por \citeonline{Penatti2012}.
 
@@ -36,28 +36,28 @@ Um exemplo das imagens obtidas após os métodos de quantização apresentados a
 
 \begin{figure}[htbp]
   \begin{center}
-    \begin{subfigure}{.3\textwidth}
+    \begin{subfigure}{.25\textwidth}
       \centering
       \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_quanttest.png}}
       \caption{Original}
       \label{fig:quant:original}
     \end{subfigure}
-    \begin{subfigure}{.3\textwidth}
+    \begin{subfigure}{.25\textwidth}
       \centering
       \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_quantGleam.png}}
       \caption{Gleam}
     \end{subfigure}
-    \begin{subfigure}{.3\textwidth}
+    \begin{subfigure}{.25\textwidth}
       \centering
       \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_quantIntensity.png}}
       \caption{Intensidade'}
     \end{subfigure}
-    \begin{subfigure}{.3\textwidth}
+    \begin{subfigure}{.25\textwidth}
       \centering
       \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_quantLuminance.png}}
       \caption{Luminance'}
     \end{subfigure}
-    \begin{subfigure}{.3\textwidth}
+    \begin{subfigure}{.25\textwidth}
       \centering
       \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_quantMSB.png}}
       \caption{MSB}
@@ -68,8 +68,7 @@ Um exemplo das imagens obtidas após os métodos de quantização apresentados a
   \label{fig:quant:quantizacoes}
 \end{figure}
 
-
-% A Tabela \ref{tab:quantizacao} apresenta alguns examplos numéricos, com a saída de cada método. Nesse caso, as entradas são tuplas de valores $(R, G, B)$. Note que a correção \textit{gamma} deve ser computada em um intervalo de valores reais $0-1$, que depois é mapeado para o intervalo $0-255$.
+% A Tabela \ref{tab:quantizacao} apresenta alguns exemplos numéricos, com a saída de cada método. Nesse caso, as entradas são tuplas de valores $(R, G, B)$. Note que a correção \textit{gamma} deve ser computada em um intervalo de valores reais $0-1$, que depois é mapeado para o intervalo $0-255$.
 
 Na Figura \ref{fig:quant:avioes} é demonstrado um exemplo de redução de cores utilizando o método MSB para um par de imagens da base de dados Caltech-101. Importante destacar que há preservação das cores, especialmente entre 64 e 256. Ao utilizar apenas 32 cores, as imagens ainda são satisfatórias mas há uma perda de informação considerável.
 
