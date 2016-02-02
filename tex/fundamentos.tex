@@ -690,7 +690,7 @@ Métodos para remoção de exemplos da classe majoritária normalmente apresenta
 
 %-------------------------------------------------------------------------------
 \section{Classificadores de padrões}
-\label{cap:classificadores}
+\label{sec:classificadores}
 
 % \subsection{Naive Bayes}
 
@@ -703,6 +703,7 @@ Métodos para remoção de exemplos da classe majoritária normalmente apresenta
 % \noindent onde $P(A|B)$ é a probabilidade de um exemplo $B$ pertencer à classe $A$; $P(A)$ a probabilidade ``a priori'' da classe e $P(B)$ que pode ser estimado pela frequência com que um novo exemplo ocorre, que pode ser ignorado por ser o mesmo para todas as classes \cite{Faceli2011}.
 
 \subsection{Algoritmo k-Vizinhos Mais Próximos}
+\label{sec:knn}
 
 K-NN é um classificador supervisionado que considera a proximidade entre os dados para realizar predições. Baseia-se na premissa de que os objetos do mesmo conceito são semelhantes. Na fase de treinamento, apenas armazena os exemplos rotulados do conjunto de dados de treinamento. Quando um novo exemplo deve ser classificado, calcula a distância entre os vetores de características do novo exemplo e aqueles já rotulados. O novo exemplo é então classificado como sendo da classe do exemplo de treinamento com menor distância~\cite{Boiman2008}.
 

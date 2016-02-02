@@ -14,27 +14,31 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Considerações Iniciais}
 
+Este capítulo apresenta os resultados encontrados na aplicação dos métodos descritos nos capítulos anteriores no pipeline de reconhecimento de imagens. Para cada experimento realizado, são descritos: a base de imagens, o protocolo utilizado, os resultados encontrados e a discussão da relevância de tais resultados.
+
+Inicialmente os experimentos serão relacionados à quantização de imagens e posteriormente à geração de imagens para rebalancear classes. Ambos os métodos são realizados antes da extração de características, e portanto no campo visual. Dessa forma, os resultados devem refletir melhoras nas etapas subsequentes, como melhora da acurácia da classificação ou redução do tempo de processamento.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Quantização de Imagens}
 
-Diferentes métodos de quantização produzem diferentes resultados em termos de acurácia. Quando comparado com métodos mais complexos, esse procedimento permite uma redução de dimensionalidade significante, enquanto preserva ou melhora a acurácia do sistema.
+Diferentes métodos de quantização provocam diferentes resultados em termos de acurácia. Quando comparado o uso desses métodos com a utilização de métodos mais complexos, esse procedimento permite uma redução de dimensionalidade significante, enquanto normalmente preserva ou melhora a acurácia do sistema.
 
-Na Figura \ref{fig:quant:flow} estão demonstrados o diagrama do fluxo das operações e os métodos utilizados nos experimentos. O objetivo dessa seção de resultados é mostrar os efeitos da etapa de quantização e como ela pode ser utilizada para reduzir a dimensionalidade do espaço de características.
+Inicialmente, as imagens são quantizadas em 256, 128, 64, 32 e 16 cores. Após, suas características são extraídas e duas etapas de experimentos são realizadas:
+\begin{enumerate}
+  \item Experimentos com um método de extração de características, seguido pela classificação sem uma posterior seleção de características;
+  \item Experimentos com o vetor resultante da concatenação de todos os métodos de extração, seguido pela classificação com e sem seleção de características.
+\end{enumerate}
+
+A Figura \ref{fig:quant:flowResult} demonstra o fluxo das operações e os métodos utilizados nos experimentos. O objetivo dessa seção de resultados é mostrar os efeitos da etapa de quantização e como ela pode ser utilizada para reduzir a dimensionalidade do espaço de características.
 
 \begin{figure}[htbp]
   \begin{center}
     \centering
     \includegraphics[width=0.4\linewidth]{\detokenize{figuras/quantizacao/quantizationResult.png}}
   \end{center}
-  \label{fig:quant:flow}
+  \caption[Essa figura demonstra o fluxo das operações e os métodos utilizados nos experimentos. Após a aquisição da imagem, ela é convertida para escala de cinza por algum método de quantização e seus níveis de cor reduzidos por um parâmetro de quantização. Dependendo do método, a correção \emph{gamma} é realizada. A imagem quantizada serve então como entrada para um método de extração de características e posteriormente é classificada com \emph{SVM}. Uma das etapas de experimentos prevê também a concatenação de todos os vetores extraídos e a seleção das características com \emph{LPP} antes da classificação.]{Essa figura demonstra o fluxo das operações e os métodos utilizados nos experimentos. Após a aquisição da imagem, ela é convertida para escala de cinza por algum método de quantização e seus níveis de cor reduzidos por um parâmetro de quantização. Dependendo do método, a correção \emph{gamma} é realizada. A imagem quantizada serve então como entrada para um método de extração de características e posteriormente é classificada com \emph{SVM}. Uma das etapas de experimentos prevê também a concatenação de todos os vetores extraídos e a seleção das características com \emph{LPP} antes da classificação. \textit{Fonte:~Elaborado pela autora.}}
+  \label{fig:quant:flowResult}
 \end{figure}
-
-Inicialmente, as imagens são quantizadas em 256, 128, 64, 32 e 16 cores. Após, suas características são extraídas e dois tipos de experimentos são realizados:
-\begin{enumerate}
-  \item Experimentos com um método de extração de características, seguido pela classificação são seleção de características;
-  \item Experimentos com o vetor resultante da concatenação de todos os métodos de extração, seguido pela classificação com e sem seleção de características.
-\end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Base de Imagens}
@@ -63,9 +67,9 @@ Três bases de imagens foram utilizadas nos experimentos, ilustradas na Figura~\
     \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_Produce_dataset.jpg}}
     \caption{Base de imagens Caltech101}
   \end{subfigure}
-  \label{fig:quant:bases}
   \end{center}
   \caption[]{\textit{Fonte:~\cite{Ponti2016}.}}
+  \label{fig:quant:bases}
 \end{figure}
 
 Considerando que esses experimentos possuem foco na redução na dimensionalidade e com a motivação de evitar o problema do desbalanceamento, as bases \textit{Produce} e \textit{Caltech101} foram modificadas. Para tal, as classes disponíveis foram balanceadas ao remover imagens das classes majoritárias.
@@ -76,17 +80,17 @@ Considerando que esses experimentos possuem foco na redução na dimensionalidad
 O seguinte protocolo foi seguido para a obtenção dos resultados:
 
 \begin{enumerate}
-\item \textbf{Quantização}:
-
-\item \textbf{Extração de características}: os parâmetros para os métodos foram escolhidos com base nas recomendações dos artigos originais:
+\item \textbf{Quantização}: com os métodos \emph{Intensidade}, \emph{Gleam}, \emph{Luminância} e \emph{MSB}.
+\meutodo{conferir com o gamma dos métodos explicados nos fundamentos}
+\item \textbf{Extração de características}: utilizando os métodos -- e parâmetros escolhidos com base nas recomendações dos artigos que proporam tais métodos -- a seguir:
   \begin{itemize}
-    \item ACC: utilizando um conjunto de quatro distâncias $D$ e a distância xadrez;
-    \item BIC: com uma vizinhança de quatro pixels;
-    \item CCV: adotando um valor de \textit{threshold} de 25 para a classificação dos pixels entre coerentes e incoerentes;
-    \item Haralick-6: o pixel vizinho para o qual computar a matriz de correlação foi definido como sendo o pixel a direita.
+    \item \emph{ACC}: utilizando um conjunto de quatro distâncias $D = {1, 3, 5, 7}$ e a distância tabuleiro de xadrez $D_8(p,q) = Max(|x-s|, |y-t|)$ entre os pixeis $p(x,y)$ e $q(s,t)$;
+    \item \emph{BIC}: com uma vizinhança de quatro pixels;
+    \item \emph{CCV}: adotando um valor de $\mathit{threshold} = 25$ para a classificação dos pixels entre coerentes e incoerentes;
+    \item \emph{Haralick-6}: o pixel vizinho para o qual computar a matriz de correlação foi definido como sendo o pixel à direita.
   \end{itemize}
 \item \textbf{Redução da dimensionalidade}: a projeção LPP foi realizada com o parâmetro $k$ = 128, 64, 32 e 16 dimensões e 10 vizinhos. Esse parâmetro foi determinado empiricamente e não influencia consideravelmente a acurácia.
-\item \textbf{Classificação}: para essa tarefa foi utilizado o classificador SVM (\textit{Support Vector Machines}). Os parâmetros para tal foram encontrados utilizando uma \textit{grid search} no conjunto de treino.
+\item \textbf{Classificação}: com o classificador SVM (\textit{Support Vector Machines}). Os parâmetros para essa etapa foram encontrados utilizando uma \textit{grid search} no conjunto de treino.
 \end{enumerate}
 
 Os experimentos foram realizados com uma validação cruzada de \textit{10-fold}. Considerando que as bases estão balanceadas e que a seleção de exemplos para a validação cruzada é estratificada, a medida estatística de \textit{acurácia} foi utilizada para avaliar a performance da classificação.
@@ -94,7 +98,7 @@ Os experimentos foram realizados com uma validação cruzada de \textit{10-fold}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Resultados e Discussão}
 
-A Figura \label{fig:quant:results} ilustra a acurácia média para o primeiro conjunto de experimentos. Para cada base de dados e método de extração, estão demonstrados seis resultados de acurácia, correspondendo a quantização para 256, 128, 64, 32, 16 e 8 cores. Com base nessa figura é possível identificar que o método para obter a imagem quantizada tem impacto significativo na acurácia da classificação. Uma importante observação é que a redução de 256 para um menor número de cores normalmente mantém as acurácias e pode em alguns casos até melhorar um pouco ela, especialmente para os níveis de 128 e 64.
+A Figura \ref{fig:quant:results} ilustra a acurácia média para o primeiro conjunto de experimentos. Para cada base de dados e método de extração, estão demonstrados seis resultados de acurácia, correspondendo a quantização para 256, 128, 64, 32, 16 e 8 cores. Com base nessa figura é possível identificar que o método para obter a imagem quantizada tem impacto significativo na acurácia da classificação. Uma importante observação é que a redução de 256 para um menor número de cores normalmente mantém as acurácias e pode em alguns casos até melhorar um pouco ela, especialmente para os níveis de 128 e 64.
 
 \begin{figure}[htbp]
   \begin{center}
@@ -116,8 +120,8 @@ O teste estatístico ANOVA foi realizado para comparar as acurácias dos experim
     \centering
     \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_results_individual_boxplotBIC.png}}
   \end{center}
-  \label{fig:quant:boxplotBIC}
   \caption[Resultados de acurácia para o método de quantização MSB considerando 256, 128, 64 e 32 cores com o descritor BIC. Os boxplots em cinza correspondem às significâncias estatísticas com $p \l 0.01$ quando comparado a acurácia de 256 cores.]{Resultados de acurácia para o método de quantização MSB considerando 256, 128, 64 e 32 cores com o descritor BIC. Os boxplots em cinza correspondem às significâncias estatísticas com $p \l 0.01$ quando comparado a acurácia de 256 cores. \textit{Fonte:~\cite{Ponti2016}.}}
+  \label{fig:quant:boxplotBIC}
 \end{figure}
 
 \begin{figure}[htbp]
@@ -184,54 +188,105 @@ O vetor concatenado com todos os descritores possui $9C + 6$ dimensões, onde $C
 Considere o seguinte exemplo: 100 imagens com 256 cores demandam 231.6 milhões de instruções do computador para extrair as características e reduzir o vetor utilizando o método LPP (com $k = 10$ e $d = 50$). Se ao invés disso, fossem utilizadas 64 cores, esse número cairia para 58.7 milhões, o que corresponde a uma redução de 74,6\%. Dessa forma, independente de utilizar um método de seleção de características, ao escolher um método de quantização apropriado e seus parâmetros, é possível reduzir a dimensionalidade e acelerar computacionalmente as etapas que precedem o reconhecimento de imagens.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
 \section{Geração de Imagens Artificiais}
 
-Essa seção descreve os resultados encontrados ao rebalancear as classes de imagens. Na figura \ref{fig:fluxo} é possível observar o fluxo de operações realizadas para analisar o impacto da geração de imagens no rebalanceamento de classes. O mesmo protocolo de conversão para escala de cinza, extração de características e classificação foi seguido para três experimentos: base desbalanceada; base rebalanceada com interpolação dos vetores de características; e base rebalanceada com a geração artificial de imagens. Portanto inicia-se com a descrição destas bases de imagens, a descrição do protocolo adotado e por fim os resultados obtidos a partir de seu uso são mostrados e discutidos.
+Esta seção descreve os resultados encontrados ao rebalancear as classes de imagens utilizando os processamentos descritos no capítulo anterior aplicados nas imagens originais. Na Figura \ref{fig:fluxo} é possível observar o fluxo de operações realizadas para analisar o impacto da geração de imagens no rebalanceamento de classes. O mesmo protocolo de conversão para escala de cinza, extração de características e classificação foi seguido para três experimentos: base desbalanceada; base rebalanceada com interpolação dos vetores de características (método SMOTE); e base rebalanceada com a geração artificial de imagens.
 
 \begin{figure}[thpb]
 \centering
-\includegraphics[scale=0.8]{\detokenize{figuras/flow_main.pdf}}
-\caption{Fluxo de operações do experimento realizado.}
+\includegraphics[scale=1]{\detokenize{figuras/flow_main.pdf}}
+\caption[Fluxo de operações para obtenção dos resultados do rebalanceamento de classes]{Fluxo de operações para obtenção dos resultados do rebalanceamento de classes. \textit{Fonte:~Elaborado pela autora.}}
 \label{fig:fluxo}
 \end{figure}
 
+Procurando uma certa estabilidade dos resultados obtidos com a geração das imagens artificiais, foi identificada a necessidade de controlar a remoção de imagens da base no momento da criação da base desbalanceada. Assim, os resultados foram obtidos a partir de uma forma de validação K-fold com o objetivo de prover mais robustez ao sistema. A Figura \ref{fig:folds} ilustra como isso foi realizado. Primeiramente as imagens foram divididas de forma aleatória em $k=5$ folds para cada classe. Depois, as duas classes compõe 40 configurações, consistindo de um fold para teste e os outros para treino na classe que ficará balanceada e um de teste e um de treino para a que os métodos de processamento irão rebalancear.
+
+\begin{figure}[thpb]
+\centering
+\includegraphics[scale=1]{\detokenize{figuras/folds_chart.png}}
+\caption[]{\textit{Fonte:~Elaborado pela autora.}}
+\label{fig:folds}
+\end{figure}
+
+A seguir, para cada base de imagens utilizada, são descritos: a base em si; o protocolo e parâmetros adotados; e por fim os resultados obtidos a partir de seu uso são mostrados e discutidos.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Base de Imagens}
+\subsection{Experimento 1: classes elefante e cavalo}
 
- Os resultados foram obtidos utilizando a base de imagens COREL-1000\footnote{Disponível em http://wang.ist.psu.edu/docs/related/}, composta por fotografias que representam classes variadas: tribos africanas, praia, construções, ônibus, dinossauros, elefantes, flores, cavalos, montanhas e tipos de comidas. São 10 classes balanceadas com 100 imagens cada. Para fins de exemplificação, são apresentadas amostras das imagens que representam essas classes na Figura \ref{fig:corel}.
+\begin{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item[] \textbf{Base de Imagens}
 
- \begin{figure}[hbpt]
- \begin{center}
-   \includegraphics[width=1\linewidth]{\detokenize {figuras/exemplos_corel.png}}
- \end{center}
-  \caption[Base de imagens COREL-1000.]{Base de imagens COREL-1000 utilizada. Estão representadas as 10 classes da base. \textit{Fonte: Elaborado pela autora.}}
- \label{fig:corel}
+Neste experimento foram utilizadas duas classes da base Corel de cavalos e elefantes. Elas estão exemplificadas na Figura \ref{fig:exp1:base}. A principal característica dessas imagens é a grande diferença das cores das imagens, apesar de haverem casos de confusão.
+
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{subfigure}{.4\linewidth}
+      \centering
+      \includegraphics[width=\linewidth]{\detokenize{figuras/corel_original4.jpg}}
+    \end{subfigure}
+    \begin{subfigure}{.4\linewidth}
+      \centering
+      \includegraphics[width=\linewidth]{\detokenize{figuras/cavalo-original2.png}}
+    \end{subfigure}
+  \end{center}
+  \caption[]{Classes cavalo e elefante utilizadas neste experimento. São duas classes com 100 imagens cada, originalmente da base de imagens Corel. \textit{Fonte:~Elaborado pela autora.}}
+  \label{fig:exp1:base}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Protocolo}
+\item[] \textbf{Protocolo}
 
-% O seguinte protocolo foi seguido para a obtenção dos resultados:
-%
-% \begin{enumerate}
-% \item \textbf{Classes de imagens originais}: classes Elefante e Cavalo da COREL-1000;
-% \item \textbf{Amostragem dos dados}: 50\% para treino e 50\% para teste de cada classe;
-% \item \textbf{Desbalanceamento}: remoção de 50\% do conjunto de treino da classe Cavalo;
-% \item \textbf{Método para geração artificial}: mistura de duas imagens originais, exemplificado na Figura~\ref{fig:mistura};
-% \item \textbf{Quantização}: Intensidade. É o método mais simples de converter uma imagem colorida em tons de cinza. Consiste em computar a média entre os canais RGB da imagem a partir de
-% \begin{equation}
-% 	Q_{Intensidade} = \frac{1}{3}(R + G + B)
-% \end{equation}
-% \noindent e então realizar uma correção por \textit{gamma};
-% \item \textbf{Extração de características}: classificação de pixels de borda e interior (BIC). Computa dois histogramas, um para pixels definidos como borda e outro como interior. Se um pixel possuir a mesma cor que seus vizinhos, é considerado pixel de interior; caso contrário, será pixel de borda. Os histogramas são concatenados em um vetor de $2N$ dimensões, onde $N$ é o número de intensidades de cor da imagem \cite{bic};
-% \item \textbf{Classificação}: classificador supervisionado K=NN com $K = 1$ (para mais detalhes ver Seção~\ref{sec:knn});
-% \item \textbf{Projeção multidimensional}: projetados os dois componentes principais encontrados ao aplicar PCA nos vetores de características para redução de dimensionalidade (Seção~\ref{sec:pca}). A implementação desenvolvida para esta projeção pode ser encontrada em \url{https://github.com/GabiThume/msc-src/blob/master/visualization/plot.py}. Vale destacar que uma animação da adição de cada novo exemplo foi realizada para fim de visualizar o melhor subespaço gerado.
-% \end{enumerate}
+\begin{enumerate}
+\item \textbf{Imagens originais}: classes \emph{elefante} e \emph{cavalo} da Corel;
+\item \textbf{Desbalanceamento}: para a visualização cada classe foi dividida em 50\% para treino e 50\% para teste e após a classe \emph{cavalo} sofreu remoção de 50\% do conjunto de treino. Já para a análise estatística, todas as 40 configurações de folds com $k=5$ foram realizadas;
+\item \textbf{Método para geração artificial}: para a visualização do espaço de características consistiu na mistura de duas imagens originais, exemplificado na Figura~\ref{fig:mistura}. Para a análise do boxplot de f1-scores, todas as gerações foram testadas;
+\item \textbf{Quantização}: Intensidade;
+\item \textbf{Extração de características}: classificação de pixels de borda e interior (BIC);
+\item \textbf{Classificação}: classificador supervisionado KNN com $K=1$ (para mais detalhes ver Seção~\ref{sec:knn});
+\item \textbf{Projeção multidimensional}: projetados os dois componentes principais encontrados ao aplicar PCA nos vetores de características para redução de dimensionalidade (Seção~\ref{sec:pca}).
+% A implementação desenvolvida para esta projeção pode ser encontrada em \url{https://github.com/GabiThume/msc-src/blob/master/visualization/plot.py}. Vale destacar que uma animação da adição de cada novo exemplo foi realizada para fim de visualizar o melhor subespaço gerado.
+\end{enumerate}
+
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{subfigure}{.3\linewidth}
+      \centering
+      \includegraphics[width=\linewidth]{\detokenize{figuras/cavalo-original.png}}
+    \caption{Original}
+    \end{subfigure}
+    \begin{subfigure}{.3\linewidth}
+      \centering
+      \includegraphics[width=\linewidth]{\detokenize{figuras/cavalo-original2.png}}
+    \caption{Original}
+    \end{subfigure}
+    \begin{subfigure}{.3\linewidth}
+      \centering
+      \includegraphics[width=\linewidth]{\detokenize{figuras/cavalo-blend.png}}
+    \caption{Mistura}
+  \end{subfigure}
+  \end{center}
+  \caption{Geração artificial de imagens com o método de mistura.}
+  \label{fig:mistura}
+\end{figure}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Resultados e Discussão}
+\item[] \textbf{Resultados e Discussão}
 
-As classes Elefante e Cavalo possuem 100 imagens cada. O primeiro passo é remover imagens de uma das classes, tornando a base desbalanceada. Como o foco é na visualização do espaço de características, é relevante ter o modelo do espaço ideal das classes balanceadas, por isso esse experimento em específico não trata de uma base naturalmente desbalanceada. Na Figura~\ref{fig:desbalanceado} está ilustrada a remoção de 50\% das imagens de treino da classe Cavalo, originalmente balanceada. Essa e as próximas projeções desta seção foram obtidas com a técnica para redução de dimensionalidade PCA, descrita na Seção~\ref{sec:pca} e são referentes aos dois componentes principais com maiores autovalores.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item[] \textbf{Visualização}
+
+As classes \emph{elefante} e \emph{cavalo} possuem 100 imagens cada. O primeiro passo é remover imagens de uma das classes, tornando a base desbalanceada. Como o foco é na visualização do espaço de características, é relevante ter o modelo do espaço ideal das classes balanceadas, por isso esse experimento em específico não trata de uma base naturalmente desbalanceada. Na Figura~\ref{fig:desbalanceado} está ilustrada a remoção de 50\% das imagens de treino da classe \emph{cavalo}, originalmente balanceada. Essa e as próximas projeções desta seção foram obtidas com a técnica para redução de dimensionalidade PCA, descrita na Seção~\ref{sec:pca} e são referentes aos dois componentes principais com maiores autovalores.
 
 \begin{figure}[htbp]
   \begin{center}
@@ -244,7 +299,7 @@ As classes Elefante e Cavalo possuem 100 imagens cada. O primeiro passo é remov
       \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/desbalanceado-fixed.png}}
     \end{subfigure}
   \end{center}
-  \caption{Remoção de 50\% das imagens de treino da classe Cavalo.}
+  \caption{Remoção de 50\% das imagens de treino da classe \emph{cavalo}.}
   \label{fig:desbalanceado}
 \end{figure}
 
@@ -288,15 +343,15 @@ De uma forma geral, pode-se dizer que a geração de imagens melhorou a definiç
 
 \begin{figure}[htbp]
   \begin{center}
-    \begin{subfigure}{.49\linewidth}
+    \begin{subfigure}{.3\linewidth}
       \centering
       \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/smote-teste-region.png}}
     \end{subfigure}
-    \begin{subfigure}{.49\linewidth}
+    \begin{subfigure}{.3\linewidth}
       \centering
       \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/geracao-teste-region.png}}
     \end{subfigure}
-    \begin{subfigure}{.49\linewidth}
+    \begin{subfigure}{.3\linewidth}
       \centering
       \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/desbalanceado-teste-region.png}}
     \end{subfigure}
@@ -309,15 +364,15 @@ Nas figuras anteriores os exemplos foram projetados no plano criado pelas suas c
 
 \begin{figure}[htbp]
   \begin{center}
-    \begin{subfigure}{.49\linewidth}
+    \begin{subfigure}{.3\linewidth}
       \centering
       \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/smote-treino.png}}
     \end{subfigure}
-    \begin{subfigure}{.49\linewidth}
+    \begin{subfigure}{.3\linewidth}
       \centering
       \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/geracao-treino.png}}
     \end{subfigure}
-    \begin{subfigure}{.49\linewidth}
+    \begin{subfigure}{.3\linewidth}
       \centering
       \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/desbalanceado-treino.png}}
     \end{subfigure}
@@ -330,13 +385,81 @@ Como relatado no início dessa seção, o extrator de características utilizado
 
 \begin{figure}[htbp]
   \begin{center}
-      \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/vis-images.png}}
+      \includegraphics[width=.6\linewidth]{\detokenize{figuras/visualizacao/vis-images.png}}
   \end{center}
   \caption{Visualização do impacto do descritor de características.}
   \label{fig:vis_images}
 \end{figure}
 
-%--------------------------------------------------------------------------------
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Experimento 1: classes xx e xxx}
+
+\begin{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item[] \textbf{Base de Imagens}
+
+% \begin{figure}[htbp]
+%   \begin{center}
+%     \begin{subfigure}{.49\linewidth}
+%       \centering
+%       \includegraphics[width=\linewidth]{\detokenize{figuras/corel_original4.jpg}}
+%     \end{subfigure}
+%     \begin{subfigure}{.49\linewidth}
+%       \centering
+%       \includegraphics[width=\linewidth]{\detokenize{figuras/cavalo-original2.png}}
+%     \end{subfigure}
+%   \end{center}
+%   \caption{Remoção de 50\% das imagens de treino da classe Cavalo.}
+%   \label{fig:exp1:base}
+% \end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item[] \textbf{Protocolo}
+
+O seguinte protocolo foi seguido para a obtenção dos resultados:
+
+\begin{enumerate}
+\item \textbf{Classes de imagens originais}:
+\item \textbf{Desbalanceamento}:
+\item \textbf{Método para geração artificial}:
+\item \textbf{Quantização}:
+\item \textbf{Extração de características}:
+\item \textbf{Classificação}:
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item[] \textbf{Resultados e Discussão}
+
+% \begin{figure}[htbp]
+%   \begin{center}
+%     \begin{subfigure}{.49\linewidth}
+%       \centering
+%       \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/original.png}}
+%     \end{subfigure}
+%     \begin{subfigure}{.49\linewidth}
+%       \centering
+%       \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/desbalanceado-fixed.png}}
+%     \end{subfigure}
+%   \end{center}
+%   \caption{Remoção de 50\% das imagens de treino da classe Cavalo.}
+%   \label{fig:desbalanceado}
+% \end{figure}
+
+\end{itemize}
+
+%-------------------------------------------------------------------------------
+
+%  Os resultados foram obtidos utilizando a base de imagens COREL-1000\footnote{Disponível em http://wang.ist.psu.edu/docs/related/}, composta por fotografias que representam classes variadas: tribos africanas, praia, construções, ônibus, dinossauros, elefantes, flores, cavalos, montanhas e tipos de comidas. São 10 classes balanceadas com 100 imagens cada. Para fins de exemplificação, são apresentadas amostras das imagens que representam essas classes na Figura \ref{fig:corel}.
+%
+%  \begin{figure}[hbpt]
+%  \begin{center}
+%    \includegraphics[width=1\linewidth]{\detokenize {figuras/exemplos_corel.png}}
+%  \end{center}
+%   \caption[Base de imagens COREL-1000.]{Base de imagens COREL-1000 utilizada. Estão representadas as 10 classes da base. \textit{Fonte: Elaborado pela autora.}}
+%  \label{fig:corel}
+% \end{figure}
+
 % \section{Considerações iniciais}
 %
 % Este capítulo apresenta os resultados preliminares obtidos. Primeiramente, é apresentada a descrição do experimento realizado, ressaltando os métodos de extração de características, quantização e classificação utilizados. Além disso, o fluxo de operações para a realização do experimento é descrito. Em seguida, os resultados são propriamente ilustrados, ao indicar que a geração de imagens artificiais é promissora para o cenário de bases desbalanceadas. Por fim, as atividades futuras são destacadas.
