@@ -34,7 +34,7 @@ A Figura \ref{fig:quant:flowResult} demonstra o fluxo das operações e os méto
 \begin{figure}[htbp]
   \begin{center}
     \centering
-    \includegraphics[width=0.4\linewidth]{\detokenize{figuras/quantizacao/quantizationResult.png}}
+    \includegraphics[width=0.4\linewidth]{\detokenize{figuras/quantizacao/quantizationResult.pdf}}
   \end{center}
   \caption[Essa figura demonstra o fluxo das operações e os métodos utilizados nos experimentos. Após a aquisição da imagem, ela é convertida para escala de cinza por algum método de quantização e seus níveis de cor reduzidos por um parâmetro de quantização. Dependendo do método, a correção \emph{gamma} é realizada. A imagem quantizada serve então como entrada para um método de extração de características e posteriormente é classificada com \emph{SVM}. Uma das etapas de experimentos prevê também a concatenação de todos os vetores extraídos e a seleção das características com \emph{LPP} antes da classificação.]{Essa figura demonstra o fluxo das operações e os métodos utilizados nos experimentos. Após a aquisição da imagem, ela é convertida para escala de cinza por algum método de quantização e seus níveis de cor reduzidos por um parâmetro de quantização. Dependendo do método, a correção \emph{gamma} é realizada. A imagem quantizada serve então como entrada para um método de extração de características e posteriormente é classificada com \emph{SVM}. Uma das etapas de experimentos prevê também a concatenação de todos os vetores extraídos e a seleção das características com \emph{LPP} antes da classificação. \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:quant:flowResult}
@@ -187,6 +187,8 @@ O vetor concatenado com todos os descritores possui $9C + 6$ dimensões, onde $C
 
 Considere o seguinte exemplo: 100 imagens com 256 cores demandam 231.6 milhões de instruções do computador para extrair as características e reduzir o vetor utilizando o método LPP (com $k = 10$ e $d = 50$). Se ao invés disso, fossem utilizadas 64 cores, esse número cairia para 58.7 milhões, o que corresponde a uma redução de 74,6\%. Dessa forma, independente de utilizar um método de seleção de características, ao escolher um método de quantização apropriado e seus parâmetros, é possível reduzir a dimensionalidade e acelerar computacionalmente as etapas que precedem o reconhecimento de imagens.
 
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -196,6 +198,9 @@ Considere o seguinte exemplo: 100 imagens com 256 cores demandam 231.6 milhões 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
 \newpage
 \section{Geração de Imagens Artificiais}
 
@@ -212,7 +217,7 @@ Procurando uma certa estabilidade dos resultados obtidos com a geração das ima
 
 \begin{figure}[thpb]
 \centering
-\includegraphics[scale=1]{\detokenize{figuras/folds_chart.png}}
+\includegraphics[scale=0.25]{\detokenize{figuras/folds_chart.png}}
 \caption[]{\textit{Fonte:~Elaborado pela autora.}}
 \label{fig:folds}
 \end{figure}
@@ -220,7 +225,7 @@ Procurando uma certa estabilidade dos resultados obtidos com a geração das ima
 A seguir, para cada base de imagens utilizada, são descritos: a base em si; o protocolo e parâmetros adotados; e por fim os resultados obtidos a partir de seu uso são mostrados e discutidos.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Experimento 1: classes elefante e cavalo}
+\subsection{Experimento 1: duas classes bem discriminadas}
 
 \begin{itemize}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -394,10 +399,10 @@ Como relatado no início dessa seção, o extrator de características utilizado
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Experimento 1: classes xx e xxx}
+\subsection{Experimento 2: duas classes bem sobrepostas}
 
 \begin{itemize}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-------------------------------------------------------------------------------
 \item[] \textbf{Base de Imagens}
 
 % \begin{figure}[htbp]
@@ -415,7 +420,7 @@ Como relatado no início dessa seção, o extrator de características utilizado
 %   \label{fig:exp1:base}
 % \end{figure}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-------------------------------------------------------------------------------
 \item[] \textbf{Protocolo}
 
 O seguinte protocolo foi seguido para a obtenção dos resultados:
@@ -428,9 +433,93 @@ O seguinte protocolo foi seguido para a obtenção dos resultados:
 \item \textbf{Extração de características}:
 \item \textbf{Classificação}:
 \end{enumerate}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-------------------------------------------------------------------------------
 \item[] \textbf{Resultados e Discussão}
 
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Experimento 3: multiclasses}
+
+\begin{itemize}
+%-------------------------------------------------------------------------------
+\item[] \textbf{Base de Imagens}
+
+% \begin{figure}[htbp]
+%   \begin{center}
+%     \begin{subfigure}{.49\linewidth}
+%       \centering
+%       \includegraphics[width=\linewidth]{\detokenize{figuras/corel_original4.jpg}}
+%     \end{subfigure}
+%     \begin{subfigure}{.49\linewidth}
+%       \centering
+%       \includegraphics[width=\linewidth]{\detokenize{figuras/cavalo-original2.png}}
+%     \end{subfigure}
+%   \end{center}
+%   \caption{Remoção de 50\% das imagens de treino da classe Cavalo.}
+%   \label{fig:exp1:base}
+% \end{figure}
+
+%-------------------------------------------------------------------------------
+\item[] \textbf{Protocolo}
+
+O seguinte protocolo foi seguido para a obtenção dos resultados:
+
+\begin{enumerate}
+\item \textbf{Classes de imagens originais}:
+\item \textbf{Desbalanceamento}:
+\item \textbf{Método para geração artificial}:
+\item \textbf{Quantização}:
+\item \textbf{Extração de características}:
+\item \textbf{Classificação}:
+\end{enumerate}
+%-------------------------------------------------------------------------------
+\item[] \textbf{Resultados e Discussão}
+
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Experimento 4: classes naturalmente desbalanceadas}
+
+\begin{itemize}
+%-------------------------------------------------------------------------------
+\item[] \textbf{Base de Imagens}
+
+% \begin{figure}[htbp]
+%   \begin{center}
+%     \begin{subfigure}{.49\linewidth}
+%       \centering
+%       \includegraphics[width=\linewidth]{\detokenize{figuras/corel_original4.jpg}}
+%     \end{subfigure}
+%     \begin{subfigure}{.49\linewidth}
+%       \centering
+%       \includegraphics[width=\linewidth]{\detokenize{figuras/cavalo-original2.png}}
+%     \end{subfigure}
+%   \end{center}
+%   \caption{Remoção de 50\% das imagens de treino da classe Cavalo.}
+%   \label{fig:exp1:base}
+% \end{figure}
+
+%-------------------------------------------------------------------------------
+\item[] \textbf{Protocolo}
+
+O seguinte protocolo foi seguido para a obtenção dos resultados:
+
+\begin{enumerate}
+\item \textbf{Classes de imagens originais}:
+\item \textbf{Desbalanceamento}:
+\item \textbf{Método para geração artificial}:
+\item \textbf{Quantização}:
+\item \textbf{Extração de características}:
+\item \textbf{Classificação}:
+\end{enumerate}
+%-------------------------------------------------------------------------------
+\item[] \textbf{Resultados e Discussão}
+
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \begin{figure}[htbp]
 %   \begin{center}
 %     \begin{subfigure}{.49\linewidth}
@@ -445,8 +534,6 @@ O seguinte protocolo foi seguido para a obtenção dos resultados:
 %   \caption{Remoção de 50\% das imagens de treino da classe Cavalo.}
 %   \label{fig:desbalanceado}
 % \end{figure}
-
-\end{itemize}
 
 %-------------------------------------------------------------------------------
 
