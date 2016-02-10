@@ -174,7 +174,7 @@ Ao comparar o uso da quantização com a utilização de métodos mais complexos
 \newpage
 \section{Geração de Imagens Artificiais}
 
-Esta seção descreve os resultados encontrados ao rebalancear as classes de imagens utilizando os processamentos descritos no capítulo anterior aplicados nas imagens originais. Na Figura \ref{fig:fluxo} é possível observar o fluxo de operações realizadas para analisar o impacto da geração de imagens no rebalanceamento de classes. O mesmo protocolo de conversão para escala de cinza, extração de características e classificação foi seguido para três experimentos: base desbalanceada; base rebalanceada com interpolação dos vetores de características (método SMOTE); e base rebalanceada com a geração artificial de imagens.
+Esta seção descreve os resultados encontrados ao rebalancear as classes de imagens utilizando os processamentos, descritos no Capítulo \ref{cap:metodo}, aplicados nas imagens originais. Na Figura \ref{fig:fluxo} é possível observar o fluxo de operações realizadas para analisar o impacto da geração de imagens no rebalanceamento de classes. O mesmo protocolo de conversão para escala de cinza, extração de características e classificação foi seguido para três experimentos: base desbalanceada; base rebalanceada com interpolação dos vetores de características (método SMOTE); e base rebalanceada com a geração artificial de imagens.
 
 \begin{figure}[thpb]
 \centering
@@ -183,7 +183,7 @@ Esta seção descreve os resultados encontrados ao rebalancear as classes de ima
 \label{fig:fluxo}
 \end{figure}
 
-Procurando uma certa estabilidade dos resultados obtidos com a geração das imagens artificiais, foi identificada a necessidade de controlar a remoção de imagens da base no momento da criação da base desbalanceada. Assim, os resultados foram obtidos a partir de uma forma de validação K-fold com o objetivo de prover mais robustez ao sistema. A Figura \ref{fig:folds} ilustra como isso foi realizado. Primeiramente as imagens foram divididas de forma aleatória em $k=5$ folds para cada classe. Depois, as duas classes compõe 40 configurações, consistindo de um fold para teste e os outros para treino na classe que ficará balanceada e um de teste e um de treino para a que os métodos de processamento irão rebalancear.
+Procurando uma certa estabilidade dos resultados obtidos com a geração das imagens artificiais, foi identificada a necessidade de controlar a remoção de imagens da base no momento da criação da base desbalanceada. Assim, os resultados foram obtidos a partir de uma forma de validação K-fold com o objetivo de prover mais robustez ao sistema. A Figura \ref{fig:folds} ilustra como isso foi realizado. Primeiramente as imagens foram divididas de forma aleatória em $k=5$ folds para cada classe. Depois, as duas classes compõe 40 configurações, consistindo de um fold para teste e os outros para treino na classe que ficará balanceada e um de teste e um de treino para a que os métodos de processamento irão rebalancear. Se originalmente a base é naturalmente desbalanceada, então um fold será utilizado para teste e os restantes para treino para todas as classes.
 
 \begin{figure}[thpb]
 \centering
@@ -192,16 +192,16 @@ Procurando uma certa estabilidade dos resultados obtidos com a geração das ima
 \label{fig:folds}
 \end{figure}
 
-A seguir, para cada base de imagens utilizada, são descritos: a base em si; o protocolo e parâmetros adotados; e por fim os resultados obtidos a partir de seu uso são mostrados e discutidos.
+A seguir, para cada experimento realizado: são descritos: a base de imagens utilizada; o protocolo e parâmetros adotados; e por fim os resultados obtidos a partir de seu uso são mostrados e discutidos.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Experimento 1: duas classes bem discriminadas}
 
+%-------------------------------------------------------------------------------
 \begin{itemize}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \item[] \textbf{Base de Imagens}
 
-Neste experimento foram utilizadas duas classes da base Corel de cavalos e elefantes. Elas estão exemplificadas na Figura \ref{fig:exp1:base}. A principal característica dessas imagens é a grande diferença das cores das imagens, apesar de haverem casos de confusão.
+Neste experimento foram utilizadas duas classes da base Corel-1000: \emph{Cavalos} e \emph{Elefantes}. Elas estão exemplificadas na Figura \ref{fig:exp1:base}. A principal característica dessas imagens é a grande diferença das cores das imagens. Apesar de haverem casos de confusão, são classes bem discriminadas.
 
 \begin{figure}[htbp]
   \begin{center}
@@ -214,22 +214,21 @@ Neste experimento foram utilizadas duas classes da base Corel de cavalos e elefa
       \includegraphics[width=\linewidth]{\detokenize{figuras/cavalo-original2.png}}
     \end{subfigure}
   \end{center}
-  \caption[]{Classes cavalo e elefante utilizadas neste experimento. São duas classes com 100 imagens cada, originalmente da base de imagens Corel. \textit{Fonte:~Elaborado pela autora.}}
+  \caption[Classes cavalo e elefante utilizadas neste experimento. São duas classes bem discriminadas com 100 imagens cada, originalmente da base de imagens Corel.]{Classes cavalo e elefante utilizadas neste experimento. São duas classes bem discriminadas com 100 imagens cada, originalmente da base de imagens Corel. \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:exp1:base}
 \end{figure}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-------------------------------------------------------------------------------
 \item[] \textbf{Protocolo}
 
 \begin{enumerate}
-\item \textbf{Imagens originais}: classes \emph{elefante} e \emph{cavalo} da Corel;
-\item \textbf{Desbalanceamento}: para a visualização cada classe foi dividida em 50\% para treino e 50\% para teste e após a classe \emph{cavalo} sofreu remoção de 50\% do conjunto de treino. Já para a análise estatística, todas as 40 configurações de folds com $k=5$ foram realizadas;
-\item \textbf{Método para geração artificial}: para a visualização do espaço de características consistiu na mistura de duas imagens originais, exemplificado na Figura~\ref{fig:mistura}. Para a análise do boxplot de f1-scores, todas as gerações foram testadas;
-\item \textbf{Quantização}: Intensidade;
-\item \textbf{Extração de características}: classificação de pixels de borda e interior (BIC);
+\item \textbf{Imagens originais}: classes \emph{Elefantes} e \emph{Cavalos} da Corel-1000;
+\item \textbf{Desbalanceamento}: para a visualização, cada classe foi dividida em 50\% para treino e 50\% para teste e após a classe \emph{cavalo} sofreu remoção de 50\% do conjunto de treino. Já para a análise estatística, todas as 40 configurações de folds com $k=5$ foram realizadas (padronização anteriormente descrita na Figura~\label{fig:folds});
+\item \textbf{Método para geração artificial}: para a visualização do espaço de características foi utilizado o método de mistura de duas imagens originais, exemplificado na Figura~\ref{fig:mistura}. Para a análise do boxplot de \textit{f1-scores}, todas as gerações foram testadas;
+\item \textbf{Quantização}: com o método \emph{Intensidade};
+\item \textbf{Extração de características}: com o método de classificação de pixels de borda e interior (BIC);
 \item \textbf{Classificação}: classificador supervisionado KNN com $K=1$ (para mais detalhes ver Seção~\ref{sec:knn});
 \item \textbf{Projeção multidimensional}: projetados os dois componentes principais encontrados ao aplicar PCA nos vetores de características para redução de dimensionalidade (Seção~\ref{sec:pca}).
-% A implementação desenvolvida para esta projeção pode ser encontrada em \url{https://github.com/GabiThume/msc-src/blob/master/visualization/plot.py}. Vale destacar que uma animação da adição de cada novo exemplo foi realizada para fim de visualizar o melhor subespaço gerado.
 \end{enumerate}
 
 \begin{figure}[htbp]
@@ -250,18 +249,14 @@ Neste experimento foram utilizadas duas classes da base Corel de cavalos e elefa
     \caption{Mistura}
   \end{subfigure}
   \end{center}
-  \caption{Geração artificial de imagens com o método de mistura.}
+  \caption[Exemplo da geração artificial de imagens com o método de mistura para as classes \emph{Elefante} e \emph{Cavalo} da Corel-1000.]{Exemplo da geração artificial de imagens com o método de mistura para as classes \emph{Elefante} e \emph{Cavalo} da Corel-1000. \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:mistura}
 \end{figure}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\item[] \textbf{Resultados e Discussão}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-------------------------------------------------------------------------------
 \item[] \textbf{Visualização}
 
-As classes \emph{elefante} e \emph{cavalo} possuem 100 imagens cada. O primeiro passo é remover imagens de uma das classes, tornando a base desbalanceada. Como o foco é na visualização do espaço de características, é relevante ter o modelo do espaço ideal das classes balanceadas, por isso esse experimento em específico não trata de uma base naturalmente desbalanceada. Na Figura~\ref{fig:desbalanceado} está ilustrada a remoção de 50\% das imagens de treino da classe \emph{cavalo}, originalmente balanceada. Essa e as próximas projeções desta seção foram obtidas com a técnica para redução de dimensionalidade PCA, descrita na Seção~\ref{sec:pca} e são referentes aos dois componentes principais com maiores autovalores.
+As classes \emph{Elefantes} e \emph{Cavalos} possuem 100 imagens cada. O primeiro passo foi remover imagens de uma das classes, tornando a base desbalanceada. Como o foco é na visualização do espaço de características, é relevante ter o modelo do espaço ideal das classes balanceadas, por isso esse experimento em específico não trata de uma base naturalmente desbalanceada. Na Figura~\ref{fig:desbalanceado} está ilustrada a remoção de 50\% das imagens de treino da classe \emph{cavalo}, originalmente balanceada. Essa e as próximas projeções desta seção foram obtidas com a técnica para redução de dimensionalidade PCA, descrita na Seção~\ref{sec:pca} e são referentes aos dois componentes principais com maiores autovalores.
 
 \begin{figure}[htbp]
   \begin{center}
@@ -274,11 +269,11 @@ As classes \emph{elefante} e \emph{cavalo} possuem 100 imagens cada. O primeiro 
       \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/desbalanceado-fixed.png}}
     \end{subfigure}
   \end{center}
-  \caption{Remoção de 50\% das imagens de treino da classe \emph{cavalo}.}
+  \caption[À esquerda a projeção dos dois componentes principais obtidos com a aplicação de PCA nas classes \emph{Elefante} -- em azul -- e \emph{Cavalo} -- em verde. À direita, as mesmas classes após a remoção de 50\% das imagens de treino da classe \emph{cavalo}. A diferença dos marcadores consiste na definição de imagens para treino e teste não existente nas classes originais.]{À esquerda a projeção dos dois componentes principais obtidos com a aplicação de PCA nas classes \emph{Elefante} -- em azul -- e \emph{Cavalo} -- em verde. À direita, as mesmas classes após a remoção de 50\% das imagens de treino da classe \emph{cavalo}. A diferença dos marcadores consiste na definição de imagens para treino e teste não existente nas classes originais. \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:desbalanceado}
 \end{figure}
 
-A classificação dos três experimentos utilizando KNN reportou que o \textit{f-score} da geração artificial de imagens utilizando o método de mistura teve um ganho de mais de 10\% em relação ao rebalanceamento no espaço de características com o SMOTE. Para confirmar que a geração aqui proposta inseriu mais informação na classe minoritária do que apenas povoar os espaços entre os exemplos (i.e.\ SMOTE), a classe rebalanceada utilizando ambos métodos está demonstrada na Figura~\ref{fig:compara_vis_treino_fixed}. Em laranja estão representados os novos exemplos de treinamento, projetados no plano da base original balanceada.
+Os resultados da classificação dos três experimentos utilizando KNN reportou que o \textit{f1-score} da geração artificial de imagens utilizando o método de mistura teve um ganho de mais de 10\% em relação ao rebalanceamento no espaço de características com o SMOTE. Para confirmar que a geração inseriu mais informação na classe minoritária do que apenas povoar os espaços entre os exemplos (i.e.\ SMOTE), a classe rebalanceada utilizando ambos métodos está demonstrada na Figura~\ref{fig:compara_vis_treino_fixed}. Em laranja estão representados os novos exemplos de treinamento, projetados no plano da base original balanceada.
 
 \begin{figure}[htbp]
   \begin{center}
@@ -291,11 +286,11 @@ A classificação dos três experimentos utilizando KNN reportou que o \textit{f
       \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/geracao-treino-fixed.png}}
     \end{subfigure}
   \end{center}
-  \caption{Comparação dos exemplos de treinamento da geração com SMOTE e no campo visual. Em laranja estão representados os novos exemplos, projetados no plano da base original balanceada.}
+  \caption[Comparação dos exemplos de treinamento da geração com SMOTE e no campo visual. Em laranja estão representados os novos exemplos, projetados no plano da base original balanceada.]{Comparação dos exemplos de treinamento da geração com SMOTE e no campo visual. Em laranja estão representados os novos exemplos, projetados no plano da base original balanceada. \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:compara_vis_treino_fixed}
 \end{figure}
 
-Após o treinamento realizado com as novas imagens e exemplos, o conjunto de teste foi fornecido ao classificador 1-NN e o resultado das predições está ilustrado na Figura~\ref{fig:compara_vis_teste}. A cor no interior dos marcadores quadrados representa a classe real dos exemplos e a borda representa a classe predita pelo classificador. Nota-se que a melhoria na classificação com a geração de imagens fica visível e corresponde ao aumento do \textit{f-score}.
+Após o treinamento realizado com as novas imagens geradas e as originais, o conjunto de teste foi fornecido ao classificador 1-NN e o resultado das predições está ilustrado na Figura~\ref{fig:compara_vis_teste}. A cor no interior dos marcadores quadrados representa a classe real dos exemplos e a borda representa a classe predita pelo classificador. Nota-se que a melhoria na classificação com a geração de imagens fica visível e corresponde ao aumento do \textit{f1-score}.
 
 \begin{figure}[htbp]
   \begin{center}
@@ -308,13 +303,13 @@ Após o treinamento realizado com as novas imagens e exemplos, o conjunto de tes
       \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/geracao-teste-fixed.png}}
     \end{subfigure}
   \end{center}
-  \caption{Resultado do teste da classificação com 1-NN após o treinamento realizado com as bases rebalanceadas. A cor no interior dos marcadores quadrados representa a classe real dos exemplos e a borda representa a classe predita pelo classificador.}
+  \caption[Resultado do teste da classificação com 1-NN após o treinamento realizado com as bases rebalanceadas. A cor no interior dos marcadores quadrados representa a classe real dos exemplos e a borda representa a classe predita pelo classificador.]{Resultado do teste da classificação com 1-NN após o treinamento realizado com as bases rebalanceadas. A cor no interior dos marcadores quadrados representa a classe real dos exemplos e a borda representa a classe predita pelo classificador. \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:compara_vis_teste}
 \end{figure}
 
-De uma forma geral, pode-se dizer que a geração de imagens melhorou a definição da classe minoritária e foi o método que mais se assemelhou à distribuição dos dados originais. Além disso, um dos problemas do SMOTE pode ser verificado nessas projeções: ao realizar a interpolação dos vetores de características originais, pode-se criar exemplos em regiões do espaço que fazem parte da outra classe. Ficou claro também que o método SMOTE não possui capacidade de extrapolar a sua região, como pode ser observado no grupo de exemplos gerados à direita do espaço. O SMOTE gerou novos elementos em linha reta, enquanto a geração de imagens proporcionou uma abrangência maior em volta desse espaço, com maior dispersão.
+De uma forma geral, pode-se dizer que a geração de imagens melhorou a definição da classe minoritária e foi o método que mais se assemelhou à distribuição dos dados originais. Além disso, um dos problemas do SMOTE pode ser verificado nessas projeções: ao realizar a interpolação dos vetores de características originais, exemplos podem ser criados em regiões do espaço que fazem parte da outra classe. Ficou claro também que o método SMOTE não possui capacidade de extrapolar a sua região, como pode ser observado no grupo de exemplos gerados à direita do espaço de características. O SMOTE gerou novos elementos próximos a uma linha reta, enquanto a geração de imagens proporcionou uma abrangência maior em volta desse espaço, com maior dispersão.
 
-É válido também visualizar a região de decisão, observando suas modificações frente aos métodos. Pode ser observado que em ambas técnicas a região da classe minoritária apresenta-se melhor representada. Além disso, é possível verificar que o SMOTE ocasionou uma certa ``invasão'' do espaço de características da classe majoritária.
+Na Figura \ref{fig:region} é possível visualizar a região de decisão, observando suas modificações frente aos métodos. Pode ser observado que em ambas técnicas a região da classe minoritária apresenta-se melhor representada. Além disso, é possível verificar que o SMOTE ocasionou uma certa ``invasão'' do espaço de características da classe majoritária.
 
 \begin{figure}[htbp]
   \begin{center}
@@ -331,11 +326,11 @@ De uma forma geral, pode-se dizer que a geração de imagens melhorou a definiç
       \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/desbalanceado-teste-region.png}}
     \end{subfigure}
   \end{center}
-  \caption{Região de decisão com K-NN (K = 1)}
+  \caption[Região de decisão com K-NN (K = 1). Pode ser observado que em ambas técnicas a região da classe minoritária apresenta-se melhor representada. Além disso, é possível verificar que o SMOTE ocasionou uma certa ``invasão'' do espaço de características da classe majoritária.]{Região de decisão com K-NN (K = 1). Pode ser observado que em ambas técnicas a região da classe minoritária apresenta-se melhor representada. Além disso, é possível verificar que o SMOTE ocasionou uma certa ``invasão'' do espaço de características da classe majoritária. \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:region}
 \end{figure}
 
-Nas figuras anteriores os exemplos foram projetados no plano criado pelas suas componentes principais com maior autovalores da base original balanceada. Se após a geração de novos exemplos essas componentes forem recalculadas (Figura \ref{fig:compara_vis_treino}), pode-se notar que a geração de imagens artificiais proporciona a criação de um subespaço que melhor discretiza as classes, quando comparado com SMOTE ou com a base desbalanceada.
+Em todas as figuras anteriores relacionadas a essa visualização, os exemplos foram projetados no plano criado pelas suas componentes principais com maior autovalores da base original balanceada. Se após a geração de novos exemplos essas componentes forem recalculadas (Figura \ref{fig:compara_vis_treino}), pode-se notar que a geração de imagens artificiais proporciona a criação de um subespaço que melhor discretiza as classes, quando comparado com SMOTE ou com a base desbalanceada.
 
 \begin{figure}[htbp]
   \begin{center}
@@ -352,11 +347,11 @@ Nas figuras anteriores os exemplos foram projetados no plano criado pelas suas c
       \includegraphics[width=\linewidth]{\detokenize{figuras/visualizacao/desbalanceado-treino.png}}
     \end{subfigure}
   \end{center}
-  \caption{Melhores subespaços encontrados após a geração de novos exemplos para o SMOTE e para a geração artificial de imagens, e após a remoção de imagens para a projeção dos dados desbalanceados.}
+  \caption[Melhores subespaços encontrados após a geração de novos exemplos para o SMOTE e para a geração artificial de imagens, e após a remoção de imagens para a projeção dos dados desbalanceados. Pode-se notar que a geração de imagens artificiais proporciona a criação de um subespaço que melhor discretiza as classes, quando comparado com SMOTE ou com a base desbalanceada.]{Melhores subespaços encontrados após a geração de novos exemplos para o SMOTE e para a geração artificial de imagens, e após a remoção de imagens para a projeção dos dados desbalanceados. Pode-se notar que a geração de imagens artificiais proporciona a criação de um subespaço que melhor discretiza as classes, quando comparado com SMOTE ou com a base desbalanceada. \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:compara_vis_treino}
 \end{figure}
 
-Como relatado no início dessa seção, o extrator de características utilizado foi o BIC. Fundamentalmente ele captura informações de intensidade de cor das imagens. Na Figura~\ref{fig:vis_images} as próprias imagens foram utilizadas como marcadores na projeção do melhor subespaço após a geração artificial com o método de mistura. É nítido o impacto da etapa de extração de características na separação das classes e também no método de geração de imagens antes dessa extração.
+Como relatado no início desse experimento, o extrator de características utilizado foi o BIC. Fundamentalmente ele captura informações de intensidade de cor das imagens. Na Figura~\ref{fig:vis_images} as próprias imagens foram utilizadas como marcadores na projeção do melhor subespaço após a geração artificial com o método de mistura. É nítido o impacto da etapa de extração de características na separação das classes e também no método de geração de imagens antes dessa extração.
 
 \begin{figure}[htbp]
   \begin{center}
@@ -366,7 +361,11 @@ Como relatado no início dessa seção, o extrator de características utilizado
   \label{fig:vis_images}
 \end{figure}
 
+%-------------------------------------------------------------------------------
+\item[] \textbf{Resultados e Discussão}
+
 \end{itemize}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Experimento 2: duas classes bem sobrepostas}
