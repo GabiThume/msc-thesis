@@ -50,7 +50,7 @@
 % ---
 % Tanto na capa quanto nas folhas de rosto apenas a primeira letra da primeira palavra (ou nomes próprios) devem estar em letra maiúscula, todas as demais devem ser em letra minúscula.
 \tituloPT{Geração de imagens artificiais e quantização de imagens aplicadas à classificação de imagens}
-\tituloEN{Artificial images generation and image quantization applied to image classification task}
+\tituloEN{Artificial images generation and image quantization applied to image classification}
 \autor[Thumé, G. S.]{Gabriela Salvador Thumé}
 \genero{F} % Gênero do autor (M = Masculino / F = Feminino)
 \orientador[Orientador]{Prof. Dr.}{Moacir Antonelli Ponti}
@@ -68,13 +68,13 @@
 % conter no máximo 500 palavras
 % conter no mínimo 1 e no máximo 5 palavras-chave
 \textoresumo[brazil]{
-Cada imagem pode ser representada como uma combinação de diversas características, como por exemplo o histograma de intensidades de cor ou propriedades de textura da imagem. Essas características compõe um vetor multidimensional que representa a imagem. É comum esse vetor ser dado como entrada para um método de classificação de padrões que, após aprender através de diversos exemplos, pode indicar o quão bem separadas as classes de imagens estão. Estudos sugerem evidências de que a preparação das imagens -- por meio da especificação cuidadosa da aquisição, pré-processamento e segmentação -- pode impactar significativamente a classificação. Além da falta de tratamento das imagens antes da extração de características, o desbalanceamento de classes também se apresenta como um obstáculo para que a classificação seja satisfatória. Imagens possuem características que podem ser exploradas para melhorar a descrição dos objetos de interesse. Entre as possibilidades de melhorias estão: a redução do número de cores das imagens antes da extração de características ao invés de métodos de quantização no vetor já extraído; e a geração de imagens a partir das imagens originais, de forma a promover o balanceamento de bases de dados cujo número de exemplos de cada classe é desbalanceado. Portanto, a proposta desta dissertação é melhorar da classificação utilizando métodos de processamento de imagens antes da extração de características. Busca-se assim estudar a influência de promover o balanceamento de bases de dados e da quantização na classificação. Esse estudo analisa ainda a visualização do espaço de características após os métodos de geração artificial de imagens e de interpolação das características extraídas das imagens originais (SMOTE), contracenando com o espaço original. A ênfase dessa visualização se dá na facilidade de observação da importância do rebalanceamento das classes quando comparado com valores de métricas estatísticas, como a acurácia da classificação.  Os resultados indicam que a quantização simplifica as imagens antes da extração de características e posterior redução de dimensionalidade, produzindo vetores mais compactos. Esta dissertação possui resultados que demonstram o potencial da pesquisa e pretende contribuir com a área, investigando métodos que permitam obter melhores espaços de características.
-}{Processamento de imagens, bases de dados desbalanceados, classificação de imagens.}
+Cada imagem pode ser representada como uma combinação de diversas características, como por exemplo o histograma de intensidades de cor ou propriedades de textura da imagem. Essas características compõe um vetor multidimensional que representa a imagem. É comum esse vetor ser dado como entrada para um método de classificação de padrões que, após aprender através de diversos exemplos, pode indicar o quão bem separadas as classes de imagens estão. Estudos sugerem evidências de que a preparação das imagens -- por meio da especificação cuidadosa da aquisição, pré-processamento e segmentação -- pode impactar significativamente a classificação. Além da falta de tratamento das imagens antes da extração de características, o desbalanceamento de classes também se apresenta como um obstáculo para que a classificação seja satisfatória. Imagens possuem características que podem ser exploradas para melhorar a descrição dos objetos de interesse. Entre as possibilidades de melhorias estão: a redução do número de cores das imagens antes da extração de características ao invés de métodos de quantização no vetor já extraído; e a geração de imagens a partir das imagens originais, de forma a promover o balanceamento de bases de dados cujo número de exemplos de cada classe é desbalanceado. Portanto, a proposta desta dissertação é melhorar da classificação utilizando métodos de processamento de imagens antes da extração de características. Busca-se assim estudar a influência do balanceamento de bases de dados e da quantização na classificação. Esse estudo analisa ainda a visualização do espaço de características após os métodos de geração artificial de imagens e de interpolação das características extraídas das imagens originais (SMOTE), contracenando com o espaço original. A ênfase dessa visualização se dá na facilidade de observação da importância do rebalanceamento das classes quando comparado com valores de métricas estatísticas, como a acurácia da classificação.  Os resultados indicam que a quantização simplifica as imagens antes da extração de características e posterior redução de dimensionalidade, produzindo vetores mais compactos. Esta dissertação possui resultados que demonstram o potencial da pesquisa e pretende contribuir com a área, investigando métodos que permitam obter melhores espaços de características.
+}{Processamento de imagens, bases de dados desbalanceados, geração de imagens, quantização, classificação de imagens}
 
 
 \textoresumo[english]{
 An image can be represented as a combination of several features like histograms or texture properties. Those features are composed in a multidimensional vector, which represents the original image. Commonly this vector is given as input to a classification method that can indicate how much separated are the images. The literature suggests that image processing steps like \textit{accute acquisition}, \textit{preprocessing} and \textit{segmentation} can positively impact such classification. Besides that, \textit{class unbalancing} is also a barrier to achieve good classification accuracy. Some features and methods can be explored to improve objects' description, thus their classification. Possible suggestions include: reducing color's number before feature extraction instead of applying quantization methods to vectors already extracted; and generating synthetic images by means of original ones to balance the number of samples in an uneven dataset. We propose to improve image classification using image processing methods before feature extraction. Specifically we want to analyse the influence of both balancing and quantization methods while applied to datasets in a classification routine. This research also analyses the visualization of feature space after the artificial image generation and feature interpolation (SMOTE), against to original space. Such visualization is used because it allows us to know how important is the rebalacing method when compared with statistical metrics. The main contribution of this research is in methods to improve image classification by obtaining a better feature space.
-}{Image processing, unbalanced datasets, image classification.}
+}{Image processing, unbalanced datasets, image generation, image quantization image classification}
 
 % ---
 % Configurações de aparência do PDF final
@@ -122,11 +122,12 @@ An image can be represented as a combination of several features like histograms
 \incluilistadetabelas
 
 % Inclui a lista de quadros
-\incluilistadequadros
+% \incluilistadequadros
 
 % Inclui a lista de algoritmos
 \incluilistadealgoritmos
 
+\meutodo{adicionar descricao do algoritmo na legenda}
 % Inclui a lista de códigos
 % \incluilistadecodigos
 
