@@ -95,40 +95,41 @@ Os métodos de filtragem possuem como objetivo aperfeiçoar certos aspectos da i
 \end{figure}
 
 %--------------------------------------------------------------------------------
-\subsection{Deconvolução}
-\label{sub:deconvolucao}
-
-O processo de convolução, descrito na seção anterior, também pode ser definido como a passagem de uma imagem por um processo de aquisição que atue como um filtro de passa-baixas, resultando em uma imagem borrada. A deconvolução realiza a inversão desse borramento, o que pode facilitar a segmentação e detecção de características~\cite{Ponti2010}. Para tal, é necessário conhecer previamente ou estimar a função que causou a degradação na imagem, geralmente denotada por $h(\mathbf{u})$, onde $\mathbf{u}$ representa as coordenadas $(x,y,z)$ para um sinal tridimensional.
-
-Em casos mais simples é possível utilizar o filtro pseudo-inverso, obtendo o filtro a partir da transformada de Fourier da função $h$, denotada por $H$ em
-\begin{equation*}
-W(\mathbf{u}) = \left\lbrace
-      \begin{array}{ll}
-    H(\mathbf{u}),  & H(\mathbf{u}) > \gamma \\
-    \gamma,     & \text{ caso contrário},
-      \end{array}
-\right.
-\end{equation*}
-\noindent onde o limiar $\gamma$ utilizado é em geral um valor entre $0,0001$ e $0,1$. O filtro $W$ é utilizado para realizar a inversão, no domínio da frequências, da imagem $g$ borrada, obtendo a imagem restaurada a partir de
-
-\begin{equation*}
-    \hat{F}(\mathbf{u}) = \frac{G(\mathbf{u})}{W(\mathbf{u})},
-\end{equation*}
-\noindent onde $\hat{F}$ é a transformada de Fourier da imagem restaurada, $G$ é a transformada de Fourier da imagem borrada, e $W$ é o filtro pseudo-inverso, que realiza a deconvolução.
-
-Um outro exemplo de algoritmo de deconvolução é o Richardson-Lucy~\cite{Ponti-Jr2011}, que utiliza um processo iterativo para recuperar uma imagem degradada que foi borrada por algum processo conhecido. Utiliza uma metodologia probabilística, baseada em EM-ML (\textit{Expectation-Maximization Maximum Likelihood}), para encontrar uma imagem que maximize a probabilidade de se visualizar a imagem original sem degradação, considerando um modelo de ruído de Poisson. O algoritmo é descrito na Equação~\ref{eq:RL}, onde $n$ é o número da iteração.
-
-\begin{equation}
-  \hat{f}_{n+1}(\mathbf{u})=
-      \left[\left(
-              \frac{g(\mathbf{u})}{\hat{f}_n(\mathbf{u})*h(\mathbf{u})}\right)
-           *h(\mathbf{u})\right]
-      \times \hat{f}_{n}(\mathbf{u}).
-  \label{eq:RL}
-\end{equation}
-\vspace{2pt}
-
-Algoritmos iterativos como o Richardson-Lucy tem a vantagem de permitir soluções parciais, evitando amplificação de ruído.
+\meutodo{tinha deconvolução aqui, posso remover?}
+% \subsection{Deconvolução}
+% \label{sub:deconvolucao}
+%
+% O processo de convolução, descrito na seção anterior, também pode ser definido como a passagem de uma imagem por um processo de aquisição que atue como um filtro de passa-baixas, resultando em uma imagem borrada. A deconvolução realiza a inversão desse borramento, o que pode facilitar a segmentação e detecção de características~\cite{Ponti2010}. Para tal, é necessário conhecer previamente ou estimar a função que causou a degradação na imagem, geralmente denotada por $h(\mathbf{u})$, onde $\mathbf{u}$ representa as coordenadas $(x,y,z)$ para um sinal tridimensional.
+%
+% Em casos mais simples é possível utilizar o filtro pseudo-inverso, obtendo o filtro a partir da transformada de Fourier da função $h$, denotada por $H$ em
+% \begin{equation*}
+% W(\mathbf{u}) = \left\lbrace
+%       \begin{array}{ll}
+%     H(\mathbf{u}),  & H(\mathbf{u}) > \gamma \\
+%     \gamma,     & \text{ caso contrário},
+%       \end{array}
+% \right.
+% \end{equation*}
+% \noindent onde o limiar $\gamma$ utilizado é em geral um valor entre $0,0001$ e $0,1$. O filtro $W$ é utilizado para realizar a inversão, no domínio da frequências, da imagem $g$ borrada, obtendo a imagem restaurada a partir de
+%
+% \begin{equation*}
+%     \hat{F}(\mathbf{u}) = \frac{G(\mathbf{u})}{W(\mathbf{u})},
+% \end{equation*}
+% \noindent onde $\hat{F}$ é a transformada de Fourier da imagem restaurada, $G$ é a transformada de Fourier da imagem borrada, e $W$ é o filtro pseudo-inverso, que realiza a deconvolução.
+%
+% Um outro exemplo de algoritmo de deconvolução é o Richardson-Lucy~\cite{Ponti-Jr2011}, que utiliza um processo iterativo para recuperar uma imagem degradada que foi borrada por algum processo conhecido. Utiliza uma metodologia probabilística, baseada em EM-ML (\textit{Expectation-Maximization Maximum Likelihood}), para encontrar uma imagem que maximize a probabilidade de se visualizar a imagem original sem degradação, considerando um modelo de ruído de Poisson. O algoritmo é descrito na Equação~\ref{eq:RL}, onde $n$ é o número da iteração.
+%
+% \begin{equation}
+%   \hat{f}_{n+1}(\mathbf{u})=
+%       \left[\left(
+%               \frac{g(\mathbf{u})}{\hat{f}_n(\mathbf{u})*h(\mathbf{u})}\right)
+%            *h(\mathbf{u})\right]
+%       \times \hat{f}_{n}(\mathbf{u}).
+%   \label{eq:RL}
+% \end{equation}
+% \vspace{2pt}
+%
+% Algoritmos iterativos como o Richardson-Lucy tem a vantagem de permitir soluções parciais, evitando amplificação de ruído.
 
 %--------------------------------------------------------------------------------
 \subsection{Realce de imagens}
@@ -182,29 +183,29 @@ s_k = T(i_k) = \frac{L-1}{MN} \sum_{j=0}^{k}n_j,
 
 \enlargethispage{\baselineskip}
 %--------------------------------------------------------------------------------
-\subsection{Restauração}
-\meutodo{Essa seção é necessária?}
-Ao contrário do realce, a etapa da restauração é objetiva. Também procura melhorar os aspectos visuais de uma imagem, mas com base em modelos probabilísticos de degradação de imagens. Dessa forma, tendo-se um modelo de degradação, procura-se recuperar a imagem original \cite{Gonzalez2007}. Mas um problema comum em algoritmos de remoção de ruído é que alguns detalhes, como textura, irão sofrer alta suavização.
-
-O objetivo dos algoritmos de remoção de ruído é recuperar a imagem original. Assim o modelo estatístico da imagem natural é crucial para a remoção de ruído. O tipo mais simples de ruído  é o aditivo, que pode ser caracterizado como
-\begin{equation*}
-p = p_0 + n,
-\end{equation*}
-\noindent onde $p_0$ é o valor real do pixel e $n$ é a perturbação de ruído naquele pixel.
-
-% A maneira mais simples de modelar o efeito de ruído em uma imagem digital é adicionar um ruído branco gaussiano, com média zero e variância $\sigma^2$.
-
-Um algoritmo alternativo para remoção de ruído é o de médias não locais. Isso porque pixels similares não necessariamente estão próximos em suas coordenadas cartesianas, assim, informações não locais podem ser utilizadas na redução de ruído. De acordo com \citeonline{Buades2005}, dada uma imagem ruidosa $v = {v(i) | i \in I}$, o valor estimado é calculado como uma média ponderada de todos os pixels em uma mesma imagem com
-\begin{equation*}
-v(i)= \sum_{j \in I} w(i, j)v(j),
-\end{equation*}
-\noindent onde os pesos $w(i, j)$ dependem da similaridade entre pixels.
+\meutodo{tem uma aqui seção de médias não locais, é necessário?}
+% \subsection{Restauração}
+% Ao contrário do realce, a etapa da restauração é objetiva. Também procura melhorar os aspectos visuais de uma imagem, mas com base em modelos probabilísticos de degradação de imagens. Dessa forma, tendo-se um modelo de degradação, procura-se recuperar a imagem original \cite{Gonzalez2007}. Mas um problema comum em algoritmos de remoção de ruído é que alguns detalhes, como textura, irão sofrer alta suavização.
+%
+% O objetivo dos algoritmos de remoção de ruído é recuperar a imagem original. Assim o modelo estatístico da imagem natural é crucial para a remoção de ruído. O tipo mais simples de ruído  é o aditivo, que pode ser caracterizado como
+% \begin{equation*}
+% p = p_0 + n,
+% \end{equation*}
+% \noindent onde $p_0$ é o valor real do pixel e $n$ é a perturbação de ruído naquele pixel.
+%
+% % A maneira mais simples de modelar o efeito de ruído em uma imagem digital é adicionar um ruído branco gaussiano, com média zero e variância $\sigma^2$.
+%
+% Um algoritmo alternativo para remoção de ruído é o de médias não locais. Isso porque pixels similares não necessariamente estão próximos em suas coordenadas cartesianas, assim, informações não locais podem ser utilizadas na redução de ruído. De acordo com \citeonline{Buades2005}, dada uma imagem ruidosa $v = {v(i) | i \in I}$, o valor estimado é calculado como uma média ponderada de todos os pixels em uma mesma imagem com
+% \begin{equation*}
+% v(i)= \sum_{j \in I} w(i, j)v(j),
+% \end{equation*}
+% \noindent onde os pesos $w(i, j)$ dependem da similaridade entre pixels.
 
 %--------------------------------------------------------------------------------
 \subsection{Quantização}
 \label{sec:quantizacao}
 
-Muitos métodos de extração de características são preparados para receber imagens de entrada em escala de cinza. Isso ocorre porque a complexidade de lidar com um pixel representado em três dimensões é muito maior do que em apenas uma dimensão. Assim, os métodos de quantização visam, de alguma forma, reduzir os canais de cores (24 bits) em apenas um (8 bits). \citeonline{Kanan2012} demonstraram que os métodos para a quantização (conversão de uma imagem colorida para escala de cinza) influenciam a performance no reconhecimento de imagens. Eles também salientam que o método utilizado deveria estar claramente descrito nas publicações da área. Os métodos de conversão para escala de cinza utilizados nessa dissertação foram escolhidos com base em \citeonline{Kanan2012}:
+Muitos métodos de extração de características são preparados apenas receber imagens de entrada em escala de cinza. Se existir a necessidade de utilizar a imagem RGB, as características são extraídas para cada canal de cor separadamente e posteriormente são concatenados. Isso ocorre porque a complexidade de lidar com um pixel representado em três dimensões é muito maior do que em apenas uma dimensão. Assim, os métodos de quantização visam, de alguma forma, reduzir os canais de cores (24 bits) em apenas um (8 bits). \citeonline{Kanan2012} demonstraram que os métodos para a quantização (conversão de uma imagem colorida para escala de cinza) influenciam a performance no reconhecimento de imagens. Eles também salientam que o método utilizado deveria estar claramente descrito nas publicações da área. Os métodos de conversão para escala de cinza utilizados nessa dissertação foram escolhidos com base em \citeonline{Kanan2012}:
 
 \begin{description}
 \item [Intensidade:] método mais simples, consiste em computar a média entre os canais RGB da imagem a partir de
