@@ -32,9 +32,8 @@ O processo de aquisição por um sistema de imageamento pode causar diversas imp
  \end{center}
 \end{figure}
 
-% Alguns exemplos de técnicas utilizadas para o pré-processamento de dados para algoritmos de Aprendizado de Máquina são: amostragem, tratamentos para dados desbalanceados, limpeza dos dados, transformações e redução de dimensionalidade \cite{Faceli2011}.
-
 Assim, técnicas de pré-processamento tornam os dados mais adequados para posterior análise, ao eliminar ou reduzir problemas como ruídos e imperfeições. Em \citeonline{Ponti2010}, o autor relata que a utilização de métodos de restauração na etapa de pré-processamento da imagem, antes da segmentação, resultou em uma qualidade superior para todos os testes, com valores de erro e desvio padrão menores. No referido estudo, métodos de realce causaram perda de informação e por isso não são indicados para uso em imagens obtidas por microscópio. O método indicado para evitar a amplificação de ruído nessas imagens é o algoritmo iterativo Richardson-Lucy, que será apresentado na Seção \ref{sub:deconvolucao}.
+\meutodo{mantenho a seção de deconvolução citada aqui?}
 
 Em contrapartida, \citeonline{6} propuseram uma representação para imagens faciais baseada em características de textura, sem utilizar pré-processamento. Este aparece somente como sugestão de trabalho futuro, como possível correção de problemas do sistema de captura (i.e. suavização causada pela captura fora de foco). O que implica que, apesar dos bons resultados, a melhoria com a utilização de pré-processamento não foi investigada. Pode-se imaginar, portanto, que o uso de pré-processamento pode melhorar os resultados já obtidos, através do realce de textura e eliminação de imperfeições nas imagens.
 
@@ -229,7 +228,7 @@ Muitos métodos de extração de características são preparados apenas receber
 \noindent e então realizar a correção por \textit{gamma}.
 
 \item [Luma:]  similar ao anterior, utilizado nas televisões de alta definição.
-\meutodo{achar referencia}
+\meutodo{referenciar}
 \begin{equation*}
 	Q_{Luma} = 0.2126R' + 0.7152G' + 0.0722B'.
 \end{equation*}
@@ -642,7 +641,7 @@ Nesta seção é definido o problema do desbalanceamento de classes e apresentad
 
 Em conjuntos de dados desbalanceados, determinadas classes possuem um número muito maior de instâncias do que outras. As classes com mais elementos são chamadas de classes majoritárias, e as com menos elementos, de minoritárias. O desempenho de algoritmos de Aprendizado de Máquina é prejudicado quando tratam de bases de dados desbalanceados. Esses algoritmos tendem a favorecer a classificação de um novo objeto à classe majoritária, pois esta fica muito melhor representada após o treinamento do que a minoritária. Considera-se, então, que esse problema é um obstáculo para a classificação satisfatória. Porém, como apontado por \cite{Batista2004}, o desbalanceamento não é o único responsável por reduzir o desempenho de algoritmos de aprendizagem. Eles sugerem que é possível haver uma ótima classificação mesmo contendo alto desbalanceamento na base de dados. Assim, a motivação do estudo de vários algoritmos para rebalanceamento não é apenas balancear os dados de treinamento, mas obter uma melhor diferenciação entre as classes. Isso porque o desbalanceamento por si só não é um problema, mas em conjunto com a sobreposição de classes pode diminuir significativamente a acurácia da classificação da classe minoritária. Os resultados reportados também mostram que a poda de árvores de decisão raramente levou a alguma melhora na classificação.
 
-\cite{Castro2011} destacam que duas abordagens têm sido utilizadas para solucionar esse problema: pré-processar os dados de forma a rebalancear as distribuições das classes ao reamostrar os dados; ou então modificar métodos de aprendizado -- como através da adição de melhores funções de custo na classificação. Em geral, são reportados melhores resultados obtidos por algoritmos de \textit{over-sampling}, os quais consistem em reamostrar os dados aumentando o número de elementos da classe minoritária \cite{Batista2004}. Esta pesquisa tem como enfoque o \textbf{pré-processamento dos dados}, ao rebalancear as classes através da \textbf{geração de imagens artificiais}.
+\cite{Castro2011} destacam que duas abordagens têm sido utilizadas para solucionar esse problema: pré-processar os dados de forma a rebalancear as distribuições das classes ao reamostrar os dados; ou então modificar métodos de aprendizado -- como através da adição de melhores funções de custo na classificação. Em geral, são reportados melhores resultados obtidos por algoritmos de \textit{over-sampling}, os quais consistem em reamostrar os dados aumentando o número de elementos da classe minoritária \cite{Batista2004}. Esta pesquisa tem como enfoque o \textbf{pré-processamento dos dados}, com um viés no rebalanceamento de classes através da \textbf{geração de imagens artificiais} (antes da extração de características).
 
 \subsection{Sobreamostragem}
 \label{sec:smote}
@@ -651,28 +650,30 @@ Realizar uma sobreamostragem (\textit{over-sampling}) em um determinado conjunto
 
 O SMOTE (\textit{Synthetic Minority Over-sampling Technique}) é um método desenvolvido por \cite{Chawla2002} para rebalancear classes ao gerar artificialmente novos elementos, ao invés de apenas replicá-los. É aplicado sobre os vetores de características previamente extraídos, com operações de perturbação dos dados de treino no espaço de características, e não no espaço dos dados. A diferença entre o vetor de características de um elemento e do seu vizinho mais próximo é multiplicada por um número $0 \le  x \le 1$. Esse valor é adicionado ao vetor original, criando um novo elemento. Como pode ser visualizado na Figura~\ref{fig:smote}, essa abordagem provoca a geração de um elemento resultante da interpolação dos dois vetores originais. Os exemplos sintéticos forçam uma região de decisão maior e mais geral para serem aprendidas como exemplos da classe minoritária.
 
-\begin{figure}[thpb]
-\centering
-\includegraphics[scale=1]{figuras/smote.pdf}
-\caption{SMOTE: interpolação entre dois exemplos vizinhos no espaço de características.} %
-\label{fig:smote}
+\begin{figure}[htbp]
+  \begin{center}
+    \includegraphics[scale=1]{figuras/smote.pdf}
+  \end{center}
+  \caption[Método SMOTE: interpolação entre dois exemplos vizinhos no espaço de características.]{Método SMOTE: interpolação entre dois exemplos vizinhos no espaço de características. \textit{Fonte: Elaborado pela autora.}}
+  \label{fig:smote}
 \end{figure}
 
 \begin{algorithm}[H]
-  \caption{Algoritmo do SMOTE}
+  \caption{SMOTE: método para rebalancear classes}
   \label{alg:smote}
   \SetAlgoLined
   \Entrada{Imagem colorida $I$ em formato BGR}
-  \Saida{Exemplos sintéticos}
+  \Saida{Exemplos sintéticos $S$}
   $N \gets \text{vizinhos(minoritária)}$\;
-  \ParaCada{exemplo $sample$}{
+  \ParaCada{exemplo}{
     $nn \gets \text{vizinho aleatório de N}$
+
     \ParaCada{\text{característica} $(x,y)$}{
-      $\text{diferença} \gets nn(x,y) - sample(x,y)$\;
+      $\text{diferença} \gets nn(x,y) - exemplo(x,y)$\;
       $\text{gap} \gets \text{número aleatório entre 0 e 1}$\;
-      $\text{G}(x,y) \gets sample(x,y) + gap*\text{diferença}$\;
+      $\text{G}(x,y) \gets exemplo(x,y) + gap*\text{diferença}$\;
     }
-    $S \gets S U G$\;
+    $S \gets S \cup G$\;
   }
 \end{algorithm}
 
@@ -688,8 +689,12 @@ Ao contrário da sobreamostragem, a subamostragem visa diminuir o número de ele
 Métodos para remoção de exemplos da classe majoritária normalmente apresentam resultados piores do que métodos de sobreamostragem, conforme relatado por \citeonline{Batista2004} e \cite{Japkowicz2002}. Um dos motivos pela preferência natural à sobreamostragem é o fato de que ao realizar subamostragem pode-se remover informações essenciais dos dados originais. Mas não há uma estratégia única que funcione melhor para todos os cenários.
 
 %-------------------------------------------------------------------------------
-\section{Classificadores de padrões}
+\section{Classificador de padrões}
 \label{sec:classificadores}
+
+A tarefa de classificação de imagens consiste em tentar predizer a classe de uma determinada imagem. Na classificação supervisionada isso é realizado da seguinte forma: na etapa de treinamento o método recebe como entrada um conjunto de imagens para treino rotulado com suas respectivas classes; e etapa de classificação, quando são preditas as classes de um conjunto de imagens de teste. Já um classificador não-supervisionado não recebe como entrada as imagens de treino rotuladas. Dessa forma, deve determinar sozinho quais representam cada classe.
+
+\meutodo {melhorar}
 
 % \subsection{Naive Bayes}
 
@@ -704,15 +709,26 @@ Métodos para remoção de exemplos da classe majoritária normalmente apresenta
 \subsection{Algoritmo k-vizinhos mais próximos}
 \label{sec:knn}
 
-K-NN é um classificador supervisionado que considera a proximidade entre os dados para realizar predições. Baseia-se na premissa de que os objetos do mesmo conceito são semelhantes. Na fase de treinamento, apenas armazena os exemplos rotulados do conjunto de dados de treinamento. Quando um novo exemplo deve ser classificado, calcula a distância entre os vetores de características do novo exemplo e aqueles já rotulados. O novo exemplo é então classificado como sendo da classe do exemplo de treinamento com menor distância~\cite{Boiman2008}.
+O classificador supervisionado K-NN considera a proximidade entre os dados para realizar predições. Baseia-se na premissa de que os objetos do mesmo conceito são semelhantes. O seu funcionamento está descrito no Algoritmo \ref{alg:knn}. Na fase de treinamento, apenas armazena os exemplos rotulados do conjunto de dados de treinamento. Quando um novo exemplo deve ser classificado, calcula a distância entre os vetores de características do novo exemplo e aqueles já rotulados. O novo exemplo é então classificado como sendo da classe do exemplo de treinamento com menor distância~\cite{Boiman2008}.
 
-\begin{enumerate}
-\item Escolhe o valor de $k$ e uma métrica de distância;
-\item Encontra os $k$ vizinhos mais próximos do exemplo que queremos classificar;
-\item Rotula o sample como pertencente à classe que recebeu mais votos.
-\end{enumerate}
+\begin{algorithm}[H]
+  \caption{K-NN: método de classificação supervisionada}
+  \label{alg:knn}
+  \SetAlgoLined
+  \Entrada{Conjunto de exemplos $S_{treino}$ e $S_{teste}$}
+  \Saida{Classes $C$ dos exemplos de teste preditas}
+  $C \gets \emptyset $\;
+  \ParaCada{teste $ \in S_{teste}$}{
+    $N \gets k \text{ vizinhos mais próximos} (teste, S_{treino}) $\;
+    $D \gets \emptyset $\;
+    \ParaCada{vizinho $n \in N$}{
+      $D \gets D \cup \text{distância} (n, teste) $\;
+    }
+    $C \gets C \cup menor(D)$\;
+  }
+\end{algorithm}
 
-\meutodo{figura aqui}
+% \meutodo{figura aqui}
 
 Esse classificador foi utilizado por ser suscetível à diferenciação entre as classes. Com $K = 1$, a predição da classe corresponde ao exemplo mais próximo.
 %-------------------------------------------------------------------------------
