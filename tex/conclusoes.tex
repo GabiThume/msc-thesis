@@ -16,6 +16,9 @@
 % - o que se pretende fazer daqui pra frente? o que é esperado como resultado?
 % }
 
+
+Os resultados encontrados apontam para uma alternativa -- ou adição -- a seleção de características, ao usar os métodos de quantização de imagens. Dado o número de cores limitado na imagem original, a quantidade de possíveis características a serem extraídas é reduzido, especialmente as de cor. A extração de características de textura também é facilitada, considerando que normalmente computa utilizando uma memória proporcional o número de intensidades. 
+
 Ficou constatado que um vetor original de $D$ dimensões pode ser reduzido a $d \approx D/4$ modifcando apenas o parâmetro de quantização e produzindo bons resultados. Outra possibilidade é utilizar esse métodos como um primeiro passo de redução e então utilizar o LPP para obter apenas 100 características que melhor representam os dados, atingindo acurácias maiores ou similares.
 
 É importante ressaltar que realizar a quantização de imagens não requere treinamento e já faz parte de uma tarefa do pipeline de reconhecimento. Por esta razão, seu uso não aumenta o custo computacional do sistema, e ainda simplifica os passos subsequentes. Isso reduz a dimensão do vetor de características para os vetores de cor e o tempo de computação para os descritores de textura. Outra observação importante é que a quantização é usada especialmente para dados visuais, então não é um método geral de redução de dimensionalidade.
