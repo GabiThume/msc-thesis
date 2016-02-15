@@ -1,8 +1,8 @@
 \section{Considerações iniciais}
 
-O processo de manipular imagens para que elas se tornem mais satisfatórias para um determinado objetivo depende do domínio de aplicação. Ou seja, não existe uma teoria geral para melhorar qualquer tipo de imagem \cite{Gonzalez2007}: um método que processa melhor uma imagem bem definida pelas suas cores difere do processamento de imagens texturizadas, às quais um processamento sobre a intensidade dos pixels da imagem -- como uma operação de borramento -- pode ocasionar perda da textura. Assim, justifica-se a exploração de um vasto número de métodos de processamento de imagens e bases.
+O processo de manipular imagens para que elas se tornem mais satisfatórias para um determinado objetivo depende do domínio de aplicação. Ou seja, não existe uma teoria geral para melhorar qualquer tipo de imagem \cite{Gonzalez2007}: um método que processa melhor uma imagem bem definida por suas cores difere do processamento de imagens texturizadas, às quais um processamento sobre a intensidade dos pixels da imagem -- como uma operação de borramento -- pode ocasionar perda da textura. Assim, justifica-se a exploração de um vasto número de métodos de processamento de imagens e bases.
 
-Nesta pesquisa oito métodos de processamento de imagens são aplicados nas imagens minoritárias originais, gerando imagens artificiais. Isso é realizado a fim de permitir a extração de informações latentes com o objetivo de melhorar a classificação com alguma técnica de Aprendizado de Máquina, o que reflete a melhora da diferenciação entre as classes. Dada a quantidade de imagens necessárias para rebalancear a base original, são geradas imagens utilizando cada um dos métodos, além de uma versão combinando todos eles (ou seja, compondo um conjunto com algumas imagens processadas por cada método) e outra apenas replicando as imagens como \textit{baseline}. Como demonstrado na Figura~\ref{fig:escolha}, dado o conjunto de treinamento da classe (ou classes) com menor número total de imagens, é realizado o rebalanceamento ao aplicar os métodos descritos neste capítulo e posteriormente essas imagens resultantes são utilizadas como treinamento.
+Nesta pesquisa oito métodos de processamento de imagens são aplicados nas imagens minoritárias originais, gerando imagens artificiais a partir destas. Isso é realizado a fim de permitir a extração de informações latentes com o objetivo de melhorar a classificação com alguma técnica de Aprendizado de Máquina, o que reflete a melhora da diferenciação entre as classes. Dada a quantidade de imagens necessárias para rebalancear a base original, são geradas imagens utilizando cada um dos métodos, além de uma versão combinando todos eles (ou seja, compondo um conjunto com algumas imagens processadas por cada método) e outra apenas replicando as imagens como \textit{baseline}. Como demonstrado na Figura~\ref{fig:escolha}, dado o conjunto de treinamento da classe (ou classes) com menor número total de imagens, é realizado o rebalanceamento ao aplicar os métodos descritos neste capítulo e posteriormente essas imagens resultantes são utilizadas como treinamento.
 
 Neste capítulo os métodos de geração artificial para o rebalanceamento de classes de imagens são descritos. Os experimentos posteriormente destacados no Capítulo~\ref{cap:resultados} foram realizados utilizando: borramento; mistura ponderada; \textit{unsharp masking}; composição; combinação de thresholds; combinação com saliência; visual SMOTE; e adição de ruído.
 
@@ -14,8 +14,6 @@ Neste capítulo os métodos de geração artificial para o rebalanceamento de cl
   \label{fig:escolha}
 \end{figure}
 
-% Não foi testado uma porcentagem fixa para verificar se existe algum ganho em utilizar
-% uma ponderação específica.
 
 %  \begin{figure}[hbpt]
 %  \begin{center}
@@ -28,7 +26,7 @@ Neste capítulo os métodos de geração artificial para o rebalanceamento de cl
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Borramento}
 
-Também conhecido como filtro de suavização, o borramento é uma operação de processamento comumente utilizada com o objetivo de filtrar as baixas frequências de uma imagem, removendo ruídos e detalhes não relevantes. Normalmente esse tipo de filtro provoca também um certo borramento das bordas, como pode ser observado na Figura~\ref{fig:blur}.
+Também conhecido como filtro de suavização, o borramento é uma operação de processamento comumente utilizada com o objetivo de filtrar as frequências de uma imagem, removendo ruídos e detalhes não relevantes. Normalmente esse tipo de filtro provoca também um certo borramento das bordas, como pode ser observado na Figura~\ref{fig:blur}.
 
 Esse comportamento não é esperado quando devemos gerar novas imagens, pois informações relevantes podem ser removidas. Dessa forma, a operação de borramento utilizada é a de filtro bilateral. Ela substitui o valor do pixel $(x,y)$ por uma média dos pixels de intensidade similar na imagem e dos pixels vizinhos \cite{Tomasi1998}. Ou seja, é uma média ponderada das intensidades. O Algoritmo~\ref{alg:blur} descreve os passos desse filtro na sua versão mais simples, de força bruta. A Figura~\ref{fig:gen:blur} exemplifica o seu funcionamento: à esquerda está demonstrada a imagem original e à direita a imagem borrada.
 
@@ -84,9 +82,7 @@ Esse comportamento não é esperado quando devemos gerar novas imagens, pois inf
 
   \item[Métodos relacionados] São diversos os métodos de borramento descritos na literatura, como a filtragem Gaussiana, a de mediana e a de médias.
 
-  \item[Visualização] É interessante notar na Figura \ref{vis:blur} o comportamento da adição de imagens borradas para o rebalanceamento de classes bem descritas pela propriedade da cor.
-
-  \meutodo{colocar aqui alguma figura do espaço... }
+  % \item[Visualização] É interessante notar na Figura \ref{vis:blur} o comportamento da adição de imagens borradas para o rebalanceamento de classes bem descritas pela propriedade da cor.
 
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -132,9 +128,9 @@ Diferentemente da suavização, o processamento de aguçamento procura enfatizar
 
   \item[Limitações] É possível que existam pixels com valor negativo no resultado final. Isso pode causar o aparecimento de uma áurea em volta das bordas, efeito não desejado \cite{Gonzalez2007}.
 
-  \item[Métodos relacionados] Outros algortimos de aguçamento conhecidos são: utilizar primeira derivada (grandiente) ou a segunda derivada da imagem (Laplaciano).
+  \item[Métodos relacionados] Outros algoritmos de aguçamento conhecidos são: utilizar primeira derivada (grandiente) ou a segunda derivada da imagem (Laplaciano).
 
-  \item[Visualização]
+  % \item[Visualização]
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Adição de ruído}
@@ -194,7 +190,7 @@ Uma possível implementação para encontrar os valores de Poisson foi desenvolv
   \item[Limitações] A adição de ruído é normalmente indesejável e a utilizamos
   para englobar mais um processamento de imagens. (??)
   \item[Métodos relacionados]
-  \item[Visualização]
+  % \item[Visualização]
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{SMOTE visual}
@@ -261,7 +257,7 @@ na imagem original (Ver Algoritmo~\ref{alg:smotevisual}). O efeito que esse proc
 
   \item[Métodos relacionados] Esse método é visualmente parecido com o de mistura ponderada, apresentado na próxima seção.
 
-  \item[Visualização]
+  % \item[Visualização]
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Mistura ponderada}
@@ -317,7 +313,7 @@ Algoritmo~\ref{alg:blend}. O efeito dessa mistura pode ser visto na Figura~\ref{
 
   \item[Métodos relacionados] É um método de combinação de imagens primitivo. Algoritmos similares são muito mais complexos, como os de threshold e saliência descritos a seguir.
 
-  \item[Visualização]
+  % \item[Visualização]
 
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -373,7 +369,7 @@ A combinação de \textit{thresholds} é uma composição do fundo (\textit{back
 
   \item[Métodos relacionados] Essa geração está fortemente correlacionada com a mistura a partir da saliência da imagem, apresentada a seguir.
 
-  \item[Visualização]
+  % \item[Visualização]
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Mistura saliente}
@@ -432,7 +428,7 @@ As operações aplicadas na imagem para extrair a região mais saliente são: SL
 
   \item[Métodos relacionados] Similar à mistura por \textit{thresholds}.
 
-  \item[Visualização]
+  % \item[Visualização]
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Composição}
@@ -492,7 +488,7 @@ Para cada quadrado a ser preenchido sorteia uma imagem do conjunto de treinament
 
   \item[Métodos relacionados]
 
-  \item[Visualização]
+  % \item[Visualização]
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \section{Metodologia}
@@ -597,5 +593,7 @@ Para cada quadrado a ser preenchido sorteia uma imagem do conjunto de treinament
 
 %-------------------------------------------------------------------------------
 \section{Considerações finais}
+
+Esse capítulo descreveu como o rebalanceamento é realizado: gerar imagens para a classe (ou classes) minoritárias e utilizá-las para o treinamento. Os métodos para gerar tais imagens foram apresentados e exemplificados. Foram também descritos os algoritmos, parâmetros utilizados, limitações e métodos relacionados a cada um dos métodos.
 
 % A proposta desta pesquisa foi apresentada, descrevendo a sua metodologia. Foi dado destaque aos resultados esperados e à forma de avaliação, descrevendo as medidas estatísticas a serem utilizadas. O cronograma previsto para a realização deste mestrado foi destacado, elencando as atividades e suas respetivas durações. O próximo capítulo apresentará os resultados preliminares.
