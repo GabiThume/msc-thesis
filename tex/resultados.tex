@@ -283,6 +283,27 @@ Os resultados da classificação dos três experimentos utilizando KNN reportou 
   \label{fig:resultados:1:vis}
 \end{figure}
 
+\begin{table}[]
+\centering
+\caption{}
+\label{fig:resultados:1:tabvis}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Intensidade e BIC} & \textbf{Média} & \textbf{Desvio padrão} \\ \hline
+Todos                      & 88.07          & 5.30                   \\ \hline
+Aguçamento                 & 86.65          & 7.00                   \\ \hline
+Borramento                 & 87.17          & 5.10                   \\ \hline
+Composição 16              & 88.16          & 5.32                   \\ \hline
+Composição 4               & 88.12          & 5.45                   \\ \hline
+Limiares                   & 87.65          & 5.10                   \\ \hline
+Mistura                    & \textbf{88.84} & 5.03          \\ \hline
+Ruído                      & 87.95          & 5.75                   \\ \hline
+SMOTE Visual               & 87.69          & 5.28                   \\ \hline
+Saliência                  & 88.09          & 5.58                   \\ \hline
+SMOTE                      & 88.55          & 5.21                   \\ \hline
+Desbalanceado              & 85.82          & 5.69                   \\ \hline
+\end{tabular}
+\end{table}
 
 Para confirmar se a geração de imagens inseriu mais informação na classe minoritária do que apenas povoar os espaços entre os exemplos (i.e.\ SMOTE), a classe rebalanceada utilizando ambos métodos está demonstrada na Figura~\ref{fig:compara_vis_treino_fixed}. Em laranja estão representados os novos exemplos de treinamento, projetados no plano da base original balanceada.
 
@@ -379,7 +400,7 @@ Como relatado no início desse experimento, o extrator de características utili
   \begin{center}
       \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/1/GCH_Gleam_elefante-cavalo.png}}
   \end{center}
-  \caption[]{Conversão em escala de cinza com Gleam e GCH como método de extração. \textit{Fonte:~Elaborado pela autora.}}
+  \caption[]{Conversão em escala de cinza com Gleam e GCH como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:resultados:1:melhor}
 \end{figure}
 
@@ -405,27 +426,35 @@ Desbalanceado        & 87.09          & 5.31                   \\ \hline
 \end{tabular}
 \end{table}
 
-\begin{table}[]
-\centering
-\caption{}
-\label{fig:resultados:1:tabvis}
-\begin{tabular}{|l|c|c|}
-\hline
-\textbf{Intensidade e BIC} & \textbf{Média} & \textbf{Desvio padrão} \\ \hline
-Todos                      & 88.07          & 5.30                   \\ \hline
-Aguçamento                 & 86.65          & 7.00                   \\ \hline
-Borramento                 & 87.17          & 5.10                   \\ \hline
-Composição 16              & 88.16          & 5.32                   \\ \hline
-Composição 4               & 88.12          & 5.45                   \\ \hline
-Limiares                   & 87.65          & 5.10                   \\ \hline
-Mistura                    & \textbf{88.84} & 5.03          \\ \hline
-Ruído                      & 87.95          & 5.75                   \\ \hline
-SMOTE Visual               & 87.69          & 5.28                   \\ \hline
-Saliência                  & 88.09          & 5.58                   \\ \hline
-SMOTE                      & 88.55          & 5.21                   \\ \hline
-Desbalanceado              & 85.82          & 5.69                   \\ \hline
-\end{tabular}
-\end{table}
+\begin{figure}
+ \begin{center}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/1/original-mistura.png}}
+\end{subfigure}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/1/original2-mistura.png}}
+\end{subfigure}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/1/resultado-mistura.png}}
+\end{subfigure}
+ \end{center}
+ \caption[]{ \textit{Fonte:~Elaborado pela autora.}}
+ \label{fig:resultados:1:mistura}
+\end{figure}
+
+%-------------------------------------------------------------------------------
+\item[] \textbf{Resultado da maior variância obtida com a combinação dos métodos de extração e conversão para escala de cinza}
+
+\begin{figure}[htbp]
+  \begin{center}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/1/HOG_MSB_elefante-cavalo.png}}
+  \end{center}
+  \caption[]{Conversão em escala de cinza com MSB e HOG como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
+  \label{fig:resultados:1:pior}
+\end{figure}
 
 
 \begin{table}[]
@@ -450,9 +479,20 @@ Desbalanceado      & 55.667145          & 13.341421              \\ \hline
 \end{tabular}
 \end{table}
 
-%-------------------------------------------------------------------------------
-\item[] \textbf{Resultado da maior variância obtida com a combinação dos métodos de extração e conversão para escala de cinza}
-
+\begin{figure}
+ \begin{center}
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/1/original-ruido.png}}
+\end{subfigure}
+\begin{subfigure}{.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/1/resultado-ruido.png}}
+\end{subfigure}
+ \end{center}
+ \caption[]{ \textit{Fonte:~Elaborado pela autora.}}
+ \label{fig:resultados:1:ruido}
+\end{figure}
 
 %-------------------------------------------------------------------------------
 \item[] \textbf{Discussão}
@@ -495,8 +535,115 @@ O seguinte protocolo foi seguido para a obtenção dos resultados:
 \item \textbf{Extração de características}:
 \item \textbf{Classificação}:
 \end{enumerate}
+
 %-------------------------------------------------------------------------------
-\item[] \textbf{Resultados e Discussão}
+\item[] \textbf{Resultado da melhor combinação dos métodos de extração e conversão para escala de cinza}
+
+\begin{figure}[htbp]
+  \begin{center}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/2/BIC_Luminance_praia-montanha.png}}
+  \end{center}
+  \caption[]{Conversão em escala de cinza com Luminância e BIC como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
+  \label{fig:resultados:2:pior}
+\end{figure}
+
+
+\begin{table}[]
+\centering
+\caption{}
+\label{my-label}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{BIC Luminance} & \textbf{Média} & \textbf{Desvio padrão} \\ \hline
+Todos                  & 65.21          & 7.54                   \\ \hline
+Aguçamento             & 62.30          & 7.85                   \\ \hline
+Borramento             & 61.24          & 7.55                   \\ \hline
+Composição 16          & 64.23          & 7.31                   \\ \hline
+Composição 4           & 65.65          & 8.27                   \\ \hline
+Limiares               & 63.69          & 8.77                   \\ \hline
+Mistura                & 65.41          & 8.20                   \\ \hline
+Ruído                  & 63.50          & 8.05                   \\ \hline
+SMOTE Visual           & 61.55          & 9.44                   \\ \hline
+Saliência              & \textbf{65.69} & 6.63                   \\ \hline
+SMOTE                  & 63.58          & 7.74                   \\ \hline
+Desbalanceado          & 59.49          & 8.11                   \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{figure}
+ \begin{center}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/2/original-saliencia.png}}
+\end{subfigure}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/2/original2-saliencia.png}}
+\end{subfigure}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/2/resultado-saliencia.png}}
+\end{subfigure}
+ \end{center}
+ \caption[]{ \textit{Fonte:~Elaborado pela autora.}}
+ \label{fig:resultados:2:saliencia}
+\end{figure}
+
+%-------------------------------------------------------------------------------
+\item[] \textbf{Resultado da maior variância obtida com a combinação dos métodos de extração e conversão para escala de cinza}
+
+\begin{figure}[htbp]
+  \begin{center}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/2/HOG_Intensity_praia-montanha.png}}
+  \end{center}
+  \caption[]{Conversão em escala de cinza com Intensidade e HOG como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
+  \label{fig:resultados:2:pior}
+\end{figure}
+
+\begin{table}[]
+\centering
+\caption{}
+\label{my-label}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Intensidade e HOG} & \textbf{Média}     & \textbf{Desvio padrão} \\ \hline
+Todos                      & 62.184222          & 9.310391               \\ \hline
+Aguçamento                 & 63.455343          & 6.719545               \\ \hline
+Borramento                 & 57.599052          & 8.332506               \\ \hline
+Composição 16              & 57.669325          & 8.424716               \\ \hline
+Composição 4               & 59.239965          & 8.254027               \\ \hline
+Limiares                   & 63.138800          & 9.132368               \\ \hline
+Mistura                    & \textbf{65.255990} & 9.073246               \\ \hline
+Ruído                      & 60.577283          & 8.690926               \\ \hline
+SMOTE Visual               & 56.998855          & 9.050991               \\ \hline
+Saliência                  & 61.728330          & 8.154174               \\ \hline
+SMOTE                      & 62.210017          & 8.318301               \\ \hline
+Desbalanceado              & 57.651543          & 8.323832               \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{figure}
+ \begin{center}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/2/original-mistura.png}}
+\end{subfigure}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/2/original2-mistura.png}}
+\end{subfigure}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/2/resultado-mistura.png}}
+\end{subfigure}
+ \end{center}
+ \caption[]{ \textit{Fonte:~Elaborado pela autora.}}
+ \label{fig:resultados:2:mistura}
+\end{figure}
+
+%-------------------------------------------------------------------------------
+\item[] \textbf{Discussão}
+
 
 \end{itemize}
 
