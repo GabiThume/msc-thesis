@@ -644,7 +644,6 @@ Desbalanceado              & 57.651543          & 8.323832               \\ \hli
 %-------------------------------------------------------------------------------
 \item[] \textbf{Discussão}
 
-
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -675,15 +674,72 @@ Desbalanceado              & 57.651543          & 8.323832               \\ \hli
 O seguinte protocolo foi seguido para a obtenção dos resultados:
 
 \begin{enumerate}
-\item \textbf{Classes de imagens originais}:
-\item \textbf{Desbalanceamento}:
-\item \textbf{Método para geração artificial}:
+\item \textbf{Classes de imagens originais}: as 10 classes da base Corel.
+\item \textbf{Desbalanceamento}: 200 configurações de folds para que cada classe fosse desbalanceada.
+\item \textbf{Método para geração artificial}: o melhor foi a mistura.
+
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{subfigure}{.3\linewidth}
+      \centering
+      \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/3/original-mistura.png}}
+    \end{subfigure}
+    \begin{subfigure}{.3\linewidth}
+      \centering
+      \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/3/original2-mistura.png}}
+    \end{subfigure}
+    \begin{subfigure}{.3\linewidth}
+      \centering
+      \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/3/resultado-mistura.png}}
+    \end{subfigure}
+  \end{center}
+  \caption{}
+  \label{fig:exp1:base}
+\end{figure}
+
 \item \textbf{Quantização}:
 \item \textbf{Extração de características}:
-\item \textbf{Classificação}:
+\item \textbf{Classificação}: KNN com $K=1$.
 \end{enumerate}
+
 %-------------------------------------------------------------------------------
-\item[] \textbf{Resultados e Discussão}
+\item[] \textbf{Resultado da melhor combinação dos métodos de extração e conversão para escala de cinza}
+
+\begin{figure}[htbp]
+  \begin{center}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/3/LBP_Luma_corel.png}}
+  \end{center}
+  \caption[Experimento com as 10 classes da base Corel. Foi utilizado o método Luma para conversão em escala de cinza e LBP como método de extração de características.]{Experimento com as 10 classes da base Corel. Foi utilizado o método Luma para conversão em escala de cinza e LBP como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
+  \label{fig:resultados:2:pior}
+\end{figure}
+
+\begin{table}[]
+\centering
+\caption{Experimento com as 10 classes da base Corel.}
+\label{my-label}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Luma e LBP} & \textbf{Média} & \textbf{Desvio padrão} \\ \hline
+Todos               & 59.46          & 2.23                   \\ \hline
+Aguçamento          & 59.32          & 2.33                   \\ \hline
+Borramento          & 58.41          & 2.36                   \\ \hline
+Composição 16       & 59.71          & 1.92                   \\ \hline
+Composição 4        & 58.97          & 2.20                   \\ \hline
+Limiares            & 59.89          & 2.33                   \\ \hline
+Mistura             & \textbf{59.99} & 2.02                   \\ \hline
+Ruído               & 58.48          & 2.21                   \\ \hline
+SMOTE Visual        & 58.43          & 2.35                   \\ \hline
+Saliência           & 59.63          & 2.07                   \\ \hline
+SMOTE               & 59.78          & 2.36                   \\ \hline
+Desbalanceado       & 58.09          & 2.31                   \\ \hline
+\end{tabular}
+\end{table}
+
+%-------------------------------------------------------------------------------
+\item[] \textbf{Resultado da maior variância obtida com a combinação dos métodos de extração e conversão para escala de cinza}
+
+%-------------------------------------------------------------------------------
+\item[] \textbf{Discussão}
 
 \end{itemize}
 
@@ -726,6 +782,29 @@ O seguinte protocolo foi seguido para a obtenção dos resultados:
 \item[] \textbf{Resultados e Discussão}
 
 \end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{table}[]
+% \centering
+% \caption{Base DTD com 3 classes bem distintas de texturas utilizando LBP e Luminância}
+% % \label{my-label}
+% \begin{tabular}{|l|c|c|}
+% \hline
+% \textbf{Luminância e LBP} & \textbf{Média} & \textbf{Desvio padrão} \\ \hline
+% Todos                     & 65.74          & 4.70                   \\ \hline
+% Aguçamento                & 66.28          & 4.10                   \\ \hline
+% Borramento                & 64.37          & 4.89                   \\ \hline
+% Composição 16             & 64.68          & 5.62                   \\ \hline
+% Composição 4              & 64.28          & 4.98                   \\ \hline
+% Limiares                  & 67.01          & 4.93                   \\ \hline
+% Mistura                   & \textbf{67.51} & 5.19                   \\ \hline
+% Ruído                     & 65.85          & 4.23                   \\ \hline
+% SMOTE Visual              & 66.63          & 4.84                   \\ \hline
+% Saliência                 & 65.91          & 5.67                   \\ \hline
+% SMOTE                     & 67.07          & 4.89                   \\ \hline
+% Desbalanceado             & 63.69          & 4.89                   \\ \hline
+% \end{tabular}
+% \end{table}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
