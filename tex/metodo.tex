@@ -6,7 +6,7 @@ Nesta pesquisa oito métodos de processamento de imagens são aplicados nas imag
 
 Neste capítulo os métodos de geração artificial para o rebalanceamento de classes de imagens são descritos. Os experimentos posteriormente destacados no Capítulo~\ref{cap:resultados} foram realizados utilizando: borramento; mistura ponderada; \textit{unsharp masking}; composição; combinação de thresholds; combinação com saliência; visual SMOTE; e adição de ruído.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \includegraphics[width=0.7\linewidth]{\detokenize {figuras/rebalance.pdf}}
   \end{center}
@@ -31,7 +31,7 @@ Também conhecido como filtro de suavização, o borramento é uma operação de
 Esse comportamento não é esperado quando devemos gerar novas imagens, pois informações relevantes podem ser removidas. Dessa forma, a operação de borramento utilizada é a de filtro bilateral. Ela substitui o valor do pixel $(x,y)$ por uma média dos pixels de intensidade similar na imagem e dos pixels vizinhos \cite{Tomasi1998}. Ou seja, é uma média ponderada das intensidades. O Algoritmo~\ref{alg:blur} descreve os passos desse filtro na sua versão mais simples, de força bruta. A Figura~\ref{fig:gen:blur} exemplifica o seu funcionamento: à esquerda está demonstrada a imagem original e à direita a imagem borrada.
 
 \vspace{0.5cm}
-\begin{algorithm}[H]
+\begin{algorithm}[!htbp]
   \caption{Algoritmo de borramento com filtro bilateral}
   \label{alg:blur}
   \SetAlgoLined
@@ -57,7 +57,7 @@ Esse comportamento não é esperado quando devemos gerar novas imagens, pois inf
 \end{algorithm}
 \vspace{0.5cm}
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \begin{subfigure}{.4\textwidth}
       \centering
@@ -91,7 +91,7 @@ Esse comportamento não é esperado quando devemos gerar novas imagens, pois inf
 Diferentemente da suavização, o processamento de aguçamento procura enfatizar as transições de intensidade. Um processo bem conhecido para atingir tal objetivo é o \textit{unsharp mask}. Ele borra a imagem, subtrai a imagem borrada da original e adiciona essa diferença na imagem original (Ver Algoritmo \ref{alg:unsharp}). A imagem resultante, ilustrada na Figura~\ref{fig:gen:unsharp}, é uma versão realçada da imagem original, dado que soma à imagem justamente o que é removido com um filtro de suavização.
 
 \vspace{0.5cm}
-\begin{algorithm}[H]
+\begin{algorithm}[!htbp]
   \caption{Algoritmo de aguçamento}
   \label{alg:unsharp}
   \SetAlgoLined
@@ -105,7 +105,7 @@ Diferentemente da suavização, o processamento de aguçamento procura enfatizar
 \end{algorithm}
 \vspace{0.5cm}
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \begin{subfigure}{.4\textwidth}
       \centering
@@ -137,7 +137,7 @@ Diferentemente da suavização, o processamento de aguçamento procura enfatizar
 
 O ruído de Poisson ocorre na contagem de fótons de dispositivos ópticos. Ele segue a distribuição de Poisson, que expressa a probabilidade de um certo número de eventos ocorrer em um intervalo fixo de tempo e/ou espaço se esses eventos ocorem com uma taxa média conhecida. O efeito da adição de ruído pode ser visto na Figura~\ref{fig:gen:noise}.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \begin{subfigure}{.4\textwidth}
       \centering
@@ -166,7 +166,7 @@ A distribuição de Poisson segue a equação:
 Uma possível implementação para encontrar os valores de Poisson foi desenvolvida por Knuth e pode ser vista no Algoritmo~\ref{alg:noise}.
 
 \vspace{0.5cm}
-\begin{algorithm}[H]
+\begin{algorithm}[!htbp]
   \caption{Algoritmo da geração com ruído de Poisson}
   \label{alg:noise}
   \SetAlgoLined
@@ -201,7 +201,7 @@ Para cada pixel é calculado a diferença entre as duas imagens. Essa diferença
 na imagem original (Ver Algoritmo~\ref{alg:smotevisual}). O efeito que esse processamento causa na imagem pode ser visualizado na Figura~\ref{fig:gen:smotevisual}.
 
 \vspace{0.5cm}
-\begin{algorithm}[H]
+\begin{algorithm}[!htbp]
   \caption{Algoritmo da geração com SMOTE visual}
   \label{alg:smotevisual}
   \SetAlgoLined
@@ -230,7 +230,7 @@ na imagem original (Ver Algoritmo~\ref{alg:smotevisual}). O efeito que esse proc
 \end{algorithm}
 \vspace{0.5cm}
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \begin{subfigure}{.3\textwidth}
       \centering
@@ -265,7 +265,7 @@ na imagem original (Ver Algoritmo~\ref{alg:smotevisual}). O efeito que esse proc
 Essa geração calcula a soma ponderada de duas imagens, de acordo com o
 Algoritmo~\ref{alg:blend}. O efeito dessa mistura pode ser visto na Figura~\ref{fig:gen:blend}, onde dadas duas imagens como entrada, a imagem da direita corresponde a soma delas.
 
-\begin{algorithm}[H]
+\begin{algorithm}[!htbp]
   \vspace{0.5cm}
   \caption{Algoritmo de mistura ponderada}
   \label{alg:blend}
@@ -284,7 +284,7 @@ Algoritmo~\ref{alg:blend}. O efeito dessa mistura pode ser visto na Figura~\ref{
 \end{algorithm}
 \vspace{0.5cm}
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \begin{subfigure}{.3\textwidth}
       \centering
@@ -321,7 +321,7 @@ Algoritmo~\ref{alg:blend}. O efeito dessa mistura pode ser visto na Figura~\ref{
 
 A combinação de \textit{thresholds} é uma composição do fundo (\textit{background}) de uma imagem e do objeto da cena (\textit{foreground}) de outra imagem. A Figura~\ref{fig:gen:threshold} mostra a mistura dos \textit{thresholds} de duas imagens originais para compor uma nova imagem. O Algoritmo~\ref{alg:threshold} descreve as operações necessárias para realizar tal processamento.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \begin{subfigure}{.3\textwidth}
       \centering
@@ -344,7 +344,7 @@ A combinação de \textit{thresholds} é uma composição do fundo (\textit{back
 \end{figure}
 
 \vspace{0.5cm}
-\begin{algorithm}[H]
+\begin{algorithm}[!htbp]
   \caption{Algoritmo de mistura limiarizada}
   \label{alg:threshold}
   \SetAlgoLined
@@ -376,7 +376,7 @@ A combinação de \textit{thresholds} é uma composição do fundo (\textit{back
 
 A combinação de regiões salientes é muito similar com o método anterior de combinação de \textit{thresholds}, porém, utiliza um algoritmo mais robuscado que detecta a saliência da imagem a partir do método SLIC. A Figura~\ref{fig:gen:saliency} mostra a combinação da região saliente da imagem original à esquerda com a imagem central, resultando na imagem combinada à direita.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \begin{subfigure}{.3\textwidth}
       \centering
@@ -401,7 +401,7 @@ A combinação de regiões salientes é muito similar com o método anterior de 
 As operações aplicadas na imagem para extrair a região mais saliente são: SLIC; rotulação por conectividade; \textit{threshold de OTSU}; e operações morfológicas. O Algoritmo~\ref{alg:saliency} apresenta os passos para o cálculo do \textit{background} e \textit{foreground}.
 
 \vspace{0.5cm}
-\begin{algorithm}[H]
+\begin{algorithm}[!htbp]
   \caption{Algoritmo de mistura saliente}
   \label{alg:saliency}
   \SetAlgoLined
@@ -437,7 +437,7 @@ Essa geração pretende compor informações de diversas imagens em uma única i
 
 \meutodo{figura da mistura central}
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \centering
     \includegraphics[width=0.4\linewidth]{\detokenize{figuras/geracao/composition.png}}
@@ -449,7 +449,7 @@ Essa geração pretende compor informações de diversas imagens em uma única i
 Para cada quadrado a ser preenchido sorteia uma imagem do conjunto de treinamento, realiza uma operação de borramento, aguçamento, mistura ponderada ou visual SMOTE e adiciona essa imagem no quadrado respectivo. Os passos para tal composição estão descritos no Algoritmo~\ref{alg:composition}.
 
 \vspace{0.5cm}
-\begin{algorithm}[H]
+\begin{algorithm}[!htbp]
   \caption{Algoritmo de composição}
   \label{alg:composition}
   \SetAlgoLined
