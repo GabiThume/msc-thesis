@@ -29,4 +29,5 @@
 *.los
 *.mw
 *.nlo
+*.nls
 *.DS_Store
