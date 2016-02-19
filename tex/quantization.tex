@@ -3,8 +3,7 @@
 
 Sistemas de reconhecimento de imagens comumente utilizam uma imagem em níveis de cinza (8-bits -- 256 intensidades) para as etapas subsequentes à extração de características. Ao aplicar a quantização (redução de cores) na etapa de pré-processamento, é esperada a redução da complexidade do vetor de características logo no início, beneficiando todos os passos subsequentes.
 
-Para analisar o impacto do uso da quantização, diferentes parâmetros de quantização combinados com quatro métodos de extração de cor e um de textura são utilizados. Esses métodos foram escolhidos de acordo com os resultados apresentados por \citeonline{Penatti2012}.
-\meutodo{Falta HOG e LPP ou tem nesse artigo?}
+Para analisar o impacto do uso da quantização, diferentes parâmetros de quantização combinados com quatro métodos de extração de cor e um de textura são utilizados. Esses métodos foram escolhidos de acordo com os resultados apresentados por \citeonline{Penatti2012}, com exceção de HOG e LBP, que também são descritores frequentemente utilizados na literatura \cite{Wang2009a}.
 
 Este capítulo descorre sobre a quantização das imagens antes da extração de características. Os métodos utilizados foram apresentados na Seção~\ref{sec:quantizacao}.
 
@@ -14,7 +13,7 @@ Este capítulo descorre sobre a quantização das imagens antes da extração de
 O pipeline de reconhecimento de imagens envolve um passo de converter imagens coloridas em imagens com apenas um canal, obtendo uma imagem quantizada que pode ser então processada por métodos de extração de características. Dessa forma, cada imagem -- originalmente no espaço de cor RGB -- é convertida a um único canal com $C$ níveis de intensidade. Após, são utilizados os métodos apresentados na Seção \ref{sec:extracao} para extrair as características.
 A Figura \ref{fig:quant:quantizationFlow} ilustra esses passos, da aquisição até a classificação das imagens.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \centering
     \includegraphics[width=0.25\linewidth]{\detokenize{figuras/quantizacao/quantizationFlow.png}}
@@ -25,7 +24,7 @@ A Figura \ref{fig:quant:quantizationFlow} ilustra esses passos, da aquisição a
 
 Cada método de quantização se comporta diferentemente para uma dada imagem RGB. Por exemplo, o método \emph{Intensidade} mapeia todas as permutações dos mesmos valores em RBG para a mesma cor. Dessa forma, produz um plano no cubo RBG conforme mostrado na Figura \ref{fig:quant:plano}. O efeito do \emph{Gleam} é similar, mas dada a natureza da função \textit{gamma}, cobrindo uma superfície curva. Em todos os casos, o resultado é o mapeamento de características cromáticas bem diferentes em valores de intensidades similares. Os métodos Luminância e Luma tentam melhorar um pouco isso ao ponderar a combinação linear dos canais.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \centering
     \includegraphics[width=0.5\linewidth]{\detokenize{figuras/quantizacao/plano.png}}
@@ -36,7 +35,7 @@ Cada método de quantização se comporta diferentemente para uma dada imagem RG
 
 Um exemplo das imagens obtidas após os métodos de quantização apresentados anteriormente pode ser visto na Figura \ref{fig:quant:quantizacoes}. A barra de gradientes abaixo da imagem dos pincéis demonstra como os métodos de quantização se comportam dada a variação da cor. É possível notar que os métodos \emph{Luminância} e \emph{MSB} conseguiram melhor discriminar as cores. Além disso, o mapa de cores \emph{MSB} obteve um maior número de cores únicas.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \begin{subfigure}{.25\textwidth}
       \centering
@@ -74,7 +73,7 @@ Um exemplo das imagens obtidas após os métodos de quantização apresentados a
 
 A Figura \ref{fig:quant:avioes} apresenta um exemplo de redução de cores utilizando o método \emph{MSB} para um par de imagens da base de dados \emph{Caltech-101}. É possível notar que há uma certa preservação das cores, especialmente entre a utilização de 64 e 256 níveis. Com apenas 32 cores as imagens ainda lembram a sua versão original, mas há uma perda considerável de informação.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \centering
     \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_quantizationexample.jpg}}

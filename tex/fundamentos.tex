@@ -1,8 +1,10 @@
 \section{Considerações iniciais}
 
-Neste capítulo são destacados os tópicos mais relevantes para a compreensão do estado da arte de processamento de imagens, com foco na preparação das imagens para a extração de características. O problema do desbalanceamento de classes e seu efeito na classificação satisfatória também são abordados, assim como a extração de características para compreender as propriedades extraídas das imagens. Alguns trabalhos relacionados são utilizados como exemplo, com o objetivo de elucidar tais tópicos.
+Neste capítulo são destacados os tópicos mais relevantes para a compreensão da metodologia e análise dos resultados desse trabalho, com foco na preparação das imagens para a extração de características. O problema do desbalanceamento de classes e seu efeito na classificação também são abordados, assim como a extração de características para compreender as propriedades extraídas das imagens. Alguns trabalhos relacionados são utilizados como exemplo, com o objetivo de elucidar tais tópicos.
 
-Inicialmente, a Seção~\ref{sec:preprocessamento} apresenta alguns dos principais métodos utilizados para o pré-processamento de imagens (i.e.\ remoção de ruído, realce de imagens e convolução), relevantes para o desenvolvimento desta pesquisa. Tendo como proposta melhor compreender o que são as características latentes, a Seção~\ref{sec:latentes} exemplifica as operações de pré-processamento utilizadas para visualizar tais características em uma aplicação específica. A extração de características é brevemente definida na Seção~\ref{sec:extracao}. Por fim, o problema do desbalanceamento de classes é apresentado na Seção~\ref{cap:desbalanceamento}. Nessa seção, além de caracterizar o problema, são apresentadas duas vertentes para solucioná-lo: sobreamostragem e subamostragem. Esses conceitos são necessários para a compreensão do capítulo de proposta desta dissertação.
+Inicialmente, a Seção~\ref{sec:preprocessamento} apresenta alguns dos principais métodos utilizados para o pré-processamento de imagens (i.e.\ remoção de ruído, realce de imagens e convolução), relevantes para o desenvolvimento desta pesquisa.
+% Tendo como proposta melhor compreender o que são as características latentes, a Seção~\ref{sec:latentes} exemplifica as operações de pré-processamento utilizadas para visualizar tais características em uma aplicação específica.
+A extração de características é brevemente definida na Seção~\ref{sec:extracao}. Por fim, o problema do desbalanceamento de classes é apresentado na Seção~\ref{cap:desbalanceamento}. Nessa seção, além de caracterizar o problema, são apresentadas duas vertentes para solucioná-lo: sobreamostragem e subamostragem. Esses conceitos são necessários para a compreensão do capítulo de proposta desta dissertação.
 
 % A área de \textit{deep learning} é definida e as redes de convolução e máquinas de Boltzmann restritas são contextualizadas no âmbito desta pesquisa.
 % A seção seguinte (\ref{sec:deeplearning}) destaca o uso de \textit{deep learning} para o aprendizado de características e a Seção~\ref{sec:rbm} aborda as máquinas de Boltzmann restritas como método para aprendizado da distribuição das imagens de entrada.
@@ -13,7 +15,7 @@ Inicialmente, a Seção~\ref{sec:preprocessamento} apresenta alguns dos principa
 
 Uma imagem digital $I$ pode ser definida como uma função $f(x,y)$, onde $x$ e $y$ são as coordenadas cartesianas de um determinado ponto e $f$ a intensidade (brilho) da imagem naquele ponto. Essa imagem é composta por finitos elementos chamados de pixels que podem ser diretamente acessados através de sua posição $x$ e $y$. Digitalmente, uma imagem é representada por uma matriz de valores com $M$ linhas e $N$ colunas onde cada elemento representa a sua intensidade. Uma imagem colorida $I$ do sistema RGB possui três canais de cores representantes das cores vermelha, verde e azul. Cada elemento $I(x,y)$ corresponde a uma tripla $(r, g, b)$ de números, com $0 \leq r \leq 255$, $0 \leq g \leq 255$ e $0 \leq b \leq 255$, onde 0 é a intensidade de cor mais escura e 255 a mais clara. A combinação dessas intensidades resulta na cor do pixel \cite{Gonzalez2007}. A Figura \ref{fig:pixel} mostra uma visualização ampliada dos pixels de uma imagem digital.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
  \begin{center}
    \includegraphics[width=0.4\linewidth]{figuras/pixel.jpg}
  \caption[Visualização pixelizada de uma imagem da base COREL-1000.]{Visualização pixelizada de uma imagem da base COREL-1000\footnotemark. \\ \textit{Fonte:~Elaborado pela autora.}}
@@ -24,7 +26,7 @@ Uma imagem digital $I$ pode ser definida como uma função $f(x,y)$, onde $x$ e 
 O processo de aquisição por um sistema de imageamento pode causar diversas imperfeições nas imagens, como pixels ruidosos, brilho inadequado e outras degradações. O pré-processamento de imagens é caracterizado por receber uma imagem de entrada e fornecer uma imagem de saída. Nessa etapa, efeitos indesejáveis podem ser eliminados e certas características realçadas (Figura \ref{fig:preproc}). Considera-se que um determinado critério utilizado para uma imagem pode não ser o mais eficiente para outra, dependendo assim da área de aplicação.
 
 \vspace{12pt}
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
  \begin{center}
    \includegraphics[width=1\linewidth]{figuras/preprocessamento.png}
  \caption[Sobre a imagem RGB de entrada foram realizadas operações de borramento, realce e de equalização de histograma. A imagem à direita é resultante dessas operações.]{O pré-processamento de imagens é caracterizado por receber uma imagem como entrada e fornecer uma imagem de saída. Sobre a imagem RGB de entrada (à esquerda) foram realizadas operações de borramento, realce e de equalização de histograma. A imagem à direita é resultante dessas operações. \textit{Fonte:~Elaborado pela autora.}}
@@ -32,21 +34,25 @@ O processo de aquisição por um sistema de imageamento pode causar diversas imp
  \end{center}
 \end{figure}
 
-Assim, técnicas de pré-processamento tornam os dados mais adequados para posterior análise, ao eliminar ou reduzir problemas como ruídos e imperfeições. Em \citeonline{Ponti2010}, o autor relata que a utilização de métodos de restauração na etapa de pré-processamento da imagem, antes da segmentação, resultou em uma qualidade superior para todos os testes, com valores de erro e desvio padrão menores. No referido estudo, métodos de realce causaram perda de informação e por isso não são indicados para uso em imagens obtidas por microscópio. O método indicado para evitar a amplificação de ruído nessas imagens é o algoritmo iterativo Richardson-Lucy, que será apresentado na Seção \ref{sub:deconvolucao}.
-\meutodo{mantenho a seção de deconvolução citada aqui?}
+Assim, técnicas de pré-processamento tornam os dados mais adequados para posterior análise, ao eliminar ou reduzir problemas como ruídos e imperfeições. Em \citeonline{Ponti2010}, o autor relata que a utilização de métodos de restauração na etapa de pré-processamento da imagem, antes da segmentação, resultou em uma qualidade superior para todos os testes, com valores de erro e desvio padrão menores. No referido estudo, métodos de realce causaram perda de informação e por isso não são indicados para uso em imagens obtidas por microscópio. O método indicado para evitar a amplificação de ruído nessas imagens é o algoritmo iterativo Richardson-Lucy ~\cite{Ponti-Jr2011}. Esse método de restauração utiliza um processo iterativo para recuperar uma imagem degradada que foi borrada por algum processo conhecido. Utiliza uma metodologia probabilística, baseada em EM-ML (\textit{Expectation-Maximization Maximum Likelihood}), para encontrar uma imagem que maximize a probabilidade de se visualizar a imagem original sem degradação, considerando um modelo de ruído de Poisson. Algoritmos iterativos como o Richardson-Lucy tem a vantagem de permitir soluções parciais, evitando amplificação de ruído.
 
 Em contrapartida, \citeonline{6} propuseram uma representação para imagens faciais baseada em características de textura, sem utilizar pré-processamento. Este aparece somente como sugestão de trabalho futuro, como possível correção de problemas do sistema de captura (i.e. suavização causada pela captura fora de foco). O que implica que, apesar dos bons resultados, a melhoria com a utilização de pré-processamento não foi investigada. Pode-se imaginar, portanto, que o uso de pré-processamento pode melhorar os resultados já obtidos, através do realce de textura e eliminação de imperfeições nas imagens.
 
 Como exemplo do uso de métodos de pré-processamento, considere imagens de algas verdes obtidas por um microscópio de alta resolução. Essas algas são mergulhadas em um líquido que normalmente causa problemas de ruído e pouco contraste. Para a preparação dessas imagens, antes da extração de características, \citeonline{Borges2013} cita algumas etapas comuns em processamento de imagens digitais:
 
-\begin{itemize}
+\begin{enumerate}
 \item As imagens -- originalmente em RGB -- são convertidas para uma escala de cinza;
 \item A dimensão da imagem é reduzida para diminuir o tempo de execução dos passos subsequentes de processamento;
 \item O constraste é ``ajustado'', para aumentar a diferença das intensidades dos pixels da imagem e corrigir o brilho;
 \item A imagem é filtrada, removendo ruídos causados pelo processo de captura;
 \item O contorno é realçado, pois a forma é uma das características mais importantes para discriminar algas (e outros objetos);
 \item Por fim, o histograma é equalizado.
-\end{itemize}
+\end{enumerate}
+
+\citeonline{Xu2016} propuseram um método de pré-processamento de imagens de faces com o objetivo de gerar imagens sintéticas para posterior reconhecimento de padrões. Inicialmente, o método separa uma imagem em metade-esquerda e metade-direita e espelham a metade-direita. Após, um algoritmo de gradiente descendente iterativo é utilizado para atualizar os vetores que representam cada metade, otimizando-os. Por fim, esses vetores são conectados para compor uma nova face do mesmo tamanho da imagem original. Os resultados são apresentados como estado da arte para o pré-processamento de imagens de face para a tarefa de reconhecimento.
+
+
+Esses estudos evidenciam a importância da etapa de processamento de imagens, indicando que o tratamento das imagens antes da extração de características pode melhorar os resultados obtidos.
 
 %--------------------------------------------------------------------------------
 \subsection{Filtragem espacial e convolução}
@@ -55,9 +61,7 @@ Como exemplo do uso de métodos de pré-processamento, considere imagens de alga
 % \subsection{Convolução}
 \label{sec:convolucao}
 
-Um filtro espacial, também conhecido como \textit{kernel}, máscara ou janela, consiste em uma matriz de vizinhanças e uma operação a ser realizada nos pixels de uma imagem. A filtragem cria um novo pixel com as mesmas coordenadas do centro da vizinhança, contendo o valor resultante da filtragem. Dessa forma, a imagem filtrada contém os pixels resultantes da passagem do centro do filtro espacial por todos os pixels da imagem original \cite{Gonzalez2007}.
-
-O processo de percorrer a imagem com um filtro espacial é chamado de correlação. A convolução, que pode ser definida como o operador $*$ na Equação \eqref{eq:conv}, é o mesmo processo, mas com o filtro previamente rotacionado em $180^{\circ}$ \cite{Gonzalez2007}.
+Um filtro espacial, também conhecido como \textit{kernel}, máscara ou janela, consiste em uma matriz de vizinhanças e uma operação a ser realizada nos pixels de uma imagem. A filtragem cria um novo pixel com as mesmas coordenadas do centro da vizinhança, contendo o valor resultante da filtragem. Dessa forma, a imagem filtrada contém os pixels resultantes da passagem do centro do filtro espacial por todos os pixels da imagem original. O processo de percorrer a imagem com um filtro espacial é chamado de correlação. A convolução, que pode ser definida como o operador $*$ na Equação \eqref{eq:conv}, é o mesmo processo, mas com o filtro previamente rotacionado em $180^{\circ}$ \cite{Gonzalez2007}.
 
 \begin{equation}
 \text{Mapa de características} = \text{imagem de entrada} * \text{filtro}
@@ -94,7 +98,6 @@ Os métodos de filtragem possuem como objetivo aperfeiçoar certos aspectos da i
 \end{figure}
 
 %--------------------------------------------------------------------------------
-\meutodo{tinha deconvolução aqui, posso remover?}
 % \subsection{Deconvolução}
 % \label{sub:deconvolucao}
 %
@@ -133,7 +136,7 @@ Os métodos de filtragem possuem como objetivo aperfeiçoar certos aspectos da i
 %--------------------------------------------------------------------------------
 \subsection{Realce de imagens}
 
-O realce de imagens é o processo de modificar uma imagem para que se torne mais adequada para uma aplicação específica do que na sua forma original. É subjetivo, porque depende do sujeito que está analisando a imagem dissernir a qualidade desse realce \cite{Gonzalez2007}.
+O realce de imagens é o processo de modificar uma imagem para que se torne mais adequada para uma aplicação específica do que na sua forma original. Diferentemente da restauração, --- que leva em consideração o processo de formação da imagem --- é subjetivo, porque depende do sujeito que está analisando a imagem dissernir a qualidade desse realce \cite{Gonzalez2007}.
 
 Na Figura \ref{fig:pre-sharp} está demonstrado o efeito do algoritmo de \textit{unsharp masking}, utilizando como borramento um filtro de média. Com o objetivo de realçar imagens, os passos deste método são:
 
@@ -181,9 +184,7 @@ s_k = T(i_k) = \frac{L-1}{MN} \sum_{j=0}^{k}n_j,
 \noindent onde $L$ é o número de intensidades e $MN$ as dimensões da imagem. A imagem de saída é obtida ao mapear cada pixel de intensidade $i_k$ em um nível $s_k$, com $i$ entre $[0,L-1]$, sendo $i = 0$ um pixel preto e $i = L-1$, branco \cite{Gonzalez2007}.
 
 \enlargethispage{\baselineskip}
-%--------------------------------------------------------------------------------
-\meutodo{tem uma aqui seção de médias não locais, é necessário?}
-% \subsection{Restauração}
+%-------------------------------------------------------------------------------% \subsection{Restauração}
 % Ao contrário do realce, a etapa da restauração é objetiva. Também procura melhorar os aspectos visuais de uma imagem, mas com base em modelos probabilísticos de degradação de imagens. Dessa forma, tendo-se um modelo de degradação, procura-se recuperar a imagem original \cite{Gonzalez2007}. Mas um problema comum em algoritmos de remoção de ruído é que alguns detalhes, como textura, irão sofrer alta suavização.
 %
 % O objetivo dos algoritmos de remoção de ruído é recuperar a imagem original. Assim o modelo estatístico da imagem natural é crucial para a remoção de ruído. O tipo mais simples de ruído  é o aditivo, que pode ser caracterizado como
@@ -200,14 +201,14 @@ s_k = T(i_k) = \frac{L-1}{MN} \sum_{j=0}^{k}n_j,
 % \end{equation*}
 % \noindent onde os pesos $w(i, j)$ dependem da similaridade entre pixels.
 
-%--------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 \subsection{Quantização}
 \label{sec:quantizacao}
 
-Muitos métodos de extração de características são preparados apenas receber imagens de entrada em escala de cinza. Se existir a necessidade de utilizar a imagem RGB, as características são extraídas para cada canal de cor separadamente e posteriormente são concatenados. Isso ocorre porque a complexidade de lidar com um pixel representado em três dimensões é muito maior do que em apenas uma dimensão. Assim, os métodos de quantização visam, de alguma forma, reduzir os canais de cores (24 bits) em apenas um (8 bits). \citeonline{Kanan2012} demonstraram que os métodos para a quantização (conversão de uma imagem colorida para escala de cinza) influenciam a performance no reconhecimento de imagens. Eles também salientam que o método utilizado deveria estar claramente descrito nas publicações da área. Os métodos de conversão para escala de cinza utilizados nessa dissertação foram escolhidos com base em \citeonline{Kanan2012}:
+Muitos métodos de extração de características são preparados apenas para receber imagens de entrada em escala de cinza ou em apenas um canal de cor. Se existir a necessidade de utilizar a imagem RGB, as características são extraídas para cada canal de cor separadamente e posteriormente são concatenados. Isso ocorre porque a complexidade de lidar com um pixel representado em três dimensões é muito maior do que em apenas uma dimensão. Assim, os métodos de quantização visam, de alguma forma, reduzir os canais de cores (24 bits) em apenas um (8 bits). \citeonline{Kanan2012} demonstraram que os métodos para a quantização (conversão de uma imagem colorida para escala de cinza) influenciam a performance no reconhecimento de imagens. Eles também salientam que o método utilizado deveria estar claramente descrito nas publicações da área. Os métodos de conversão para escala de cinza utilizados nessa dissertação foram escolhidos com base em \citeonline{Kanan2012}: \emph{Gleam} e as versões corrigidas por gamma de \emph{Intensidade} e \emph{Luminância}. A operação \textit{gamma} utilizada $z' = z^{1/2.2}$ é a padrão.
 
 \begin{description}
-\item [Intensidade:] método mais simples, consiste em computar a média entre os canais RGB da imagem a partir de
+\item [Intensidade:] consiste em computar a média entre os canais RGB da imagem a partir de
 \begin{equation*}
 	Q_{Intensidade} = \frac{1}{3}(R + G + B)
 \end{equation*}
@@ -228,7 +229,6 @@ Muitos métodos de extração de características são preparados apenas receber
 \noindent e então realizar a correção por \textit{gamma}.
 
 \item [Luma:]  similar ao anterior, utilizado nas televisões de alta definição.
-\meutodo{referenciar}
 \begin{equation*}
 	Q_{Luma} = 0.2126R' + 0.7152G' + 0.0722B'.
 \end{equation*}
@@ -239,7 +239,8 @@ Muitos métodos de extração de características são preparados apenas receber
 
 A Figura \ref{fig:quantizacao} apresenta a conversão na escala de cinza obtida com o uso destes métodos.
 
-\begin{figure}
+
+\begin{figure}[!htbp]
  \begin{center}
 \begin{subfigure}{.3\textwidth}
   \centering
@@ -277,7 +278,7 @@ A Figura \ref{fig:quantizacao} apresenta a conversão na escala de cinza obtida 
   \label{fig:msb}
 \end{subfigure}
  \end{center}
- \caption[Conversão para a escala de cinza com os métodos de Intensidade e MSB.]{Conversão para a escala de cinza com os métodos de Intensidade e MSB. \textit{Fonte:~Elaborado pela autora.}}
+ \caption[Conversão para a escala de cinza com os métodos utilizados nessa pesquisa. O método MSB resulta em uma imagem com 8 bits (64 cores) e os outros em 256 cores.]{Conversão para a escala de cinza com os métodos utilizados nessa pesquisa. O método MSB resulta em uma imagem com 8 bits (64 cores) e os outros em 256 cores. \textit{Fonte:~Elaborado pela autora.}}
  \label{fig:quantizacao}
 \end{figure}
 
@@ -319,7 +320,7 @@ O objetivo da extração de características é descrever as informações visua
 \item [Cor:] considera a distribuição espacial de cores na imagem. O histograma de uma imagem pode descrever essa configuração de forma global.
 \end{description}
 
-Exemplos de métodos conhecidos capazes de descrever forma e outras características são: histogramas de orientação de gradiente~\cite{Wang2009}, curvatura, descritores de Fourier, métodos baseados na detecção de SUSAN~\cite{Smith1997}, Harris-Affine~\cite{Han2005b} e diferença de Gaussianas~\cite{Lowe2004a}. Os descritores utilizados no desenvolvimento desta pesquisa para a obtenção dos resultados da Seção~\ref{cap:resultados} estão abaixo descritos.
+Exemplos de métodos conhecidos capazes de descrever outras características são: histogramas de orientação de gradiente~\cite{Wang2009}, curvatura, descritores de Fourier, métodos baseados na detecção de SUSAN~\cite{Smith1997}, Harris-Affine~\cite{Han2005b} e diferença de Gaussianas~\cite{Lowe2004a}. Os descritores utilizados no desenvolvimento desta pesquisa para a obtenção dos resultados da Seção~\ref{cap:resultados} estão abaixo descritos.
 
 \begin{description}
 \item[Histograma global de cor (GCH):] calcula o histograma global dos níveis de intensidade da imagem. É a alternativa mais simples para representar as informações de uma imagem~\cite{Gonzalez2007}. Produz um vetor de $N$ dimensões, sendo $N$ o número de intensidades.
@@ -392,110 +393,107 @@ O vetor de coerência de cor armazena o número de pixels coerentes e de incoere
 
 \end{description}
 
-%--------------------------------------------------------------------------------
-\section{Características latentes}
-\label{sec:latentes}
-\meutodo{Deixar essa seção?}
-
-Assim como o método de quantização se mostrou relevante na classificação, nesta dissertação são estudados diversos métodos de pré-processamento de imagens, como filtros de borramento e deconvolução, com o objetivo de obter imagens processadas que sejam mais bem caracterizadas para a etapa de classificação (ou seja, aumentando a variância entre as classes, sem aumentar a variância intra-classe). O enfoque está em como realçar determinadas características, como por exemplo cor, textura e forma. A esses atributos pode-se dar o nome de características latentes, não visíveis na imagem original. Identificar e realçar tais características é objetivo deste estudo. Essa abordagem se diferencia das técnicas multi-resolução, pois não pretende encontrar apenas características em versões de diferentes resoluções (convoluídas com filtros passa-baixa), e sim também em versões deconvoluídas ou transformadas por outros operadores.
-
-Se uma das principais características que diferenciam classes de uma certa base utiliza a sua forma, é possível utilizar o método de diferença de Gaussianas para ressaltá-la.
-% Considerando, por exemplo, uma série de imagens filtradas por um filtro Gaussiano definido como $f_1(x,y) = G_{\sigma}(f(x,y))$.
-O método DoG (\textit{Difference of Gaussians}) se baseia na diferença entre duas imagens filtradas. A operação comumente é feita usando $\sigma = \sqrt{2}$ e sua definição para dois níveis de filtragem é definida por
-\begin{eqnarray*}
-         f_1(x,y) &=& G_{\sigma}(f(x,y)) \\
-         f_2(x,y) &=& G_{\sigma}(f_1(x,y)) \\
-         DoG_1(x,y,\sigma) &=& f_2 - f_1
-\end{eqnarray*}
-
-A Figura~\ref{fig:caracteristicas} demonstra uma possível execução de filtragem e restauração seguida pela detecção de bordas por DoG, aplicadas em uma base de imagens de algas verdes.
-
-\renewcommand{\tabcolsep}{0.0cm}
-\begin{figure}[htbp]
- \begin{center}
-\begin{subfigure}{.2\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05b.png}}
-  \caption{}
-  \label{fig:algaa}
-\end{subfigure}
-\begin{subfigure}{.2\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05c.png}}
-  \caption{}
-  \label{fig:algab}
-\end{subfigure}
-\begin{subfigure}{.2\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05d.png}}
-  \caption{}
-  \label{fig:algac}
-\end{subfigure}
-\begin{subfigure}{.2\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05e.png}}
-  \caption{}
-  \label{fig:algad}
-\end{subfigure}
-\begin{subfigure}{.2\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05ba.png}}
-  \caption{}
-  \label{fig:algae}
-\end{subfigure}
-\begin{subfigure}{.2\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05ca.png}}
-  \caption{}
-  \label{fig:algaf}
-\end{subfigure}
-\begin{subfigure}{.2\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05da.png}}
-  \caption{}
-  \label{fig:algag}
-\end{subfigure}
-\begin{subfigure}{.2\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05ea.png}}
-  \caption{}
-  \label{fig:algah}
-\end{subfigure}
-\begin{subfigure}{.2\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05bb.png}}
-  \caption{}
-  \label{fig:algai}
-\end{subfigure}
-\begin{subfigure}{.2\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05cb.png}}
-  \caption{}
-  \label{fig:algaj}
-\end{subfigure}
-\begin{subfigure}{.2\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05db.png}}
-  \caption{}
-  \label{fig:algak}
-\end{subfigure}
-\begin{subfigure}{.2\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05eb.png}}
-  \caption{}
-  \label{fig:algal}
-\end{subfigure}
-
- \caption[Características latentes de algas verdes.]{Características latentes de algas verdes. A primeira imagem (a) é uma imagem original segmentada de alga. As próximas colunas são imagens resultantes da deconvolução da imagem (coluna 2), filtragem Gaussiana (coluna 3) e filtragem Gaussiana seletiva (coluna 4). A primeira linha mostra versões diferentes de imagens de algas, a segunda linha exibe imagens resultantes da diferença de Gaussianas, e a terceira linha demonstra imagens binárias obtidas por limiarização das imagens contidas na segunda linha). \textit{Fonte:~Elaborado pela autora.}}
- \label{fig:caracteristicas}
- \end{center}
-\end{figure}
-\renewcommand{\tabcolsep}{0.25cm}
-
-A imagem \ref{fig:algaa} é uma imagem original segmentada de alga. As próximas colunas são imagens resultantes da deconvolução da imagem (coluna 2), filtragem Gaussiana (coluna 3) e filtragem Gaussiana seletiva (coluna 4). As modificações apresentadas na primeira linha geram informações em diferentes planos axiais da imagem de microscopia. Imagens na segunda coluna representam uma versão deconvoluída das imagens originais, ressaltando a textura na superfície das algas, resultantes da diferença de Gaussianas. Já a terceira linha demonstra imagens binárias obtidas por limiarização das imagens da segunda linha, realçando as características da base da célula.
-
-Acredita-se que ao manipular as imagens através de técnicas de pré-processamento, pode-se gerar imagens artificiais com características latentes realçadas, melhorando a extração de características.
-
+% %-------------------------------------------------------------------------------\section{Características latentes}
+% \label{sec:latentes}
+%
+% Assim como o método de quantização se mostrou relevante na classificação, nesta dissertação são estudados diversos métodos de pré-processamento de imagens, como filtros de borramento e deconvolução, com o objetivo de obter imagens processadas que sejam mais bem caracterizadas para a etapa de classificação (ou seja, aumentando a variância entre as classes, sem aumentar a variância intra-classe). O enfoque está em como realçar determinadas características, como por exemplo cor, textura e forma. A esses atributos pode-se dar o nome de características latentes, não visíveis na imagem original. Identificar e realçar tais características é objetivo deste estudo. Essa abordagem se diferencia das técnicas multi-resolução, pois não pretende encontrar apenas características em versões de diferentes resoluções (convoluídas com filtros passa-baixa), e sim também em versões deconvoluídas ou transformadas por outros operadores.
+%
+% Se uma das principais características que diferenciam classes de uma certa base utiliza a sua forma, é possível utilizar o método de diferença de Gaussianas para ressaltá-la.
+% % Considerando, por exemplo, uma série de imagens filtradas por um filtro Gaussiano definido como $f_1(x,y) = G_{\sigma}(f(x,y))$.
+% O método DoG (\textit{Difference of Gaussians}) se baseia na diferença entre duas imagens filtradas. A operação comumente é feita usando $\sigma = \sqrt{2}$ e sua definição para dois níveis de filtragem é definida por
+% \begin{eqnarray*}
+%          f_1(x,y) &=& G_{\sigma}(f(x,y)) \\
+%          f_2(x,y) &=& G_{\sigma}(f_1(x,y)) \\
+%          DoG_1(x,y,\sigma) &=& f_2 - f_1
+% \end{eqnarray*}
+%
+% A Figura~\ref{fig:caracteristicas} demonstra uma possível execução de filtragem e restauração seguida pela detecção de bordas por DoG, aplicadas em uma base de imagens de algas verdes.
+%
+% \renewcommand{\tabcolsep}{0.0cm}
+% \begin{figure}[htbp]
+%  \begin{center}
+% \begin{subfigure}{.2\textwidth}
+%   \centering
+%   \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05b.png}}
+%   \caption{}
+%   \label{fig:algaa}
+% \end{subfigure}
+% \begin{subfigure}{.2\textwidth}
+%   \centering
+%   \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05c.png}}
+%   \caption{}
+%   \label{fig:algab}
+% \end{subfigure}
+% \begin{subfigure}{.2\textwidth}
+%   \centering
+%     \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05d.png}}
+%   \caption{}
+%   \label{fig:algac}
+% \end{subfigure}
+% \begin{subfigure}{.2\textwidth}
+%   \centering
+%   \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05e.png}}
+%   \caption{}
+%   \label{fig:algad}
+% \end{subfigure}
+% \begin{subfigure}{.2\textwidth}
+%   \centering
+%   \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05ba.png}}
+%   \caption{}
+%   \label{fig:algae}
+% \end{subfigure}
+% \begin{subfigure}{.2\textwidth}
+%   \centering
+%   \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05ca.png}}
+%   \caption{}
+%   \label{fig:algaf}
+% \end{subfigure}
+% \begin{subfigure}{.2\textwidth}
+%   \centering
+%   \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05da.png}}
+%   \caption{}
+%   \label{fig:algag}
+% \end{subfigure}
+% \begin{subfigure}{.2\textwidth}
+%   \centering
+%   \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05ea.png}}
+%   \caption{}
+%   \label{fig:algah}
+% \end{subfigure}
+% \begin{subfigure}{.2\textwidth}
+%   \centering
+%   \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05bb.png}}
+%   \caption{}
+%   \label{fig:algai}
+% \end{subfigure}
+% \begin{subfigure}{.2\textwidth}
+%   \centering
+%   \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05cb.png}}
+%   \caption{}
+%   \label{fig:algaj}
+% \end{subfigure}
+% \begin{subfigure}{.2\textwidth}
+%   \centering
+%   \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05db.png}}
+%   \caption{}
+%   \label{fig:algak}
+% \end{subfigure}
+% \begin{subfigure}{.2\textwidth}
+%   \centering
+%   \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05eb.png}}
+%   \caption{}
+%   \label{fig:algal}
+% \end{subfigure}
+%
+%  \caption[Características latentes de algas verdes.]{Características latentes de algas verdes. A primeira imagem (a) é uma imagem original segmentada de alga. As próximas colunas são imagens resultantes da deconvolução da imagem (coluna 2), filtragem Gaussiana (coluna 3) e filtragem Gaussiana seletiva (coluna 4). A primeira linha mostra versões diferentes de imagens de algas, a segunda linha exibe imagens resultantes da diferença de Gaussianas, e a terceira linha demonstra imagens binárias obtidas por limiarização das imagens contidas na segunda linha). \textit{Fonte:~Elaborado pela autora.}}
+%  \label{fig:caracteristicas}
+%  \end{center}
+% \end{figure}
+% \renewcommand{\tabcolsep}{0.25cm}
+%
+% A imagem \ref{fig:algaa} é uma imagem original segmentada de alga. As próximas colunas são imagens resultantes da deconvolução da imagem (coluna 2), filtragem Gaussiana (coluna 3) e filtragem Gaussiana seletiva (coluna 4). As modificações apresentadas na primeira linha geram informações em diferentes planos axiais da imagem de microscopia. Imagens na segunda coluna representam uma versão deconvoluída das imagens originais, ressaltando a textura na superfície das algas, resultantes da diferença de Gaussianas. Já a terceira linha demonstra imagens binárias obtidas por limiarização das imagens da segunda linha, realçando as características da base da célula.
+%
+% Acredita-se que ao manipular as imagens através de técnicas de pré-processamento, pode-se gerar imagens artificiais com características latentes realçadas, melhorando a extração de características.
 %--------------------------------------------------------------------------------
 % \section{Deep learning}
 % \label{sec:deeplearning}
@@ -648,9 +646,9 @@ Em conjuntos de dados desbalanceados, determinadas classes possuem um número mu
 
 Realizar uma sobreamostragem (\textit{over-sampling}) em um determinado conjunto de dados significa aumentar -- utilizando alguma estratégia -- o número de elementos desse conjunto. Em \cite{Chawla2002}, a simples replicação de exemplos pertencentes à classe minoritária não melhorou a classificação. Isso se deve ao reconhecimento de regiões muito específicas, causando \textit{overfitting}.
 
-O SMOTE (\textit{Synthetic Minority Over-sampling Technique}) é um método desenvolvido por \cite{Chawla2002} para rebalancear classes ao gerar artificialmente novos elementos, ao invés de apenas replicá-los. É aplicado sobre os vetores de características previamente extraídos, com operações de perturbação dos dados de treino no espaço de características, e não no espaço dos dados. A diferença entre o vetor de características de um elemento e do seu vizinho mais próximo é multiplicada por um número $0 \le  x \le 1$. Esse valor é adicionado ao vetor original, criando um novo elemento. Como pode ser visualizado na Figura~\ref{fig:smote}, essa abordagem provoca a geração de um elemento resultante da interpolação dos dois vetores originais. Os exemplos sintéticos forçam uma região de decisão maior e mais geral para serem aprendidas como exemplos da classe minoritária.
+O SMOTE \textit{Synthetic Minority Over-sampling Technique} é um método desenvolvido por \cite{Chawla2002} para rebalancear classes ao gerar artificialmente novos elementos, ao invés de apenas replicá-los. É aplicado sobre os vetores de características previamente extraídos, com operações de perturbação dos dados de treino no espaço de características, e não no espaço dos dados. A diferença entre o vetor de características de um elemento e do seu vizinho mais próximo é multiplicada por um número $0 \le  x \le 1$. Esse valor é adicionado ao vetor original, criando um novo elemento. Como pode ser visualizado na Figura~\ref{fig:smote}, essa abordagem provoca a geração de um elemento resultante da interpolação dos dois vetores originais. Os exemplos sintéticos forçam uma região de decisão maior e mais geral para serem aprendidas como exemplos da classe minoritária.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \includegraphics[scale=1]{figuras/smote.pdf}
   \end{center}
@@ -658,7 +656,7 @@ O SMOTE (\textit{Synthetic Minority Over-sampling Technique}) é um método dese
   \label{fig:smote}
 \end{figure}
 
-\begin{algorithm}[H]
+\begin{algorithm}[!htbp]
   \caption{SMOTE: método para rebalancear classes}
   \label{alg:smote}
   \SetAlgoLined
@@ -686,15 +684,13 @@ Uma variação desse algoritmo, denominada Borderline-SMOTE1 \cite{Han2005}, con
 
 Ao contrário da sobreamostragem, a subamostragem visa diminuir o número de elementos de um determinado conjunto. A ideia é eliminar elementos da classe majoritária que estão distantes da fronteira de decisão, isso porque eles são considerados menos relevantes para a aprendizagem.
 
-Métodos para remoção de exemplos da classe majoritária normalmente apresentam resultados piores do que métodos de sobreamostragem, conforme relatado por \citeonline{Batista2004} e \cite{Japkowicz2002}. Um dos motivos pela preferência natural à sobreamostragem é o fato de que ao realizar subamostragem pode-se remover informações essenciais dos dados originais. Mas não há uma estratégia única que funcione melhor para todos os cenários.
+Métodos para remoção de exemplos da classe majoritária normalmente apresentam resultados piores do que métodos de sobreamostragem, conforme relatado por \citeonline{Batista2004} e \citeonline{Japkowicz2002}. Um dos motivos pela preferência natural à sobreamostragem é o fato de que ao realizar subamostragem pode-se remover informações essenciais dos dados originais. Mas não há uma estratégia única que funcione melhor para todos os cenários.
 
 %-------------------------------------------------------------------------------
 \section{Classificador de padrões}
 \label{sec:classificadores}
 
-A tarefa de classificação de imagens consiste em tentar predizer a classe de uma determinada imagem. Na classificação supervisionada isso é realizado da seguinte forma: na etapa de treinamento o método recebe como entrada um conjunto de imagens para treino rotulado com suas respectivas classes; e etapa de classificação, quando são preditas as classes de um conjunto de imagens de teste. Já um classificador não-supervisionado não recebe como entrada as imagens de treino rotuladas. Dessa forma, deve determinar sozinho quais representam cada classe.
-
-\meutodo {melhorar}
+A tarefa de classificação de imagens consiste em tentar predizer a classe de uma determinada imagem. Na etapa de treinamento o método recebe como entrada um conjunto de imagens rotulado com suas respectivas classes; com o modelo treinado é possível realizar a classificação de exemplos de rótulo desconhecido; num experimento são preditas as classes de um conjunto de imagens de teste.
 
 % \subsection{Naive Bayes}
 
@@ -709,9 +705,9 @@ A tarefa de classificação de imagens consiste em tentar predizer a classe de u
 \subsection{Algoritmo k-vizinhos mais próximos}
 \label{sec:knn}
 
-O classificador supervisionado K-NN considera a proximidade entre os dados para realizar predições. Baseia-se na premissa de que os objetos do mesmo conceito são semelhantes. O seu funcionamento está descrito no Algoritmo \ref{alg:knn}. Na fase de treinamento, apenas armazena os exemplos rotulados do conjunto de dados de treinamento. Quando um novo exemplo deve ser classificado, calcula a distância entre os vetores de características do novo exemplo e aqueles já rotulados. O novo exemplo é então classificado como sendo da classe do exemplo de treinamento com menor distância~\cite{Boiman2008}.
+O classificador K-NN considera a proximidade entre os dados para realizar predições. Baseia-se na premissa de que os objetos do mesmo conceito são semelhantes. O seu funcionamento está descrito no Algoritmo \ref{alg:knn}. Na fase de treinamento, apenas armazena os exemplos rotulados do conjunto de dados de treinamento. Quando um novo exemplo deve ser classificado, calcula a distância entre os vetores de características do novo exemplo e aqueles já rotulados. O novo exemplo é então classificado como sendo da classe do exemplo de treinamento com menor distância~\cite{Boiman2008}.
 
-\begin{algorithm}[H]
+\begin{algorithm}[!htbp]
   \caption{K-NN: método de classificação supervisionada}
   \label{alg:knn}
   \SetAlgoLined
