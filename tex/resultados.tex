@@ -694,7 +694,7 @@ O seguinte protocolo foi seguido para a obtenção dos resultados:
       \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/3/LBP_Luma_corel.png}}
   \end{center}
   \caption[Experimento com as 10 classes da base Corel. Foi utilizado o método Luma para conversão em escala de cinza e LBP como método de extração de características.]{Experimento com as 10 classes da base Corel. Foi utilizado o método Luma para conversão em escala de cinza e LBP como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
-  \label{fig:resultados:2:pior}
+  \label{fig:resultados:3:melhor}
 \end{figure}
 
 \begin{table}[!htbp]
@@ -721,6 +721,36 @@ Desbalanceado       & 58.09          & 2.31                   \\ \hline
 
 %-------------------------------------------------------------------------------
 \item[] \textbf{Resultado da maior variância obtida com a combinação dos métodos de extração e conversão para escala de cinza}
+
+\begin{figure}[!htbp]
+  \begin{center}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/3/LBP_Intensity_corel.png}}
+  \end{center}
+  \caption[Experimento com as 10 classes da base Corel. Foi utilizado o método \emph{Intensidade} para conversão em escala de cinza e LBP como método de extração de características.]{Experimento com as 10 classes da base Corel. Foi utilizado o método \emph{Intensidade} para conversão em escala de cinza e LBP como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
+  \label{fig:resultados:3:pior}
+\end{figure}
+
+\begin{table}[]
+\centering
+\caption{My caption}
+\label{my-label}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{LBP Intensity} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+Todos                  & 60.39          & 2.35               \\ \hline
+Aguçamento             & 59.78          & 2.51               \\ \hline
+Borramento             & 59.30          & 2.34               \\ \hline
+Composição 16          & \textbf{60.73} & 2.23               \\ \hline
+Composição 4           & 59.77          & 2.30               \\ \hline
+Limiares               & 60.59          & 2.24               \\ \hline
+Mistura                & 60.71          & 2.16               \\ \hline
+Ruído                  & 59.39          & 2.44               \\ \hline
+SMOTE Visual           & 59.44          & 2.26               \\ \hline
+Saliência              & 60.36          & 2.18               \\ \hline
+SMOTE                  & 60.49          & 2.22               \\ \hline
+Desbalanceado          & 58.91          & 2.20               \\ \hline
+\end{tabular}
+\end{table}
 
 %-------------------------------------------------------------------------------
 \item[] \textbf{Discussão}
@@ -750,6 +780,63 @@ O seguinte protocolo foi seguido para a obtenção dos resultados:
 \end{enumerate}
 %-------------------------------------------------------------------------------
 \item[] \textbf{Resultados e Discussão}
+
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Experimento 4: classes com muitas imagens}
+
+\begin{itemize}
+%-------------------------------------------------------------------------------
+\item[] \textbf{Base de Imagens}
+
+
+%-------------------------------------------------------------------------------
+\item[] \textbf{Protocolo}
+
+O seguinte protocolo foi seguido para a obtenção dos resultados:
+
+\begin{enumerate}
+\item \textbf{Classes de imagens originais}:
+\item \textbf{Desbalanceamento}:
+\item \textbf{Método para geração artificial}:
+\item \textbf{Quantização}:
+\item \textbf{Extração de características}:
+\item \textbf{Classificação}:
+\end{enumerate}
+%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
+\item[] \textbf{Resultado da melhor combinação dos métodos de extração e conversão para escala de cinza}
+
+\begin{figure}[!htbp]
+  \begin{center}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/5/HOG_Gleam_deer-ship.png}}
+  \end{center}
+  \caption[]{\textit{Fonte:~Elaborado pela autora.}}
+  \label{fig:resultados:5:melhor}
+\end{figure}
+
+\begin{table}[!htbp]
+\centering
+\caption{Experimento com 2 classes contendo 5000 imagens cada.}
+\label{my-label}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Gleam e HOG} & \textbf{Média} & \textbf{Desvio padrão} \\ \hline
+Todos                & 79.38          & 9.88                   \\ \hline
+Aguçamento           & 88.88          & 1.13                   \\ \hline
+Borramento           & 86.69          & 1.81                   \\ \hline
+Composição 16        & 86.61          & 1.84                   \\ \hline
+Composição 4         & 86.69          & 1.97                   \\ \hline
+Limiares             & 88.93          & 1.04                   \\ \hline
+Mistura              & \textbf{88.99} & 0.98                   \\ \hline
+Ruído                & 73.72          & 13.18                  \\ \hline
+SMOTE Visual         & 76.23          & 12.51                  \\ \hline
+Saliência            & 86.61          & 1.86                   \\ \hline
+SMOTE                & 60.90          & 3.46                   \\ \hline
+Desbalanceado        & 86.60          & 1.86                   \\ \hline
+\end{tabular}
+\end{table}
 
 \end{itemize}
 
