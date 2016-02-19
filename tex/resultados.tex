@@ -19,7 +19,7 @@ O objetivo dessa seção é mostrar os efeitos da etapa de quantização e como 
   \item Experimentos utilizando o vetor resultante da concatenação de todos os métodos de extração, seguido pela classificação com e sem a seleção de características.
 \end{enumerate}
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \centering
     \includegraphics[width=0.4\linewidth]{\detokenize{figuras/quantizacao/quantizationResult.pdf}}
@@ -38,7 +38,7 @@ Três bases de imagens, ilustradas na Figura~\ref{fig:quant:bases}, foram utiliz
 \item[] \textbf{Produce}\footnote{Disponível em ??} (também conhecido como base de vegetais e frutas tropicais): composta por imagens com um fundo similar mas muitas mudanças na iluminação, no número de objetos e na escala. Apesar da oclusão parcial de objetos ser observada, essa classe possui dados bem comportados.
 \end{itemize}
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
   \begin{subfigure}{.6\textwidth}
     \centering
@@ -69,7 +69,6 @@ Os experimentos foram realizados com uma validação cruzada de \textit{10-fold}
 
 \begin{enumerate}
 \item \textbf{Quantização}: com os métodos \emph{Intensidade}, \emph{Gleam}, \emph{Luminância} e \emph{MSB}.
-\meutodo{conferir com o gamma dos métodos explicados nos fundamentos}
 \item \textbf{Extração de características}: utilizando os métodos -- e parâmetros escolhidos com base nas recomendações dos artigos que proporam tais métodos -- a seguir:
   \begin{itemize}
     \item \emph{ACC}: utilizando um conjunto de quatro distâncias $D = {1, 3, 5, 7}$ e a distância tabuleiro de xadrez $D_8(p,q) = Max(|x-s|, |y-t|)$ entre os pixeis $p(x,y)$ e $q(s,t)$;
@@ -86,7 +85,7 @@ Os experimentos foram realizados com uma validação cruzada de \textit{10-fold}
 
 A Figura \ref{fig:quant:results} ilustra a acurácia média para o primeiro conjunto de experimentos: para cada combinação de base de dados e método de extração, são demonstrados seis resultados de acurácia correspondentes à quantização para 256, 128, 64, 32, 16 e 8 cores. Com base nessa figura é possível identificar que o método para obter a imagem quantizada tem uma impacto significativo na acurácia da classificação. Além disso, a redução de 256 para um menor número de cores normalmente manteve as acurácias e em alguns casos resultou em uma ligeira melhora, especialmente para os níveis de 128 e 64.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \centering
     \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_results_individual.png}}
@@ -101,7 +100,7 @@ A partir dessa análise geral, uma análise mais específica foi realizada com a
 
 O teste estatístico ANOVA foi realizado para comparar as acurácias dos experimentos da Figura \ref{fig:quant:boxplotBIC} e \ref{fig:quant:boxplotHaralick}. O boxplot para 256, 128, 64 e 32 cores com os métodos BIC e MSB está demonstrado na Figura \ref{fig:quant:boxplotBIC}. De acordo com o teste estatístico representado, utilizar características de cor e níveis de quantização providos pelo método MSB demonstrou resultados melhores do que com 256 cores para as bases Corel (128, 64 e 32 cores) e Caltech (64 cores). O único resultado que piorou significativamente foi para 32 cores da base de imagens \textit{Produce}. Portanto, reduzir converter as imagens de 3 canais de cores para um e reduzir os 256 possíveis valores para apenas 64 provou uma boa escolha de processamento anterior a extração de características. Menores valores podem degradar os resultados em características de textura, como mostrado na Figura \ref{fig:quant:boxplotHaralick}.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \centering
     \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_results_individual_boxplotBIC.png}}
@@ -110,7 +109,7 @@ O teste estatístico ANOVA foi realizado para comparar as acurácias dos experim
   \label{fig:quant:boxplotBIC}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \centering
     \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_results_individual_boxplotHaralick.png}}
@@ -121,7 +120,7 @@ O teste estatístico ANOVA foi realizado para comparar as acurácias dos experim
 
 A redução de dimensionalidade obtida utilizando os métodos de quantização e redução da dimensionalidade com o LPP está ilustrada na Figura \ref{fig:quant:boxplotMSBLPP}. A imagem de entrada foi convertida para escala de cinza com o método MSB em 256 cores. Essa imagem foi dada como entrada para o método de extração de características BIC, que resultou em um vetor dado como entrada para o LPP. Esse último passo teve o objetivo de produzir versões reduzidas desse vetor para 256, 128 e 64 dimensões. As acurácias obtidas foram comparadas com a classificação dos vetores reduzidos apenas pela quantização. O método de quantização obteve valores de acurácia menores à utilização do LPP em três experimentos: de 256 dimensões com a base \textit{Corel} e com 256 e 64 na base \textit{Produce}. Para a base \textit{Caltech} a quantização foi melhor com 256 e 128 dimensões. O restante dos experimentos não apresentaram diferença estatística relevante. Apesar da perda de acurácia em alguns casos, é importante notar que -- se utilizado um número de cores correto -- é possível manter ou até mesmo melhorar as acurácias após a redução da dimensionalidade. Isso pode ser observado na Figura \ref{fig:quant:boxplotMSBLPP} referente à base de dados \textit{Caltech}.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \centering
     \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_results_individual_boxplotMSBLPP.png}}
@@ -134,7 +133,7 @@ O número de dimensões de um vetor resultante de apenas um método de extraçã
 
 Inicialmente, foi testada a configuração de um vetor $D=2310$ com LPP para redução de dimensionalidade com $d$ = 1160, 582, 294 e 150. Ou seja, produzindo vetores com o mesmo tamanho dos obtidos apenas com a quantização como redução da dimensão. O número de características em relação ao número de cores, concatenando todos os vetores resultantes dos métodos de extração de características, é: 256 cores -- 2310 características; 128 cores -- 1160 características; 64 cores -- 582 características; 32 cores --- 294 características; e 16 cores -- 150 características. A Figura \ref{fig:quant:resultsFull} mostra os resultados utilizando LPP. Note que o método de quantização MSB resultou em acurácias melhores que os outros métodos.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \centering
     \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_results_full.png}}
@@ -145,7 +144,7 @@ Inicialmente, foi testada a configuração de um vetor $D=2310$ com LPP para red
 
 A utilização da concatenação de todos os vetores melhorou a acurácia em relação ao melhor descritor individual. A Figura \ref{fig:quant:resultsFullBoxplot} apresenta a comparação do espaço original com LPP e MSB para redução da dimensionalidade. O teste estatístico ANOVA foi realizado utilizando $\alpha = 0.01$ como nível de significância. Os resultados que não mudaram significativamente as acurácias foram: MSB com 582 características para a base de dados Corel; e MSB com 1160 nas três bases. O único resultado de piora significative foi para 32 cores com a base Produce. Por conta disso, 64 cores parece ser uma boa escolha de parâmetro de quantização.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \centering
     \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_results_full_boxplot.png}}
@@ -156,7 +155,7 @@ A utilização da concatenação de todos os vetores melhorou a acurácia em rel
 
 Os resultados indicam que a quantização pode ser utilizada como redução da dimensão de dados visuais, especialmente utilziando 128 e 64 cores. Como experimento, a Figura \ref{fig:quant:fullLPP} mostra as acurácias resultantes da aplicação do LPP sob o vetor obtido após a quantização com MSB utilizando 256 e 64 cores ($d=2310$ e $d=582$, respectivamente). É interessante notar que as projeções LPP em geral foram melhores com as imagens quantizadas em 64 cores com MSB ao invés da original em 256. A razão para isso deve estar no fato da quantização remover informações confusas: ela simplifica as imagens de forma que as cores restantes possam melhor descrever uma certa classe.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \centering
     \includegraphics[width=0.6\linewidth]{\detokenize{figuras/quantizacao/fig_results_full_LPP}}
@@ -171,12 +170,12 @@ Ao comparar o uso da quantização com a utilização de métodos mais complexos
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newpage
+% \newpage
 \section{Geração de Imagens Artificiais}
 
 Esta seção descreve os resultados encontrados ao rebalancear as classes de imagens utilizando os processamentos, descritos no Capítulo \ref{cap:metodo}, aplicados nas imagens originais. Na Figura \ref{fig:fluxo} é possível observar o fluxo de operações realizadas para analisar o impacto da geração de imagens no rebalanceamento de classes. O mesmo protocolo de conversão para escala de cinza, extração de características e classificação foi seguido para três experimentos: base desbalanceada; base rebalanceada com interpolação dos vetores de características (método SMOTE); e base rebalanceada com a geração artificial de imagens.
 
-\begin{figure}[thpb]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[scale=1]{\detokenize{figuras/flow_main.pdf}}
 \caption[Fluxo de operações para obtenção dos resultados do rebalanceamento de classes]{Fluxo de operações para obtenção dos resultados do rebalanceamento de classes. \textit{Fonte:~Elaborado pela autora.}}
@@ -185,7 +184,7 @@ Esta seção descreve os resultados encontrados ao rebalancear as classes de ima
 
 Procurando uma certa estabilidade dos resultados obtidos com a geração das imagens artificiais, foi identificada a necessidade de controlar a remoção de imagens da base no momento da criação da base desbalanceada. Assim, os resultados foram obtidos a partir de uma forma de validação K-fold com o objetivo de prover mais robustez ao sistema. A Figura \ref{fig:folds} ilustra como isso foi realizado. Primeiramente as imagens foram divididas de forma aleatória em $k=5$ folds para cada classe. Depois, as duas classes compõe 40 configurações, consistindo de um fold para teste e os outros para treino na classe que ficará balanceada e um de teste e um de treino para a que os métodos de processamento irão rebalancear. Se originalmente a base é naturalmente desbalanceada, então um fold será utilizado para teste e os restantes para treino para todas as classes.
 
-\begin{figure}[thpb]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[scale=0.25]{\detokenize{figuras/folds_chart.png}}
 \caption[]{\textit{Fonte:~Elaborado pela autora.}}
@@ -203,7 +202,7 @@ A seguir, para cada experimento realizado: são descritos: a base de imagens uti
 
 Neste experimento foram utilizadas duas classes da base Corel-1000: \emph{Cavalos} e \emph{Elefantes}. Elas estão exemplificadas na Figura \ref{fig:exp1:base}. A principal característica dessas imagens é a grande diferença das cores das imagens. Apesar de haverem casos de confusão, são classes bem discriminadas.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \begin{subfigure}{.4\linewidth}
       \centering
@@ -231,7 +230,7 @@ Neste experimento foram utilizadas duas classes da base Corel-1000: \emph{Cavalo
 \item \textbf{Projeção multidimensional}: projetados os dois componentes principais encontrados ao aplicar PCA nos vetores de características para redução de dimensionalidade (Seção~\ref{sec:pca}).
 \end{enumerate}
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \begin{subfigure}{.3\linewidth}
       \centering
@@ -258,7 +257,7 @@ Neste experimento foram utilizadas duas classes da base Corel-1000: \emph{Cavalo
 
 As classes \emph{Elefantes} e \emph{Cavalos} possuem 100 imagens cada. O primeiro passo foi remover imagens de uma das classes, tornando a base desbalanceada. Como o foco é na visualização do espaço de características, é relevante ter o modelo do espaço ideal das classes balanceadas, por isso esse experimento em específico não trata de uma base naturalmente desbalanceada. Na Figura~\ref{fig:desbalanceado} está ilustrada a remoção de 50\% das imagens de treino da classe \emph{cavalo}, originalmente balanceada. Essa e as próximas projeções desta seção foram obtidas com a técnica para redução de dimensionalidade PCA, descrita na Seção~\ref{sec:pca} e são referentes aos dois componentes principais com maiores autovalores.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \begin{subfigure}{.49\linewidth}
       \centering
@@ -275,7 +274,7 @@ As classes \emph{Elefantes} e \emph{Cavalos} possuem 100 imagens cada. O primeir
 
 Os resultados da classificação dos três experimentos utilizando KNN reportou que o \textit{f1-score} da geração artificial de imagens utilizando o método de mistura teve um ganho satisfatório em relação ao rebalanceamento no espaço de características com o SMOTE (apresentado na Figura \ref{fig:resultados:1:vis}). Foi utilizado BIC como método de extração de características e Intensidade como método de conversão em escala de cinza. Para essa combinação, a geração de imagens utilizando mistura se mostrou favorável e portanto a visualização do espaço de características apresenta esse método como geração.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
       \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/1/BIC_Intensity_elefante-cavalo.png}}
   \end{center}
@@ -283,7 +282,7 @@ Os resultados da classificação dos três experimentos utilizando KNN reportou 
   \label{fig:resultados:1:vis}
 \end{figure}
 
-\begin{table}[]
+\begin{table}[!htbp]
 \centering
 \caption{}
 \label{fig:resultados:1:tabvis}
@@ -307,7 +306,7 @@ Desbalanceado              & 85.82          & 5.69                   \\ \hline
 
 Para confirmar se a geração de imagens inseriu mais informação na classe minoritária do que apenas povoar os espaços entre os exemplos (i.e.\ SMOTE), a classe rebalanceada utilizando ambos métodos está demonstrada na Figura~\ref{fig:compara_vis_treino_fixed}. Em laranja estão representados os novos exemplos de treinamento, projetados no plano da base original balanceada.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \begin{subfigure}{.49\linewidth}
       \centering
@@ -324,7 +323,7 @@ Para confirmar se a geração de imagens inseriu mais informação na classe min
 
 Após o treinamento realizado com as novas imagens geradas e as originais, o conjunto de teste foi fornecido ao classificador 1-NN e o resultado das predições está ilustrado na Figura~\ref{fig:compara_vis_teste}. A cor no interior dos marcadores quadrados representa a classe real dos exemplos e a borda representa a classe predita pelo classificador. Nota-se que a melhoria na classificação com a geração de imagens fica visível e corresponde ao aumento do \textit{f1-score}.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \begin{subfigure}{.49\linewidth}
       \centering
@@ -343,7 +342,7 @@ De uma forma geral, pode-se dizer que a geração de imagens melhorou a definiç
 
 Na Figura \ref{fig:region} é possível visualizar a região de decisão, observando suas modificações frente aos métodos. Pode ser observado que em ambas técnicas a região da classe minoritária apresenta-se melhor representada. Além disso, é possível verificar que o SMOTE ocasionou uma certa ``invasão'' do espaço de características da classe majoritária.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \begin{subfigure}{.3\linewidth}
       \centering
@@ -364,7 +363,7 @@ Na Figura \ref{fig:region} é possível visualizar a região de decisão, observ
 
 Em todas as figuras anteriores relacionadas a essa visualização, os exemplos foram projetados no plano criado pelas suas componentes principais com maior autovalores da base original balanceada. Se após a geração de novos exemplos essas componentes forem recalculadas (Figura \ref{fig:compara_vis_treino}), pode-se notar que a geração de imagens artificiais proporciona a criação de um subespaço que melhor discretiza as classes, quando comparado com SMOTE ou com a base desbalanceada.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \begin{subfigure}{.3\linewidth}
       \centering
@@ -385,7 +384,7 @@ Em todas as figuras anteriores relacionadas a essa visualização, os exemplos f
 
 Como relatado no início desse experimento, o extrator de características utilizado foi o BIC. Fundamentalmente ele captura informações de intensidade de cor das imagens. Na Figura~\ref{fig:vis_images} as próprias imagens foram utilizadas como marcadores na projeção do melhor subespaço após a geração artificial com o método de mistura. É nítido o impacto da etapa de extração de características na separação das classes e também no método de geração de imagens antes dessa extração.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
       \includegraphics[width=.6\linewidth]{\detokenize{figuras/visualizacao/vis-images.png}}
   \end{center}
@@ -396,7 +395,7 @@ Como relatado no início desse experimento, o extrator de características utili
 %-------------------------------------------------------------------------------
 \item[] \textbf{Resultado da melhor combinação dos métodos de extração e conversão para escala de cinza}
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
       \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/1/GCH_Gleam_elefante-cavalo.png}}
   \end{center}
@@ -404,7 +403,7 @@ Como relatado no início desse experimento, o extrator de características utili
   \label{fig:resultados:1:melhor}
 \end{figure}
 
-\begin{table}[]
+\begin{table}[!htbp]
 \centering
 \caption{}
 \label{fig:resultados:1:tabmelhor}
@@ -426,7 +425,7 @@ Desbalanceado        & 87.09          & 5.31                   \\ \hline
 \end{tabular}
 \end{table}
 
-\begin{figure}
+\begin{figure}[!htbp]
  \begin{center}
 \begin{subfigure}{.3\textwidth}
   \centering
@@ -448,7 +447,7 @@ Desbalanceado        & 87.09          & 5.31                   \\ \hline
 %-------------------------------------------------------------------------------
 \item[] \textbf{Resultado da maior variância obtida com a combinação dos métodos de extração e conversão para escala de cinza}
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
       \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/1/HOG_MSB_elefante-cavalo.png}}
   \end{center}
@@ -457,7 +456,7 @@ Desbalanceado        & 87.09          & 5.31                   \\ \hline
 \end{figure}
 
 
-\begin{table}[]
+\begin{table}[!htbp]
 \centering
 \caption{}
 \label{fig:resultados:1:tabpior}
@@ -479,7 +478,7 @@ Desbalanceado      & 55.667145          & 13.341421              \\ \hline
 \end{tabular}
 \end{table}
 
-\begin{figure}
+\begin{figure}[!htbp]
  \begin{center}
 \begin{subfigure}{.45\textwidth}
   \centering
@@ -507,7 +506,7 @@ Desbalanceado      & 55.667145          & 13.341421              \\ \hline
 %-------------------------------------------------------------------------------
 \item[] \textbf{Base de Imagens}
 
-% \begin{figure}[htbp]
+% \begin{figure}[!htbp]
 %   \begin{center}
 %     \begin{subfigure}{.49\linewidth}
 %       \centering
@@ -539,7 +538,7 @@ O seguinte protocolo foi seguido para a obtenção dos resultados:
 %-------------------------------------------------------------------------------
 \item[] \textbf{Resultado da melhor combinação dos métodos de extração e conversão para escala de cinza}
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
       \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/2/BIC_Luminance_praia-montanha.png}}
   \end{center}
@@ -548,7 +547,7 @@ O seguinte protocolo foi seguido para a obtenção dos resultados:
 \end{figure}
 
 
-\begin{table}[]
+\begin{table}[!htbp]
 \centering
 \caption{}
 \label{my-label}
@@ -570,7 +569,7 @@ Desbalanceado          & 59.49          & 8.11                   \\ \hline
 \end{tabular}
 \end{table}
 
-\begin{figure}
+\begin{figure}[!htbp]
  \begin{center}
 \begin{subfigure}{.3\textwidth}
   \centering
@@ -592,7 +591,7 @@ Desbalanceado          & 59.49          & 8.11                   \\ \hline
 %-------------------------------------------------------------------------------
 \item[] \textbf{Resultado da maior variância obtida com a combinação dos métodos de extração e conversão para escala de cinza}
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
       \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/2/HOG_Intensity_praia-montanha.png}}
   \end{center}
@@ -600,7 +599,7 @@ Desbalanceado          & 59.49          & 8.11                   \\ \hline
   \label{fig:resultados:2:pior}
 \end{figure}
 
-\begin{table}[]
+\begin{table}[!htbp]
 \centering
 \caption{}
 \label{my-label}
@@ -622,7 +621,7 @@ Desbalanceado              & 57.651543          & 8.323832               \\ \hli
 \end{tabular}
 \end{table}
 
-\begin{figure}
+\begin{figure}[!htbp]
  \begin{center}
 \begin{subfigure}{.3\textwidth}
   \centering
@@ -653,21 +652,6 @@ Desbalanceado              & 57.651543          & 8.323832               \\ \hli
 %-------------------------------------------------------------------------------
 \item[] \textbf{Base de Imagens}
 
-% \begin{figure}[htbp]
-%   \begin{center}
-%     \begin{subfigure}{.49\linewidth}
-%       \centering
-%       \includegraphics[width=\linewidth]{\detokenize{figuras/corel_original4.jpg}}
-%     \end{subfigure}
-%     \begin{subfigure}{.49\linewidth}
-%       \centering
-%       \includegraphics[width=\linewidth]{\detokenize{figuras/cavalo-original2.png}}
-%     \end{subfigure}
-%   \end{center}
-%   \caption{Remoção de 50\% das imagens de treino da classe Cavalo.}
-%   \label{fig:exp1:base}
-% \end{figure}
-
 %-------------------------------------------------------------------------------
 \item[] \textbf{Protocolo}
 
@@ -678,7 +662,7 @@ O seguinte protocolo foi seguido para a obtenção dos resultados:
 \item \textbf{Desbalanceamento}: 200 configurações de folds para que cada classe fosse desbalanceada.
 \item \textbf{Método para geração artificial}: o melhor foi a mistura.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \begin{subfigure}{.3\linewidth}
       \centering
@@ -705,7 +689,7 @@ O seguinte protocolo foi seguido para a obtenção dos resultados:
 %-------------------------------------------------------------------------------
 \item[] \textbf{Resultado da melhor combinação dos métodos de extração e conversão para escala de cinza}
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
       \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/3/LBP_Luma_corel.png}}
   \end{center}
@@ -713,7 +697,7 @@ O seguinte protocolo foi seguido para a obtenção dos resultados:
   \label{fig:resultados:2:pior}
 \end{figure}
 
-\begin{table}[]
+\begin{table}[!htbp]
 \centering
 \caption{Experimento com as 10 classes da base Corel.}
 \label{my-label}
@@ -750,20 +734,6 @@ Desbalanceado       & 58.09          & 2.31                   \\ \hline
 %-------------------------------------------------------------------------------
 \item[] \textbf{Base de Imagens}
 
-% \begin{figure}[htbp]
-%   \begin{center}
-%     \begin{subfigure}{.49\linewidth}
-%       \centering
-%       \includegraphics[width=\linewidth]{\detokenize{figuras/corel_original4.jpg}}
-%     \end{subfigure}
-%     \begin{subfigure}{.49\linewidth}
-%       \centering
-%       \includegraphics[width=\linewidth]{\detokenize{figuras/cavalo-original2.png}}
-%     \end{subfigure}
-%   \end{center}
-%   \caption{Remoção de 50\% das imagens de treino da classe Cavalo.}
-%   \label{fig:exp1:base}
-% \end{figure}
 
 %-------------------------------------------------------------------------------
 \item[] \textbf{Protocolo}
@@ -784,7 +754,7 @@ O seguinte protocolo foi seguido para a obtenção dos resultados:
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \begin{table}[]
+% \begin{table}[!htbp]
 % \centering
 % \caption{Base DTD com 3 classes bem distintas de texturas utilizando LBP e Luminância}
 % % \label{my-label}
@@ -808,7 +778,7 @@ O seguinte protocolo foi seguido para a obtenção dos resultados:
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \begin{figure}[htbp]
+% \begin{figure}[!htbp]
 %   \begin{center}
 %     \begin{subfigure}{.49\linewidth}
 %       \centering
