@@ -80,19 +80,11 @@ Os métodos de filtragem possuem como objetivo aperfeiçoar certos aspectos da i
 % A filtragem Gaussiana seletiva objetiva borrar áreas da imagem onde há pouco detalhe, porém preservando contraste e pequenas estruturas. Esse tipo de filtragem é dita adaptativa, pois modifica-se o parâmetro $\sigma$ (Equação~\ref{eq:Gaussian}) para cada pixel da imagem. Uma implementação dessa técnica utiliza a variância global da imagem $\sigma_g$ e variâncias locais $\sigma_r$, suavizando com maior intensidade regiões onde a $\sigma_r \leq \sigma_g$, e suavizando menos as regiões onde $\sigma_r > \sigma_g$.
 \vspace{12pt}
 \begin{figure}[!hbpt]
- \begin{center}
-\begin{subfigure}{.4\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/original.png}}
-  \caption{Original}
-\end{subfigure}
-\hspace{0.1\textwidth}
-\begin{subfigure}{.4\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/blur.png}}
-  \caption{Filtrada}
-\end{subfigure}
- \end{center}
+  \subfloat[Original]{ \includegraphics[width=.49\linewidth]{\detokenize{figuras/original.png}}
+  }
+  \subfloat[Filtrada]{
+    \includegraphics[width=.49\linewidth]{\detokenize{figuras/blur.png}}
+  }
  \caption[Exemplo de filtragem gaussiana como operação de pré-processamento.]{Exemplo de filtragem gaussiana como operação de pré-processamento. \textit{Fonte:~Elaborado pela autora.}}
  \label{fig:blur}
 \end{figure}
@@ -148,18 +140,13 @@ Na Figura \ref{fig:pre-sharp} está demonstrado o efeito do algoritmo de \textit
 
 \begin{figure}[!htbp]
  \begin{center}
-\begin{subfigure}{.4\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/original.png}}
-  \caption{Original}
-\end{subfigure}
-\hspace{0.1\textwidth}
-\begin{subfigure}{.4\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/unsharpmask.png}}
-  \caption{\textit{Unsharp masking}}
-  \label{fig:unsharp}
-\end{subfigure}
+  \subfloat[Original]{
+    \includegraphics[width=.49\linewidth]{\detokenize{figuras/original.png}}
+  }
+  \subfloat[\textit{Unsharp masking}]{
+    \includegraphics[width=.49\linewidth]{\detokenize{figuras/unsharpmask.png}}
+    \label{fig:unsharp}
+  }
  \end{center}
  \caption[A imagem original, já em escala de cinza, foi realçada utilizando o método \textit{unsharp masking}.]{A imagem original, já em escala de cinza, foi realçada utilizando o método \textit{unsharp masking}. \textit{Fonte:~Elaborado pela autora.}}
  \label{fig:pre-sharp}
@@ -242,41 +229,30 @@ A Figura \ref{fig:quantizacao} apresenta a conversão na escala de cinza obtida 
 
 \begin{figure}[!htbp]
  \begin{center}
-\begin{subfigure}{.3\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/Lenna.png}}
-  \caption{Original}
-\end{subfigure}
-\begin{subfigure}{.3\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/Intensity_gray.png}}
-  \caption{Intensidade}
+\subfloat[Original]{
+  \includegraphics[width=.3\linewidth]{\detokenize{figuras/quantizacao/Lenna.png}}
+}
+\subfloat[Intensidade]{
+  \includegraphics[width=.3\linewidth]{\detokenize{figuras/quantizacao/Intensity_gray.png}}
   \label{fig:intensidade}
-\end{subfigure}
-\begin{subfigure}{.3\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/Gleam_gray.png}}
-  \caption{Gleam}
+}
+\subfloat[Gleam]{
+  \includegraphics[width=.3\linewidth]{\detokenize{figuras/quantizacao/Gleam_gray.png}}
   \label{fig:gleam}
-\end{subfigure}
-\begin{subfigure}{.3\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/Luminance_gray.png}}
-  \caption{Luminância}
+}
+\newline
+\subfloat[Luminância]{
+  \includegraphics[width=.3\linewidth]{\detokenize{figuras/quantizacao/Luminance_gray.png}}
   \label{fig:Luminance}
-\end{subfigure}
-\begin{subfigure}{.3\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/Luma_gray.png}}
-  \caption{Luma}
+}
+\subfloat[Luma]{
+  \includegraphics[width=.3\linewidth]{\detokenize{figuras/quantizacao/Luma_gray.png}}
   \label{fig:luma}
-\end{subfigure}
-\begin{subfigure}{.3\textwidth}
-  \centering
-  \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/MSB_gray.png}}
-  \caption{MSB}
+}
+\subfloat[MSB]{
+  \includegraphics[width=.3\linewidth]{\detokenize{figuras/quantizacao/MSB_gray.png}}
   \label{fig:msb}
-\end{subfigure}
+}
  \end{center}
  \caption[Conversão para a escala de cinza com os métodos utilizados nessa pesquisa. O método MSB resulta em uma imagem com 8 bits (64 cores) e os outros em 256 cores.]{Conversão para a escala de cinza com os métodos utilizados nessa pesquisa. O método MSB resulta em uma imagem com 8 bits (64 cores) e os outros em 256 cores. \textit{Fonte:~Elaborado pela autora.}}
  \label{fig:quantizacao}
@@ -412,78 +388,78 @@ O vetor de coerência de cor armazena o número de pixels coerentes e de incoere
 % \renewcommand{\tabcolsep}{0.0cm}
 % \begin{figure}[htbp]
 %  \begin{center}
-% \begin{subfigure}{.2\textwidth}
+% \subfloat{
 %   \centering
 %   \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05b.png}}
-%   \caption{}
+%   \caption{}}
 %   \label{fig:algaa}
-% \end{subfigure}
-% \begin{subfigure}{.2\textwidth}
+%
+% \subfloat{
 %   \centering
 %   \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05c.png}}
-%   \caption{}
+%   \caption{}}
 %   \label{fig:algab}
-% \end{subfigure}
-% \begin{subfigure}{.2\textwidth}
+%
+% \subfloat{
 %   \centering
 %     \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05d.png}}
-%   \caption{}
+%   \caption{}}
 %   \label{fig:algac}
-% \end{subfigure}
-% \begin{subfigure}{.2\textwidth}
+%
+% \subfloat{
 %   \centering
 %   \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05e.png}}
-%   \caption{}
+%   \caption{}}
 %   \label{fig:algad}
-% \end{subfigure}
-% \begin{subfigure}{.2\textwidth}
+%
+% \subfloat{
 %   \centering
 %   \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05ba.png}}
-%   \caption{}
+%   \caption{}}
 %   \label{fig:algae}
-% \end{subfigure}
-% \begin{subfigure}{.2\textwidth}
+%
+% \subfloat{
 %   \centering
 %   \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05ca.png}}
-%   \caption{}
+%   \caption{}}
 %   \label{fig:algaf}
-% \end{subfigure}
-% \begin{subfigure}{.2\textwidth}
+%
+% \subfloat{
 %   \centering
 %   \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05da.png}}
-%   \caption{}
+%   \caption{}}
 %   \label{fig:algag}
-% \end{subfigure}
-% \begin{subfigure}{.2\textwidth}
+%
+% \subfloat{
 %   \centering
 %   \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05ea.png}}
-%   \caption{}
+%   \caption{}}
 %   \label{fig:algah}
-% \end{subfigure}
-% \begin{subfigure}{.2\textwidth}
+%
+% \subfloat{
 %   \centering
 %   \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05bb.png}}
-%   \caption{}
+%   \caption{}}
 %   \label{fig:algai}
-% \end{subfigure}
-% \begin{subfigure}{.2\textwidth}
+%
+% \subfloat{
 %   \centering
 %   \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05cb.png}}
-%   \caption{}
+%   \caption{}}
 %   \label{fig:algaj}
-% \end{subfigure}
-% \begin{subfigure}{.2\textwidth}
+%
+% \subfloat{
 %   \centering
 %   \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05db.png}}
-%   \caption{}
+%   \caption{}}
 %   \label{fig:algak}
-% \end{subfigure}
-% \begin{subfigure}{.2\textwidth}
+%
+% \subfloat{
 %   \centering
 %   \includegraphics[width=\linewidth]{\detokenize{figuras/alga_05eb.png}}
-%   \caption{}
+%   \caption{}}
 %   \label{fig:algal}
-% \end{subfigure}
+%
 %
 %  \caption[Características latentes de algas verdes.]{Características latentes de algas verdes. A primeira imagem (a) é uma imagem original segmentada de alga. As próximas colunas são imagens resultantes da deconvolução da imagem (coluna 2), filtragem Gaussiana (coluna 3) e filtragem Gaussiana seletiva (coluna 4). A primeira linha mostra versões diferentes de imagens de algas, a segunda linha exibe imagens resultantes da diferença de Gaussianas, e a terceira linha demonstra imagens binárias obtidas por limiarização das imagens contidas na segunda linha). \textit{Fonte:~Elaborado pela autora.}}
 %  \label{fig:caracteristicas}

@@ -59,17 +59,13 @@ Esse comportamento não é esperado quando devemos gerar novas imagens, pois inf
 
 \begin{figure}[!htbp]
   \begin{center}
-    \begin{subfigure}{.4\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/blur-a.png}}
-      \caption{Original}
-    \end{subfigure}
+    \subfloat[Original]{
+      \includegraphics[width=.4\linewidth]{\detokenize{figuras/geracao/blur-a.png}}
+    }
     \hspace{0.1\textwidth}
-    \begin{subfigure}{.4\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/blur-b.png}}
-      \caption{Imagem artificial}
-    \end{subfigure}
+    \subfloat[Imagem artificial]{
+      \includegraphics[width=.4\linewidth]{\detokenize{figuras/geracao/blur-b.png}}
+    }
   \end{center}
   \caption[Geração artificial utilizando borramento com filtro bilateral.]{Geração artificial utilizando borramento com filtro bilateral. \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:gen:blur}
@@ -107,17 +103,13 @@ Diferentemente da suavização, o processamento de aguçamento procura enfatizar
 
 \begin{figure}[!htbp]
   \begin{center}
-    \begin{subfigure}{.4\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/unsharp-a.png}}
-      \caption{Original}
-    \end{subfigure}
+    \subfloat[Original]{
+      \includegraphics[width=.4\linewidth]{\detokenize{figuras/geracao/unsharp-a.png}}
+    }
     \hspace{0.1\textwidth}
-    \begin{subfigure}{.4\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/unsharp-b.png}}
-      \caption{Imagem artificial}
-    \end{subfigure}
+    \subfloat[Imagem artificial]{
+      \includegraphics[width=.4\linewidth]{\detokenize{figuras/geracao/unsharp-b.png}}
+    }
   \end{center}
   \caption[Geração artificial utilizando unsharp masking.]{Geração artificial utilizando unsharp masking. \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:gen:unsharp}
@@ -137,19 +129,16 @@ Diferentemente da suavização, o processamento de aguçamento procura enfatizar
 
 O ruído de Poisson ocorre na contagem de fótons de dispositivos ópticos. Ele segue a distribuição de Poisson, que expressa a probabilidade de um certo número de eventos ocorrer em um intervalo fixo de tempo e/ou espaço se esses eventos ocorem com uma taxa média conhecida. O efeito da adição de ruído pode ser visto na Figura~\ref{fig:gen:noise}.
 
+
 \begin{figure}[!htbp]
   \begin{center}
-    \begin{subfigure}{.4\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/noise-a.png}}
-      \caption{Original}
-    \end{subfigure}
+    \subfloat[Original]{
+      \includegraphics[width=.4\linewidth]{\detokenize{figuras/geracao/noise-a.png}}
+    }
     \hspace{0.1\textwidth}
-    \begin{subfigure}{.4\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/noise-b.png}}
-      \caption{Imagem artificial}
-    \end{subfigure}
+    \subfloat[Imagem artificial]{
+      \includegraphics[width=.4\linewidth]{\detokenize{figuras/geracao/noise-b.png}}
+    }
   \end{center}
   \caption[Geração artificial utilizando adição de ruído de Poisson.]{Geração artificial utilizando adição de ruído de Poisson. \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:gen:noise}
@@ -230,23 +219,20 @@ na imagem original (Ver Algoritmo~\ref{alg:smotevisual}). O efeito que esse proc
 \end{algorithm}
 \vspace{0.5cm}
 
+\meutodo{Nova imagem}
 \begin{figure}[!htbp]
   \begin{center}
-    \begin{subfigure}{.3\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/smote-a.png}}
-      \caption{Original}
-    \end{subfigure}
-    \begin{subfigure}{.3\textwidth}
-      \centering
-      \includegraphics[width=0.65\linewidth]{\detokenize{figuras/geracao/smote-b.png}}
-      \caption{Original}
-    \end{subfigure}
-    \begin{subfigure}{.3\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/smote-c.png}}
-      \caption{Imagem artificial}
-    \end{subfigure}
+    \begin{center}
+    \subfloat[Original]{
+      \includegraphics[width=.3\linewidth]{\detokenize{figuras/geracao/smote-a.png}}
+    }
+    \subfloat[Original]{
+      \includegraphics[width=0.2\linewidth]{\detokenize{figuras/geracao/smote-b.png}}
+    }
+  \end{center}
+    \subfloat[Imagem artificial]{
+      \includegraphics[width=.5\linewidth]{\detokenize{figuras/geracao/smote-c.png}}
+    }
   \end{center}
   \caption[Geração artificial utilizando o método SMOTE no espaço visual.]{Geração artificial utilizando o método SMOTE no espaço visual. \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:gen:smotevisual}
@@ -286,21 +272,15 @@ Algoritmo~\ref{alg:blend}. O efeito dessa mistura pode ser visto na Figura~\ref{
 
 \begin{figure}[!htbp]
   \begin{center}
-    \begin{subfigure}{.3\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/blend-a.png}}
-      \caption{Original}
-    \end{subfigure}
-    \begin{subfigure}{.3\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/blend-b.png}}
-      \caption{Original}
-    \end{subfigure}
-    \begin{subfigure}{.3\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/blend-c.png}}
-      \caption{Imagem artificial}
-    \end{subfigure}
+    \subfloat[Original]{
+      \includegraphics[width=.3\linewidth]{\detokenize{figuras/geracao/blend-a.png}}
+    }
+    \subfloat[Original]{
+      \includegraphics[width=0.3\linewidth]{\detokenize{figuras/geracao/blend-b.png}}
+    }
+    \subfloat[Imagem artificial]{
+      \includegraphics[width=.3\linewidth]{\detokenize{figuras/geracao/blend-c.png}}
+    }
   \end{center}
   \caption[Geração artificial utilizando uma mistura ponderada de duas imagens.]{Geração artificial utilizando uma mistura ponderada de duas imagens. \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:gen:blend}
@@ -323,21 +303,15 @@ A combinação de \textit{thresholds} é uma composição do fundo (\textit{back
 
 \begin{figure}[!htbp]
   \begin{center}
-    \begin{subfigure}{.3\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/threshold-a.png}}
-      \caption{Original}
-    \end{subfigure}
-    \begin{subfigure}{.3\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/threshold-b.png}}
-      \caption{Original}
-    \end{subfigure}
-    \begin{subfigure}{.3\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/threshold-c.png}}
-      \caption{Imagem artificial}
-    \end{subfigure}
+    \subfloat[Original]{
+      \includegraphics[width=.3\linewidth]{\detokenize{figuras/geracao/threshold-a.png}}
+    }
+    \subfloat[Original]{
+      \includegraphics[width=0.3\linewidth]{\detokenize{figuras/geracao/threshold-b.png}}
+    }
+    \subfloat[Imagem artificial]{
+      \includegraphics[width=.3\linewidth]{\detokenize{figuras/geracao/threshold-c.png}}
+    }
   \end{center}
   \caption[Geração artificial utilizando uma mistura limiarizada de duas imagens.]{Geração artificial utilizando uma mistura limiarizada de duas imagens. \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:gen:threshold}
@@ -378,21 +352,15 @@ A combinação de regiões salientes é muito similar com o método anterior de 
 
 \begin{figure}[!htbp]
   \begin{center}
-    \begin{subfigure}{.3\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/saliency-a.png}}
-      \caption{Original}
-    \end{subfigure}
-    \begin{subfigure}{.25\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/saliency-b.png}}
-      \caption{Original}
-    \end{subfigure}
-    \begin{subfigure}{.25\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/geracao/saliency-c.png}}
-      \caption{Imagem artificial}
-    \end{subfigure}
+    \subfloat[Original]{
+      \includegraphics[width=.3\linewidth]{\detokenize{figuras/geracao/saliency-a.png}}
+    }
+    \subfloat[Original]{
+      \includegraphics[width=0.3\linewidth]{\detokenize{figuras/geracao/saliency-b.png}}
+    }
+    \subfloat[Imagem artificial]{
+      \includegraphics[width=.3\linewidth]{\detokenize{figuras/geracao/saliency-c.png}}
+    }
   \end{center}
   \caption[Geração artificial utilizando uma mistura de duas imagens a partir da saliência da primeira imagem.]{Geração artificial utilizando uma mistura de duas imagens a partir da saliência da primeira imagem. \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:gen:saliency}

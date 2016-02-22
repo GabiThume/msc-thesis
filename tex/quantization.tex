@@ -37,32 +37,22 @@ Um exemplo das imagens obtidas após os métodos de quantização apresentados a
 
 \begin{figure}[!htbp]
   \begin{center}
-    \begin{subfigure}{.25\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_quanttest.png}}
-      \caption{Original}
+    \subfloat[Original]{
+      \includegraphics[width=.18\linewidth]{\detokenize{figuras/quantizacao/fig_quanttest.png}}
       \label{fig:quant:original}
-    \end{subfigure}
-    \begin{subfigure}{.25\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_quantGleam.png}}
-      \caption{Gleam}
-    \end{subfigure}
-    \begin{subfigure}{.25\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_quantIntensity.png}}
-      \caption{Intensidade'}
-    \end{subfigure}
-    \begin{subfigure}{.25\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_quantLuminance.png}}
-      \caption{Luminance'}
-    \end{subfigure}
-    \begin{subfigure}{.25\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_quantMSB.png}}
-      \caption{MSB}
-    \end{subfigure}
+    }
+    \subfloat[Gleam]{
+      \includegraphics[width=.18\linewidth]{\detokenize{figuras/quantizacao/fig_quantGleam.png}}
+    }
+    \subfloat[Intensidade]{
+      \includegraphics[width=.18\linewidth]{\detokenize{figuras/quantizacao/fig_quantIntensity.png}}
+    }
+    \subfloat[Luminance]{
+      \includegraphics[width=.18\linewidth]{\detokenize{figuras/quantizacao/fig_quantLuminance.png}}
+    }
+    \subfloat[MSB]{
+      \includegraphics[width=.18\linewidth]{\detokenize{figuras/quantizacao/fig_quantMSB.png}}
+    }
     \hspace{0.1\textwidth}
   \end{center}
   \caption[Resultado da aplicação de métodos de quantização. A imagem original \protect\subref{fig:quant:original} resultou em versões de um canal de cor com 232 cores unicas para MSB e 184 cores para os restantes métodos.]{Resultado da aplicação de métodos de quantização. A imagem original \protect\subref{fig:quant:original} resultou em versões de um canal de cor com 232 cores unicas para MSB e 184 cores para os restantes métodos. \textit{Fonte:~\cite{Ponti2016}.}}
