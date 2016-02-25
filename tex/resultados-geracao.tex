@@ -3,6 +3,8 @@
 
 Os resultados encontrados ao rebalancear classes a partir da geração de imagens artificiais estão descritos neste capítulo. Para cada experimento realizado, são descritos: o protocolo utilizado (incluindo a base de imagens e os métodos de conversão para escala de cinza e extração de características), os resultados encontrados e a discussão da relevância de tais resultados.
 
+Foram realizados diversos experimentos direcionados a explorar o rebalanceamento com métodos de processamento, para melhorar a acurácia da classificação de bases de imagens. Como entrada são utilizadas imagens originais provenientes de diversas coleções disponíveis na literatura. Como resultado, são calculadas medidas estatísticas da classificação dessas coleções após a alteração dessas imagens com os métodos de realce de características relevantes.
+
 Os experimentos a serem relatados são relacionados à geração de imagens para rebalancear classes. Tal processamento é realizado antes da extração de características, e portanto no campo visual. Por conta disso, os resultados devem refletir melhoras nas etapa subsequente de classificação.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -26,6 +28,48 @@ Procurando estabilidade dos resultados obtidos com a geração das imagens artif
 \caption[]{\textit{Fonte:~Elaborado pela autora.}}
 \label{fig:folds}
 \end{figure}
+
+A medida estatística mais comum para avaliação é a razão do número de acertos pela quantidade de imagens testadas. Essa medida, conhecida por \underline{acurácia}, pode não refletir propriamente os resultados, em um cenário de bases desbalanceadas. Isso se deve ao fato de que se a classe minoritária não obtiver nenhum resultado correto e a classe majoritária tiver 100\% de acertos, a acurária normal poderá ser muito alta, mesmo considerando que nenhuma imagem da classe minoritária foi corretamente classificada. Dessa forma, considera que os erros são igualmente importantes. Mas em se tratando de bases desbalanceadas, deve-se diferenciar o erro em, por exemplo, diagnosticar um paciente doente -- classe minoritária -- como sendo saudável e um paciente saudável -- classe majoritária -- como estando doente \cite{Batista2004}. No primeiro caso, o paciente corre risco de diagnóstico tardil, enquanto o paciente saudável realiza outros testes para refutação.
+
+Pode-se estender essa medida obtendo-se a \underline{acurácia $k$-fold}: medida de acerto baseada na divisão do conjunto de objetos em teste e treinamento, realizando a repetição dos experimentos $n$ vezes e obtendo a média e o desvio padrão. A acurácia de cada experimento é obtida pela Equação~\ref{eq:Accuracy}, que considera problemas de desbalanceamento de classes.
+
+    \begin{equation}
+      Acc = 1 - \frac{\sum_{i=1}^{c} E(i)}{2c},
+    \label{eq:Accuracy}
+    \end{equation}
+
+    \noindent onde $c$ é o número de classes e $E(i) = e_{i,1} + e_{i,2}$ é o erro relativo a $c$, calculado por:
+
+    \begin{equation*}
+      e_{i,1} = \frac{FP(i)}{N-N(i)} \,\,\,\,\, \text{ e } \,\,\,\,\, e_{i,2} = \frac{FN(i)}{N(i)}, i=1,...,c,
+    \label{eq:Errors}
+    \end{equation*}
+   \noindent onde $FN(i)$ (falsos negativos) são os exemplos pertencentes a $i$ e incorretamente classificados, e $FP(i)$ (falsos positivos) são os exemplos erroneamente rotulados como~$i$.
+
+% consideramos positivos a minoritaria
+
+Uma outra medida para bases desbalanceadas é a \underline{medida-F1} (conhecida como \textit{F1-Measure} ou \textit{F1-Score} e apresentada na Equação~\eqref{medidaf}), que combina precisão e revocação como medida de efetividade da classificação \cite{Garcia2009}.
+% Pode efetivamente avaliar a performance de classificação em cenários desbalanceados.
+A precisão (Equação~\ref{precisao}) é a medida da exatidão: dos exemplos classificados como positivos, quantos realmente são. E a revocação (Equação~\ref{revocacao}) é a medida de completude: quantos exemplos positivos foram corretamente classificados como tal.
+
+\begin{equation}
+  P = \frac{VP}{VP + FP},
+  \label{precisao}
+\end{equation}
+
+\noindent onde $VP$ são os exemplos positivos corretamente classificados.
+
+\begin{equation}
+  R = \frac{VP}{VP + FN}
+  \label{revocacao}
+\end{equation}
+
+\begin{equation}
+  F1 = 2 \frac{PR}{P+R}
+  \label{medidaf}
+\end{equation}
+
+A partir dessas medidas, o \underline{teste estatístico de Friedman} pode ser usado para determinar se há diferença significante em uma amostra de resultados gerados \cite{friedman2010}. As performances dos algoritmos são analisados e um \textit{rank} é atribuído para cada conjunto de dados. Ele considera que a hipótese nula a ser testada é que não há diferença estatística relevante entre as observações. Para analisar se o teste da hipótese é significativo, pode ser utilizado o \underline{p-valor}, que indica o quão estatisticamente significante o resultado é: quanto menor o seu valor, maior a evidência contra a hipótese nula (geralmente o limiar utilizado é de 0,05).
 
 A seguir, para cada experimento realizado são descritos: a base de imagens utilizada; o protocolo e parâmetros adotados; e por fim os resultados obtidos a partir de seu uso são mostrados e discutidos.
 
