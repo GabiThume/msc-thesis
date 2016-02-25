@@ -89,8 +89,8 @@ Neste experimento foram utilizadas duas classes com cores bem distintas entre el
 
 \begin{minipage}{\linewidth}
   \begin{figure}[H]
-    \subfloat{\includegraphics[width=0.45\linewidth]{\detokenize{figuras/corel_original4.jpg}}}
-    \subfloat{\includegraphics[width=0.45\linewidth]{\detokenize{figuras/cavalo-original2.png}}}
+    \subfloat{\includegraphics[width=0.5\linewidth]{\detokenize{figuras/corel_original4.jpg}}}
+    \subfloat{\includegraphics[width=0.5\linewidth]{\detokenize{figuras/cavalo-original2.png}}}
 
     \caption[Classes \emph{Cavalo} e \emph{Elefante} utilizadas neste experimento. São duas classes bem discriminadas com 100 imagens cada, originalmente da base de imagens Corel.]{Classes \emph{Cavalo} e \emph{Elefante} utilizadas neste experimento. São duas classes bem discriminadas com 100 imagens cada, originalmente da base de imagens Corel. \textit{Fonte:~Elaborado pela autora.}}
     \label{fig:resultados:1:base}
@@ -212,14 +212,16 @@ Na Figura \ref{fig:region} é possível visualizar a região de decisão, observ
 
 \begin{minipage}{\linewidth}
   \begin{figure}[H]
+    \begin{center}
     \subfloat[Desbalanceado]{
-      \includegraphics[width=.33\linewidth]{\detokenize{figuras/visualizacao/desbalanceado-teste-region.png}}
+      \includegraphics[width=.5\linewidth]{\detokenize{figuras/visualizacao/desbalanceado-teste-region.png}}
     }
+    \end{center}
     \subfloat[Smote]{
-      \includegraphics[width=.33\linewidth]{\detokenize{figuras/visualizacao/smote-teste-region.png}}
+      \includegraphics[width=.5\linewidth]{\detokenize{figuras/visualizacao/smote-teste-region.png}}
     }
     \subfloat[Geração artificial]{
-      \includegraphics[width=.33\linewidth]{\detokenize{figuras/visualizacao/geracao-teste-region.png}}
+      \includegraphics[width=.5\linewidth]{\detokenize{figuras/visualizacao/geracao-teste-region.png}}
     }
   \caption[Região de decisão com K-NN (K = 1). Pode ser observado que em ambas técnicas a região da classe minoritária apresenta-se melhor representada. Além disso, é possível verificar que o SMOTE ocasionou uma certa ``invasão'' do espaço de características da classe majoritária.]{Região de decisão com K-NN (K = 1). Pode ser observado que em ambas técnicas a região da classe minoritária apresenta-se melhor representada. Além disso, é possível verificar que o SMOTE ocasionou uma certa ``invasão'' do espaço de características da classe majoritária. \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:region}
