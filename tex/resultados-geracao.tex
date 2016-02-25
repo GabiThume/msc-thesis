@@ -319,51 +319,54 @@ Desbalanceado      & 55.66          & 13.34              \\ \hline
 \end{minipage}
 
 %-------------------------------------------------------------------------------
-% \item[] \textbf{Discussão}
+\item[] \textbf{Discussão}
 \meutodo{Adicionar um item de discussão, para recapitular tudo aqui? talvez fique repetitivo}
 
 \end{itemize}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \FloatBarrier
 \subsection{Experimento 2: duas classes bem sobrepostas}
 
+O experimento anterior considerou classes distintas, por isso classes de difícil diferenciação também foram testadas.
+
 \begin{itemize}
 %-------------------------------------------------------------------------------
 \item[] \textbf{Protocolo}
-
-O seguinte protocolo foi seguido para a obtenção dos resultados:
-
 \begin{enumerate}
 \item \textbf{Classes de imagens originais}: as classes \textit{Praia} e \emph{Montanha} foram escolhidas por serem as classes que possuem maior dificuldade de diferenciação da base Corel, havendo alta taxa de sobreposição de intensidades de cores e texturas, conforme testes realizados.
 
-\item \textbf{Desbalanceamento}:
-\item \textbf{Método para geração artificial}:
-\item \textbf{Quantização}:
-\item \textbf{Extração de características}:
-\item \textbf{Classificação}:
+\item \textbf{Desbalanceamento}: as duas classes contém 100 imagens cada, portanto são balanceadas. Para o experimento, foram utilizadas as 40 configurações de $k=5$ folds.
+
+\item \textbf{Método para geração artificial}: todas as gerações foram testadas, as que melhor se sobressaíram são relatadas nas seções de resultados a seguir.
+
+\item \textbf{Quantização}: todos os métodos de conversão em escala de cinza foram testados.
+
+\item \textbf{Extração de características}: todos os métodos para extração foram testados.
+
+\item \textbf{Classificação}: o classificador utilizado foi o KNN com $K=1$.
 \end{enumerate}
 
 %-------------------------------------------------------------------------------
-\item[] \textbf{Resultado da melhor combinação dos métodos de extração e conversão para escala de cinza}
+\item[] \textbf{Resultados: melhor combinação dos métodos de extração e conversão para escala de cinza}
+
+A combinação de métodos que resultou em um melhor \textit{f-score} para esse contexto foi a utilização de Luminância e BIC. Na Figura \ref{fig:resultados:2:melhor} é possível verificar o \textit{boxplot} dos \textit{f-scores} para as classes desbalanceadas, rebalanceadas com SMOTE após a extração de características e rebalanceadas com os métodos de geração artificial como primeiro passo do \textit{pipeline}. Como pode ser visto na Tabela \ref{tab:resultados:2:melhor}, diversos métodos foram melhores que o SMOTE, e todos melhores do que a base desbalanceada. O método de saliência, mistura e composição obtiveram os melhores resultados.
 
 \begin{figure}[!htbp]
   \begin{center}
       \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/2/BIC_Luminance_praia-montanha.png}}
   \end{center}
-  \caption[]{Conversão em escala de cinza com Luminância e BIC como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
-  \label{fig:resultados:2:pior}
+  \caption[Boxplot das classes \emph{Praia} e \emph{Montanha} para a conversão em escala de cinza com Luminância e BIC como método de extração de características.]{Boxplot das classes \emph{Praia} e \emph{Montanha} para a conversão em escala de cinza com Luminância e BIC como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
+  \label{fig:resultados:2:melhor}
 \end{figure}
-
 
 \begin{table}[!htbp]
 \centering
-\caption{}
-\label{my-label}
+\caption{Resultados de \textit{f1-score} para as classes \emph{Praia} e \emph{Montanha}, utilizando \emph{Luminância} como método para conversão em escala de cinza e \emph{BIC} para extração de características.}
+\label{tab:resultados:2:melhor}
 \begin{tabular}{|l|c|c|}
 \hline
-\textbf{BIC Luminance} & \textbf{Média} & \textbf{Desvio padrão} \\ \hline
+\textbf{Luminância e BIC} & \textbf{Média} & \textbf{Desvio padrão} \\ \hline
 Todos                  & 65.21          & 7.54                   \\ \hline
 Aguçamento             & 62.30          & 7.85                   \\ \hline
 Borramento             & 61.24          & 7.55                   \\ \hline
@@ -379,6 +382,8 @@ Desbalanceado          & 59.49          & 8.11                   \\ \hline
 \end{tabular}
 \end{table}
 
+A Figura \ref{fig:resultados:2:saliencia} exemplifica uma geração artificial deste experimento, utilizando o método de \emph{saliência}. Interessante notar que essa imagem faz sentido visualmente.
+
 \begin{minipage}{\linewidth}
   \begin{figure}[H]
     \subfloat[Original]{  \includegraphics[width=.33\linewidth]{\detokenize{figuras/resultados/2/original-saliencia.png}}
@@ -389,13 +394,15 @@ Desbalanceado          & 59.49          & 8.11                   \\ \hline
     \subfloat[Saliência]{
       \includegraphics[width=.33\linewidth]{\detokenize{figuras/resultados/2/resultado-saliencia.png}}
     }
- \caption[]{\textit{Fonte:~Elaborado pela autora.}}
+ \caption[Geração artificial utilizando o método de \emph{saliência} em duas imagens da classe \emph{Praia} da base de imagens Corel.]{Geração artificial utilizando o método de \emph{saliência} em duas imagens da classe \emph{Praia} da base de imagens Corel. \textit{Fonte:~Elaborado pela autora.}}
  \label{fig:resultados:2:saliencia}
 \end{figure}
 \end{minipage}
 
 %-------------------------------------------------------------------------------
-\item[] \textbf{Resultado da maior variância obtida com a combinação dos métodos de extração e conversão para escala de cinza}
+\item[] \textbf{Resultados: maior variância obtida com a combinação dos métodos de extração e conversão para escala de cinza}
+
+Os métodos que combinados obtiveram a maior variância foram \emph{Intensidade} e \emph{HOG} (ver Figura \ref{fig:resultados:2:pior} e Tabela \ref{tab:resultados:2:pior}). O rebalanceamento com a geração de imagens obteve a melhor performance. Porém, o único método que melhorou a variância foi o \emph{aguçamento} (um exemplo de tal geração pode ser visto na Figura \ref{fig:resultados:2:agucamento}). A Figura \ref{fig:resultados:2:mistura} exemplifica a geração artificial com o método \emph{mistura}, utilizando duas imagens de treinamento da classe \emph{Montanha}.
 
 \begin{minipage}{\linewidth}
   \begin{figure}[H]
@@ -409,8 +416,8 @@ Desbalanceado          & 59.49          & 8.11                   \\ \hline
 
 \begin{table}[!htbp]
 \centering
-\caption{}
-\label{my-label}
+\caption{Resultados de \textit{f1-score} para as classes \emph{Praia} e \emph{Montanha}, utilizando \emph{Intensidade} como método para conversão em escala de cinza e \emph{HOG} para extração de características.}
+\label{tab:resultados:2:pior}
 \begin{tabular}{|l|c|c|}
 \hline
 \textbf{Intensidade e HOG} & \textbf{Média}     & \textbf{Desvio padrão} \\ \hline
@@ -429,6 +436,23 @@ Desbalanceado              & 57.651543          & 8.323832               \\ \hli
 \end{tabular}
 \end{table}
 
+% \begin{minipage}{\linewidth}
+%   \begin{figure}[H]
+%     \subfloat[Original]{
+%       \includegraphics[width=.33\linewidth]{\detokenize{figuras/resultados/2/original-agucamento.png}}
+%     }
+%     \subfloat[Original]{
+%       \includegraphics[width=.33\linewidth]{\detokenize{figuras/resultados/2/original2-agucamento.png}}
+%     }
+%     \subfloat[Mistura]{
+%       \includegraphics[width=.33\linewidth]{\detokenize{figuras/resultados/2/resultado-agucamento.png}}
+%     }
+%     \caption[Geração artificial utilizando o método de \emph{aguçamento} em duas imagens da classe \emph{Montanha} da base de imagens Corel.]{Geração artificial utilizando o método de \emph{aguçamento} em duas imagens da classe \emph{Montanha} da base de imagens Corel. \textit{Fonte:~Elaborado pela autora.}}
+%     \label{fig:resultados:2:agucamento}
+%   \end{figure}
+% \end{minipage}
+
+
 \begin{minipage}{\linewidth}
   \begin{figure}[H]
     \subfloat[Original]{
@@ -440,7 +464,7 @@ Desbalanceado              & 57.651543          & 8.323832               \\ \hli
     \subfloat[Mistura]{
       \includegraphics[width=.33\linewidth]{\detokenize{figuras/resultados/2/resultado-mistura.png}}
     }
-    \caption[]{ \textit{Fonte:~Elaborado pela autora.}}
+    \caption[Geração artificial utilizando o método de \emph{mistura} em duas imagens da classe \emph{Montanha} da base de imagens Corel.]{Geração artificial utilizando o método de \emph{mistura} em duas imagens da classe \emph{Montanha} da base de imagens Corel. \textit{Fonte:~Elaborado pela autora.}}
     \label{fig:resultados:2:mistura}
   \end{figure}
 \end{minipage}
@@ -454,6 +478,8 @@ Desbalanceado              & 57.651543          & 8.323832               \\ \hli
 \FloatBarrier
 \subsection{Experimento 3: multiclasses}
 
+Os dois experimentos anteriores analisaram o rebalanceamento de apenas duas classes. Este experimento apresenta a geração artificial de imagens aplicada a uma base com 10 classes balanceadas, contendo 100 imagens cada.
+
 \begin{itemize}
 %-------------------------------------------------------------------------------
 \item[] \textbf{Protocolo}
@@ -461,7 +487,15 @@ Desbalanceado              & 57.651543          & 8.323832               \\ \hli
 O seguinte protocolo foi seguido para a obtenção dos resultados:
 
 \begin{enumerate}
-\item \textbf{Classes de imagens originais}: esse experimento foi realizado com a base de imagens COREL-1000\footnote{Disponível em http://wang.ist.psu.edu/docs/related/}, composta por fotografias que representam classes variadas: tribos africanas, praia, construções, ônibus, dinossauros, elefantes, flores, cavalos, montanhas e tipos de comidas. São 10 classes balanceadas com 100 imagens cada. Para fins de exemplificação, são apresentadas amostras das imagens que representam essas classes na Figura \ref{fig:corel}.
+\item \textbf{Classes de imagens originais}: esse experimento foi realizado com a base de imagens Corel-1000\footnote{Disponível em http://wang.ist.psu.edu/docs/related/}, composta por fotografias que representam classes variadas: tribos africanas, praia, construções, ônibus, dinossauros, elefantes, flores, cavalos, montanhas e tipos de comidas.. Para fins de exemplificação, são apresentadas amostras das imagens que representam essas classes na Figura \ref{fig:resultados:3:base}.
+
+\begin{minipage}{\linewidth}
+  \begin{figure}[H]
+    \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_COREL_dataset.jpg}}
+    \caption{Base de imagens Corel-1000. \textit{Fonte:~\cite{Ponti2016}.}}
+    \label{fig:resultados:3:base}
+  \end{figure}
+\end{minipage}
 
 \item \textbf{Desbalanceamento}: 200 configurações de folds para que cada classe fosse desbalanceada.
 \item \textbf{Método para geração artificial}: o melhor foi a mistura.
@@ -696,4 +730,4 @@ Desbalanceado        & 86.60          & 1.86                   \\ \hline
 %
 \section{Considerações Finais}
 
-Este estudo apresentou evidências experimentais de que, em problemas de duas classes, pode haver ganho estatístico da medida-F ao gerar imagens, quando comparado à geração de exemplos artificiais no espaço de atributos (ou seja, depois que as características já foram extraídas das imagens).  Com os experimentos realizados foi possível notar que a geração de imagens artificiais pode gerar novas informações para a classificação das imagens. O que indica que um estudo aprofundado de cada contexto pode relatar quais operações podem ser aplicadas nas imagens originais de forma a auxiliar o cenário de bases desbalanceadas.
+Este estudo apresentou evidências experimentais de que, em problemas de duas classes, pode haver ganho estatístico do \textit{f-score} ao gerar imagens, quando comparado à geração de exemplos artificiais no espaço de atributos (ou seja, depois que as características já foram extraídas das imagens).  Com os experimentos realizados foi possível notar que a geração de imagens artificiais pode gerar novas informações para a classificação das imagens. O que indica que um estudo aprofundado de cada contexto pode relatar quais operações podem ser aplicadas nas imagens originais de forma a auxiliar o cenário de bases desbalanceadas.
