@@ -34,8 +34,7 @@ Ainda, \citeonline{Paiva2011} mostraram que os espaços de características form
 
 Em outros dois trabalhos relacionados é possível ver a diferença da performance para problemas de classificação de imagens. No primeiro, os autores atingem acurácia acima de 98\% na classificação de frutas após investigar alterações nos parâmetros de aquisição, realizar pré-processamento e obter a segmentação \cite{Rocha2010}. No segundo, os autores indicam que o método utilizado para obter a imagem em escala de cinza (comumente utilizada por algoritmos de extração), pode impactar significativamente a classificação final de diversas bases de imagens~\cite{Kanan2012}.
 
-\meutodo{adicionar alguma pesquisa mais recente aqui}
-\meutodo{adicionar http://arxiv.org/pdf/1602.03264v1.pdf}
+A geração de imagens artificiais (ou sintéticas) é uma tarefa comum, mas não para o rebalanceamento de classes. Em \cite{Xie2016}, os autores utilizam um modelo generativo de uma CNN (ou ConvNet) para sintetizar imagens realistas. Essas imagens foram geradas, mas não utilizadas como entrada para um algoritmo de classificação ou no treinamento da própria rede.
 
 %--------------------------------------------------------------------------------
 \section{Hipóteses}
@@ -78,7 +77,9 @@ O conteúdo desta dissertação está estruturado como segue.
 
 \item [Capítulo~\ref{cap:metodo}:] descreve-se os métodos de processamento utilizados para a geração artificial de imagens --- sobre as imagens originais --- com o objetivo de rebalancear classes.
 
-\item [Capítulo~\ref{cap:resultados}:] os resultados obtidos com a quantização e a geração de imagens artificiais são apresentados e discutidos.
+\item [Capítulo~\ref{cap:resultados-quantizacao}:] os resultados obtidos com a quantização de imagens são apresentados e discutidos.
+
+\item [Capítulo~\ref{cap:resultados-geracao}:] os resultados obtidos com geração de imagens artificiais são apresentados e discutidos.
 
 \item [Capítulo~\ref{cap:conclusoes}:] reflete sobre as contribuições deste trabalho e apresenta os trabalhos futuros.
 
