@@ -1,22 +1,5 @@
+% O treinamento de uma rede neural de convolução~\footnote{\url{http://caffe.berkeleyvision.org/}} foi realizado, utilizando as classes ``praia'' e ``montanha'', balanceadas, da base COREL-1000. A classificação sobre este treinamento obteve $\approx 80\%$ de acurácia, enquanto que utilizando os extratores padrões foi possível atingir apenas $\approx 69\%$. Isso reforça a proposta de analisar quais são as características latentes que esse tipo de rede neural consegue extrair. Para essa análise vão ser utilizadas bases discriminadas quanto às propriedades de textura, cor e forma.
 
-% \meutodo{
-% Responder aqui as perguntas levantadas na introdução, retomando todo o trabalho:
-%
-% - qual  o problema?
-%
-% - como se pretende resolver o desbalanceamento? o que as características latentes têm a ver com isso? e o pré-processamento?
-%
-% - limitações
-% - quais descritores serão usados? porquê?
-%
-% - porquê e como será usado CNN? qual o objetivo?
-%
-% - quais os resultados preliminares? o que eles mostram? indicam que estamos no caminho certo?
-%
-% - o que se pretende fazer daqui pra frente? o que é esperado como resultado?
-% }
-
-\meutodo{limitações}
 % Não foi testado uma porcentagem fixa para verificar se existe algum ganho em utilizar
 % uma ponderação específica.
 
@@ -32,44 +15,25 @@ Com os experimentos realizados foi possível notar que a geração de imagens ar
 
 % A visualização do espaço de características utilizando a técnica de análise de componentes principais (PCA) se mostrou crucial para confirmar visualmente que a melhora da acurácia da classificação se deve à melhor definição da classe minoritária.
 
-
 \section{Publicações}
+
+Foi publicado um artigo na revista \textit{Neurocomputing} (Figura \ref{fig:artigo}), referente aos resultados de quantização desta pesquisa. O artigo referente à geração de imagens artificiais para o rebalanceamento de classes está em preparo.
+
+\begin{figure}[hbpt]
+ \begin{center}
+   \includegraphics[width=\linewidth]{figuras/artigo.png}
+ \end{center}
+ \caption{Artigo publicado na \textit{Neurocomputing}, referente a quantização de imagens. \textit{Fonte~\url{http://www.sciencedirect.com/science/article/pii/S0925231215012771}}.}
+ \label{fig:artigo}
+\end{figure}
 
 \section{Trabalhos Futuros}
 
 Ao usar imagens com reduzido número de cores (quantizadas), os métodos de extração de características baseados em orientação (HoG, SIFT), \textit{bag of visual words} e \textit{Fisher vectors}, seriam provavelmente mais esparços.
-
-Em deep leraning, pode ser investigado se o uso de imagens quantizadas ajudaria o aprendizado de características.
+\meutodo{trabalhos futuros da quantização}
 
 Como extensão dos experimentos reportados pode ser feita a análise dos espaços encontrados para os diferentes métodos de geração artificial de imagens. Além disso, o impacto de tais métodos em diferentes extratores de características pode sugerir quais são as características latentes percebidas com cada extrator.
 
+Atualmente, o estado da arte de extração e classificação de imagens corresponde ao uso de redes neurais de convolução, conhecidas por CNN \cite{Schmidhuber2014}. Essas redes são compostas por camadas de neurônios que têm por objetivo aprender quais são as melhores características que diferenciam as classes de imagens. O aprendizado, nesse caso, corresponde ao ajuste dos parâmetros para reduzir a diferença entre a saída esperada -- classe verdadeira -- e a produzida. Dessa forma, tais redes aprendem quais são as características latentes nas imagens de entrada. Uma possível continuação a esta pesquisa é analisar as características aprendidas por uma CNN. Essa rede permite encontrar as características mais relevantes da base de imagens, que os extratores de características canônicos não capturam. Isso porque ela possui uma hierarquia de camadas, desde a imagem original até uma etapa de classificação, com o objetivo de aprender qual o melhor processamento para as imagens de modo a melhor discriminar as classes. Podem também indicar possíveis operações para auxiliar na geração de imagens artificiais.
 
-O treinamento de uma rede neural de convolução~\footnote{\url{http://caffe.berkeleyvision.org/}} foi realizado, utilizando as classes ``praia'' e ``montanha'', balanceadas, da base COREL-1000. A classificação sobre este treinamento obteve $\approx 80\%$ de acurácia, enquanto que utilizando os extratores padrões foi possível atingir apenas $\approx 69\%$. Isso reforça a proposta de analisar quais são as características latentes que esse tipo de rede neural consegue extrair. Para essa análise vão ser utilizadas bases discriminadas quanto às propriedades de textura, cor e forma.
-
-Além de analisar o processamento realizado por uma rede de convolução para a classificação das imagens, uma rede RBM também será treinada para análise da sua memória associativa. As imagens artificialmente geradas foram adicionadas no conjunto de treino sem verificação da sua relevância, o que pode ter prejudicado a classificação. A memória associativa aprendida com o treinamento de uma máquina de Bolztmann restrita pode vir a auxiliar no entendimento dessas imagens como relevantes ou não. Além disso, pode servir como escolha para qual imagem original utilizar, ao invés do método aleatório utilizado nos resultados preliminares.
-
-\meutodo{
-Atualmente, o estado da arte de extração e classificação de imagens corresponde ao uso de redes neurais de convolução, conhecidas por CNN \cite{Schmidhuber2014}. Essas redes são compostas por camadas de neurônios que têm por objetivo aprender quais são as melhores características que diferenciam as classes de imagens. O aprendizado, nesse caso, corresponde ao ajuste dos parâmetros para reduzir a diferença entre a saída esperada -- classe verdadeira -- e a produzida. Dessa forma, tais redes aprendem quais são as características latentes nas imagens de entrada. As redes neurais são discutidas na Seção \ref{sec:deeplearning}, onde as máquinas de Boltzmann restritas (RBM) também são apresentadas. A representação das imagens de entrada, aprendida pela etapa de treinamento da RBM, será utilizada para definir quais imagens são relevantes para o aprendizado ou não. De certa forma essas técnicas produzem versões processadas das imagens de entrada, indicando que os filtros aprendidos são os que melhor diferenciam as classes de imagens.
-}
-\meutodo{
-Investigar, também, o aprendizado de redes neurais de convolução, com o objetivo de observar quais são as características relevantes ao treiná-la com bases de imagens bem discriminadas em termos de cor, textura e forma;
-}
-\meutodo{
-Para definir quais são as imagens que acrescentam informações na base, primeiramente será treinada uma máquina de Boltzmann restrita (RBM). A partir da matriz de características aprendida (memória associativa), é possível verificar se uma imagem acrescenta informações à base ou não.
-}
-\meutodo{
-O próximo passo é utilizar a matriz de características aprendida por máquinas de Boltzmann restritas para verificar se as imagens artificialmente geradas são relevantes para o aprendizado ou não, além de melhor escolher as imagens originais para a geração dessas imagens.
-}
-\meutodo{
-A extração de características foi abordada, apresentando os principais descritores utilizados nesta pesquisa. A lacuna destacada é que existem características não passíveis de extração por descritores convencionais. Para isso, as redes de convolução são apresentadas, pois possuem capacidade de aprender as características relevantes das imagens de entrada. Justificando, assim, seu uso para análise das propriedades das bases de imagens. Podem também indicar possíveis operações para auxiliar na geração de imagens artificiais. }
-\meutodo{
-Ainda, a memória associativa aprendida por máquinas de Boltzmann restritas pode ser indicadora de quais imagens geradas adicionam informações ao aprendizado.
-}
-\meutodo{
-Esta pesquisa pretende dar continuidade a esse trabalho, ao analisar técnicas de \textit{deep learning}. Essas técnicas realizam múltiplas operações sobre imagens de entrada de forma a aprender quais operações permitem gerar características capazes de discriminar as classes \cite{bengio2009}.
-}
-\meutodo{
-Com o objetivo de confirmar tais hipóteses, uma das propostas é analisar as características aprendidas por uma rede neural de convolução (CNN). Essa rede permite encontrar as características mais relevantes da base de imagens, que os extratores de características canônicos não capturam. Isso porque ela possui uma hierarquia de camadas, desde a imagem original até uma etapa de classificação, com o objetivo de aprender qual o melhor processamento para as imagens de modo a melhor discriminar as classes.
-}
-
-% Dessa forma, esse capítulo também apresentou as próximas tarefas a serem realizadas. Foi destacada a análise das redes de convolução para identificar quais características latentes são automaticamente extraídas. Apesar de algumas operações de pré-processamento terem gerado imagens que melhoraram a classificação, algumas não causaram melhora. Isso indica que a análise da relevância da informação contida em imagens deve melhorar esse resultado. A memória associativa, aprendida com uma máquina de Boltzmann restrita, deve ser capaz de indicar se uma determinada imagem é relevante para o aprendizado.
+Além de analisar o processamento realizado por uma rede de convolução para a classificação das imagens, uma RBM (máquinas de Boltzmann restritas) também pode ser treinada para análise da sua memória associativa (matriz de características aprendida). Uma rede neural RBM treina um modelo a partir dos vetores de entrada \cite{Fischer2014}. As imagens artificialmente geradas foram adicionadas no conjunto de treino sem verificação da sua relevância, o que pode ter prejudicado a classificação. A representação das imagens de entrada, aprendida pela etapa de treinamento da RBM, pode ser utilizada para definir quais imagens são relevantes para o aprendizado ou não. Além disso, pode servir como escolha para qual imagem original utilizar, ao invés do método aleatório utilizado nos resultados preliminares.
