@@ -220,7 +220,7 @@ Muitos métodos de extração de características são preparados apenas para re
 	Q_{Luma} = 0.2126R' + 0.7152G' + 0.0722B'.
 \end{equation*}
 
-\item [Bits Mais Significativos (MSB):] ao invés de realizar uma combinação linear dos canais de cores, ordena os bits dos canais coloridos em um único canal. Computa quantos bits de cada canal de cor contribuem para a imagem final e extrai os bits do código binário dos canais originais \cite{Ponti-Jr2013}.
+\item [\sigla{MSB}{\textit{Bits Mais Significativos}}:] ao invés de realizar uma combinação linear dos canais de cores, ordena os bits dos canais coloridos em um único canal. Computa quantos bits de cada canal de cor contribuem para a imagem final e extrai os bits do código binário dos canais originais \cite{Ponti-Jr2013}.
 
 \end{description}
 
@@ -299,9 +299,9 @@ O objetivo da extração de características é descrever as informações visua
 Exemplos de métodos conhecidos capazes de descrever outras características são: histogramas de orientação de gradiente~\cite{Wang2009}, curvatura, descritores de Fourier, métodos baseados na detecção de SUSAN~\cite{Smith1997}, Harris-Affine~\cite{Han2005b} e diferença de Gaussianas~\cite{Lowe2004a}. Os descritores utilizados no desenvolvimento desta pesquisa para a obtenção dos resultados da Seção~\ref{cap:resultados} estão abaixo descritos.
 
 \begin{description}
-\item[Histograma global de cor (GCH):] calcula o histograma global dos níveis de intensidade da imagem. É a alternativa mais simples para representar as informações de uma imagem~\cite{Gonzalez2007}. Produz um vetor de $N$ dimensões, sendo $N$ o número de intensidades.
+\item[\sigla{GCH}{\textit{Global Color Histogram}}:] calcula o histograma global dos níveis de intensidade da imagem. É a alternativa mais simples para representar as informações de uma imagem~\cite{Gonzalez2007}. Produz um vetor de $N$ dimensões, sendo $N$ o número de intensidades.
 
-\item[Vetor de coerência de cor (CCV):] captura informações sobre como as cores são organizadas em regiões conectadas, de acordo com um \textit{threshold}. Classifica os pixels da imagem em coerentes e incoerentes, computa os respectivos histogramas e os concatena \cite{ccv}. Dessa forma, o vetor de características produzido possui $2N$ dimensões.
+\item[\sigla{CCV}{\textit{Color Coherence Vector}}:] captura informações sobre como as cores são organizadas em regiões conectadas, de acordo com um \textit{threshold}. Classifica os pixels da imagem em coerentes e incoerentes, computa os respectivos histogramas e os concatena \cite{ccv}. Dessa forma, o vetor de características produzido possui $2N$ dimensões.
 
 O vetor de coerência de cor armazena o número de pixels coerentes e de incoerentes para cada cor. Pixels coerentes fazem parte de uma região contígua enquanto incoerentes não. Seu funcionamento pode ser resumido nos seguintes passos:
 
@@ -317,7 +317,7 @@ O vetor de coerência de cor armazena o número de pixels coerentes e de incoere
   \item Concatena os histogramas.
 \end{enumerate}
 
-\item[Classificação de pixels de borda e interior (BIC):] computa dois histogramas, um para pixels definidos como borda e outro como interior. Se um pixel possuir a mesma cor que seus vizinhos, é pixel de interior; caso contrário, será pixel de borda. Os histogramas são concatenados, gerando um vetor de $2N$ dimensões \cite{bic}. Para computar tal vetor, as operações realizadas são:
+\item[\sigla{BIC}{\textit{Border-interior classification}}:] computa dois histogramas, um para pixels definidos como borda e outro como interior. Se um pixel possuir a mesma cor que seus vizinhos, é pixel de interior; caso contrário, será pixel de borda. Os histogramas são concatenados, gerando um vetor de $2N$ dimensões \cite{bic}. Para computar tal vetor, as operações realizadas são:
 
 \begin{enumerate}
   \item Os pixels são classificados entre borda e interior:
@@ -333,7 +333,7 @@ O vetor de coerência de cor armazena o número de pixels coerentes e de incoere
   \item Concatena os histogramas.
 \end{enumerate}
 
-\item[Auto-correlograma de cor (ACC):] captura a correlação espacial entre cores idênticas. Para tal, computa a probabilidade de encontrar dois pixels com a mesma cor, a uma distância $d$ um do outro \cite{acc}. O vector resultante consiste na concatenação dos auto-correlogramas, um para cada distância. Neste estudo, são consideradas quatro distâncias: 1, 3, 5 e 7; resultando em um vetor com $4N$ características.
+\item[\sigla{ACC}{\textit{Auto Color Correlogram}}:] captura a correlação espacial entre cores idênticas. Para tal, computa a probabilidade de encontrar dois pixels com a mesma cor, a uma distância $d$ um do outro \cite{acc}. O vector resultante consiste na concatenação dos auto-correlogramas, um para cada distância. Neste estudo, são consideradas quatro distâncias: 1, 3, 5 e 7; resultando em um vetor com $4N$ características.
 
 \item[Haralick-6:] descreve a textura das imagens, ou seja, diferenças locais em níveis de intensidade~\cite{Haralick1973}. O vetor resultante possui seis dimensões que representam as seguintes características:
 
@@ -346,7 +346,7 @@ O vetor de coerência de cor armazena o número de pixels coerentes e de incoere
   \item \emph{Entropia:} descreve a aleatoriedade. Intervalo:~$[0, 2*log_2 colors]$.
 \end{enumerate}
 
-\item [Histograma de Gradientes Orientados (HOG):]  \cite{Dalal2005}.
+\item [\sigla{HOG}{\textit{Histogram of oriented gradients}}:]  \cite{Dalal2005}.
 
 \begin{enumerate}
   \item Divide a janela da imagem em células;
@@ -357,7 +357,7 @@ O vetor de coerência de cor armazena o número de pixels coerentes e de incoere
   \item Concatena os histogramas de todas as células.
 \end{enumerate}
 
-\item [LBP utilizando padrões uniformes (LBP):] baseia-se em reconhecer que padrões de textura uniformes são propriedades fundamentais da textura local da imagen e o histograma da sua ocorrência provou-se um bom extrator de características. Computa um histograma de ocorrência dos padrões locais binários em uma vizinhança da imagem, detectando micro-estruturas cuja distribuição é estimada pelo histograma \cite{Ojala2002}.
+\item [\sigla{LBP}{\textit{Local Binary Patterns}} utilizando padrões uniformes:] baseia-se em reconhecer que padrões de textura uniformes são propriedades fundamentais da textura local da imagen e o histograma da sua ocorrência provou-se um bom extrator de características. Computa um histograma de ocorrência dos padrões locais binários em uma vizinhança da imagem, detectando micro-estruturas cuja distribuição é estimada pelo histograma \cite{Ojala2002}.
 
 \begin{enumerate}
   \item Divide a janela da imagem em células;
@@ -678,10 +678,10 @@ A tarefa de classificação de imagens consiste em tentar predizer a classe de u
 
 % \noindent onde $P(A|B)$ é a probabilidade de um exemplo $B$ pertencer à classe $A$; $P(A)$ a probabilidade ``a priori'' da classe e $P(B)$ que pode ser estimado pela frequência com que um novo exemplo ocorre, que pode ser ignorado por ser o mesmo para todas as classes \cite{Faceli2011}.
 
-\subsection{Algoritmo k-vizinhos mais próximos}
+\subsection{\textit{K-Nearest Neighbors}}
 \label{sec:knn}
 
-O classificador K-NN considera a proximidade entre os dados para realizar predições. Baseia-se na premissa de que os objetos do mesmo conceito são semelhantes. O seu funcionamento está descrito no Algoritmo \ref{alg:knn}. Na fase de treinamento, apenas armazena os exemplos rotulados do conjunto de dados de treinamento. Quando um novo exemplo deve ser classificado, calcula a distância entre os vetores de características do novo exemplo e aqueles já rotulados. O novo exemplo é então classificado como sendo da classe do exemplo de treinamento com menor distância~\cite{Boiman2008}.
+O classificador \sigla{K-NN}{\textit{K-Nearest Neighbors}} considera a proximidade entre os dados para realizar predições. Baseia-se na premissa de que os objetos do mesmo conceito são semelhantes. O seu funcionamento está descrito no Algoritmo \ref{alg:knn}. Na fase de treinamento, apenas armazena os exemplos rotulados do conjunto de dados de treinamento. Quando um novo exemplo deve ser classificado, calcula a distância entre os vetores de características do novo exemplo e aqueles já rotulados. O novo exemplo é então classificado como sendo da classe do exemplo de treinamento com menor distância~\cite{Boiman2008}.
 
 \begin{algorithm}[!htbp]
   \caption{K-NN: método de classificação supervisionada}
@@ -719,7 +719,7 @@ Considerando que um vetor de características extraído com extratores comuns po
 % http://sebastianraschka.com/Articles/2014_pca_step_by_step.html
 % http://arxiv.org/pdf/1404.1100v1.pdf
 
-O PCA (Análise de Componentes Principais) é uma técnica não supervisionada que pode ser utilizada para reduzir a dimensionalidade dos dados com a máxima variância possível. Cada imagem, originalmente representada por um vetor com $N$ características, pode então ser representada por apenas um ou mais valores. Essa redução permite a projeção dessas imagens no espaço de características. O objetivo é extrair as informações mais importantes dos dados e representá-las como um conjunto de variáveis ortogonais chamadas de componentes principais. Para isso encontra-se uma outra base: uma combinação linear da base original, que melhor representa os dados ao assumir que as direções das maiores variâncias são as mais importantes. Ou seja, a variância associada com cada direção quantifica o quão principal é aquela direção \cite{Abdi2010}. Pode-se, portanto, enumerar os passos necessários para o PCA sendo:
+O \sigla{PCA}{\textit{Principal Component Analysis}} é uma técnica não supervisionada que pode ser utilizada para reduzir a dimensionalidade dos dados com a máxima variância possível. Cada imagem, originalmente representada por um vetor com $N$ características, pode então ser representada por apenas um ou mais valores. Essa redução permite a projeção dessas imagens no espaço de características. O objetivo é extrair as informações mais importantes dos dados e representá-las como um conjunto de variáveis ortogonais chamadas de componentes principais. Para isso encontra-se uma outra base: uma combinação linear da base original, que melhor representa os dados ao assumir que as direções das maiores variâncias são as mais importantes. Ou seja, a variância associada com cada direção quantifica o quão principal é aquela direção \cite{Abdi2010}. Pode-se, portanto, enumerar os passos necessários para o PCA sendo:
 
 \begin{enumerate}
 \item Centraliza todos os atributos em zero ao subtrair a média de cada dimensão;
@@ -745,7 +745,7 @@ O PCA (Análise de Componentes Principais) é uma técnica não supervisionada q
 \subsection{\textit{Locality preserving projections}}
 \label{sec:lpp}
 
-LPP é um algoritmo linear de redução de dimensionalidade com propriedades de preservação da estrutura local dos dados. Não te a dificuldade dos algoritmos tradicionais (como PCA) de manter o manifold não linear dos dados originais \cite{Zhuo2014}. Embora o método mais utilizado para redução da dimensionalidade de forma não-supervisionada seja o PCA, métodos como esse produzem melhores projeções em termos de separação das classes. Em \cite{Zhuo2014} o LPP alcançou a melhor relação entre complexidade computacional e a redução da dimensionalidade, enquanto manteve a acurácia. Seu algoritmo segue três passos principais \cite{He2004}:
+\sigla{LPP}{\textit{Locality preserving projections}} é um algoritmo linear de redução de dimensionalidade com propriedades de preservação da estrutura local dos dados. Não te a dificuldade dos algoritmos tradicionais (como PCA) de manter o manifold não linear dos dados originais \cite{Zhuo2014}. Embora o método mais utilizado para redução da dimensionalidade de forma não-supervisionada seja o PCA, métodos como esse produzem melhores projeções em termos de separação das classes. Em \cite{Zhuo2014} o LPP alcançou a melhor relação entre complexidade computacional e a redução da dimensionalidade, enquanto manteve a acurácia. Seu algoritmo segue três passos principais \cite{He2004}:
 
 \begin{enumerate}
 \item Constrói um grafo de adjacências. Os nós $i$ e $j$ possuem uma aresta entre eles se fazem parte do conjunto de $k$-vizinhos mais próximos de cada nó (sendo $k$ um parâmetro do algoritmo);
