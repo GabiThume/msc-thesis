@@ -263,14 +263,14 @@ Como relatado no início desse experimento, o extrator de características utili
 %-------------------------------------------------------------------------------
 \item[] \textbf{Resultados: melhor combinação dos métodos de extração de características e conversão para escala de cinza}
 
-Para análise estatística, todas as combinações de conversão para escala de cinza e métodos de extração de características foram utilizados. A combinação que obteve o melhor \textit{f-score} para as classes \emph{Elevante} e \emph{Cavalo} foi utilizando \emph{Gleam} e \emph{GCH}. O \textit{boxplot} apresentado na Figura \ref{fig:resultados:1:melhor} retrata a média dos \textit{f-scores} das 40 configurações deste experimento. O método \emph{mistura}, exemplificado na Figura \ref{fig:resultados:1:mistura}, obteve o melhor \textit{f-score}. A Tabela \ref{fig:resultados:1:tabmelhor} mostra os valores de tal métrica com valores decimais para o cálculo dos testes estatísticos.
+Para análise estatística, todas as combinações de conversão para escala de cinza e métodos de extração de características foram utilizados. A combinação que obteve o melhor \textit{f-score} para as classes \emph{Elevante} e \emph{Cavalo} foi utilizando \emph{Gleam} e \emph{ACC}. O \textit{boxplot} apresentado na Figura \ref{fig:resultados:1:melhor} retrata a média dos \textit{f-scores} das 40 configurações deste experimento. O método \emph{mistura}, exemplificado na Figura \ref{fig:resultados:1:mistura}, obteve o melhor \textit{f-score}. A Tabela \ref{fig:resultados:1:tabmelhor} mostra os valores de tal métrica com valores decimais para o cálculo dos testes estatísticos.
 
 \begin{minipage}{\linewidth}
   \begin{figure}[H]
   \begin{center}
-      \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/1/GCH_Gleam_elefante-cavalo.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/1/ACC_Gleam_elefante-cavalo.png}}
   \end{center}
-  \caption[]{Conversão em escala de cinza com Gleam e GCH como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
+  \caption[]{Conversão em escala de cinza com Gleam e ACC como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:resultados:1:melhor}
 \end{figure}
 \end{minipage}
@@ -293,26 +293,25 @@ Para análise estatística, todas as combinações de conversão para escala de 
 
 \begin{table}[!htbp]
 \centering
-\caption{Resultados de \textit{f1-score} para as classes \emph{Cavalo} e \emph{Elefante}, utilizando \emph{Gleam} como método para conversão em escala de cinza e \emph{GCH} para extração de características.}
+\caption{Resultados de \textit{f1-score} para as classes \emph{Cavalo} e \emph{Elefante}, utilizando \emph{Gleam} como método para conversão em escala de cinza e \emph{ACC} para extração de características.}
 \label{fig:resultados:1:tabmelhor}
 \begin{tabular}{|l|c|c|}
 \hline
-\textbf{Gleam e GCH} & \textbf{Média} & \textbf{Desvio padrão} \\ \hline
-Todos                & 90.32          & 4.14                   \\ \hline
-Aguçamento           & 88.09          & 5.78                   \\ \hline
-Borramento           & 87.97          & 4.86                   \\ \hline
-Composição 16        & 89.14          & 5.24                   \\ \hline
-Composição 4         & 89.24          & 5.42                   \\ \hline
-Limiares             & 88.78          & 5.51                   \\ \hline
-Mistura              & \textbf{90.64} & 3.08          \\ \hline
-Ruído                & 88.31          & 4.96                   \\ \hline
-SMOTE Visual         & 89.62          & 4.06                   \\ \hline
-Saliência            & 88.01          & 5.59                   \\ \hline
-SMOTE                & 87.71          & 5.47                   \\ \hline
-Desbalanceado        & 87.09          & 5.31                   \\ \hline
+\textbf{Gleam \& ACC} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+Todos                 & 91.090913          & 4.559066               \\ \hline
+Aguçamento            & 91.002678          & 4.907016               \\ \hline
+Borramento            & 89.394500          & 5.103498               \\ \hline
+Composição 16         & 90.934305          & 4.399334               \\ \hline
+Composição 4          & \textbf{91.773528} & 4.909852               \\ \hline
+Limiares              & 90.893133          & 5.285833               \\ \hline
+Mistura               & 90.177055          & 4.409787               \\ \hline
+Ruído                 & 89.337770          & 5.169757               \\ \hline
+SMOTE Visual          & 88.616535          & 5.567976               \\ \hline
+Saliência             & 91.282655          & 4.230281               \\ \hline
+SMOTE                 & 90.169505          & 4.498590               \\ \hline
+Desbalanceado         & 88.258567          & 5.538461               \\ \hline
 \end{tabular}
 \end{table}
-
 
 %-------------------------------------------------------------------------------
 \item[] \textbf{Resultados: maior variância obtida com a combinação dos métodos de extração de características e conversão para escala de cinza}
@@ -335,19 +334,19 @@ Considerando a análise da melhor combinação dos métodos de representação d
 \label{fig:resultados:1:tabpior}
 \begin{tabular}{|l|c|c|}
 \hline
-\textbf{MSB e HOG} & \textbf{Média}     & \textbf{Desvio padrão} \\ \hline
-Todos              & 59.87          & 12.12              \\ \hline
-Aguçamento         & 54.34          & 10.16              \\ \hline
-Borramento         & 55.58          & 13.27              \\ \hline
-Composição 16      & 55.66          & 13.34              \\ \hline
-Composição 4       & 55.39          & 13.21              \\ \hline
-Limiares           & 55.02          & 10.85              \\ \hline
-Mistura            & 59.53          & 10.95              \\ \hline
-Ruído              & \textbf{62.58} & 11.08              \\ \hline
-SMOTE Visual       & 58.31          & 14.69              \\ \hline
-Saliência          & 56.26          & 12.32              \\ \hline
-SMOTE              & 59.16          & 14.08              \\ \hline
-Desbalanceado      & 55.66          & 13.34              \\ \hline
+\textbf{MSB \& HOG} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+Todos               & 60.000127          & 12.063967              \\ \hline
+Aguçamento          & 54.809555          & 10.610213              \\ \hline
+Borramento          & 55.588173          & 13.275734              \\ \hline
+Composição 16       & 55.667145          & 13.341421              \\ \hline
+Composição 4        & 55.652205          & 13.323408              \\ \hline
+Limiares            & 55.652268          & 11.547820              \\ \hline
+Mistura             & 57.826535          & 10.882912              \\ \hline
+Ruído               & \textbf{62.174910} & 10.746760              \\ \hline
+SMOTE Visual        & 58.920085          & 14.765860              \\ \hline
+Saliência           & 56.322367          & 12.169296              \\ \hline
+SMOTE               & 58.342450          & 13.768688              \\ \hline
+Desbalanceado       & 55.667145          & 13.341421              \\ \hline
 \end{tabular}
 \end{table}
 
@@ -666,6 +665,37 @@ O seguinte protocolo foi seguido para a obtenção dos resultados:
 \end{enumerate}
 %-------------------------------------------------------------------------------
 \item[] \textbf{Resultados e Discussão}
+
+\begin{figure}[!htbp]
+  \begin{center}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/4/HOG_Luminance_eiffel-ponte.png}}
+  \end{center}
+  \caption[]{\textit{Fonte:~Elaborado pela autora.}}
+  \label{fig:resultados:2:melhor}
+\end{figure}
+
+\begin{table}[]
+\centering
+\caption{My caption}
+\label{my-label}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Luminância \& HOG} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+Todos                      & 77.373797          & 5.112180               \\ \hline
+Aguçamento                 & 87.831980          & 7.039036               \\ \hline
+Borramento                 & 85.051780          & 9.816291               \\ \hline
+Composição 16              & 85.051780          & 9.816291               \\ \hline
+Composição 4               & 85.392703          & 10.069356              \\ \hline
+Limiares                   & 86.213200          & 10.528769              \\ \hline
+Mistura                    & 90.312440          & 7.357446               \\ \hline
+Ruído                      & 75.523828          & 6.209384               \\ \hline
+SMOTE Visual               & 74.109795          & 4.093989               \\ \hline
+Saliência                  & 85.713360          & 10.399830              \\ \hline
+SMOTE                      & \textbf{90.711873} & 6.423170               \\ \hline
+Desbalanceado              & 85.051780          & 9.816291               \\ \hline
+\end{tabular}
+\end{table}
+
 
 \end{itemize}
 
