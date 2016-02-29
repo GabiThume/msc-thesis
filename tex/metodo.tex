@@ -141,7 +141,6 @@ Diferentemente da suavização, o processamento de aguçamento procura enfatizar
 
 O ruído de Poisson ocorre na contagem de fótons de dispositivos ópticos. Ele segue a distribuição de Poisson, que expressa a probabilidade de um certo número de eventos ocorrer em um intervalo fixo de tempo e/ou espaço se esses eventos ocorem com uma taxa média conhecida. O efeito da adição de ruído pode ser visto na Figura~\ref{fig:gen:noise}.
 
-
 \begin{figure}[!htbp]
   \begin{center}
     \subfloat[Original]{
@@ -158,8 +157,7 @@ O ruído de Poisson ocorre na contagem de fótons de dispositivos ópticos. Ele 
 
 \meutodo{descrever o algoritmo}
 
-A distribuição de Poisson segue a equação:
-
+% A distribuição de Poisson segue a equação:
 % \begin{equation}
 % $P_\mi)(n) = (e^(-\mi)\mi^(n))/(n!), n >= 0$
 % \end{equation}
@@ -189,7 +187,7 @@ Uma possível implementação para encontrar os valores de Poisson foi desenvolv
 \begin{description}
   \item[Parâmetros e suas variações]
   \item[Limitações] A adição de ruído é normalmente indesejável e a utilizamos
-  para englobar mais um processamento de imagens. (??)
+  para englobar um processamento de imagens que, de certa forma, se contrapõe ao borramento.
   \item[Métodos relacionados]
   % \item[Visualização]
 \end{description}
@@ -231,7 +229,6 @@ na imagem original (Ver Algoritmo~\ref{alg:smotevisual}). O efeito que esse proc
 \end{algorithm}
 \vspace{0.5cm}
 
-\meutodo{Nova imagem}
 \begin{figure}[!htbp]
   \begin{center}
     \begin{center}
@@ -413,9 +410,11 @@ As operações aplicadas na imagem para extrair a região mais saliente são: SL
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Composição}
 
-Essa geração pretende compor informações de diversas imagens em uma única imagem. Assim é feito um mosaico com várias imagens, conforme pode ser visto na  Figura~\ref{fig:gen:composition}. Se as imagens possuem um elemento centralizado, essa geração pode resultar em uma imagem de um objeto que parece uma mutação dos objetos centrais, conforme pode ser visualizado na Figura~\ref{}.
+Essa geração pretende compor informações de diversas imagens em uma única imagem. Assim é feito um mosaico com várias imagens, conforme pode ser visto na  Figura~\ref{fig:gen:composition}. Para cada quadrado a ser preenchido sorteia uma imagem do conjunto de treinamento, realiza uma operação de borramento, aguçamento, mistura ponderada ou visual SMOTE e adiciona essa imagem no quadrado respectivo. Os passos para tal composição estão descritos no Algoritmo~\ref{alg:composition}.
 
-\meutodo{figura da mistura central}
+% Se as imagens possuem um elemento centralizado, essa geração pode resultar em uma imagem de um objeto que parece uma mutação dos objetos centrais, conforme pode ser visualizado na Figura~\ref{}.
+%
+% \meutodo{figura da mistura central}
 
 \begin{figure}[!htbp]
   \begin{center}
@@ -426,7 +425,6 @@ Essa geração pretende compor informações de diversas imagens em uma única i
   \label{fig:gen:composition}
 \end{figure}
 
-Para cada quadrado a ser preenchido sorteia uma imagem do conjunto de treinamento, realiza uma operação de borramento, aguçamento, mistura ponderada ou visual SMOTE e adiciona essa imagem no quadrado respectivo. Os passos para tal composição estão descritos no Algoritmo~\ref{alg:composition}.
 
 \vspace{0.5cm}
 \begin{algorithm}[!htbp]
@@ -467,7 +465,7 @@ Para cada quadrado a ser preenchido sorteia uma imagem do conjunto de treinament
   \item[Limitações] O término brusco de uma imagem para início da outra ao formar a grade de imagens tenha efeitos colaterais de inserção de textura que não excedam a vantagem de compor uma mesma imagem com várias cores, texturas e formas das imagens originais.
 
   \item[Métodos relacionados]
-
+  \meutodo {quais??}
   % \item[Visualização]
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -517,5 +515,7 @@ Para cada quadrado a ser preenchido sorteia uma imagem do conjunto de treinament
 \section{Considerações finais}
 
 Esse capítulo descreveu como o rebalanceamento é realizado: gerar imagens para a classe (ou classes) minoritárias e utilizá-las para o treinamento. Os métodos para gerar tais imagens foram apresentados e exemplificados. Foram também descritos os algoritmos, parâmetros utilizados, limitações e métodos relacionados a cada um dos métodos.
+
+Os resultados da utilização dos métodos descritos neste capítulo estão no Capítulo \ref{cap:resultados-geracao}.
 
 % A proposta desta pesquisa foi apresentada, descrevendo a sua metodologia. Foi dado destaque aos resultados esperados e à forma de avaliação, descrevendo as medidas estatísticas a serem utilizadas. O cronograma previsto para a realização deste mestrado foi destacado, elencando as atividades e suas respetivas durações. O próximo capítulo apresentará os resultados preliminares.
