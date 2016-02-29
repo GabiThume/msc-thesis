@@ -397,35 +397,35 @@ O experimento anterior considerou classes distintas, por isso classes de difíci
 
 A combinação de métodos que resultou em um melhor \textit{f-score} para esse contexto foi a utilização de \emph{Luminância'}ância e BIC. Na Figura \ref{fig:resultados:2:melhor} é possível verificar o \textit{boxplot} dos \textit{f-scores} para as classes desbalanceadas, rebalanceadas com SMOTE após a extração de características e rebalanceadas com os métodos de geração artificial como primeiro passo do \textit{pipeline}. Como pode ser visto na Tabela \ref{tab:resultados:2:melhor}, diversos métodos foram melhores que o SMOTE, e todos melhores do que a base desbalanceada. O método de saliência, mistura e composição obtiveram os melhores resultados.
 
-\begin{figure}[!htbp]
-  \begin{center}
-      \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/2/BIC_Luminance_praia-montanha.png}}
-  \end{center}
-  \caption[Boxplot das classes \emph{Praia} e \emph{Montanha} para a conversão em escala de cinza com \emph{Luminância'} e BIC como método de extração de características.]{Boxplot das classes \emph{Praia} e \emph{Montanha} para a conversão em escala de cinza com \emph{Luminância'} e BIC como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
-  \label{fig:resultados:2:melhor}
-\end{figure}
+% \begin{figure}[!htbp]
+%   \begin{center}
+%       \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/2/BIC_Luminance_praia-montanha.png}}
+%   \end{center}
+%   \caption[Boxplot das classes \emph{Praia} e \emph{Montanha} para a conversão em escala de cinza com \emph{Luminância'} e BIC como método de extração de características.]{Boxplot das classes \emph{Praia} e \emph{Montanha} para a conversão em escala de cinza com \emph{Luminância'} e BIC como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
+%   \label{fig:resultados:2:melhor}
+% \end{figure}
 
-\begin{table}[!htbp]
-\centering
-\caption{Resultados de \textit{f1-score} para as classes \emph{Praia} e \emph{Montanha}, utilizando \emph{Luminância'} como método para conversão em escala de cinza e \emph{BIC} para extração de características.}
-\label{tab:resultados:2:melhor}
-\begin{tabular}{|l|c|c|}
-\hline
-\textbf{Luminância' e BIC} & \textbf{Média} & \textbf{Desvio padrão} \\ \hline
-Todos                  & 65.21          & 7.54                   \\ \hline
-Aguçamento             & 62.30          & 7.85                   \\ \hline
-Borramento             & 61.24          & 7.55                   \\ \hline
-Composição 16          & 64.23          & 7.31                   \\ \hline
-Composição 4           & 65.65          & 8.27                   \\ \hline
-Limiares               & 63.69          & 8.77                   \\ \hline
-Mistura                & 65.41          & 8.20                   \\ \hline
-Ruído                  & 63.50          & 8.05                   \\ \hline
-SMOTE Visual           & 61.55          & 9.44                   \\ \hline
-Saliência              & \textbf{65.69} & 6.63                   \\ \hline
-SMOTE                  & 63.58          & 7.74                   \\ \hline
-Desbalanceado          & 59.49          & 8.11                   \\ \hline
-\end{tabular}
-\end{table}
+% \begin{table}[!htbp]
+% \centering
+% \caption{Resultados de \textit{f1-score} para as classes \emph{Praia} e \emph{Montanha}, utilizando \emph{Luminância'} como método para conversão em escala de cinza e \emph{BIC} para extração de características.}
+% \label{tab:resultados:2:melhor}
+% \begin{tabular}{|l|c|c|}
+% \hline
+% \textbf{Luminância' e BIC} & \textbf{Média} & \textbf{Desvio padrão} \\ \hline
+% Todos                  & 65.21          & 7.54                   \\ \hline
+% Aguçamento             & 62.30          & 7.85                   \\ \hline
+% Borramento             & 61.24          & 7.55                   \\ \hline
+% Composição 16          & 64.23          & 7.31                   \\ \hline
+% Composição 4           & 65.65          & 8.27                   \\ \hline
+% Limiares               & 63.69          & 8.77                   \\ \hline
+% Mistura                & 65.41          & 8.20                   \\ \hline
+% Ruído                  & 63.50          & 8.05                   \\ \hline
+% SMOTE Visual           & 61.55          & 9.44                   \\ \hline
+% Saliência              & \textbf{65.69} & 6.63                   \\ \hline
+% SMOTE                  & 63.58          & 7.74                   \\ \hline
+% Desbalanceado          & 59.49          & 8.11                   \\ \hline
+% \end{tabular}
+% \end{table}
 
 A Figura \ref{fig:resultados:2:saliencia} exemplifica uma geração artificial deste experimento, utilizando o método de \emph{saliência}. Interessante notar que essa imagem faz sentido visualmente.
 
@@ -449,37 +449,37 @@ A Figura \ref{fig:resultados:2:saliencia} exemplifica uma geração artificial d
 
 Os métodos que combinados obtiveram a maior variância foram \emph{Intensidade'} e \emph{HOG} (ver Figura \ref{fig:resultados:2:pior} e Tabela \ref{tab:resultados:2:pior}). O rebalanceamento com a geração de imagens obteve a melhor performance. Porém, o único método que melhorou a variância foi o \emph{aguçamento} (um exemplo de tal geração pode ser visto na Figura \ref{fig:resultados:2:agucamento}). A Figura \ref{fig:resultados:2:mistura} exemplifica a geração artificial com o método \emph{mistura}, utilizando duas imagens de treinamento da classe \emph{Montanha}.
 
-\begin{minipage}{\linewidth}
-  \begin{figure}[H]
-  \begin{center}
-      \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/2/HOG_Intensity_praia-montanha.png}}
-  \end{center}
-  \caption[]{Conversão em escala de cinza com \emph{Intensidade'} e HOG como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
-  \label{fig:resultados:2:pior}
-\end{figure}
-\end{minipage}
-
-\begin{table}[!htbp]
-\centering
-\caption{Resultados de \textit{f1-score} para as classes \emph{Praia} e \emph{Montanha}, utilizando \emph{Intensidade'} como método para conversão em escala de cinza e \emph{HOG} para extração de características.}
-\label{tab:resultados:2:pior}
-\begin{tabular}{|l|c|c|}
-\hline
-\textbf{Intensidade' e HOG} & \textbf{Média}     & \textbf{Desvio padrão} \\ \hline
-Todos                      & 62.184222          & 9.310391               \\ \hline
-Aguçamento                 & 63.455343          & 6.719545               \\ \hline
-Borramento                 & 57.599052          & 8.332506               \\ \hline
-Composição 16              & 57.669325          & 8.424716               \\ \hline
-Composição 4               & 59.239965          & 8.254027               \\ \hline
-Limiares                   & 63.138800          & 9.132368               \\ \hline
-Mistura                    & \textbf{65.255990} & 9.073246               \\ \hline
-Ruído                      & 60.577283          & 8.690926               \\ \hline
-SMOTE Visual               & 56.998855          & 9.050991               \\ \hline
-Saliência                  & 61.728330          & 8.154174               \\ \hline
-SMOTE                      & 62.210017          & 8.318301               \\ \hline
-Desbalanceado              & 57.651543          & 8.323832               \\ \hline
-\end{tabular}
-\end{table}
+% \begin{minipage}{\linewidth}
+%   \begin{figure}[H]
+%   \begin{center}
+%       \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/2/HOG_Intensity_praia-montanha.png}}
+%   \end{center}
+%   \caption[]{Conversão em escala de cinza com \emph{Intensidade'} e HOG como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
+%   \label{fig:resultados:2:pior}
+% \end{figure}
+% \end{minipage}
+%
+% \begin{table}[!htbp]
+% \centering
+% \caption{Resultados de \textit{f1-score} para as classes \emph{Praia} e \emph{Montanha}, utilizando \emph{Intensidade'} como método para conversão em escala de cinza e \emph{HOG} para extração de características.}
+% \label{tab:resultados:2:pior}
+% \begin{tabular}{|l|c|c|}
+% \hline
+% \textbf{Intensidade' e HOG} & \textbf{Média}     & \textbf{Desvio padrão} \\ \hline
+% Todos                      & 62.184222          & 9.310391               \\ \hline
+% Aguçamento                 & 63.455343          & 6.719545               \\ \hline
+% Borramento                 & 57.599052          & 8.332506               \\ \hline
+% Composição 16              & 57.669325          & 8.424716               \\ \hline
+% Composição 4               & 59.239965          & 8.254027               \\ \hline
+% Limiares                   & 63.138800          & 9.132368               \\ \hline
+% Mistura                    & \textbf{65.255990} & 9.073246               \\ \hline
+% Ruído                      & 60.577283          & 8.690926               \\ \hline
+% SMOTE Visual               & 56.998855          & 9.050991               \\ \hline
+% Saliência                  & 61.728330          & 8.154174               \\ \hline
+% SMOTE                      & 62.210017          & 8.318301               \\ \hline
+% Desbalanceado              & 57.651543          & 8.323832               \\ \hline
+% \end{tabular}
+% \end{table}
 
 % \begin{minipage}{\linewidth}
 %   \begin{figure}[H]
@@ -561,80 +561,80 @@ O seguinte protocolo foi seguido para a obtenção dos resultados:
   \end{figure}
 \end{minipage}
 
-\item \textbf{Quantização}:
-\item \textbf{Extração de características}:
-\item \textbf{Classificação}: KNN com $K=1$.
+\item \textbf{Quantização}: todos os métodos foram testados.
+\item \textbf{Extração de características}: todos os métodos foram testados.
+\item \textbf{Classificação}: classificador KNN com $K=1$.
 \end{enumerate}
 
 %-------------------------------------------------------------------------------
-\item[] \textbf{Resultado da melhor combinação dos métodos de extração e conversão para escala de cinza}
+\item[] \textbf{Resultado: melhor combinação dos métodos de extração e conversão para escala de cinza}
 
-\begin{minipage}{\linewidth}
-  \begin{figure}[H]
-  \begin{center}
-      \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/3/LBP_Luma_corel.png}}
-  \end{center}
-  \caption[Experimento com as 10 classes da base Corel. Foi utilizado o método Luma para conversão em escala de cinza e LBP como método de extração de características.]{Experimento com as 10 classes da base Corel. Foi utilizado o método Luma para conversão em escala de cinza e LBP como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
-  \label{fig:resultados:3:melhor}
-\end{figure}
-\end{minipage}
-
-\begin{table}[!htbp]
-\centering
-\caption{Resultados de \textit{f1-score} para as 10 classes da Corel, utilizando \emph{Luma} como método para conversão em escala de cinza e \emph{LBP} para extração de características}
-\label{tab:resultados:3:melhor}
-\begin{tabular}{|l|c|c|}
-\hline
-\textbf{Luma e LBP} & \textbf{Média} & \textbf{Desvio padrão} \\ \hline
-Todos               & 59.46          & 2.23                   \\ \hline
-Aguçamento          & 59.32          & 2.33                   \\ \hline
-Borramento          & 58.41          & 2.36                   \\ \hline
-Composição 16       & 59.71          & 1.92                   \\ \hline
-Composição 4        & 58.97          & 2.20                   \\ \hline
-Limiares            & 59.89          & 2.33                   \\ \hline
-Mistura             & \textbf{59.99} & 2.02                   \\ \hline
-Ruído               & 58.48          & 2.21                   \\ \hline
-SMOTE Visual        & 58.43          & 2.35                   \\ \hline
-Saliência           & 59.63          & 2.07                   \\ \hline
-SMOTE               & 59.78          & 2.36                   \\ \hline
-Desbalanceado       & 58.09          & 2.31                   \\ \hline
-\end{tabular}
-\end{table}
+% \begin{minipage}{\linewidth}
+%   \begin{figure}[H]
+%   \begin{center}
+%       \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/3/LBP_Luma_corel.png}}
+%   \end{center}
+%   \caption[Experimento com as 10 classes da base Corel. Foi utilizado o método Luma para conversão em escala de cinza e LBP como método de extração de características.]{Experimento com as 10 classes da base Corel. Foi utilizado o método Luma para conversão em escala de cinza e LBP como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
+%   \label{fig:resultados:3:melhor}
+% \end{figure}
+% \end{minipage}
+%
+% \begin{table}[!htbp]
+% \centering
+% \caption{Resultados de \textit{f1-score} para as 10 classes da Corel, utilizando \emph{Luma} como método para conversão em escala de cinza e \emph{LBP} para extração de características}
+% \label{tab:resultados:3:melhor}
+% \begin{tabular}{|l|c|c|}
+% \hline
+% \textbf{Luma e LBP} & \textbf{Média} & \textbf{Desvio padrão} \\ \hline
+% Todos               & 59.46          & 2.23                   \\ \hline
+% Aguçamento          & 59.32          & 2.33                   \\ \hline
+% Borramento          & 58.41          & 2.36                   \\ \hline
+% Composição 16       & 59.71          & 1.92                   \\ \hline
+% Composição 4        & 58.97          & 2.20                   \\ \hline
+% Limiares            & 59.89          & 2.33                   \\ \hline
+% Mistura             & \textbf{59.99} & 2.02                   \\ \hline
+% Ruído               & 58.48          & 2.21                   \\ \hline
+% SMOTE Visual        & 58.43          & 2.35                   \\ \hline
+% Saliência           & 59.63          & 2.07                   \\ \hline
+% SMOTE               & 59.78          & 2.36                   \\ \hline
+% Desbalanceado       & 58.09          & 2.31                   \\ \hline
+% \end{tabular}
+% \end{table}
 
 %-------------------------------------------------------------------------------
-\item[] \textbf{Resultado da maior variância obtida com a combinação dos métodos de extração e conversão para escala de cinza}
+\item[] \textbf{Resultado: maior variância obtida com a combinação dos métodos de extração e conversão para escala de cinza}
 
-\begin{minipage}{\linewidth}
-  \begin{figure}[H]
-    \begin{center}
-        \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/3/LBP_Intensity_corel.png}}
-    \end{center}
-    \caption[Experimento com as 10 classes da base Corel. Foi utilizado o método \emph{Intensidade'} para conversão em escala de cinza e LBP como método de extração de características.]{Experimento com as 10 classes da base Corel. Foi utilizado o método \emph{Intensidade'} para conversão em escala de cinza e LBP como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
-    \label{fig:resultados:3:pior}
-  \end{figure}
-\end{minipage}
-
-\begin{table}[]
-\centering
-\caption{Resultados de \textit{f1-score} para as 10 classes da Corel, utilizando \emph{Intensidade'} como método para conversão em escala de cinza e \emph{LBP} para extração de características}
-\label{tab:resultados:3:pior}
-\begin{tabular}{|l|c|c|}
-\hline
-\textbf{LBP Intensity} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
-Todos                  & 60.39          & 2.35               \\ \hline
-Aguçamento             & 59.78          & 2.51               \\ \hline
-Borramento             & 59.30          & 2.34               \\ \hline
-Composição 16          & \textbf{60.73} & 2.23               \\ \hline
-Composição 4           & 59.77          & 2.30               \\ \hline
-Limiares               & 60.59          & 2.24               \\ \hline
-Mistura                & 60.71          & 2.16               \\ \hline
-Ruído                  & 59.39          & 2.44               \\ \hline
-SMOTE Visual           & 59.44          & 2.26               \\ \hline
-Saliência              & 60.36          & 2.18               \\ \hline
-SMOTE                  & 60.49          & 2.22               \\ \hline
-Desbalanceado          & 58.91          & 2.20               \\ \hline
-\end{tabular}
-\end{table}
+% \begin{minipage}{\linewidth}
+%   \begin{figure}[H]
+%     \begin{center}
+%         \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/3/LBP_Intensity_corel.png}}
+%     \end{center}
+%     \caption[Experimento com as 10 classes da base Corel. Foi utilizado o método \emph{Intensidade'} para conversão em escala de cinza e LBP como método de extração de características.]{Experimento com as 10 classes da base Corel. Foi utilizado o método \emph{Intensidade'} para conversão em escala de cinza e LBP como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
+%     \label{fig:resultados:3:pior}
+%   \end{figure}
+% \end{minipage}
+%
+% \begin{table}[]
+% \centering
+% \caption{Resultados de \textit{f1-score} para as 10 classes da Corel, utilizando \emph{Intensidade'} como método para conversão em escala de cinza e \emph{LBP} para extração de características}
+% \label{tab:resultados:3:pior}
+% \begin{tabular}{|l|c|c|}
+% \hline
+% \textbf{LBP Intensity} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+% Todos                  & 60.39          & 2.35               \\ \hline
+% Aguçamento             & 59.78          & 2.51               \\ \hline
+% Borramento             & 59.30          & 2.34               \\ \hline
+% Composição 16          & \textbf{60.73} & 2.23               \\ \hline
+% Composição 4           & 59.77          & 2.30               \\ \hline
+% Limiares               & 60.59          & 2.24               \\ \hline
+% Mistura                & 60.71          & 2.16               \\ \hline
+% Ruído                  & 59.39          & 2.44               \\ \hline
+% SMOTE Visual           & 59.44          & 2.26               \\ \hline
+% Saliência              & 60.36          & 2.18               \\ \hline
+% SMOTE                  & 60.49          & 2.22               \\ \hline
+% Desbalanceado          & 58.91          & 2.20               \\ \hline
+% \end{tabular}
+% \end{table}
 
 %-------------------------------------------------------------------------------
 \item[] \textbf{Discussão}
@@ -645,6 +645,8 @@ Desbalanceado          & 58.91          & 2.20               \\ \hline
 \FloatBarrier
 \subsection{Experimento 4: classes naturalmente desbalanceadas}
 
+Os experimentos anteriores foram realizados em bases já balanceadas, com o desbalancemento sendo provocado. Este experimento utiliza duas classes de imagens naturalmente desbalanceadas.
+
 \begin{itemize}
 %-------------------------------------------------------------------------------
 \item[] \textbf{Base de Imagens}
@@ -657,45 +659,51 @@ O seguinte protocolo foi seguido para a obtenção dos resultados:
 
 \begin{enumerate}
 \item \textbf{Classes de imagens originais}:
-\item \textbf{Desbalanceamento}:
-\item \textbf{Método para geração artificial}:
-\item \textbf{Quantização}:
-\item \textbf{Extração de características}:
-\item \textbf{Classificação}:
+\item \textbf{Desbalanceamento}: natural da base. Uma classe contém X imagens e a outra X.
+\item \textbf{Método para geração artificial}: todas as gerações foram testadas, as melhores estão relatadas a seguir, na seção de resultados.
+\item \textbf{Quantização}: todos os métodos foram testados.
+\item \textbf{Extração de características}: todos os métodos para extração foram testados.
+\item \textbf{Classificação}: KNN com $K=1$.
 \end{enumerate}
+
 %-------------------------------------------------------------------------------
-\item[] \textbf{Resultados e Discussão}
+\item[] \textbf{Resultado: melhor combinação dos métodos de extração e conversão para escala de cinza}
 
-\begin{figure}[!htbp]
-  \begin{center}
-      \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/4/HOG_Luminance_eiffel-ponte.png}}
-  \end{center}
-  \caption[]{\textit{Fonte:~Elaborado pela autora.}}
-  \label{fig:resultados:2:melhor}
-\end{figure}
+%-------------------------------------------------------------------------------
+\item[] \textbf{Resultado: maior variância obtida com a combinação dos métodos de extração e conversão para escala de cinza}
 
-\begin{table}[]
-\centering
-\caption{Resultados de \textit{f1-score} para as classes XX, utilizando \emph{Luminância'} como método para conversão em escala de cinza e \emph{HOG} para extração de características}
-\label{tab:resultados:4:melhor}
-\begin{tabular}{|l|c|c|}
-\hline
-\textbf{Luminância \& HOG} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
-Todos                      & 77.373797          & 5.112180               \\ \hline
-Aguçamento                 & 87.831980          & 7.039036               \\ \hline
-Borramento                 & 85.051780          & 9.816291               \\ \hline
-Composição 16              & 85.051780          & 9.816291               \\ \hline
-Composição 4               & 85.392703          & 10.069356              \\ \hline
-Limiares                   & 86.213200          & 10.528769              \\ \hline
-Mistura                    & 90.312440          & 7.357446               \\ \hline
-Ruído                      & 75.523828          & 6.209384               \\ \hline
-SMOTE Visual               & 74.109795          & 4.093989               \\ \hline
-Saliência                  & 85.713360          & 10.399830              \\ \hline
-SMOTE                      & \textbf{90.711873} & 6.423170               \\ \hline
-Desbalanceado              & 85.051780          & 9.816291               \\ \hline
-\end{tabular}
-\end{table}
+% \begin{figure}[!htbp]
+%   \begin{center}
+%       \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/4/HOG_Luminance_eiffel-ponte.png}}
+%   \end{center}
+%   \caption[]{\textit{Fonte:~Elaborado pela autora.}}
+%   \label{fig:resultados:2:melhor}
+% \end{figure}
+%
+% \begin{table}[]
+% \centering
+% \caption{Resultados de \textit{f1-score} para as classes XX, utilizando \emph{Luminância'} como método para conversão em escala de cinza e \emph{HOG} para extração de características}
+% \label{tab:resultados:4:melhor}
+% \begin{tabular}{|l|c|c|}
+% \hline
+% \textbf{Luminância \& HOG} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+% Todos                      & 77.373797          & 5.112180               \\ \hline
+% Aguçamento                 & 87.831980          & 7.039036               \\ \hline
+% Borramento                 & 85.051780          & 9.816291               \\ \hline
+% Composição 16              & 85.051780          & 9.816291               \\ \hline
+% Composição 4               & 85.392703          & 10.069356              \\ \hline
+% Limiares                   & 86.213200          & 10.528769              \\ \hline
+% Mistura                    & 90.312440          & 7.357446               \\ \hline
+% Ruído                      & 75.523828          & 6.209384               \\ \hline
+% SMOTE Visual               & 74.109795          & 4.093989               \\ \hline
+% Saliência                  & 85.713360          & 10.399830              \\ \hline
+% SMOTE                      & \textbf{90.711873} & 6.423170               \\ \hline
+% Desbalanceado              & 85.051780          & 9.816291               \\ \hline
+% \end{tabular}
+% \end{table}
 
+%-------------------------------------------------------------------------------
+\item[] \textbf{Discussão}
 
 \end{itemize}
 
@@ -703,6 +711,8 @@ Desbalanceado              & 85.051780          & 9.816291               \\ \hli
 \FloatBarrier
 \subsection{Experimento 5: classes com muitas imagens}
 
+Por fim, este experimento foi realizado com duas classes contendo uma grande quantidade de imagens.
+
 \begin{itemize}
 %-------------------------------------------------------------------------------
 \item[] \textbf{Base de Imagens}
@@ -723,39 +733,45 @@ O seguinte protocolo foi seguido para a obtenção dos resultados:
 \end{enumerate}
 %-------------------------------------------------------------------------------
 %-------------------------------------------------------------------------------
-\item[] \textbf{Resultado da melhor combinação dos métodos de extração e conversão para escala de cinza}
+\item[] \textbf{Resultado: melhor combinação dos métodos de extração e conversão para escala de cinza}
 
-\begin{minipage}{\linewidth}
-  \begin{figure}[H]
-  \begin{center}
-      \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/5/HOG_Gleam_deer-ship.png}}
-  \end{center}
-  \caption[]{\textit{Fonte:~Elaborado pela autora.}}
-  \label{fig:resultados:5:melhor}
-\end{figure}
-\end{minipage}
+% \begin{minipage}{\linewidth}
+%   \begin{figure}[H]
+%   \begin{center}
+%       \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/5/HOG_Gleam_deer-ship.png}}
+%   \end{center}
+%   \caption[]{\textit{Fonte:~Elaborado pela autora.}}
+%   \label{fig:resultados:5:melhor}
+% \end{figure}
+% \end{minipage}
+%
+% \begin{table}[!htbp]
+% \centering
+% \caption{Resultados de \textit{f1-score} para as classes \emph{Tubarão} e \emph{Peixe}, utilizando \emph{Gleam} como método para conversão em escala de cinza e \emph{HOG} para extração de características}
+% \label{tab:resultados:5:melhor}
+% \begin{tabular}{|l|c|c|}
+% \hline
+% \textbf{Gleam e HOG} & \textbf{Média} & \textbf{Desvio padrão} \\ \hline
+% Todos                & 79.38          & 9.88                   \\ \hline
+% Aguçamento           & 88.88          & 1.13                   \\ \hline
+% Borramento           & 86.69          & 1.81                   \\ \hline
+% Composição 16        & 86.61          & 1.84                   \\ \hline
+% Composição 4         & 86.69          & 1.97                   \\ \hline
+% Limiares             & 88.93          & 1.04                   \\ \hline
+% Mistura              & \textbf{88.99} & 0.98                   \\ \hline
+% Ruído                & 73.72          & 13.18                  \\ \hline
+% SMOTE Visual         & 76.23          & 12.51                  \\ \hline
+% Saliência            & 86.61          & 1.86                   \\ \hline
+% SMOTE                & 60.90          & 3.46                   \\ \hline
+% Desbalanceado        & 86.60          & 1.86                   \\ \hline
+% \end{tabular}
+% \end{table}
 
-\begin{table}[!htbp]
-\centering
-\caption{Resultados de \textit{f1-score} para as classes \emph{Tubarão} e \emph{Peixe}, utilizando \emph{Gleam} como método para conversão em escala de cinza e \emph{HOG} para extração de características}
-\label{tab:resultados:5:melhor}
-\begin{tabular}{|l|c|c|}
-\hline
-\textbf{Gleam e HOG} & \textbf{Média} & \textbf{Desvio padrão} \\ \hline
-Todos                & 79.38          & 9.88                   \\ \hline
-Aguçamento           & 88.88          & 1.13                   \\ \hline
-Borramento           & 86.69          & 1.81                   \\ \hline
-Composição 16        & 86.61          & 1.84                   \\ \hline
-Composição 4         & 86.69          & 1.97                   \\ \hline
-Limiares             & 88.93          & 1.04                   \\ \hline
-Mistura              & \textbf{88.99} & 0.98                   \\ \hline
-Ruído                & 73.72          & 13.18                  \\ \hline
-SMOTE Visual         & 76.23          & 12.51                  \\ \hline
-Saliência            & 86.61          & 1.86                   \\ \hline
-SMOTE                & 60.90          & 3.46                   \\ \hline
-Desbalanceado        & 86.60          & 1.86                   \\ \hline
-\end{tabular}
-\end{table}
+%-------------------------------------------------------------------------------
+\item[] \textbf{Resultado: maior variância obtida com a combinação dos métodos de extração e conversão para escala de cinza}
+
+%-------------------------------------------------------------------------------
+\item[] \textbf{Discussão}
 
 \end{itemize}
 
