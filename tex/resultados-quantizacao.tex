@@ -64,7 +64,7 @@ Estes experimentos possuem foco na redução na dimensionalidade. Para evitar o 
 Os experimentos foram realizados com uma validação cruzada de \textit{10-fold}. Considerando que as bases estão balanceadas e que a seleção de exemplos para a validação cruzada é estratificada, a medida estatística de \textit{acurácia} foi utilizada para avaliar a performance da classificação. O seguinte protocolo foi seguido para a obtenção dos resultados:
 
 \begin{enumerate}
-\item \textbf{Quantização}: com os métodos \emph{Intensidade}, \emph{Gleam}, \emph{Luminância} e \emph{MSB}.
+\item \textbf{Quantização}: com os métodos \emph{Intensidade'}, \emph{Gleam}, \emph{Luminância'} e \emph{MSB}.
 \item \textbf{Extração de características}: utilizando os métodos -- e parâmetros escolhidos com base nas recomendações dos artigos que proporam tais métodos -- a seguir:
   \begin{itemize}
     \item \emph{ACC}: utilizando um conjunto de quatro distâncias $D = {1, 3, 5, 7}$ e a distância tabuleiro de xadrez $D_8(p,q) = Max(|x-s|, |y-t|)$ entre os pixeis $p(x,y)$ e $q(s,t)$;
@@ -90,18 +90,18 @@ A Figura \ref{fig:quant:results} ilustra a acurácia média para o primeiro conj
   \label{fig:quant:results}
 \end{figure}
 
-A partir dessa análise geral, uma análise mais específica foi realizada com a combinação dos métodos BIC e MSB; e Haralick e Luminância. Considerando que a utilização de apenas 16 e 8 cores resultou em uma acurácia muito inferior, o restante dos resultados utilizam 256, 128, 64 e 32 cores.
+A partir dessa análise geral, uma análise mais específica foi realizada com a combinação dos métodos BIC e \emph{MSB}; e Haralick e \emph{Luminância'}. Considerando que a utilização de apenas 16 e 8 cores resultou em uma acurácia muito inferior, o restante dos resultados utilizam 256, 128, 64 e 32 cores.
 
 \meutodo{descrever o teste estatístico e o resultado}
 
-O teste estatístico ANOVA foi realizado para comparar as acurácias dos experimentos da Figura \ref{fig:quant:boxplotBIC} e \ref{fig:quant:boxplotHaralick}. O boxplot para 256, 128, 64 e 32 cores com os métodos BIC e MSB está demonstrado na Figura \ref{fig:quant:boxplotBIC}. De acordo com o teste estatístico representado, utilizar características de cor e níveis de quantização providos pelo método MSB demonstrou resultados melhores do que com 256 cores para as bases Corel (128, 64 e 32 cores) e Caltech (64 cores). O único resultado que piorou significativamente foi para 32 cores da base de imagens \textit{Produce}. Portanto, reduzir converter as imagens de 3 canais de cores para um e reduzir os 256 possíveis valores para apenas 64 provou uma boa escolha de processamento anterior a extração de características. Menores valores podem degradar os resultados em características de textura, como mostrado na Figura \ref{fig:quant:boxplotHaralick}.
+O teste estatístico ANOVA foi realizado para comparar as acurácias dos experimentos da Figura \ref{fig:quant:boxplotBIC} e \ref{fig:quant:boxplotHaralick}. O boxplot para 256, 128, 64 e 32 cores com os métodos BIC e \emph{MSB} está demonstrado na Figura \ref{fig:quant:boxplotBIC}. De acordo com o teste estatístico representado, utilizar características de cor e níveis de quantização providos pelo método \emph{MSB} demonstrou resultados melhores do que com 256 cores para as bases Corel (128, 64 e 32 cores) e Caltech (64 cores). O único resultado que piorou significativamente foi para 32 cores da base de imagens \textit{Produce}. Portanto, reduzir converter as imagens de 3 canais de cores para um e reduzir os 256 possíveis valores para apenas 64 provou uma boa escolha de processamento anterior a extração de características. Menores valores podem degradar os resultados em características de textura, como mostrado na Figura \ref{fig:quant:boxplotHaralick}.
 
 \begin{figure}[!htbp]
   \begin{center}
     \centering
     \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_results_individual_boxplotBIC.png}}
   \end{center}
-  \caption[Resultados de acurácia para o método de quantização MSB considerando 256, 128, 64 e 32 cores com o descritor BIC. Os boxplots em cinza correspondem às significâncias estatísticas com $p \l 0.01$ quando comparado a acurácia de 256 cores.]{Resultados de acurácia para o método de quantização MSB considerando 256, 128, 64 e 32 cores com o descritor BIC. Os boxplots em cinza correspondem às significâncias estatísticas com $p \l 0.01$ quando comparado a acurácia de 256 cores. \textit{Fonte:~\cite{Ponti2016}.}}
+  \caption[Resultados de acurácia para o método de quantização \emph{MSB} considerando 256, 128, 64 e 32 cores com o descritor BIC. Os boxplots em cinza correspondem às significâncias estatísticas com $p \l 0.01$ quando comparado a acurácia de 256 cores.]{Resultados de acurácia para o método de quantização \emph{MSB} considerando 256, 128, 64 e 32 cores com o descritor BIC. Os boxplots em cinza correspondem às significâncias estatísticas com $p \l 0.01$ quando comparado a acurácia de 256 cores. \textit{Fonte:~\cite{Ponti2016}.}}
   \label{fig:quant:boxplotBIC}
 \end{figure}
 
@@ -110,53 +110,53 @@ O teste estatístico ANOVA foi realizado para comparar as acurácias dos experim
     \centering
     \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_results_individual_boxplotHaralick.png}}
   \end{center}
-  \caption[Resultados de acurácia para o método de quantização Luminância considerando 256, 128, 64 e 32 cores com o descritor Haralick. Os boxplots em cinza correspondem às significâncias estatísticas com $p \l 0.01$ quando comparado a acurácia de 256 cores.]{Resultados de acurácia para o método de quantização Luminância considerando 256, 128, 64 e 32 cores com o descritor Haralick. Os boxplots em cinza correspondem às significâncias estatísticas com $p \l 0.01$ quando comparado a acurácia de 256 cores. \textit{Fonte:~\cite{Ponti2016}.}}
+  \caption[Resultados de acurácia para o método de quantização \emph{Luminância'} considerando 256, 128, 64 e 32 cores com o descritor Haralick. Os boxplots em cinza correspondem às significâncias estatísticas com $p \l 0.01$ quando comparado a acurácia de 256 cores.]{Resultados de acurácia para o método de quantização \emph{Luminância'} considerando 256, 128, 64 e 32 cores com o descritor Haralick. Os boxplots em cinza correspondem às significâncias estatísticas com $p \l 0.01$ quando comparado a acurácia de 256 cores. \textit{Fonte:~\cite{Ponti2016}.}}
   \label{fig:quant:boxplotHaralick}
 \end{figure}
 
-A redução de dimensionalidade obtida utilizando os métodos de quantização e redução da dimensionalidade com o LPP está ilustrada na Figura \ref{fig:quant:boxplotMSBLPP}. A imagem de entrada foi convertida para escala de cinza com o método MSB em 256 cores. Essa imagem foi dada como entrada para o método de extração de características BIC, que resultou em um vetor dado como entrada para o LPP. Esse último passo teve o objetivo de produzir versões reduzidas desse vetor para 256, 128 e 64 dimensões. As acurácias obtidas foram comparadas com a classificação dos vetores reduzidos apenas pela quantização. O método de quantização obteve valores de acurácia menores à utilização do LPP em três experimentos: de 256 dimensões com a base \textit{Corel} e com 256 e 64 na base \textit{Produce}. Para a base \textit{Caltech} a quantização foi melhor com 256 e 128 dimensões. O restante dos experimentos não apresentaram diferença estatística relevante. Apesar da perda de acurácia em alguns casos, é importante notar que -- se utilizado um número de cores correto -- é possível manter ou até mesmo melhorar as acurácias após a redução da dimensionalidade. Isso pode ser observado na Figura \ref{fig:quant:boxplotMSBLPP} referente à base de dados \textit{Caltech}.
+A redução de dimensionalidade obtida utilizando os métodos de quantização e redução da dimensionalidade com o LPP está ilustrada na Figura \ref{fig:quant:boxplotMSBLPP}. A imagem de entrada foi convertida para escala de cinza com o método \emph{MSB} em 256 cores. Essa imagem foi dada como entrada para o método de extração de características BIC, que resultou em um vetor dado como entrada para o LPP. Esse último passo teve o objetivo de produzir versões reduzidas desse vetor para 256, 128 e 64 dimensões. As acurácias obtidas foram comparadas com a classificação dos vetores reduzidos apenas pela quantização. O método de quantização obteve valores de acurácia menores à utilização do LPP em três experimentos: de 256 dimensões com a base \textit{Corel} e com 256 e 64 na base \textit{Produce}. Para a base \textit{Caltech} a quantização foi melhor com 256 e 128 dimensões. O restante dos experimentos não apresentaram diferença estatística relevante. Apesar da perda de acurácia em alguns casos, é importante notar que -- se utilizado um número de cores correto -- é possível manter ou até mesmo melhorar as acurácias após a redução da dimensionalidade. Isso pode ser observado na Figura \ref{fig:quant:boxplotMSBLPP} referente à base de dados \textit{Caltech}.
 
 \begin{figure}[!htbp]
   \begin{center}
     \centering
     \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_results_individual_boxplotMSBLPP.png}}
   \end{center}
-  \caption[Resultados de acurácia para os método MSB (quantização), LPP (redução de dimensionalidade) e BIC (extração de características). A comparação do LPP versus MSB foi realizada com a mesma dimensionalidade. Os boxplots em cinza correspondem às significâncias estatísticas com $p \l 0.01$ quando comparado a acurácia de 256 cores.]{Resultados de acurácia para os método MSB (quantização), LPP (redução de dimensionalidade) e BIC (extração de características). A comparação do LPP versus MSB foi realizada com a mesma dimensionalidade. Os boxplots em cinza correspondem às significâncias estatísticas com $p \l 0.01$ quando comparado a acurácia de 256 cores. \textit{Fonte:~\cite{Ponti2016}.}}
+  \caption[Resultados de acurácia para os método \emph{MSB} (quantização), LPP (redução de dimensionalidade) e BIC (extração de características). A comparação do LPP versus \emph{MSB} foi realizada com a mesma dimensionalidade. Os boxplots em cinza correspondem às significâncias estatísticas com $p \l 0.01$ quando comparado a acurácia de 256 cores.]{Resultados de acurácia para os método \emph{MSB} (quantização), LPP (redução de dimensionalidade) e BIC (extração de características). A comparação do LPP versus \emph{MSB} foi realizada com a mesma dimensionalidade. Os boxplots em cinza correspondem às significâncias estatísticas com $p \l 0.01$ quando comparado a acurácia de 256 cores. \textit{Fonte:~\cite{Ponti2016}.}}
   \label{fig:quant:boxplotMSBLPP}
 \end{figure}
 
 O número de dimensões de um vetor resultante de apenas um método de extração de características pode ser considerado baixo. Ainda mais que é comum extrair diversos descritores para uma situação, considernado que normalmente não está claro qual método deveria ser utilizado em cada caso. Por conta disso, os próximos experimentos utilizaram a concatenação de tais características. O objetivo destes experimentos é verificar se a concatenação de todos os descritores pode melhorar os resultados de acurácia. Além disso, comparar os resultados com os experimentos anteriores, afim de verificar se a quantização pode ser uma alternativa a redução da dimensionalidade com métodos convencionais (LPP, neste caso). A melhor configuração encontrada, até então, entre tamanho do vetor e acurácia foi utilizando 128 e 64 cores.
 
-Inicialmente, foi testada a configuração de um vetor $D=2310$ com LPP para redução de dimensionalidade com $d$ = 1160, 582, 294 e 150. Ou seja, produzindo vetores com o mesmo tamanho dos obtidos apenas com a quantização como redução da dimensão. O número de características em relação ao número de cores, concatenando todos os vetores resultantes dos métodos de extração de características, é: 256 cores -- 2310 características; 128 cores -- 1160 características; 64 cores -- 582 características; 32 cores --- 294 características; e 16 cores -- 150 características. A Figura \ref{fig:quant:resultsFull} mostra os resultados utilizando LPP. Note que o método de quantização MSB resultou em acurácias melhores que os outros métodos.
+Inicialmente, foi testada a configuração de um vetor $D=2310$ com LPP para redução de dimensionalidade com $d$ = 1160, 582, 294 e 150. Ou seja, produzindo vetores com o mesmo tamanho dos obtidos apenas com a quantização como redução da dimensão. O número de características em relação ao número de cores, concatenando todos os vetores resultantes dos métodos de extração de características, é: 256 cores -- 2310 características; 128 cores -- 1160 características; 64 cores -- 582 características; 32 cores --- 294 características; e 16 cores -- 150 características. A Figura \ref{fig:quant:resultsFull} mostra os resultados utilizando LPP. Note que o método de quantização \emph{MSB} resultou em acurácias melhores que os outros métodos.
 
 \begin{figure}[!htbp]
   \begin{center}
     \centering
     \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_results_full.png}}
   \end{center}
-  \caption[Comparação da acurácia alcançada com diferentes métodos de quantização: Gleam, Intensidade, Luminância e MSB. Inicialmente com $D=2310$ e então reduzindo com LPP para $d = 1160$, $582$, $294$ e $150$.]{Comparação da acurácia alcançada com diferentes métodos de quantização: Gleam, Intensidade, Luminância e MSB. Inicialmente com $D=2310$ e então reduzindo com LPP para $d = 1160$, $582$, $294$ e $150$. \textit{Fonte:~\cite{Ponti2016}.}}
+  \caption[Comparação da acurácia alcançada com diferentes métodos de quantização: \emph{Gleam}, \emph{Intensidade'}, \emph{Luminância'} e \emph{MSB}. Inicialmente com $D=2310$ e então reduzindo com LPP para $d = 1160$, $582$, $294$ e $150$.]{Comparação da acurácia alcançada com diferentes métodos de quantização: \emph{Gleam}, \emph{Intensidade'}, \emph{Luminância'} e \emph{MSB}. Inicialmente com $D=2310$ e então reduzindo com LPP para $d = 1160$, $582$, $294$ e $150$. \textit{Fonte:~\cite{Ponti2016}.}}
   \label{fig:quant:resultsFull}
 \end{figure}
 
-A utilização da concatenação de todos os vetores melhorou a acurácia em relação ao melhor descritor individual. A Figura \ref{fig:quant:resultsFullBoxplot} apresenta a comparação do espaço original com LPP e MSB para redução da dimensionalidade. O teste estatístico ANOVA foi realizado utilizando $\alpha = 0.01$ como nível de significância. Os resultados que não mudaram significativamente as acurácias foram: MSB com 582 características para a base de dados Corel; e MSB com 1160 nas três bases. O único resultado de piora significative foi para 32 cores com a base Produce. Por conta disso, 64 cores parece ser uma boa escolha de parâmetro de quantização.
+A utilização da concatenação de todos os vetores melhorou a acurácia em relação ao melhor descritor individual. A Figura \ref{fig:quant:resultsFullBoxplot} apresenta a comparação do espaço original com LPP e \emph{MSB} para redução da dimensionalidade. O teste estatístico ANOVA foi realizado utilizando $\alpha = 0.01$ como nível de significância. Os resultados que não mudaram significativamente as acurácias foram: \emph{MSB} com 582 características para a base de dados Corel; e \emph{MSB} com 1160 nas três bases. O único resultado de piora significative foi para 32 cores com a base Produce. Por conta disso, 64 cores parece ser uma boa escolha de parâmetro de quantização.
 
 \begin{figure}[!htbp]
   \begin{center}
     \centering
     \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_results_full_boxplot.png}}
   \end{center}
-  \caption[Comparação da acurácia com o uso da projeção LPP e o método MSB para quantização das imagens com o objetivo de redução de dimensionalidade.]{Comparação da acurácia com o uso da projeção LPP e o método MSB para quantização das imagens com o objetivo de redução de dimensionalidade. \textit{Fonte:~\cite{Ponti2016}.}}
+  \caption[Comparação da acurácia com o uso da projeção LPP e o método \emph{MSB} para quantização das imagens com o objetivo de redução de dimensionalidade.]{Comparação da acurácia com o uso da projeção LPP e o método \emph{MSB} para quantização das imagens com o objetivo de redução de dimensionalidade. \textit{Fonte:~\cite{Ponti2016}.}}
   \label{fig:quant:resultsFullBoxplot}
 \end{figure}
 
-Os resultados indicam que a quantização pode ser utilizada como redução da dimensão de dados visuais, especialmente utilziando 128 e 64 cores. Como experimento, a Figura \ref{fig:quant:fullLPP} mostra as acurácias resultantes da aplicação do LPP sob o vetor obtido após a quantização com MSB utilizando 256 e 64 cores ($d=2310$ e $d=582$, respectivamente). É interessante notar que as projeções LPP em geral foram melhores com as imagens quantizadas em 64 cores com MSB ao invés da original em 256. A razão para isso deve estar no fato da quantização remover informações confusas: ela simplifica as imagens de forma que as cores restantes possam melhor descrever uma certa classe.
+Os resultados indicam que a quantização pode ser utilizada como redução da dimensão de dados visuais, especialmente utilziando 128 e 64 cores. Como experimento, a Figura \ref{fig:quant:fullLPP} mostra as acurácias resultantes da aplicação do LPP sob o vetor obtido após a quantização com \emph{MSB} utilizando 256 e 64 cores ($d=2310$ e $d=582$, respectivamente). É interessante notar que as projeções LPP em geral foram melhores com as imagens quantizadas em 64 cores com \emph{MSB} ao invés da original em 256. A razão para isso deve estar no fato da quantização remover informações confusas: ela simplifica as imagens de forma que as cores restantes possam melhor descrever uma certa classe.
 
 \begin{figure}[!htbp]
   \begin{center}
     \centering
     \includegraphics[width=0.6\linewidth]{\detokenize{figuras/quantizacao/fig_results_full_LPP}}
   \end{center}
-  \caption[Resultados para a projeção do LPP sobre o espaço de características produzido pelo método de quantização MSB utilizando 256 ($d = 2310$) e 64 cores ($d=582$)]{Resultados para a projeção do LPP sobre o espaço de características produzido pelo método de quantização MSB utilizando 256 ($d = 2310$) e 64 cores ($d=582$)\textit{Fonte:~\cite{Ponti2016}.}}
+  \caption[Resultados para a projeção do LPP sobre o espaço de características produzido pelo método de quantização \emph{MSB} utilizando 256 ($d = 2310$) e 64 cores ($d=582$)]{Resultados para a projeção do LPP sobre o espaço de características produzido pelo método de quantização \emph{MSB} utilizando 256 ($d = 2310$) e 64 cores ($d=582$)\textit{Fonte:~\cite{Ponti2016}.}}
   \label{fig:quant:fullLPP}
 \end{figure}
 

@@ -192,16 +192,16 @@ s_k = T(i_k) = \frac{L-1}{MN} \sum_{j=0}^{k}n_j,
 \subsection{Quantização}
 \label{sec:quantizacao}
 
-Muitos métodos de extração de características são preparados apenas para receber imagens de entrada em escala de cinza ou em apenas um canal de cor. Se existir a necessidade de utilizar a imagem RGB, as características são extraídas para cada canal de cor separadamente e posteriormente são concatenados. Isso ocorre porque a complexidade de lidar com um pixel representado em três dimensões é muito maior do que em apenas uma dimensão. Assim, os métodos de quantização visam, de alguma forma, reduzir os canais de cores (24 bits) em apenas um (8 bits). \citeonline{Kanan2012} demonstraram que os métodos para a quantização (conversão de uma imagem colorida para escala de cinza) influenciam a performance no reconhecimento de imagens. Eles também salientam que o método utilizado deveria estar claramente descrito nas publicações da área. Os métodos de conversão para escala de cinza utilizados nessa dissertação foram escolhidos com base em \citeonline{Kanan2012}: \emph{Gleam} e as versões corrigidas por gamma de \emph{Intensidade} e \emph{Luminância}. A operação \textit{gamma} utilizada $z' = z^{1/2.2}$ é a padrão.
+Muitos métodos de extração de características são preparados apenas para receber imagens de entrada em escala de cinza ou em apenas um canal de cor. Se existir a necessidade de utilizar a imagem RGB, as características são extraídas para cada canal de cor separadamente e posteriormente são concatenados. Isso ocorre porque a complexidade de lidar com um pixel representado em três dimensões é muito maior do que em apenas uma dimensão. Assim, os métodos de quantização visam, de alguma forma, reduzir os canais de cores (24 bits) em apenas um (8 bits). \citeonline{Kanan2012} demonstraram que os métodos para a quantização (conversão de uma imagem colorida para escala de cinza) influenciam a performance no reconhecimento de imagens. Eles também salientam que o método utilizado deveria estar claramente descrito nas publicações da área. Os métodos de conversão para escala de cinza utilizados nessa dissertação foram escolhidos com base em \citeonline{Kanan2012}: \emph{Gleam} e as versões corrigidas por \textit{gamma} de \emph{Intensidade} e \emph{Luminância}. A operação \textit{gamma} utilizada $z' = z^{1/2.2}$ é a padrão.
 
 \begin{description}
 \item [Intensidade:] consiste em computar a média entre os canais RGB da imagem a partir de
 \begin{equation*}
 	Q_{Intensidade} = \frac{1}{3}(R + G + B)
 \end{equation*}
-\noindent e então realizar a correção por \textit{gamma}.
+\noindent e então realizar a correção por \textit{gamma}, obtendo assim o método \emph{Intensidade'}.
 
-\item [Gleam:] ao corrigir por \textit{gamma} cada canal antes de realizar a combinação linear, tem-se o método de quantização \textit{Gleam}:
+\item [Gleam:] ao corrigir por \textit{gamma} cada canal antes de realizar a combinação linear, tem-se o método:
 
 \begin{equation*}
 	Q_{Gleam} = \frac{1}{3}(R' + G' + B'),
@@ -211,14 +211,15 @@ Muitos métodos de extração de características são preparados apenas para re
 \item [Luminância:] computa uma soma ponderada dos canais de cor. Esse método foi desenvolido para levar em conta a percepção visual humana. O olho humano percebe verde melhor que vermelho, e vermelho melhor que azul:
 
 \begin{equation*}
-	Q_{Gleam} = 0.299R + 0.587G + 0.114B.
+	Q_{\text{Luminância}} = 0.299R + 0.587G + 0.114B.
 \end{equation*}
-\noindent e então realizar a correção por \textit{gamma}.
+\noindent e então realizar a correção por \textit{gamma}, obtendo assim o método \emph{Luminância'}
 
-\item [Luma:]  similar ao anterior, utilizado nas televisões de alta definição.
+\item [Luma:]  similar ao anterior, utilizado nas televisões de alta definição:
 \begin{equation*}
 	Q_{Luma} = 0.2126R' + 0.7152G' + 0.0722B'.
 \end{equation*}
+\noindent onde $R'$, $G'$ e $B'$ são os canais R, G e B corrigidos por \textit{gamma}.
 
 \item [\sigla{MSB}{\textit{Bits Mais Significativos}}:] ao invés de realizar uma combinação linear dos canais de cores, ordena os bits dos canais coloridos em um único canal. Computa quantos bits de cada canal de cor contribuem para a imagem final e extrai os bits do código binário dos canais originais \cite{Ponti-Jr2013}.
 

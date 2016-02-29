@@ -116,7 +116,7 @@ Neste experimento foram utilizadas duas classes com cores bem distintas entre el
   \end{figure}
 \end{minipage}
 
-\item \textbf{Conversão em escala de cinza}: método \emph{Intensidade} para a visualização. Todas as combinações de extração e conversão em escala de cinza foram testadas, portanto todos os métodos de conversão foram utilizados;
+\item \textbf{Conversão em escala de cinza}: método \emph{Intensidade'} para a visualização. Todas as combinações de extração e conversão em escala de cinza foram testadas, portanto todos os métodos de conversão foram utilizados;
 \item \textbf{Extração de características}: classificação de pixels de borda e interior (BIC) para a visualização. Todos os métodos de extração para a análise estatística;
 \item \textbf{Classificação}: Inicialmente o classificador \textit{Naive Bayes} foi explorado, apresentando melhora na acurácia ao apenas replicar as imagens. Esse comportamento não é desejado em um classificador para a avaliação de rebalanceamento de classes. Por essa razão e por permitir uma análise da melhora no comportamento da classificação, o classificador supervisionado KNN com $K=1$ (para mais detalhes ver Seção~\ref{sec:knn}) foi utilizado;
 \item \textbf{Projeção multidimensional}: dois componentes principais encontrados ao aplicar PCA (Seção~\ref{sec:pca}) nos vetores de características para redução de dimensionalidade foram projetados.
@@ -141,12 +141,12 @@ As classes \emph{Elefante} e \emph{Cavalo} possuem 100 imagens cada. O primeiro 
   \end{figure}
 \end{minipage}
 
-Os resultados da classificação dos três experimentos (desbalanceado, SMOTE e geração artificial) utilizando KNN com $K=1$ reportou que o \textit{f1-score} da geração de imagens utilizando o método de mistura teve um ganho satisfatório em relação ao rebalanceamento no espaço de características com o SMOTE (apresentado na Figura \ref{fig:resultados:1:vis} e Tabela \ref{fig:resultados:1:tabvis}). Foi utilizado \emph{BIC} como método de extração de características e \emph{Intensidade} como método de conversão em escala de cinza. Para essa combinação, a geração de imagens utilizando mistura se mostrou favorável e portanto a visualização do espaço de características apresenta esse método como geração.
+Os resultados da classificação dos três experimentos (desbalanceado, SMOTE e geração artificial) utilizando KNN com $K=1$ reportou que o \textit{f1-score} da geração de imagens utilizando o método de mistura teve um ganho satisfatório em relação ao rebalanceamento no espaço de características com o SMOTE (apresentado na Figura \ref{fig:resultados:1:vis} e Tabela \ref{fig:resultados:1:tabvis}). Foi utilizado \emph{BIC} como método de extração de características e \emph{Intensidade'} como método de conversão em escala de cinza. Para essa combinação, a geração de imagens utilizando mistura se mostrou favorável e portanto a visualização do espaço de características apresenta esse método como geração.
 
 \begin{minipage}{\linewidth}
   \begin{figure}[H]
       \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/1/BIC_Intensity_elefante-cavalo.png}}
-    \caption[Resultados de \textit{f1-score} para as classes \emph{Cavalo} e \emph{Elefante} da base Corel. Foi utilizado \emph{BIC} como método de extração de características e \emph{Intensidade} como método de conversão em escala de cinza. Para essa combinação, a geração de imagens utilizando mistura se mostrou favorável.]{Resultados de \textit{f1-score} para as classes \emph{Cavalo} e \emph{Elefante} da base Corel. Foi utilizado \emph{BIC} como método de extração de características e \emph{Intensidade} como método de conversão em escala de cinza. Para essa combinação, a geração de imagens utilizando \emph{mistura} se mostrou favorável. \textit{Fonte:~Elaborado pela autora.}}
+    \caption[Resultados de \textit{f1-score} para as classes \emph{Cavalo} e \emph{Elefante} da base Corel. Foi utilizado \emph{BIC} como método de extração de características e \emph{Intensidade'} como método de conversão em escala de cinza. Para essa combinação, a geração de imagens utilizando mistura se mostrou favorável.]{Resultados de \textit{f1-score} para as classes \emph{Cavalo} e \emph{Elefante} da base Corel. Foi utilizado \emph{BIC} como método de extração de características e \emph{Intensidade'} como método de conversão em escala de cinza. Para essa combinação, a geração de imagens utilizando \emph{mistura} se mostrou favorável. \textit{Fonte:~Elaborado pela autora.}}
     \label{fig:resultados:1:vis}
   \end{figure}
 \end{minipage}
@@ -155,11 +155,11 @@ Os resultados da classificação dos três experimentos (desbalanceado, SMOTE e 
 
 % \begin{table}[!htbp]
 % \centering
-% \caption{Resultados de \textit{f1-score} para as classes \emph{Cavalo} e \emph{Elefante}, utilizando \emph{Intensidade} como método para conversão em escala de cinza e \emph{BIC} para extração de características.}
+% \caption{Resultados de \textit{f1-score} para as classes \emph{Cavalo} e \emph{Elefante}, utilizando \emph{Intensidade'} como método para conversão em escala de cinza e \emph{BIC} para extração de características.}
 % \label{fig:resultados:1:tabvis}
 % \begin{tabular}{|l|c|c|}
 % \hline
-% \textbf{Intensidade e BIC} & \textbf{Média} & \textbf{Desvio padrão} \\ \hline
+% \textbf{Intensidade' e BIC} & \textbf{Média} & \textbf{Desvio padrão} \\ \hline
 % Todos                      & 88.07          & 5.30                   \\ \hline
 % Aguçamento                 & 86.65          & 7.00                   \\ \hline
 % Borramento                 & 87.17          & 5.10                   \\ \hline
@@ -395,23 +395,23 @@ O experimento anterior considerou classes distintas, por isso classes de difíci
 %-------------------------------------------------------------------------------
 \item[] \textbf{Resultados: melhor combinação dos métodos de extração e conversão para escala de cinza}
 
-A combinação de métodos que resultou em um melhor \textit{f-score} para esse contexto foi a utilização de Luminância e BIC. Na Figura \ref{fig:resultados:2:melhor} é possível verificar o \textit{boxplot} dos \textit{f-scores} para as classes desbalanceadas, rebalanceadas com SMOTE após a extração de características e rebalanceadas com os métodos de geração artificial como primeiro passo do \textit{pipeline}. Como pode ser visto na Tabela \ref{tab:resultados:2:melhor}, diversos métodos foram melhores que o SMOTE, e todos melhores do que a base desbalanceada. O método de saliência, mistura e composição obtiveram os melhores resultados.
+A combinação de métodos que resultou em um melhor \textit{f-score} para esse contexto foi a utilização de \emph{Luminância'}ância e BIC. Na Figura \ref{fig:resultados:2:melhor} é possível verificar o \textit{boxplot} dos \textit{f-scores} para as classes desbalanceadas, rebalanceadas com SMOTE após a extração de características e rebalanceadas com os métodos de geração artificial como primeiro passo do \textit{pipeline}. Como pode ser visto na Tabela \ref{tab:resultados:2:melhor}, diversos métodos foram melhores que o SMOTE, e todos melhores do que a base desbalanceada. O método de saliência, mistura e composição obtiveram os melhores resultados.
 
 \begin{figure}[!htbp]
   \begin{center}
       \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/2/BIC_Luminance_praia-montanha.png}}
   \end{center}
-  \caption[Boxplot das classes \emph{Praia} e \emph{Montanha} para a conversão em escala de cinza com Luminância e BIC como método de extração de características.]{Boxplot das classes \emph{Praia} e \emph{Montanha} para a conversão em escala de cinza com Luminância e BIC como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
+  \caption[Boxplot das classes \emph{Praia} e \emph{Montanha} para a conversão em escala de cinza com \emph{Luminância'} e BIC como método de extração de características.]{Boxplot das classes \emph{Praia} e \emph{Montanha} para a conversão em escala de cinza com \emph{Luminância'} e BIC como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:resultados:2:melhor}
 \end{figure}
 
 \begin{table}[!htbp]
 \centering
-\caption{Resultados de \textit{f1-score} para as classes \emph{Praia} e \emph{Montanha}, utilizando \emph{Luminância} como método para conversão em escala de cinza e \emph{BIC} para extração de características.}
+\caption{Resultados de \textit{f1-score} para as classes \emph{Praia} e \emph{Montanha}, utilizando \emph{Luminância'} como método para conversão em escala de cinza e \emph{BIC} para extração de características.}
 \label{tab:resultados:2:melhor}
 \begin{tabular}{|l|c|c|}
 \hline
-\textbf{Luminância e BIC} & \textbf{Média} & \textbf{Desvio padrão} \\ \hline
+\textbf{Luminância' e BIC} & \textbf{Média} & \textbf{Desvio padrão} \\ \hline
 Todos                  & 65.21          & 7.54                   \\ \hline
 Aguçamento             & 62.30          & 7.85                   \\ \hline
 Borramento             & 61.24          & 7.55                   \\ \hline
@@ -447,25 +447,25 @@ A Figura \ref{fig:resultados:2:saliencia} exemplifica uma geração artificial d
 %-------------------------------------------------------------------------------
 \item[] \textbf{Resultados: maior variância obtida com a combinação dos métodos de extração e conversão para escala de cinza}
 
-Os métodos que combinados obtiveram a maior variância foram \emph{Intensidade} e \emph{HOG} (ver Figura \ref{fig:resultados:2:pior} e Tabela \ref{tab:resultados:2:pior}). O rebalanceamento com a geração de imagens obteve a melhor performance. Porém, o único método que melhorou a variância foi o \emph{aguçamento} (um exemplo de tal geração pode ser visto na Figura \ref{fig:resultados:2:agucamento}). A Figura \ref{fig:resultados:2:mistura} exemplifica a geração artificial com o método \emph{mistura}, utilizando duas imagens de treinamento da classe \emph{Montanha}.
+Os métodos que combinados obtiveram a maior variância foram \emph{Intensidade'} e \emph{HOG} (ver Figura \ref{fig:resultados:2:pior} e Tabela \ref{tab:resultados:2:pior}). O rebalanceamento com a geração de imagens obteve a melhor performance. Porém, o único método que melhorou a variância foi o \emph{aguçamento} (um exemplo de tal geração pode ser visto na Figura \ref{fig:resultados:2:agucamento}). A Figura \ref{fig:resultados:2:mistura} exemplifica a geração artificial com o método \emph{mistura}, utilizando duas imagens de treinamento da classe \emph{Montanha}.
 
 \begin{minipage}{\linewidth}
   \begin{figure}[H]
   \begin{center}
       \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/2/HOG_Intensity_praia-montanha.png}}
   \end{center}
-  \caption[]{Conversão em escala de cinza com Intensidade e HOG como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
+  \caption[]{Conversão em escala de cinza com \emph{Intensidade'} e HOG como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:resultados:2:pior}
 \end{figure}
 \end{minipage}
 
 \begin{table}[!htbp]
 \centering
-\caption{Resultados de \textit{f1-score} para as classes \emph{Praia} e \emph{Montanha}, utilizando \emph{Intensidade} como método para conversão em escala de cinza e \emph{HOG} para extração de características.}
+\caption{Resultados de \textit{f1-score} para as classes \emph{Praia} e \emph{Montanha}, utilizando \emph{Intensidade'} como método para conversão em escala de cinza e \emph{HOG} para extração de características.}
 \label{tab:resultados:2:pior}
 \begin{tabular}{|l|c|c|}
 \hline
-\textbf{Intensidade e HOG} & \textbf{Média}     & \textbf{Desvio padrão} \\ \hline
+\textbf{Intensidade' e HOG} & \textbf{Média}     & \textbf{Desvio padrão} \\ \hline
 Todos                      & 62.184222          & 9.310391               \\ \hline
 Aguçamento                 & 63.455343          & 6.719545               \\ \hline
 Borramento                 & 57.599052          & 8.332506               \\ \hline
@@ -609,14 +609,14 @@ Desbalanceado       & 58.09          & 2.31                   \\ \hline
     \begin{center}
         \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/3/LBP_Intensity_corel.png}}
     \end{center}
-    \caption[Experimento com as 10 classes da base Corel. Foi utilizado o método \emph{Intensidade} para conversão em escala de cinza e LBP como método de extração de características.]{Experimento com as 10 classes da base Corel. Foi utilizado o método \emph{Intensidade} para conversão em escala de cinza e LBP como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
+    \caption[Experimento com as 10 classes da base Corel. Foi utilizado o método \emph{Intensidade'} para conversão em escala de cinza e LBP como método de extração de características.]{Experimento com as 10 classes da base Corel. Foi utilizado o método \emph{Intensidade'} para conversão em escala de cinza e LBP como método de extração de características. \textit{Fonte:~Elaborado pela autora.}}
     \label{fig:resultados:3:pior}
   \end{figure}
 \end{minipage}
 
 \begin{table}[]
 \centering
-\caption{Resultados de \textit{f1-score} para as 10 classes da Corel, utilizando \emph{Intensidade} como método para conversão em escala de cinza e \emph{LBP} para extração de características}
+\caption{Resultados de \textit{f1-score} para as 10 classes da Corel, utilizando \emph{Intensidade'} como método para conversão em escala de cinza e \emph{LBP} para extração de características}
 \label{tab:resultados:3:pior}
 \begin{tabular}{|l|c|c|}
 \hline
@@ -676,7 +676,7 @@ O seguinte protocolo foi seguido para a obtenção dos resultados:
 
 \begin{table}[]
 \centering
-\caption{Resultados de \textit{f1-score} para as classes XX, utilizando \emph{Luminância} como método para conversão em escala de cinza e \emph{HOG} para extração de características}
+\caption{Resultados de \textit{f1-score} para as classes XX, utilizando \emph{Luminância'} como método para conversão em escala de cinza e \emph{HOG} para extração de características}
 \label{tab:resultados:4:melhor}
 \begin{tabular}{|l|c|c|}
 \hline
