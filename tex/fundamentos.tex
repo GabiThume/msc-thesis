@@ -158,13 +158,11 @@ Um exemplo clássico de utilização de realce, é para compensar a variação d
 
 O constraste é a diferença de intensidade entre os níveis de maior e menor intensidade na imagem. Imagens com baixa resolução podem ser geradas a partir de uma iluminação pobre ou outros problemas com a captura. Dessa forma, o processo de ``esticar'' o contraste expande os níveis de intensidade da imagem \cite{Gonzalez2007}.
 
-\meutodo{Explicar melhor histograma e k}
-
 É possível aumentar o contraste de uma imagem ao manipular o seu histograma $h$, que pode ser definido como
 \begin{equation*}
 h(i_k) = n_k,
 \end{equation*}
-\noindent onde $n_k$ é o número de pixels de intensidade $i_k$. Ao observar os histogramas de diferentes imagens é possível notar que imagens com alto contraste possuem um histograma com níveis próximos a uma distribuição uniforme. Isso permite que certas operações, como a equalização de histograma, obtenham o melhor contraste de uma imagem. Essa operação é caracterizada pela máxima variância do histograma e pode ser definida como
+\noindent onde $k$ é o índice do pixel e $n_k$ é o número de pixels de intensidade $i_k$. Ou seja, o histograma é uma representação da frequência de cada intensidade na imagem. Ao observar os histogramas de diferentes imagens é possível notar que imagens com alto contraste possuem um histograma com níveis próximos a uma distribuição uniforme. Isso permite que certas operações, como a equalização de histograma, obtenham o melhor contraste de uma imagem. Essa operação é caracterizada pela máxima variância do histograma e pode ser definida como
 \begin{equation}
 s_k = T(i_k) = \frac{L-1}{MN} \sum_{j=0}^{k}n_j,
 \end{equation}
@@ -221,7 +219,7 @@ Muitos métodos de extração de características são preparados apenas para re
 \end{equation*}
 \noindent onde $R'$, $G'$ e $B'$ são os canais R, G e B corrigidos por \textit{gamma}.
 
-\item [\sigla{MSB}{\textit{Bits Mais Significativos}}:] ao invés de realizar uma combinação linear dos canais de cores, ordena os bits dos canais coloridos em um único canal. Computa quantos bits de cada canal de cor contribuem para a imagem final e extrai os bits do código binário dos canais originais \cite{Ponti-Jr2013}.
+\item [\sigla{MSB}{\textit{Most Significant Bits}}:] ao invés de realizar uma combinação linear dos canais de cores, ordena os bits dos canais coloridos em um único canal. Computa quantos bits de cada canal de cor contribuem para a imagem final e extrai os bits do código binário dos canais originais \cite{Ponti-Jr2013}.
 
 \end{description}
 

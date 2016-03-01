@@ -160,8 +160,9 @@ Os resultados indicam que a quantização pode ser utilizada como redução da d
   \label{fig:quant:fullLPP}
 \end{figure}
 
+
+\section{Considerações Finais}
+
 O vetor concatenado com todos os descritores possui $9C + 6$ dimensões, onde $C$ é o número de cores da imagem de entrada. E o tempo de execução para a extração de todas as características é $f(N) = 42N + 6C^2$, onde $N$ é o número de pixels. Para cada imagem são necessárias $D^2 + kD + d^2$ operações para computar o vetor reduzido com LPP, onde $D$ é o tamanho do vetor original, $d$ o tamanho do vetor de saída e $k$ é o número de vizinhos utilizados no algoritmo.
 
 Ao comparar o uso da quantização com a utilização de métodos mais complexos para redução da dimensionalidade, esse procedimento permite uma redução significante, enquanto normalmente preserva ou melhora a acurácia do sistema. Independente da utilização de um método de seleção de características, ao escolher um método de quantização apropriado e seus parâmetros é possível reduzir a dimensionalidade e acelerar computacionalmente as etapas que precedem o reconhecimento de imagens. Considere o seguinte exemplo: 100 imagens com 256 cores demandam 231.6 milhões de instruções para extrair as características e reduzir o vetor utilizando o método LPP (com $k = 10$ e $d = 50$). Se ao invés disso, fossem utilizadas 64 cores, esse número cairia para 58.7 milhões, o que corresponde a uma redução de 74,6\%.
-
-\section{Considerações Finais}
