@@ -38,9 +38,7 @@ Neste capítulo os métodos de geração artificial para o rebalanceamento de cl
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Borramento}
 
-Também conhecido como filtro de suavização, o borramento é uma operação de processamento comumente utilizada com o objetivo de filtrar as frequências de uma imagem, removendo ruídos e detalhes não relevantes. Normalmente esse tipo de filtro provoca também um certo borramento das bordas, como pode ser observado na Figura~\ref{fig:blur}.
-
-Esse comportamento não é esperado quando devemos gerar novas imagens, pois informações relevantes podem ser removidas. Dessa forma, a operação de borramento utilizada é a de filtro bilateral. Ela substitui o valor do pixel $(x,y)$ por uma média dos pixels de intensidade similar na imagem e dos pixels vizinhos \cite{Tomasi1998}. Ou seja, é uma média ponderada das intensidades. O Algoritmo~\ref{alg:blur} descreve os passos desse filtro na sua versão mais simples, de força bruta. A Figura~\ref{fig:gen:blur} exemplifica o seu funcionamento: à esquerda está demonstrada a imagem original e à direita a imagem borrada.
+Também conhecido como filtro de suavização, o borramento é uma operação de processamento comumente utilizada com o objetivo de filtrar uma imagem, removendo ruídos e detalhes não relevantes. Normalmente esse tipo de filtro provoca também um certo borramento das bordas, como pode ser observado na Figura~\ref{fig:blur}. Esse comportamento não é esperado quando queremos gerar novas imagens, pois informações relevantes podem ser removidas. Com o intuito de preservar as bordas, a operação de borramento \textbf{filtro bilateral} pode ser utilizada. Ela substitui o valor do pixel $I_(x,y)$ pela média dos pixels vizinhos de intensidade similar \cite{Tomasi1998}. Ou seja, é uma média ponderada das intensidades que considera a diferença dos valores entre vizinhos para preservar bordas. Assim, para um pixel influenciar outro, deve estar próximo no espaço de coordenadas e possuir intensidade similar. O Algoritmo~\ref{alg:blur} descreve os passos desse filtro na sua versão mais simples, de força bruta. A Figura~\ref{fig:gen:blur} exemplifica o seu funcionamento: à esquerda está demonstrada a imagem original e à direita a imagem borrada.
 
 \vspace{0.5cm}
 \begin{algorithm}[!htbp]
@@ -49,8 +47,8 @@ Esse comportamento não é esperado quando devemos gerar novas imagens, pois inf
   \SetAlgoLined
   \Entrada{Imagem colorida $I$ em formato BGR}
   \Entrada{Diâmetro $d$ de pixinhança de pixels}
-  \Entrada{Sigma do espaço de cor}
-  \Entrada{Sigma do espaço de coordenadas}
+  \Entrada{Sigma do espaço de cor $\sigma_{range}$}
+  \Entrada{Sigma do espaço de coordenadas $\sigma_{spatial}$}
 
   \Saida{Imagem gerada $BF$}
 
@@ -59,13 +57,12 @@ Esse comportamento não é esperado quando devemos gerar novas imagens, pois inf
     $\text{W(x,y)} \gets 0$\;
 
     \ParaCada{pixel $(i,j)$}{
-      $\text{w} \gets G_{\sigma_{s}} (\lVert(x,y) - (i,j)\rVert) G_{\sigma_{x}} (\lvert I(x,y) - I(i,j) \rvert) $\;
+      $\text{w} \gets G_{\sigma_{spatial}} (\lVert(x,y) - (i,j)\rVert) G_{\sigma_{range}} (\lvert I(x,y) - I(i,j) \rvert) $\;
       $\text{BF(x,y)} \gets BF(x,y) + w I(i,j)$\;
       $\text{W(x,y)} \gets W(x,y) + w$\;
     }
     $\text{BF(x,y)} \gets I(x,y) / W(x,y)$\;
   }
-  \meutodo{Conferir algoritmo}
 \end{algorithm}
 \vspace{0.5cm}
 
@@ -83,8 +80,9 @@ Esse comportamento não é esperado quando devemos gerar novas imagens, pois inf
   \label{fig:gen:blur}
 \end{figure}
 
+\FloatBarrier
 \begin{description}
-  \item[Parâmetros e suas variações] Conforme descrito no Algoritmo~\ref{alg:blur}, os parâmetros para essa geração são: o diâmetro $d$ de pixinhança de pixels, o $\sigma$ do espaço de cor e o $\sigma$ do espaço de coordenadas. Esses parâmetros dependem das propriedades das imagens e dos resultados pretendidos. Dessa forma, o tamanho do filtro é um valor escolhido arbitrariamente para cada aplicação em específico \cite{Tomasi1998}. Como o nosso objetivo com a geração das imagens não foi especializar no comportamento de uma classe de imagens específica, um valor foi escolhido aleatoriamente e a partir dele os parâmetros de entrada foram definidos.
+  \item[Parâmetros e suas variações] Conforme descrito no Algoritmo~\ref{alg:blur}, os parâmetros para essa geração são: o $\sigma_{range}$ do espaço de cor e o $\sigma_{spatial}$ do espaço de coordenadas. Esses parâmetros dependem das propriedades das imagens e dos resultados pretendidos. Quanto maior o $\sigma_{range}$, mais próximo da convolução Gaussiana e assim ocorre o borramento de intensidades mais distintas. Já o $\sigma_{spatial}$ controla o tamanho da vizinhança. Dessa forma, esses valores são escolhidos arbitrariamente para cada aplicação específica \cite{Tomasi1998}. Como o nosso objetivo com a geração das imagens não foi especializar no comportamento de uma classe de imagens específica, um valor foi escolhido aleatoriamente e a partir dele os parâmetros de entrada foram definidos.
 
   \item[Limitações] Esse filtro tende a remover texturas e a criar novos contornos. Dependendo dos valores, pode gerar uma imagem ``cartoonizada''.
 
