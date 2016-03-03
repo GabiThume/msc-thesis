@@ -50,7 +50,7 @@ Também conhecido como filtro de suavização, o borramento é uma operação de
   \Entrada{Sigma do espaço de cor $\sigma_{range}$}
   \Entrada{Sigma do espaço de coordenadas $\sigma_{spatial}$}
 
-  \Saida{Imagem gerada $BF$}
+  \Saida{Imagem borrada $BF$}
 
   \ParaCada{pixel $(x,y)$}{
     $\text{BF(x,y)} \gets 0$\;
@@ -102,7 +102,7 @@ Diferentemente da suavização, o processamento de aguçamento procura enfatizar
   \label{alg:unsharp}
   \SetAlgoLined
   \Entrada{Imagem colorida $I$ em formato BGR}
-  \Saida{Imagem gerada $G$}
+  \Saida{Imagem aguçada $G$}
   $borrada \gets \text{filtro de suavização}(I)$
   \ParaCada{pixel $(x,y)$}{
   $\text{diferença} \gets I(x,y) - borrada(x,y)$\;
@@ -168,14 +168,14 @@ Uma possível implementação para encontrar os valores de Poisson foi desenvolv
   \label{alg:noise}
   \SetAlgoLined
   \Entrada{Imagem colorida $I$ em formato BGR}
-  \Saida{Imagem gerada $G$}
+  \Saida{Imagem ruidosa $G$}
   \ParaCada{pixel $(x,y)$}{
   $L \gets exp(-I(x,y))$\;
   $p \gets 1$\;
   $k \gets 0$\;
   \DoWhile{$p > L$}{
   $k \gets k + 1$\;
-  $p \gets p * \text{número aleatório entre 0 e 1}$\;
+  $p \gets p * \text{número aleatório uniforme entre 0 e 1}$\;
   }
   $\text{G}(x,y) \gets k - 1$\;
   }
@@ -186,7 +186,7 @@ Uma possível implementação para encontrar os valores de Poisson foi desenvolv
   \item[Parâmetros e suas variações]
   \item[Limitações] A adição de ruído é normalmente indesejável e a utilizamos
   para englobar um processamento de imagens que, de certa forma, se contrapõe ao borramento.
-  \item[Métodos relacionados]
+  \item[Métodos relacionados] Esse método está relacionado com diversos outros ruídos, como o sal e pimenta, por exemplo.
   % \item[Visualização]
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -462,8 +462,8 @@ Essa geração pretende compor informações de diversas imagens em uma única i
 
   \item[Limitações] O término brusco de uma imagem para início da outra ao formar a grade de imagens tenha efeitos colaterais de inserção de textura que não excedam a vantagem de compor uma mesma imagem com várias cores, texturas e formas das imagens originais.
 
-  \item[Métodos relacionados]
-  \meutodo {quais??}
+  \item[Métodos relacionados] Fazer uma composição de imagens em quadrantes pode estar relacionado com a composição ao utilizar saliência.
+
   % \item[Visualização]
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
