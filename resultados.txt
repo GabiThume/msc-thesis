@@ -1,0 +1,759 @@
+%%%%%%%%%%%%%
+% elefante%cavalo
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{ACC Gleam} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos         &  91.090913 &  4.559066  \\ \hline
+  Aguçamento     &  91.002678 &  4.907016  \\ \hline
+  Borramento     &  89.394500 &  5.103498  \\ \hline
+  Composição 16  &  90.934305 &  4.399334  \\ \hline
+  Composição 4   &  91.773528 &  4.909852  \\ \hline
+  Limiares       &  90.893133 &  5.285833  \\ \hline
+  Mistura        &  90.177055 &  4.409787  \\ \hline
+  Ruído          &  89.337770 &  5.169757  \\ \hline
+  SMOTE Visual   &  88.616535 &  5.567976  \\ \hline
+  Saliência      &  91.282655 &  4.230281  \\ \hline
+ SMOTE           &  90.173808 &  4.566863  \\ \hline
+Desbalanceado    &  88.258567 &  5.538461  \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{HOG MSB} & \textbf{Média}     & \textbf{ Desvio Padrão} \\ \hline
+   Todos        &  60.000127 &  12.063967  \\ \hline
+  Aguçamento    &  54.809555 &  10.610213  \\ \hline
+  Borramento    &  55.588173 &  13.275734  \\ \hline
+  Composição 16 &  55.667145 &  13.341421  \\ \hline
+  Composição 4  &  55.652205 &  13.323408  \\ \hline
+  Limiares      &  55.652268 &  11.547820  \\ \hline
+  Mistura       &  57.826535 &  10.882912  \\ \hline
+  Ruído         &  62.174910 &  10.746760  \\ \hline
+  SMOTE Visual  &  58.920085 &  14.765860  \\ \hline
+  Saliência     &  56.322367 &  12.169296  \\ \hline
+ SMOTE          &  58.342450 &  13.768688  \\ \hline
+Desbalanceado   &  55.667145 &  13.341421  \\ \hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%
+% leafs
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{CCV Intensity} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  57.353742 &  7.836745  \\ \hline
+  Aguçamento    &  56.445753 &  8.733590  \\ \hline
+  Borramento    &  58.787980 &  6.171935  \\ \hline
+  Composição 16 &  55.412412 &  7.886897  \\ \hline
+  Composição 4  &  56.299638 &  8.453923  \\ \hline
+  Limiares      &  57.655005 &  8.514697  \\ \hline
+  Mistura       &  58.248577 &  8.153029  \\ \hline
+  Ruído         &  55.554812 &  7.398869  \\ \hline
+  SMOTE Visual  &  53.557565 &  9.091481  \\ \hline
+  Saliência     &  60.390612 &  7.593063  \\ \hline
+ SMOTE          &  59.572190 &  7.617556  \\ \hline
+Desbalanceado   &  53.446988 &  9.096767  \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{HOG Luminance} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  89.419685 &  5.385949  \\ \hline
+  Aguçamento    &  90.349900 &  4.957448  \\ \hline
+  Borramento    &  88.192345 &  5.883145  \\ \hline
+  Composição 16 &  88.192345 &  5.883145  \\ \hline
+  Composição 4  &  88.192345 &  5.883145  \\ \hline
+  Limiares      &  89.695107 &  5.133200  \\ \hline
+  Mistura       &  88.516380 &  5.908127  \\ \hline
+  Ruído         &  88.973907 &  5.733604  \\ \hline
+  SMOTE Visual  &  89.573522 &  5.457095  \\ \hline
+  Saliência     &  89.422038 &  5.529887  \\ \hline
+ SMOTE          &  91.904057 &  4.951265  \\ \hline
+Desbalanceado   &  88.192345 &  5.883145  \\ \hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%
+% praia montanha
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{CCV Luma} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  64.425960 &  7.932999  \\ \hline
+  Aguçamento    &  64.647290 &  6.785433  \\ \hline
+  Borramento    &  61.768695 &  7.093587  \\ \hline
+  Composição 16 &  63.262915 &  8.108386  \\ \hline
+  Composição 4  &  64.473190 &  7.320042  \\ \hline
+  Limiares      &  62.308295 &  7.632398  \\ \hline
+  Mistura       &  59.979555 &  8.134610  \\ \hline
+  Ruído         &  62.171690 &  7.800338  \\ \hline
+  SMOTE Visual  &  60.371835 &  6.562603  \\ \hline
+  Saliência     &  67.222670 &  5.514302  \\ \hline
+ SMOTE          &  66.152585 &  5.035412  \\ \hline
+Desbalanceado   &  59.640090 &  8.675836  \\ \hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% shark%fish
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{LBP Luma} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  77.128293 &  2.064232  \\ \hline
+  Aguçamento    &  76.862198 &  1.786898  \\ \hline
+  Borramento    &  73.919025 &  1.942236  \\ \hline
+  Composição 16 &  75.435960 &  2.254193  \\ \hline
+  Composição 4  &  74.359165 &  1.974563  \\ \hline
+  Limiares      &  78.330465 &  1.768789  \\ \hline
+  Mistura       &  77.381940 &  2.588103  \\ \hline
+  Ruído         &  74.094233 &  1.743535  \\ \hline
+  SMOTE Visual  &  74.569545 &  1.648100  \\ \hline
+  Saliência     &  76.934077 &  2.114528  \\ \hline
+ SMOTE          &  78.066890 &  2.107176  \\ \hline
+Desbalanceado   &  73.378227 &  2.110355  \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{HOG Luma} & \textbf{Média}     & \textbf{ Desvio Padrão} \\ \hline
+   Todos        &  51.441720 &  12.921923  \\ \hline
+  Aguçamento    &  60.974365  &  4.566761  \\ \hline
+  Borramento    &  56.753103  &  8.141379  \\ \hline
+  Composição 16 &  56.729255  &  8.149596  \\ \hline
+  Composição 4  &  56.723105  &  8.117873  \\ \hline
+  Limiares      &  58.216875  &  6.972602  \\ \hline
+  Mistura       &  59.222603  &  6.725825  \\ \hline
+  Ruído         &  48.840517 &  12.176960  \\ \hline
+  SMOTE Visual  &  49.560188 &  12.596971  \\ \hline
+  Saliência     &  57.425075  &  7.524789  \\ \hline
+ SMOTE          &  55.772368 &  10.372273  \\ \hline
+Desbalanceado   &  56.729255  &  8.149596  \\ \hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%
+% deer%ship
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{BIC Intensity} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  68.014415 &  0.980650  \\ \hline
+  Aguçamento    &  68.316195 &  0.805162  \\ \hline
+  Borramento    &  66.818710 &  1.098375  \\ \hline
+  Composição 16 &  67.765980 &  0.951134  \\ \hline
+  Composição 4  &  67.631380 &  0.973894  \\ \hline
+  Limiares      &  69.093785 &  0.990086  \\ \hline
+  Mistura       &  68.461075 &  1.078629  \\ \hline
+  Ruído         &  68.802275 &  0.854582  \\ \hline
+  SMOTE Visual  &  68.147100 &  1.184462  \\ \hline
+  Saliência     &  67.584525 &  1.049048  \\ \hline
+ SMOTE          &  68.283720 &  0.804066  \\ \hline
+Desbalanceado   &  67.574775 &  1.053371  \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{HOG Gleam    } & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  88.939785 &  1.035462  \\ \hline
+  Aguçamento    &  89.473075 &  0.961293  \\ \hline
+  Borramento    &  88.150530 &  1.006920  \\ \hline
+  Composição 16 &  88.086065 &  0.987147  \\ \hline
+  Composição 4  &  88.360675 &  0.949842  \\ \hline
+  Limiares      &  89.356875 &  0.942907  \\ \hline
+  Mistura       &  89.445505 &  0.939809  \\ \hline
+  Ruído         &  86.762190 &  1.165064  \\ \hline
+  SMOTE Visual  &  88.395965 &  1.081594  \\ \hline
+  Saliência     &  88.136675 &  0.988034  \\ \hline
+ SMOTE          &  63.183905 &  2.355925  \\ \hline
+Desbalanceado   &  88.121310 &  0.985599  \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{HOG Luminance} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  88.653880 &  0.813826  \\ \hline
+  Aguçamento    &  89.248575 &  0.835802  \\ \hline
+  Borramento    &  87.309680 &  0.938277  \\ \hline
+  Composição 16 &  87.296770 &  0.905665  \\ \hline
+  Composição 4  &  87.659990 &  0.905510  \\ \hline
+  Limiares      &  89.036480 &  0.853427  \\ \hline
+  Mistura       &  89.006620 &  0.729144  \\ \hline
+  Ruído         &  86.546455 &  0.932451  \\ \hline
+  SMOTE Visual  &  88.204755 &  0.831198  \\ \hline
+  Saliência     &  87.298615 &  0.940479  \\ \hline
+ SMOTE          &  63.548590 &  1.876178  \\ \hline
+Desbalanceado   &  87.280425 &  0.934383  \\ \hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%
+% caltech
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{CCV Luma} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  32.310205 &  5.124719  \\ \hline
+  Aguçamento    &  32.323863 &  4.842180  \\ \hline
+  Borramento    &  32.098333 &  4.964983  \\ \hline
+  Composição 16 &  32.291380 &  4.749573  \\ \hline
+  Composição 4  &  32.353122 &  4.842966  \\ \hline
+  Limiares      &  32.881367 &  4.665450  \\ \hline
+  Mistura       &  31.749173 &  4.806095  \\ \hline
+  Ruído         &  31.551965 &  4.801347  \\ \hline
+  SMOTE Visual  &  30.605105 &  4.748897  \\ \hline
+  Saliência     &  32.021265 &  4.866437  \\ \hline
+ SMOTE          &  32.609082 &  4.600097  \\ \hline
+Desbalanceado   &  31.339258 &  4.904720  \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{HOG Intensity} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  77.591493 &  3.387543  \\ \hline
+  Aguçamento    &  76.982412 &  3.482750  \\ \hline
+  Borramento    &  75.736587 &  3.812333  \\ \hline
+  Composição 16 &  75.742438 &  3.823391  \\ \hline
+  Composição 4  &  75.787022 &  3.794589  \\ \hline
+  Limiares      &  76.785628 &  3.652596  \\ \hline
+  Mistura       &  77.186702 &  3.382386  \\ \hline
+  Ruído         &  77.344959 &  3.664212  \\ \hline
+  SMOTE Visual  &  75.486170 &  4.405685  \\ \hline
+  Saliência     &  76.587268 &  3.600158  \\ \hline
+ SMOTE          &  77.755417 &  3.529355  \\ \hline
+Desbalanceado   &  75.732382 &  3.833682  \\ \hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%
+% corel
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{LBP Gleam} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  61.216388 &  2.205391  \\ \hline
+  Aguçamento    &  61.098384 &  2.275732  \\ \hline
+  Borramento    &  60.369376 &  2.254895  \\ \hline
+  Composição 16 &  60.630235 &  2.212156  \\ \hline
+  Composição 4  &  60.568624 &  2.254904  \\ \hline
+  Limiares      &  61.296003 &  2.101686  \\ \hline
+  Mistura       &  61.366671 &  2.225635  \\ \hline
+  Ruído         &  60.825884 &  2.358098  \\ \hline
+  SMOTE Visual  &  60.886122 &  2.321783  \\ \hline
+  Saliência     &  61.050988 &  2.271443  \\ \hline
+ SMOTE          &  61.368896 &  2.148675  \\ \hline
+Desbalanceado   &  60.362256 &  2.290263  \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{LBP MSB } & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  57.210442 &  3.744924  \\ \hline
+  Aguçamento    &  57.088167 &  3.804031  \\ \hline
+  Borramento    &  56.733362 &  3.829360  \\ \hline
+  Composição 16 &  57.002406 &  3.800792  \\ \hline
+  Composição 4  &  56.863346 &  3.796709  \\ \hline
+  Limiares      &  57.495513 &  3.869726  \\ \hline
+  Mistura       &  57.751719 &  3.756804  \\ \hline
+  Ruído         &  56.752651 &  3.678322  \\ \hline
+  SMOTE Visual  &  56.400359 &  3.558930  \\ \hline
+  Saliência     &  57.437298 &  3.773111  \\ \hline
+ SMOTE          &  57.663756 &  3.887890  \\ \hline
+Desbalanceado   &  56.554079 &  3.860002  \\ \hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%
+% dtd%3
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{CCV MSB } & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  50.014875 &  6.920990  \\ \hline
+  Aguçamento    &  49.509720 &  7.668507  \\ \hline
+  Borramento    &  49.948920 &  7.685131  \\ \hline
+  Composição 16 &  49.610573 &  6.654422  \\ \hline
+  Composição 4  &  50.452450 &  7.348440  \\ \hline
+  Limiares      &  51.533113 &  7.352758  \\ \hline
+  Mistura       &  50.718318 &  6.782458  \\ \hline
+  Ruído         &  48.576857 &  8.047922  \\ \hline
+  SMOTE Visual  &  49.313247 &  7.111819  \\ \hline
+  Saliência     &  51.553817 &  7.135818  \\ \hline
+ SMOTE          &  50.256637 &  6.988601  \\ \hline
+Desbalanceado   &  47.045110 &  7.386726  \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{LBP Luminance} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  65.888525 &  5.160787  \\ \hline
+  Aguçamento    &  65.113232 &  4.791274  \\ \hline
+  Borramento    &  63.215212 &  6.113617  \\ \hline
+  Composição 16 &  64.174632 &  5.985990  \\ \hline
+  Composição 4  &  63.304767 &  6.020630  \\ \hline
+  Limiares      &  66.111205 &  5.722652  \\ \hline
+  Mistura       &  65.870268 &  5.092446  \\ \hline
+  Ruído         &  64.808212 &  4.774068  \\ \hline
+  SMOTE Visual  &  65.191322 &  5.502901  \\ \hline
+  Saliência     &  65.721438 &  5.768244  \\ \hline
+ SMOTE          &  65.738165 &  5.116455  \\ \hline
+Desbalanceado   &  62.351115 &  5.689125  \\ \hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%
+% tropical_fruits1400
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{LBP Luma} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  91.645504 &  1.953079  \\ \hline
+  Aguçamento    &  91.461692 &  2.045135  \\ \hline
+  Borramento    &  91.487007 &  2.020616  \\ \hline
+  Composição 16 &  91.503759 &  2.031501  \\ \hline
+  Composição 4  &  91.469747 &  2.029588  \\ \hline
+  Limiares      &  91.792760 &  1.971010  \\ \hline
+  Mistura       &  91.925818 &  1.928285  \\ \hline
+  Ruído         &  91.489904 &  2.028988  \\ \hline
+  SMOTE Visual  &  91.471437 &  2.027512  \\ \hline
+  Saliência     &  91.744950 &  1.991271  \\ \hline
+ SMOTE          &  91.853505 &  1.964750  \\ \hline
+Desbalanceado   &  91.489904 &  2.028988  \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{HOG MSB} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  77.742523 &  3.439656  \\ \hline
+  Aguçamento    &  86.937887 &  3.231634  \\ \hline
+  Borramento    &  86.635640 &  3.399867  \\ \hline
+  Composição 16 &  86.635640 &  3.399867  \\ \hline
+  Composição 4  &  86.638271 &  3.399586  \\ \hline
+  Limiares      &  86.818014 &  3.344101  \\ \hline
+  Mistura       &  87.098318 &  3.270390  \\ \hline
+  Ruído         &  75.722874 &  3.370713  \\ \hline
+  SMOTE Visual  &  78.905535 &  5.169790  \\ \hline
+  Saliência     &  86.860756 &  3.320881  \\ \hline
+ SMOTE          &  85.543933 &  3.699019  \\ \hline
+Desbalanceado   &  86.635640 &  3.399867  \\ \hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%
+%leafsnap-1000
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{BIC Intensity} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  48.917594 &  4.560108  \\ \hline
+  Aguçamento    &  48.910608 &  4.475141  \\ \hline
+  Borramento    &  48.553919 &  4.560730  \\ \hline
+  Composição 16 &  48.654596 &  4.547956  \\ \hline
+  Composição 4  &  48.534639 &  4.530744  \\ \hline
+  Limiares      &  48.753526 &  4.497595  \\ \hline
+  Mistura       &  49.415185 &  4.569106  \\ \hline
+  Ruído         &  48.569050 &  4.470451  \\ \hline
+  SMOTE Visual  &  48.247184 &  4.450895  \\ \hline
+  Saliência     &  48.791881 &  4.398131  \\ \hline
+ SMOTE          &  49.199615 &  4.554478  \\ \hline
+Desbalanceado   &  48.435470 &  4.529753  \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{LBP Luminance} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  78.996719 &  3.244853  \\ \hline
+  Aguçamento    &  78.649003 &  3.287007  \\ \hline
+  Borramento    &  78.601896 &  3.287302  \\ \hline
+  Composição 16 &  78.627216 &  3.291905  \\ \hline
+  Composição 4  &  78.621777 &  3.283837  \\ \hline
+  Limiares      &  79.122887 &  3.220693  \\ \hline
+  Mistura       &  79.239798 &  3.309218  \\ \hline
+  Ruído         &  78.611838 &  3.282242  \\ \hline
+  SMOTE Visual  &  78.641342 &  3.294647  \\ \hline
+  Saliência     &  79.074926 &  3.355666  \\ \hline
+ SMOTE          &  79.197638 &  3.282848  \\ \hline
+Desbalanceado   &  78.611838 &  3.282242  \\ \hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%
+% Naturalmente desbalanceados
+
+%%%%%%%%%%%%%
+% Bigben + museu
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{CCV Intensity} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  56.212500 &  2.714247  \\ \hline
+  Aguçamento    &  60.676030 &  4.710675  \\ \hline
+  Borramento    &  60.351503 &  4.155252  \\ \hline
+  Composição 16 &  66.580947 &  7.016479  \\ \hline
+  Composição 4  &  63.987452 &  3.468676  \\ \hline
+  Limiares      &  60.631843 &  2.907331  \\ \hline
+  Mistura       &  56.600202 &  3.550611  \\ \hline
+  Ruído         &  57.359880 &  3.574094  \\ \hline
+  SMOTE Visual  &  59.479700 &  5.368689  \\ \hline
+  Saliência     &  61.335735 &  3.363669  \\ \hline
+ SMOTE          &  63.360295 &  4.908738  \\ \hline
+Desbalanceado   &  66.259100 &  7.173544  \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{HOG Gleam} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  82.733200 &  3.231024  \\ \hline
+  Aguçamento    &  95.067560 &  2.954127  \\ \hline
+  Borramento    &  96.138760 &  1.333680  \\ \hline
+  Composição 16 &  95.958713 &  1.412477  \\ \hline
+  Composição 4  &  95.741642 &  1.708952  \\ \hline
+  Limiares      &  94.405550 &  2.297024  \\ \hline
+  Mistura       &  95.248790 &  1.945429  \\ \hline
+  Ruído         &  85.424083 &  3.041741  \\ \hline
+  SMOTE Visual  &  77.874767 &  3.500503  \\ \hline
+  Saliência     &  95.767123 &  2.649306  \\ \hline
+ SMOTE          &  86.364565 &  1.908916  \\ \hline
+Desbalanceado   &  96.138760 &  1.333680  \\ \hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%
+% eiffel + trafalgar
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{BIC Gleam} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  59.175302 &  2.532414  \\ \hline
+  Aguçamento    &  58.049800 &  5.800853  \\ \hline
+  Borramento    &  61.067525 &  4.546042  \\ \hline
+  Composição 16 &  60.540642 &  4.572195  \\ \hline
+  Composição 4  &  60.326013 &  4.834876  \\ \hline
+  Limiares      &  60.277397 &  3.093546  \\ \hline
+  Mistura       &  57.930468 &  3.552764  \\ \hline
+  Ruído         &  61.145358 &  2.174345  \\ \hline
+  SMOTE Visual  &  58.898637 &  4.688396  \\ \hline
+  Saliência     &  59.591055 &  2.457358  \\ \hline
+ SMOTE          &  60.810838 &  2.992142  \\ \hline
+Desbalanceado   &  60.698560 &  6.584647  \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{HOG MSB} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  88.616130 &  1.952745  \\ \hline
+  Aguçamento    &  98.345625 &  1.755180  \\ \hline
+  Borramento    &  97.173480 &  2.760269  \\ \hline
+  Composição 16 &  97.206953 &  2.712589  \\ \hline
+  Composição 4  &  97.301088 &  2.381761  \\ \hline
+  Limiares      &  98.628050 &  1.142830  \\ \hline
+  Mistura       &  99.112148 &  0.837440  \\ \hline
+  Ruído         &  91.499965 &  1.762218  \\ \hline
+  SMOTE Visual  &  82.963755 &  2.678785  \\ \hline
+  Saliência     &  98.246915 &  1.526565  \\ \hline
+ SMOTE          &  98.471765 &  0.788747  \\ \hline
+Desbalanceado   &  97.173480 &  2.760269  \\ \hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%
+% eiffel + ponte
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{LBP Luma} & \textbf{Média}     & \textbf{ Desvio Padrão} \\ \hline
+   Todos        &  69.303225  &  2.789350  \\ \hline
+  Aguçamento    &  75.541880  &  8.889638  \\ \hline
+  Borramento    &  80.487440 &  11.091993  \\ \hline
+  Composição 16 &  75.096575  &  8.751236  \\ \hline
+  Composição 4  &  78.556665  &  9.010462  \\ \hline
+  Limiares      &  76.000980  &  6.099727  \\ \hline
+  Mistura       &  73.056525  &  3.600406  \\ \hline
+  Ruído         &  78.827550  &  9.912278  \\ \hline
+  SMOTE Visual  &  73.581905  &  8.446787  \\ \hline
+  Saliência     &  78.687970  &  5.561384  \\ \hline
+ SMOTE          &  74.486350  &  5.233649  \\ \hline
+Desbalanceado   &  82.413120 &  11.559015  \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{HOG Luminance} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  77.565535  &  5.736038  \\ \hline
+  Aguçamento    &  87.831980  &  7.131054  \\ \hline
+  Borramento    &  85.051780  &  9.944614  \\ \hline
+  Composição 16 &  85.051780  &  9.944614  \\ \hline
+  Composição 4  &  85.568245 &  10.297901  \\ \hline
+  Limiares      &  86.213200 &  10.666406  \\ \hline
+  Mistura       &  90.312440  &  7.453625  \\ \hline
+  Ruído         &  75.816045  &  6.804065  \\ \hline
+  SMOTE Visual  &  74.099885  &  4.337487  \\ \hline
+  Saliência     &  85.713360 &  10.535782  \\ \hline
+ SMOTE          &  90.439670  &  6.400823  \\ \hline
+Desbalanceado   &  85.051780  &  9.944614  \\ \hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%
+% industrial + suburb
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{BIC MSB} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  78.195328 &  3.418888  \\ \hline
+  Aguçamento    &  78.581518 &  2.903253  \\ \hline
+  Borramento    &  81.092040 &  3.245369  \\ \hline
+  Composição 16 &  79.614572 &  3.239193  \\ \hline
+  Composição 4  &  79.145692 &  2.975621  \\ \hline
+  Limiares      &  80.118585 &  4.181324  \\ \hline
+  Mistura       &  79.916205 &  3.253547  \\ \hline
+  Ruído         &  78.214967 &  3.466563  \\ \hline
+  SMOTE Visual  &  79.519672 &  3.150122  \\ \hline
+  Saliência     &  80.908200 &  2.956950  \\ \hline
+ SMOTE          &  81.167090 &  3.326338  \\ \hline
+Desbalanceado   &  81.651020 &  3.148817  \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{HOG Luma} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  73.782638 &  3.246911  \\ \hline
+  Aguçamento    &  86.121235 &  3.941179  \\ \hline
+  Borramento    &  89.424940 &  2.199974  \\ \hline
+  Composição 16 &  89.133062 &  2.157975  \\ \hline
+  Composição 4  &  89.065823 &  2.066247  \\ \hline
+  Limiares      &  85.824543 &  2.896445  \\ \hline
+  Mistura       &  87.489563 &  2.597712  \\ \hline
+  Ruído         &  66.763493 &  2.592067  \\ \hline
+  SMOTE Visual  &  64.728147 &  3.372146  \\ \hline
+  Saliência     &  88.876352 &  2.522921  \\ \hline
+ SMOTE          &  79.530137 &  3.472731  \\ \hline
+Desbalanceado   &  89.424940 &  2.199974  \\ \hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%
+% BigBen + EiffelTower + PisaTower
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{LBP Intensity } & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  67.760598 &  2.398980  \\ \hline
+  Aguçamento    &  68.060298 &  2.156532  \\ \hline
+  Borramento    &  68.168215 &  2.369960  \\ \hline
+  Composição 16 &  68.339365 &  2.346606  \\ \hline
+  Composição 4  &  68.386830 &  2.301022  \\ \hline
+  Limiares      &  67.797922 &  2.212177  \\ \hline
+  Mistura       &  68.249713 &  2.345068  \\ \hline
+  Ruído         &  68.244437 &  2.364243  \\ \hline
+  SMOTE Visual  &  67.617823 &  2.295574  \\ \hline
+  Saliência     &  68.557078 &  2.239666  \\ \hline
+ SMOTE          &  68.582857 &  2.381638  \\ \hline
+Desbalanceado   &  68.602660 &  2.212402  \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{HOG Intensity} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  84.484077 &  1.263607  \\ \hline
+  Aguçamento    &  87.758528 &  1.407163  \\ \hline
+  Borramento    &  88.291397 &  1.464939  \\ \hline
+  Composição 16 &  88.280242 &  1.472323  \\ \hline
+  Composição 4  &  88.262078 &  1.486276  \\ \hline
+  Limiares      &  88.088858 &  1.711609  \\ \hline
+  Mistura       &  88.049632 &  1.427445  \\ \hline
+  Ruído         &  85.714138 &  0.895389  \\ \hline
+  SMOTE Visual  &  82.703635 &  0.871827  \\ \hline
+  Saliência     &  88.291470 &  1.583846  \\ \hline
+ SMOTE          &  85.299612 &  1.210397  \\ \hline
+Desbalanceado   &  88.287100 &  1.467879  \\ \hline
+\end{tabular}
+\end{table}
+
+
+%%%%%%%%%%%%%
+% TrafalgarSquare + MadeleineChurch + Pantheon
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{HOG Gleam} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  57.285167 &  6.383771  \\ \hline
+  Aguçamento    &  69.726448 &  8.069939  \\ \hline
+  Borramento    &  70.621480 &  8.314352  \\ \hline
+  Composição 16 &  70.478478 &  8.366100  \\ \hline
+  Composição 4  &  70.837125 &  7.811876  \\ \hline
+  Limiares      &  67.965067 &  5.699239  \\ \hline
+  Mistura       &  65.644708 &  6.112751  \\ \hline
+  Ruído         &  60.777810 &  8.257640  \\ \hline
+  SMOTE Visual  &  53.912270 &  7.907406  \\ \hline
+  Saliência     &  67.584110 &  6.236710  \\ \hline
+ SMOTE          &  62.322870 &  5.726037  \\ \hline
+Desbalanceado   &  70.621480 &  8.314352  \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\caption{}
+\label{tab:resultados:x:melhor}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{LBP MSB} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+   Todos        &  50.918755 &  5.202628  \\ \hline
+  Aguçamento    &  55.421382 &  4.013506  \\ \hline
+  Borramento    &  58.098552 &  5.141085  \\ \hline
+  Composição 16 &  56.220720 &  4.458686  \\ \hline
+  Composição 4  &  57.282263 &  4.516686  \\ \hline
+  Limiares      &  50.161918 &  4.278987  \\ \hline
+  Mistura       &  49.866195 &  5.770862  \\ \hline
+  Ruído         &  58.392777 &  5.030586  \\ \hline
+  SMOTE Visual  &  53.879860 &  3.292420  \\ \hline
+  Saliência     &  53.224420 &  4.686609  \\ \hline
+ SMOTE          &  54.340473 &  6.921971  \\ \hline
+Desbalanceado   &  58.672760 &  4.916962  \\ \hline
+\end{tabular}
+\end{table}

@@ -217,8 +217,6 @@ Uma possível implementação para encontrar os valores de Poisson foi desenvolv
 
 Conforme visto na Seção \ref{sec:smote}, o SMOTE é um método de rebalanceamento aplicado após a extração de características. É proposta uma alternativa, chamada de SMOTE visual, onde imita-se o funcionamento do SMOTE, porém no nível de pixels. A diferença é que não é feito entre as imagens mais próximas, mas sim entre duas imagens escolhidas de forma aleatória do conjunto de treinamento da classe minoritária.
 
-% TODO: Sugerir em trabalhos futuros, no cap de Conclusão, um SMOTE visual não-aleatório: tomando-se imagens próximas, assim como é feito no SMOTE, dada uma medida de distância qualquer (k-means, euclidiana?)
-
 Para cada pixel é calculado a diferença entre as duas imagens. Essa diferença é então multiplicada por um número aleatório no intervalo $[0-1]$ e adicionado
 na imagem original (ver Algoritmo~\ref{alg:smotevisual}). O efeito que esse processamento causa na imagem pode ser visualizado na Figura~\ref{fig:gen:smotevisual}.
 
