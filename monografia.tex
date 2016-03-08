@@ -19,6 +19,7 @@
 	%english,			% idioma adicional para hifenização
 	%brazil				% o último idioma é o principal do documento
 \documentclass[mestrado, pre-defesa, english, brazil]{packages/icmc}
+
 \renewcommand{\bf}{\textbf}
 \usepackage{xargs}                      % Use more than one optional parameter in a new commands
 % \usepackage[pdftex,dvipsnames]{xcolor}  % Coloured text etc.
@@ -97,7 +98,6 @@ An image can be represented as a combination of several features like histograms
 % informações do PDF
 \makeatletter
 \hypersetup{
-     	pagebackref=true,
 		pdftitle={\@title},
 		pdfauthor={\@author},
     	pdfsubject={\imprimirpreambulo},
@@ -204,16 +204,16 @@ An image can be represented as a combination of several features like histograms
 % ----------------------------------------------------------
 \bibliography{referencias}
 
-% ---------------------------------------------------------------------
-% GLOSSÁRIO
-% ---------------------------------------------------------------------
-
-% Arquivo que contém as definições que vão aparecer no glossário
-\input{tex/glossario}
-% Comando para incluir todas as definições do arquivo glossario.tex
-\glsaddall
-% Impressão do glossário
-\printglossaries
+% % ---------------------------------------------------------------------
+% % GLOSSÁRIO
+% % ---------------------------------------------------------------------
+%
+% % Arquivo que contém as definições que vão aparecer no glossário
+% \input{tex/glossario}
+% % Comando para incluir todas as definições do arquivo glossario.tex
+% \glsaddall
+% % Impressão do glossário
+% \printglossaries
 
 % ----------------------------------------------------------
 % Apêndices

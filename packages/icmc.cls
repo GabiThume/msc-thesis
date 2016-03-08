@@ -1,6 +1,6 @@
 %%
-%% Customizações do abnTeX2 (http://abnTeX2.googlecode.com) para o 
-%% Instituto de Ciências Matemáticas e de Computação, Universidade 
+%% Customizações do abnTeX2 (http://abnTeX2.googlecode.com) para o
+%% Instituto de Ciências Matemáticas e de Computação, Universidade
 %% de São Paulo
 %%
 %% This work may be distributed and/or modified under the
@@ -12,16 +12,16 @@
 %% version 2005/12/01 or later.
 %%
 %% This work has the LPPL maintenance status `maintained'.
-%% 
-%% The Current Maintainer of this work is Humberto Lidio Antonelli, 
+%%
+%% The Current Maintainer of this work is Humberto Lidio Antonelli,
 %% Contact: humbertoantonelli@usp.br
 %%
-%% Further information about abnTeX2 are available on 
+%% Further information about abnTeX2 are available on
 %% http://abntex2.googlecode.com/
 %%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{packages/icmc}[2015/01/07 v1.1.9 Classe ICMC baseado em abnTeX2 - Teses e Dissertações dos  
+\ProvidesClass{packages/icmc}[2015/09/21 v1.2.0 Classe ICMC baseado em abnTeX2 - Teses e Dissertações dos
 Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Computação]
 \RequirePackage{xifthen}
 
@@ -33,7 +33,7 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
 %   completa:       Formata documento para dissertação/tese
 %	doutorado:      Formata documento para tese de doutorado
 % 	mestrado:       Formata documento para dissertação de mestrado
-% 	pre-defesa:     Formata documento para versão de defesa (utilizado 
+% 	pre-defesa:     Formata documento para versão de defesa (utilizado
 %                   apenas para versão completa)
 %   pro-defesa:     Formata documento para versão final (utilizado apenas
 %                   para versão completa)
@@ -71,7 +71,7 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
 \ExecuteOptions{pos-defesa}
 
 %
-% Repassa demais opções a abntex	
+% Repassa demais opções a abntex
 %
 \DeclareOption*{%
   \PassOptionsToClass{\CurrentOption}{abntex2}%
@@ -84,17 +84,17 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
 %================================================================================
 \LoadClass[% -- opções da classe memoir --
 	12pt,				% tamanho da fonte
-	openright,			% capítulos começam em pág ímpar 
+	openright,			% capítulos começam em pág ímpar
 	                    % (insere página vazia caso preciso)
 	twoside,			% para impressão em verso e anverso. Oposto a oneside
-	a4paper,			% tamanho do papel. 
+	a4paper,			% tamanho do papel.
 	chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
 	brazil              % Define o idioma pt-br para as opções da classe
 	]{abntex2}
-	
+
 
 %================================================================================
-% Pacotes fundamentais 
+% Pacotes fundamentais
 %================================================================================
 \RequirePackage{morewrites}         % Resolve o erro “No room for a new \write”
 \RequirePackage{cmap}				% Mapear caracteres especiais no PDF
@@ -106,6 +106,7 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
                                     % (utilizado no título)
 \RequirePackage{graphicx}			% Inclusão de gráficos
 \RequirePackage{caption}            % Pacote para definição dos captions
+% \RequirePackage{subcaption}         % Pacote para definição dos subcaptions (ambientes de subfigures)
 \RequirePackage{microtype} 		    % para melhorias de justificação
 \RequirePackage{pdfpages}           % inclusão de arquivos PDF
 \RequirePackage{ifxetex}            % verifica se a compilação ocorre por xetex
@@ -117,14 +118,14 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
                                     % resumos
 \RequirePackage{amsthm, amsfonts, amsmath, amssymb} % Pacote para a definição dos ambientes matemáticos
 \RequirePackage{mathptmx}           % Usando times para equações, opcional
-\RequirePackage{listings}           % Pacote para formatação de diversos 
+\RequirePackage{listings}           % Pacote para formatação de diversos
                                     % códigos fontes
 \RequirePackage[linesnumbered, ruled, vlined]{algorithm2e}      % Pacote para
                                     % escrever algoritmos em pseudo-código
 \RequirePackage{pgffor}             % Pacote utilizado para gerar as
                                     % palavras-chave da ficha catalográfica
 \RequirePackage{nomencl}            % Pacote para criação da Lista de Siglas
-\RequirePackage[translate=babel,nonumberlist,style=altlist,toc]{glossaries}	 % Pacote para gerar o glossário
+% \RequirePackage[noredefwarn,translate=babel,nonumberlist,style=altlist,toc]{glossaries}	 % Pacote para gerar o glossário
 \RequirePackage[brazilian,hyperpageref]{backref} % Paginas com as citações na bibl
 \RequirePackage[alf,bibjustif,abnt-last-names=abnt,abnt-etal-text=it,abnt-repeated-title-omit=yes,abnt-emphasize=bf,abnt-etal-cite=3,abnt-etal-list=0]{abntex2cite}   % Citações padrão ABNT
 
@@ -142,7 +143,7 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
 
 % Configuração do texto do preâmbulo
 \addto\captionsenglish{% ingles
-    \renewcommand{\exam}{ in partial fulfillment of the requirements for the degree of the}
+    \renewcommand{\exam}{ in partial fulfillment of the requirements for the degree}
 }
 \addto\captionsbrazil{% portugues-brasil
     \renewcommand{\exam}{ como parte dos requisitos para obten{\c c}{\~a}o do t{\'i}tulo de}
@@ -168,7 +169,7 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
 % Configuração do tipo de trabalho para DOUTORADO ou MESTRADO
 \ifthenelse{\boolean{opt-doutorado}}{
     \addto\captionsenglish{% ingles
-        \renewcommand{\degree}{Doctorate}
+        \renewcommand{\degree}{of the Doctorate}
         \renewcommand{\tipodocurso}{Doctorate Candidate}
         \tipotrabalho{Doctoral dissertation}
     }
@@ -179,7 +180,7 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
     }
 }{
     \addto\captionsenglish{% ingles
-        \renewcommand{\degree}{Master}
+        \renewcommand{\degree}{of the Master}
         \renewcommand{\tipodocurso}{Master student}
         \tipotrabalho{Master dissertation}
     }
@@ -231,7 +232,7 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
         BoldFont        = *bd,
         ItalicFont      = *i,
         BoldItalicFont  = *bi]{arial}
-    
+
     \newcommand\@icmcTitulo{\@icmcFont{18}\arial}
     \newcommand\@icmcAutorCapa{\@icmcFont{13}\arial\bfseries\itshape}
     \newcommand\@icmcAutorFolhaRosto{\@icmcFont{13}\arial\bfseries}
@@ -251,7 +252,7 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
         BoldFont        = *bd,
         ItalicFont      = *i,
         BoldItalicFont  = *bi]{arial}
-      
+
         \newcommand\@icmcTitulo{\@icmcFont{18}\arial}
         \newcommand\@icmcAutorCapa{\@icmcFont{13}\arial\bfseries\itshape}
         \newcommand\@icmcAutorFolhaRosto{\@icmcFont{13}\arial\bfseries}
@@ -261,7 +262,7 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
         \newcommand\@icmcLocalData{\@icmcFont{11}\arial\bfseries}
         \newcommand\@icmcCarimbo{\@icmcFont{11}\arial}
         \newcommand\@icmcSVPG{\@icmcFont{8}\arial}
-    
+
     \else % Configuração da fonte para a compilação por PDFLATEX
       \RequirePackage[T1]{fontenc}	    	% Selecao de codigos de fonte.
       \RequirePackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
@@ -371,10 +372,10 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
 
 % Configuração do pacote nomencl
 % Tamanho da Label da sigla
-\setlength{\nomlabelwidth}{0.15\hsize} 
+\setlength{\nomlabelwidth}{0.15\hsize}
 % Separa as abreviaturas de suas definições com pontos (....)
 \renewcommand{\nomlabel}[1]{#1 \dotfill}
-\setlength{\nomitemsep}{-.05in} 
+\setlength{\nomitemsep}{-.05in}
 % Comando necessário para a criação da lista de abreviaturas
 \makenomenclature
 % Traduz o título da lista de abreviaturas
@@ -383,32 +384,32 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
 % Comando para criação de abreviaturas e siglas
 \def\sigla{\@ifstar\@sigla\@@sigla}
 % Apenas faz o registro na tabela de siglas
-\def\@sigla#1#2{\nomenclature{#1}{#2}}          % \sigla*{}{} 
+\def\@sigla#1#2{\nomenclature{#1}{#2}}          % \sigla*{}{}
 % Faz o registro na tabela de siglas e insere os dados no corpo do documento
 \def\@@sigla#1#2{#2 (#1)\nomenclature{#1}{#2}}  % \sigla{}{}
 
 %================================================================================
 % Pacote para criação do GLOSSÁRIO
-%================================================================================
-% Gera o indíce do Glossário
-\makeglossaries
-% Traduz o nome do glossário
-\addto\captionsbrazil{% portugues-brasil
-    \renewcommand{\glossaryname}{Glossário}
-}
-% Estilo de apresentação do glossário
-\glossarystyle{list}
-
-% Contador de definições do Glossário
-\newcounter{count_glossario}
-% Comando para simplificar a definição de palavras no glossário
-\newcommand{\newword}[2]{%
-    \stepcounter{count_glossario}% Incrementa o contador do glossário
-    \newglossaryentry{Def.\arabic{count_glossario}}{%
-        name={#1:},%
-        description={#2},%
-    }%
-}
+% %================================================================================
+% % Gera o indíce do Glossário
+% \makeglossaries
+% % Traduz o nome do glossário
+% \addto\captionsbrazil{% portugues-brasil
+%     \renewcommand{\glossaryname}{Glossário}
+% }
+% % Estilo de apresentação do glossário
+% \setglossarystyle{list}
+%
+% % Contador de definições do Glossário
+% \newcounter{count_glossario}
+% % Comando para simplificar a definição de palavras no glossário
+% \newcommand{\newword}[2]{%
+%     \stepcounter{count_glossario}% Incrementa o contador do glossário
+%     \newglossaryentry{Def.\arabic{count_glossario}}{%
+%         name={#1:},%
+%         description={#2},%
+%     }%
+% }
 
 %================================================================================
 % Pacotes de citações
@@ -476,7 +477,7 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
 
 % Comando para definição do nome e sobrenome do author
 \renewcommand\autor[2][Nome para Referência]{
-    
+
     \StrCount{#2}{\space}[\nbmatch]%
     \StrCut[\nbmatch]{#2}{\space}\strfirstautor\strsecondautor
 
@@ -505,7 +506,7 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
 
     \StrCount{#3}{\space}[\nbmatch]%
     \StrCut[\nbmatch]{#3}{\space}\strfirstorientador\strsecondorientador
-    
+
     \addto\captionsbrazil{% portugues-brasil
         \renewcommand{\imprimirorientadorRotulo}{#1}
     }
@@ -522,7 +523,7 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
 
     \StrCount{#3}{\space}[\nbmatch]%
     \StrCut[\nbmatch]{#3}{\space}\strfirstcoorientador\strsecondcoorientador
-    
+
     \addto\captionsbrazil{% portugues-brasil
         \renewcommand{\imprimircoorientadorRotulo}{#1}
     }
@@ -558,10 +559,11 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
 
 % CCMC ==========================================================================
     \ifthenelse{\equal{#1}{CCMC}}{
-        \area{Ciências de Computação e Matemática Computacional}
-        \programa{Programa de Pós-Graduação em Ciências de Computação e Matemática Computacional}
-        \especialidade{em Ciências -- Ciências de Computação e Matemática Computacional}
-        
+        \addto\captionsbrazil{
+            \area{Ciências de Computação e Matemática Computacional}
+            \programa{Programa de Pós-Graduação em Ciências de Computação e Matemática Computacional}
+            \especialidade{em Ciências -- Ciências de Computação e Matemática Computacional}
+        }
         \addto\captionsenglish{% ingles
             \area{Computer Science and Computational Mathematics}
             %\programa{Programa de Pós-Graduação em Ciências de Computação e Matemática Computacional}
@@ -570,22 +572,26 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
     }{
 % MAT ===========================================================================
         \ifthenelse{\equal{#1}{MAT}}{
-            \area{Matemática}
-            \programa{Programa de Pós-Graduação em Matemática}
-            \especialidade{em Ciências -- Matemática}
+            \addto\captionsbrazil{
+                \area{Matemática}
+                \programa{Programa de Pós-Graduação em Matemática}
+                \especialidade{em Ciências -- Matemática}
+            }
             \addto\captionsenglish{% ingles
                 \area{Mathematics}
                 %\programa{Programa de Pós-Graduação em Matemática}
                 \especialidade{Program in Mathematics}
             }
         }{
-% PIPGES ========================================================================     
+% PIPGES ========================================================================
             \ifthenelse{\equal{#1}{PIPGES}}{
-                \universidade{USP/UFSCar}
-                \instituicao{Instituto de Ciências Matemáticas e de Computação -- ICMC-USP e ao Departamento de Estatística -- DEs-UFSCar}
-                \area{Estatística}
-                \programa{Programa Interinstitucional de Pós-Graduação em Estatística}
-                \especialidade{em Estatística -- Interinstitucional de Pós-Graduação em Estatística}
+                \addto\captionsbrazil{
+                    \universidade{USP/UFSCar}
+                    \instituicao{Instituto de Ciências Matemáticas e de Computação -- ICMC-USP e ao Departamento de Estatística -- DEs-UFSCar}
+                    \area{Estatística}
+                    \programa{Programa Interinstitucional de Pós-Graduação em Estatística}
+                    \especialidade{em Estatística -- Interinstitucional de Pós-Graduação em Estatística}
+                }
                 \addto\captionsenglish{% ingles
                     \instituicao{Instituto de Ciências Matemáticas e de Computação -- ICMC-USP and to the Departamento de Estatística -- DEs-UFSCar}
                     \area{Statistics}
@@ -595,20 +601,25 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
             }{
 % PROFMAT =======================================================================
                 \ifthenelse{\equal{#1}{PROFMAT}}{
-                    \area{Matemática}
-                    \programa{Programa de Pós-graduação em Mestrado Profissional em Matemática em Rede Nacional}
-                    \especialidade{-- Programa de Mestrado Profissional em Matemática}
+                    \addto\captionsbrazil{
+                        \area{Matemática}
+                        \programa{Programa de Pós-graduação em Mestrado Profissional em Matemática em Rede Nacional}
+                        \especialidade{em Ciências -- Programa de Mestrado Profissional em Matemática}
+                    }
                     \addto\captionsenglish{% ingles
                         \area{Mathematics}
                         %\programa{Programa de Pós-graduação em Mestrado Profissional em Matemática em Rede Nacional}
-                        \especialidade{-- Program in Mathematics Professional Master}
+                        \especialidade{of Mathematics Professional Master’s Program}
+                        \renewcommand{\imprimirpreambulo}{\nohyphens{\imprimirtipotrabalho~submitted to the \imprimirinstituicao,\exam~\imprimirespecialidade. \textit{\tipoexemplar}}}
                     }
                 }{
 % MECAI =========================================================================
                     \ifthenelse{\equal{#1}{MECAI}}{
-                        \area{Matemática, Estatística e Computação Aplicadas à Indústria}
-                        \programa{Programa de Pós-graduação em Mestrado Profissional em Matemática, Estatística e Computação Aplicadas à Indústria}
-                        \especialidade{-- Programa de Mestrado Profissional em Matemática, Estatística e Computação Aplicadas à Indústria}
+                        \addto\captionsbrazil{
+                            \area{Matemática, Estatística e Computação Aplicadas à Indústria}
+                            \programa{Programa de Pós-graduação em Mestrado Profissional em Matemática, Estatística e Computação Aplicadas à Indústria}
+                            \especialidade{-- Programa de Mestrado Profissional em Matemática, Estatística e Computação Aplicadas à Indústria}
+                        }
                         \addto\captionsenglish{% ingles
                             \area{Mathematics, Statistics and Computing Applied to Industry}
                             %\programa{Programa de Pós-graduação em Mestrado Profissional em Matemática, Estatística e Computação Aplicadas à Indústria}
@@ -642,21 +653,24 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
 }
 
 % Nome do Mês
-\newcommand\Monthname[1][EMPTY]{%
-    \begin{switch}{#1}%
-        \case{1}{Janeiro}%
-        \case{2}{Fevereiro}%
-        \case{3}{Março}%
-        \case{4}{Abril}%
-        \case{5}{Maio}%
-        \case{6}{Junho}%
-        \case{7}{Julho}%
-        \case{8}{Agosto}%
-        \case{9}{Setembro}%
-        \case{10}{Outubro}%
-        \case{11}{Novembro}%
-        \case{12}{Dezembro}%
-    \end{switch}%
+\providecommand*{\Monthname}{}
+\addto\captionsbrazil{
+    \renewcommand\Monthname[1][EMPTY]{%
+        \begin{switch}{#1}%
+            \case{1}{Janeiro}%
+            \case{2}{Fevereiro}%
+            \case{3}{Março}%
+            \case{4}{Abril}%
+            \case{5}{Maio}%
+            \case{6}{Junho}%
+            \case{7}{Julho}%
+            \case{8}{Agosto}%
+            \case{9}{Setembro}%
+            \case{10}{Outubro}%
+            \case{11}{Novembro}%
+            \case{12}{Dezembro}%
+        \end{switch}%
+    }
 }
 \addto\captionsenglish{% ingles
     \renewcommand\Monthname[1][EMPTY]{%
@@ -725,11 +739,13 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
 }
 
 % Comando para inclusão da ficha catalográfica
+\newboolean{opt-fichacatalografica}
+\setboolean{opt-fichacatalografica}{false}
 \def\incluifichacatalografica{\@ifstar\@incluifichacatalografica\@@incluifichacatalografica}
 % Incluir um arquivo externo como ficha catalográfica
-\def\@incluifichacatalografica#1{\gdef\@incluifichacatalografica{true}\gdef\@arquivofichacatalografica{#1}}          % \incluifichacatalografica*{}{} 
+\def\@incluifichacatalografica#1{\setboolean{opt-fichacatalografica}{true}\gdef\@arquivofichacatalografica{#1}}          % \incluifichacatalografica*{}
 % Gera a ficha catalográfica automaticamente de acordo com o número da Tabela de Cutter http://www.davignon.qc.ca/cutter1.html
-\def\@@incluifichacatalografica#1{\gdef\@incluifichacatalografica{true}\gdef\@codigocutter{#1}}  % \incluifichacatalografica{}{}
+\def\@@incluifichacatalografica#1{\setboolean{opt-fichacatalografica}{true}\gdef\@codigocutter{#1}}  % \incluifichacatalografica{}
 
 
 %================================================================================
@@ -825,7 +841,7 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
 % Formatação de código-fonte
 % ---
 
-% Altera o nome padrão do rótulo 
+% Altera o nome padrão do rótulo
 \renewcommand{\lstlistingname}{\codigoname}
 % Altera o rótulo a ser usando no elemento pré-textual "Lista de códigos"
 \renewcommand{\lstlistlistingname}{\listcodigoname}
@@ -848,12 +864,12 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
    \oldlstlistoflistings%
    \endgroup}
 
-% Cria um ambiente "codigo" estilizando o ambiente "lstlisting" 
+% Cria um ambiente "codigo" estilizando o ambiente "lstlisting"
 \newcounter{countcodigo}
 \setcounter{countcodigo}{1}
 \lstnewenvironment{codigo}[1][]
   {\lstset{basicstyle=\ttfamily\ABNTEXfontereduzida,
-           numbers=left, 
+           numbers=left,
            numbersep=5pt,
            numberstyle=\tiny\bfseries,
             xleftmargin=20pt,
@@ -885,7 +901,7 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
 % Comando para definição da dedicatória
 \def\textodedicatoria{\@ifstar\@textodedicatoria\@@textodedicatoria}
 % Inclui texto de um arquivo como dedicatória
-\def\@textodedicatoria#1{\gdef\@dedicatoria{\input{#1}}} % \textodedicatoria*{}{} 
+\def\@textodedicatoria#1{\gdef\@dedicatoria{\input{#1}}} % \textodedicatoria*{}{}
 % Inclui o texto como dedicatória
 \def\@@textodedicatoria#1{\gdef\@dedicatoria{#1}}       % \textodedicatoria{}{}
 
@@ -931,7 +947,7 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
 % Comando para definição da epígafe
 \def\textoepigrafe{\@ifstar\@textoepigrafe\@@textoepigrafe}
 % Inclui texto de um arquivo como epígafe
-\def\@textoepigrafe#1{\gdef\@epigrafe{\input{#1}}}      % \textoepigrafe*{}{} 
+\def\@textoepigrafe#1{\gdef\@epigrafe{\input{#1}}}      % \textoepigrafe*{}{}
 % Inclui o texto como epígafe
 \def\@@textoepigrafe#1{\gdef\@epigrafe{#1}}             % \textoepigrafe{}{}
 
@@ -944,8 +960,8 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
 	  \begin{flushright}
 		\textit{\@epigrafe}
 	 \end{flushright}
-    \end{epigrafe}	 
-    
+    \end{epigrafe}
+
   }
 }
 
@@ -992,37 +1008,37 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
 {
     \@ifundefined{@arquivofichacatalografica}
     {
-    
+
     % Captura a primeira letra do sobrenome do autor
     \expandafter\StrLeft\expandafter{\ABNTautordatabib}{1}[\firstletterauthor]
     % Captura a primeira letra do título
     \expandafter\StrLeft\expandafter{\thetitle}{1}[\firstlettertitle]
-    
+
         \begin{fichacatalografica}
         	\vspace*{\fill}					% Posição vertical
- 
+
 	% Conteúdo
 	\begin{otherlanguage}{brazil}
 	\begin{tabular}{c|p{1.4cm}p{10.1cm}|}
-	
+
 	\multicolumn{3}{c}{\sffamily\small Ficha catalográfica elaborada pela Biblioteca Prof. Achille Bassi} \\
 	\multicolumn{3}{c}{\sffamily\small e Seção Técnica de Informática, ICMC/USP,} \\
 	\multicolumn{3}{c}{\sffamily\small com os dados fornecidos pelo(a) autor(a)} \\ \cline{2-3}
 	& & \\
 	& & \\
-	& & {\fontsize{10.3pt}{1em}\selectfont\ttfamily\ABNTautordatabib} \\ 
+	& & {\fontsize{10.3pt}{1em}\selectfont\ttfamily\ABNTautordatabib} \\
 	& {\fontsize{10.3pt}{1em}\selectfont\ttfamily \MakeUppercase{\firstletterauthor}\@codigocutter}\MakeLowercase{\firstlettertitle}%
-	& {\fontsize{10.3pt}{1em}\selectfont\ttfamily~~~\imprimirmaintitle\ / \imprimirautor; \MakeLowercase{\imprimirorientadorRotulo} \imprimirorientador \abntex@ifnotempty{\imprimircoorientador}{; \MakeLowercase{\imprimircoorientadorRotulo}~\imprimircoorientador}. -- \imprimirlocal, \@year.} \\ 
+	& {\fontsize{10.3pt}{1em}\selectfont\ttfamily~~~\imprimirmaintitle\ / \imprimirautor; \MakeLowercase{\imprimirorientadorRotulo} \imprimirorientador \abntex@ifnotempty{\imprimircoorientador}{; \MakeLowercase{\imprimircoorientadorRotulo}~\imprimircoorientador}. -- \imprimirlocal, \@year.} \\
 	& & {\fontsize{10.3pt}{1em}\selectfont\ttfamily~~~\pageref{LastPage} p.}\\
 	& &\\
 	& & {\fontsize{10.3pt}{1em}\selectfont\ttfamily~~~\imprimirtipotrabalho~(\tipodocurso~- \imprimirprograma) -- Instituto de Ciências Matemáticas e de Computação, Universidade de São Paulo, \@year.}\\
-	& & \\ 
+	& & \\
 	& & {\fontsize{10.3pt}{1em}\selectfont\ttfamily~~~\expandafter\PROCESS\expandafter{\palavraschave}I. \ABNTorientadordatabib, orient.\ II.\ \abntex@ifnotempty{\imprimircoorientador}{%
 	\ABNTcoorientadordatabib, coorient.\ III.\ }Título.} \\
 	& & \\
 	& & \\ \cline{2-3}
 	%& & ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~CDU: 681.3.01:621.39 \\ \cline{2-3}
-	
+
 	\end{tabular}
 	\end{otherlanguage}
 	\vspace{1.5cm}
@@ -1060,7 +1076,7 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
     { test {\ifnumcomp{\value{count}}{<}{\thenumresumo}} }%
     {
         \stepcounter{count}
-        
+
         \if@openright\cleardoublepage\else\clearpage\fi
         \phantomsection
         \begin{resumo}[\csuse{res-title-\csuse{res-language-\thecount}}]
@@ -1071,9 +1087,9 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
                 %\end{flushleft}
                 \vskip 20pt
                 \csuse{res-text-\thecount}
-                
+
                 \vspace{\onelineskip}
-                
+
                 \noindent
                 \textbf{\csuse{res-label-keywords-\csuse{res-language-\thecount}}:}
                 \@tempswafalse
@@ -1185,12 +1201,12 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
         \makebox[14.9cm][r]{\fbox{\parbox{7.2cm}{
         \vspace{0.3cm}
         \makebox[\linewidth][c]{\@icmcSVPG{SERVIÇO DE PÓS-GRADUAÇÃO DO ICMC-USP}}
-          
+
           {
               \@icmcCarimbo
               \vspace{12pt}
               \hspace{2pt} Data de Depósito:
-              
+
               \vspace{9pt}
               \hspace{2pt} Assinatura: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
               \vspace{9pt}
@@ -1216,10 +1232,10 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
   \begin{minipage}{8.4cm}
     \begin{Spacing}{0.9}
         {\@icmcPreambulo\imprimirpreambulo}%
-        
+
         \vspace{5pt}
         {\@icmcPreambulo\arealabel: \nohyphens{\imprimirarea}}%
-        
+
         \vspace{5pt}
         {\@icmcOrientador\imprimirorientadorRotulo: \titulacaoorientador{} \nohyphens{\imprimirorientador}}%
         \abntex@ifnotempty{\imprimircoorientador}{%
@@ -1251,8 +1267,8 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
 
 
 \makechapterstyle{icmc}{%
-  \renewcommand{\chapterheadstart}{} 
-  
+  \renewcommand{\chapterheadstart}{}
+
     % Secao secundaria (Section) Caixa baixa, Negrito
     \renewcommand*{\cftsectionfont}{\bfseries}
     % Secao terciaria (Subsection) Caixa baixa, Negrito, italico
@@ -1263,56 +1279,56 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
     \renewcommand*{\cftparagraphfont}{\normalsize}
 
 
-  % tamanhos de fontes de chapter e part	
+  % tamanhos de fontes de chapter e part
    \ifthenelse{\equal{\ABNTEXisarticle}{true}}{%
      \setlength\beforechapskip{\baselineskip}
      \renewcommand{\chaptitlefont}{\ABNTEXsectionfont\ABNTEXsectionfontsize}
    }{%else
      \setlength{\beforechapskip}{0pt}
      \renewcommand{\ABNTEXchapterfontsize}{\LARGE}
-    
+
     %\renewcommand{\ABNTEXchapterfont}{\sffamily\bfseries}  %alteração da fonte dos capítulos, seções e subseções
     \renewcommand{\chaptitlefont}{\ABNTEXchapterfont\bfseries\ABNTEXchapterfontsize}
    }
-  
+
   \renewcommand{\chapnumfont}{\chaptitlefont}
   \renewcommand{\parttitlefont}{\ABNTEXpartfont\ABNTEXpartfontsize}
   \renewcommand{\partnumfont}{\ABNTEXpartfont\ABNTEXpartfontsize}
   \renewcommand{\partnamefont}{\ABNTEXpartfont\ABNTEXpartfontsize}
-  
+
   % tamanhos de fontes de section, subsection, subsubsection e subsubsubsection
   \setsecheadstyle{\ABNTEXsectionfont\ABNTEXsectionfontsize\bfseries\ABNTEXsectionupperifneeded}
   \setsubsecheadstyle{\ABNTEXsubsectionfont\ABNTEXsubsectionfontsize\bfseries\itshape\ABNTEXsubsectionupperifneeded}
   \setsubsubsecheadstyle{\ABNTEXsubsubsectionfont\ABNTEXsubsubsectionfontsize\itshape\ABNTEXsubsubsectionupperifneeded}
   \setsubsubsubsecheadstyle{\ABNTEXsubsubsubsectionfont\ABNTEXsubsubsubsectionfontsize\ABNTEXsubsubsubsectionupperifneeded}
- 
+
   % impressao do numero do capitulo
   \renewcommand{\chapternamenum}{}
-  
+
   % impressao do nome do capitulo
   \renewcommand{\printchaptername}{%
    %\chaptitlefont
    %\ifthenelse{\boolean{abntex@apendiceousecao}}{\appendixname}{\chaptername}%
   }
-    
+
   % impressao do titulo do capitulo
   \def\printchaptertitle##1{%
-    
+
     \setboolean{ABNTEXupperchapter}{true}
-    
+
     \ifthenelse{\boolean{abntex@innonumchapter}}{
         \vskip 0ex \hrulefill\chaptitlefont\bfseries\ABNTEXchapterupperifneeded{##1}
-        \vskip -0.6ex\hfill\rule{.8\textwidth}{0.5pt} 
+        \vskip -0.6ex\hfill\rule{.8\textwidth}{0.5pt}
         \vskip -2.8ex\hfill\rule{.8\textwidth}{2pt}
         \vskip 1.5ex
-    
+
     }{%
     % else
         {\hrulefill
         {\renewcommand{\arraystretch}{1.5} %  1 is the default, change whatever you need
         \begin{tabular}{|c|}
             \rowcolor{black}\color{white}\normalsize\ABNTEXchapterfont
-              \ifthenelse{\boolean{abntex@apendiceousecao}}{\MakeTextUppercase{\appendixname}}{\MakeTextUppercase{\chaptername}}  \\ 
+              \ifthenelse{\boolean{abntex@apendiceousecao}}{\MakeTextUppercase{\appendixname}}{\MakeTextUppercase{\chaptername}}  \\
             \vspace{-1.5ex}\\ %coloquei para aumentar o espaço entre o título e o número
             \resizebox{!}{1.1cm}{\ABNTEXchapterfont\thechapter}
             \\[2.5ex]
@@ -1322,16 +1338,16 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
         \vskip -0.6ex\hfill\rule{.8\textwidth}{0.5pt} \\
         \vskip -2.8ex\hfill\rule{.8\textwidth}{2pt}\\
         \vskip 1.5ex
-	}    
-        
+	}
+
   }
-       
-  % impressao do numero do capitulo     	
+
+  % impressao do numero do capitulo
   \renewcommand{\printchapternum}{%
     \setboolean{abntex@innonumchapter}{false}
   }
   \renewcommand{\afterchapternum}{}
-  
+
   % impressao do capitulo nao numerado
   \renewcommand\printchapternonum{%
      \setboolean{abntex@innonumchapter}{true}%
@@ -1351,33 +1367,33 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
 \else
     \ifluatex
         \defaultfontfeatures{Mapping=tex-text}
-        \setmainfont[Ligatures=TeX]{Latin Modern Roman} 
+        \setmainfont[Ligatures=TeX]{Latin Modern Roman}
     \fi
 \fi
 
 \pretextual
-    
+
     % Capa
     \imprimircapa
 
     % Folha de rosto e Ficha catalográfica (se houver)
-    \@ifundefined{@incluifichacatalografica}{
-        \begin{otherlanguage}{brazil}
-            \imprimirfolhaderosto{}
-        \end{otherlanguage}
-    }{
+    \ifthenelse{\boolean{opt-fichacatalografica}}{
         % (o * indica que haverá a ficha bibliográfica)
         \begin{otherlanguage}{brazil}
             \imprimirfolhaderosto*{}
         \end{otherlanguage}
 		\inserefichacatalografica
 		\newpage
+    }{
+        \begin{otherlanguage}{brazil}
+            \imprimirfolhaderosto{}
+        \end{otherlanguage}
     }
-    
+
     \begin{otherlanguage}{english}
         \imprimirfolhaderosto{}
     \end{otherlanguage}
-    
+
     %\renewcommand{\rmdefault}{cmr}
 
     % DEDICATÓRIA / AGRADECIMENTO / EPÍGRAFE
@@ -1390,7 +1406,7 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
 
     % Insere as Listas que forem setadas no documento
     \inserelistadefiguras
-    \inserelistadequadros    
+    \inserelistadequadros
     \inserelistadealgoritmos
     \inserelistadecodigos
     \inserelistadetabelas
@@ -1400,19 +1416,19 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
 	\pdfbookmark[0]{\contentsname}{toc}
     \tableofcontents*
     \cleardoublepage
-    
+
     % Configuração dos caracteres especiais utilizados no pacote <listings>
     \lstset{%
         frame=top,
         frame=bottom,
-        breakatwhitespace=false,         
-        breaklines=true,                 
-        keepspaces=true,                 
-        numbers=left,                    
-        numbersep=5pt,                  
-        showspaces=false,                
+        breakatwhitespace=false,
+        breaklines=true,
+        keepspaces=true,
+        numbers=left,
+        numbersep=5pt,
+        showspaces=false,
         showstringspaces=false,
-        showtabs=false,                  
+        showtabs=false,
         tabsize=2,
         inputencoding=utf8,
         extendedchars=true,
@@ -1449,15 +1465,15 @@ Programas de Pós-graduação do Instituto de Ciências Matemáticas e de Comput
         {Ü}{{\"U}}1
         {ü}{{\"u}}1
     }
-    
+
     % Numeração contínua do elementos do presentes no documento
     \counterwithout{quadro}{chapter}
     \counterwithout{lstlisting}{chapter}
-    
+
     \mainmatter
 
     % Retira espaço extra obsoleto entre as frases.
-    \frenchspacing 
+    \frenchspacing
 }
 
 % Finaliza comandos com @ no nome
