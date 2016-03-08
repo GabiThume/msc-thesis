@@ -92,7 +92,7 @@ Neste experimento foram utilizadas duas classes com cores bem distintas entre el
 \begin{itemize}
 \item[] \textbf{Protocolo}
 \begin{enumerate}
-\item \textbf{Imagens originais}: classes \emph{Cavalo} e \emph{Elefante} da base de imagens Corel, exemplificadas na Figura \ref{fig:resultados:1:base}. A principal característica dessas imagens é a diferença de cores. Apesar de haverem casos de confusão, são classes que podem ser consideradas bem discriminadas.
+\item \textbf{Imagens originais}: classes \emph{Cavalo} e \emph{Elefante} da base de imagens Corel, exemplificadas na Figura \ref{fig:resultados:1:base} \cite{Wang2001}. A principal característica dessas imagens é a diferença de cores. Apesar de haverem casos de confusão, são classes que podem ser consideradas bem discriminadas.
 
 \begin{minipage}{\linewidth}
 \begin{figure}[H]
@@ -104,7 +104,7 @@ Neste experimento foram utilizadas duas classes com cores bem distintas entre el
       \includegraphics[width=0.45\linewidth]{\detokenize{figuras/cavalo-original2.png}}
     }
 
-    \caption[Classes \emph{Cavalo} e \emph{Elefante} utilizadas neste experimento. São duas classes bem discriminadas com 100 imagens cada, originalmente da base de imagens Corel.]{Classes \emph{Cavalo} e \emph{Elefante} utilizadas neste experimento. São duas classes bem discriminadas com 100 imagens cada, originalmente da base de imagens Corel. \textit{Fonte:~Elaborado pela autora.}}
+    \caption[Classes \emph{Cavalo} e \emph{Elefante} utilizadas neste experimento. São duas classes bem discriminadas com 100 imagens cada, originalmente da base de imagens Corel.]{Classes \emph{Cavalo} e \emph{Elefante} utilizadas neste experimento. São duas classes bem discriminadas com 100 imagens cada, originalmente da base de imagens Corel. \textit{Fonte:~\cite{Hu2013}.}}
     \label{fig:resultados:1:base}
 \end{center}
 \end{figure}
@@ -419,7 +419,7 @@ O experimento anterior considerou classes distintas, por isso classes de difíci
 %-------------------------------------------------------------------------------
 \item[] \textbf{Protocolo}
 \begin{enumerate}
-\item \textbf{Classes de imagens originais}: \textit{Praia} e \emph{Montanha} foram escolhidas por serem as classes que possuem maior dificuldade de diferenciação da base Corel. Apresentam alta taxa de sobreposição de intensidades de cores e texturas, conforme testes realizados.
+\item \textbf{Classes de imagens originais}: \textit{Praia} e \emph{Montanha} foram escolhidas por serem as classes que possuem maior dificuldade de diferenciação da base Corel \cite{Wang2001}. Apresentam alta taxa de sobreposição de intensidades de cores e texturas, conforme testes realizados.
 
 \begin{minipage}{\linewidth}
 \begin{figure}[H]
@@ -541,7 +541,7 @@ Os dois experimentos anteriores analisaram o rebalanceamento de apenas duas clas
 \item[] \textbf{Protocolo}
 
 \begin{enumerate}
-\item \textbf{Base de imagens originais}: esse experimento foi realizado com a base de imagens Corel-1000\footnote{Disponível em http://wang.ist.psu.edu/docs/related/}, composta por fotografias que representam 10 classes variadas: tribos africanas, praia, construções, ônibus, dinossauros, elefantes, flores, cavalos, montanhas e tipos de comidas. Para fins de exemplificação, são apresentadas amostras das imagens que representam essas classes na Figura \ref{fig:resultados:3:base}.
+\item \textbf{Base de imagens originais}: esse experimento foi realizado com a base de imagens Corel-1000, composta por fotografias que representam 10 classes variadas: tribos africanas, praia, construções, ônibus, dinossauros, elefantes, flores, cavalos, montanhas e tipos de comidas \cite{Wang2001}. Para fins de exemplificação, são apresentadas amostras das imagens que representam essas classes na Figura \ref{fig:resultados:3:base}.
 
 \begin{minipage}{\linewidth}
 \begin{figure}[H]
@@ -627,7 +627,7 @@ O rebalanceamento com o método de \emph{mistura} e com o SMOTE tiveram uma perf
 \item[] \textbf{Protocolo}
 
 \begin{enumerate}
-\item \textbf{Classes de imagens originais}: foi utilizada a base Caltech101-600\footnote{Disponível em \url{http://www.vision.caltech.edu/Image_Datasets/Caltech101/Caltech101.html}}. Desta base, foi utilizado um conjunto de seis classes balanceadas: aviões, bonsais, candelabros, tartarugas, motocicletas e relógios. Imagens que representam essas classes são apresentadas na Figura \ref{fig:resultados:3.2:base}.
+\item \textbf{Classes de imagens originais}: foi utilizada a base Caltech101-600 \cite{Fei-Fei2007}. Desta base, foi utilizado um conjunto de seis classes balanceadas: aviões, bonsais, candelabros, tartarugas, motocicletas e relógios. Imagens que representam essas classes são apresentadas na Figura \ref{fig:resultados:3.2:base}.
 
 \begin{minipage}{\linewidth}
 \begin{figure}[H]
@@ -654,7 +654,7 @@ O rebalanceamento com o método de \emph{mistura} e com o SMOTE tiveram uma perf
     \subfloat[Mistura limiarizada]{
       \includegraphics[height=1.7cm,keepaspectratio]{\detokenize{figuras/resultados/3/resultado-limiares.png}}
     }
-    \caption[Exemplo de uma geração artificial utilizando o método de combinação de limiares para a base Caltech. ]{Exemplo de uma geração artificial utilizando o método de combinação de limiares para a base Caltech.  \textit{Fonte:~Elaborado pela autora.}}
+    \caption[Exemplo de uma geração artificial utilizando o método de combinação de limiares para a base Caltech.]{Exemplo de uma geração artificial utilizando o método de combinação de limiares para a base Caltech. \textit{Fonte:~Elaborado pela autora.}}
     \label{fig:resultados:3.2:limiares}
   \end{center}
   \end{figure}
@@ -714,7 +714,7 @@ Com o teste \textit{post-hoc} HSD de Tukey ficou comprovada a suposição de que
 \item[] \textbf{Protocolo}
 
 \begin{enumerate}
-\item \textbf{Classes de imagens originais}: composta por imagens de vegetais e frutas tropicais. Posuem fundo similar mas muitas mudanças na iluminação, no número de objetos e na escala. Amostras das imagens dessa base são apresentadas na Figura \ref{fig:resultados:3.3:base}. Essa base contem 14 classes e um total de 1400 imagens.
+\item \textbf{Classes de imagens originais}: composta por imagens de vegetais e frutas tropicais. Posuem fundo similar mas muitas mudanças na iluminação, no número de objetos e na escala. Amostras das imagens dessa base são apresentadas na Figura \ref{fig:resultados:3.3:base}. Essa base contem 14 classes e um total de 1400 imagens \cite{Rocha2010}.
 
 \begin{minipage}{\linewidth}
 \begin{figure}[H]
@@ -760,7 +760,7 @@ A Tabela \ref{tab:resultados:3.3} apresenta a média e o desvio padrão dos \tex
 \begin{minipage}{\linewidth}
 \begin{table}[H]
 \begin{center}
-\caption{}
+\caption{Resultados de \textit{F1-Scores} para a base de imagens \textit{Produce}.}
 \label{tab:resultados:3.3}
 \begin{tabular}{|l|c|c|}
 \hline
@@ -809,13 +809,13 @@ Os experimentos anteriores foram realizados em bases já balanceadas, com o desb
 \begin{minipage}{\linewidth}
 \begin{figure}[H]
   \begin{center}
-    \subfloat[Eiffel Tower]{
+    \subfloat[\textit{Eiffel Tower}]{
       \includegraphics[height=5cm,keepaspectratio]{\detokenize{figuras/resultados/4/class13-1.png}}
     }
-    \subfloat[???]{
+    \subfloat[\textit{Rome antica}]{
       \includegraphics[height=5cm,keepaspectratio]{\detokenize{figuras/resultados/4/class41-2.png}}
     }
-    \caption[]{}
+    \caption[Imagens das classes \textit{Eiffel Tower} e \textit{Rome antica}.]{Imagens das classes \textit{Eiffel Tower} e \textit{Rome antica}. \textit{Fonte:~Elaborado pela autora.}}
     \label{fig:resultados:4.1:base}
 \end{center}
 \end{figure}
@@ -896,7 +896,7 @@ De acordo com o teste \textit{post-hoc} de Tukey, foi encontrado $\textit{p-valu
 
 \begin{enumerate}
 
-\item \textbf{Classes de imagens originais}: foram utilizadas \textit{Trafalgar Square}, \textit{Madeleine Church} e \textit{Pantheon}  \cite{Hu2013}. Essas classes são apresentadas na Figura \ref{fig:resultados:4.2:base}. Vale notar que algumas imagens são muito parecidas (difícil classificação) e outras bem divergentes (fácil diferenciação).
+\item \textbf{Classes de imagens originais}: foram utilizadas \textit{Trafalgar Square}, \textit{Madeleine Church} e \textit{Pantheon} \cite{Hu2013}. Essas classes são apresentadas na Figura \ref{fig:resultados:4.2:base}. Vale notar que algumas imagens são muito parecidas (difícil classificação) e outras bem divergentes (fácil diferenciação).
 
 \begin{minipage}{\linewidth}
 \begin{figure}[H]
@@ -910,7 +910,7 @@ De acordo com o teste \textit{post-hoc} de Tukey, foi encontrado $\textit{p-valu
     \subfloat[Pantheon]{
       \includegraphics[width=.32\linewidth]{\detokenize{figuras/resultados/4/pantheon.png}}
     }
-    \caption{}
+    \caption[Imagens exemplo das classes \textit{Trafalgar Square}, \textit{Madeleine Church} e \textit{Pantheon}.]{Imagens exemplo das classes \textit{Trafalgar Square}, \textit{Madeleine Church} e \textit{Pantheon}. \textit{Fonte:~\cite{Hu2013}.}}
     \label{fig:resultados:4.2:base}
 \end{center}
 \end{figure}
