@@ -798,15 +798,13 @@ Os experimentos anteriores foram realizados em bases já balanceadas, com o desb
 
 % Os sub-experimentos foram realizados de forma diferente que os anteriores. Isso foi realizado indicando que o número de imagens faltantes são do \textit{fold} que não seria utilizado, caso fosse o caso de bases balanceadas (experimentos anteriores). Ou seja, todas as classes ainda continuam com \textit{5-folds} cada.
 
-\subsection{Duas classes}
+\subsubsection{Duas classes}
 \begin{itemize}
 %-------------------------------------------------------------------------------
 \item[] \textbf{Protocolo}
 
 \begin{enumerate}
-\item \textbf{Classes de imagens originais}: as classes utilizadas para esse experimento foram \textit{Eiffel Tower} com 1607 imagens, e \textit{???} com apenas 125 imagens.
-
-\meutodo{Tenho essa base nomeada como flickr-surrey. Qual base é essa? Preciso referenciá-la!}
+\item \textbf{Classes de imagens originais}: as classes utilizadas para esse experimento foram \textit{Eiffel Tower} com 1607 imagens, e \textit{Rome antica} com apenas 125 imagens \cite{Hu2013}.
 
 \begin{minipage}{\linewidth}
 \begin{figure}[H]
@@ -823,7 +821,7 @@ Os experimentos anteriores foram realizados em bases já balanceadas, com o desb
 \end{figure}
 \end{minipage}
 
-\item \textbf{Desbalanceamento}: natural da base. A classe minoritária é a \textit{???} com 125 imagens. Dessa forma, a cada sub-experimento, $1607 - 125 = 1482$ imagens foram geradas para rebalancear a base.
+\item \textbf{Desbalanceamento}: natural da base. A classe minoritária é a \textit{Rome antica} com 125 imagens. Dessa forma, a cada sub-experimento, $1607 - 125 = 1482$ imagens foram geradas para rebalancear a base.
 \item \textbf{Método para geração artificial}: todas as gerações foram testadas, a que obteve melhor resultado foi a mistura. Essa geração está exemplificada na Figura \ref{fig:resultados:4.1:geracao}.
 
 \begin{minipage}{\linewidth}
@@ -852,7 +850,7 @@ Os experimentos anteriores foram realizados em bases já balanceadas, com o desb
 %-------------------------------------------------------------------------------
 \item[] \textbf{Resultados}
 
-O rebalanceamento foi realizado de forma a balancear a classe minoritária \textit{???}. A Tabela \ref{tab:resultados:4.1} apresenta os resultados de tal rebalanceamento.
+O rebalanceamento foi realizado de forma a balancear a classe minoritária \textit{Rome antica}. A Tabela \ref{tab:resultados:4.1} apresenta os resultados de tal rebalanceamento.
 
 \begin{minipage}{\linewidth}
 \begin{table}[H]
@@ -891,13 +889,14 @@ De acordo com o teste \textit{post-hoc} de Tukey, foi encontrado $\textit{p-valu
 
 \end{itemize}
 
-\subsection{Multiclasses}
+\subsubsection{Multiclasses}
 \begin{itemize}
 %-------------------------------------------------------------------------------
 \item[] \textbf{Protocolo}
 
 \begin{enumerate}
-\item \textbf{Classes de imagens originais}: foram utilizadas \textit{Trafalgar Square}, \textit{Madeleine Church} e \textit{Pantheon}. Essas classes são apresentadas na Figura \ref{fig:resultados:4.2:base}. Vale notar que algumas imagens são muito parecidas (difícil classificação) e outras bem divergentes (fácil diferenciação).
+
+\item \textbf{Classes de imagens originais}: foram utilizadas \textit{Trafalgar Square}, \textit{Madeleine Church} e \textit{Pantheon}  \cite{Hu2013}. Essas classes são apresentadas na Figura \ref{fig:resultados:4.2:base}. Vale notar que algumas imagens são muito parecidas (difícil classificação) e outras bem divergentes (fácil diferenciação).
 
 \begin{minipage}{\linewidth}
 \begin{figure}[H]
@@ -985,14 +984,14 @@ Utilizando o teste \textit{post-hoc} de Tukey, foi encontrado $\textit{p-value} 
 
 Por fim, este experimento foi realizado com duas classes contendo uma grande quantidade de imagens.
 
-\subsubsection{Classes bem distintas: Cervo e Navio}
+\subsubsection{Classes bem distintas: \textit{Deer} e \textit{Ship}}
 
 \begin{itemize}
 %-------------------------------------------------------------------------------
 \item[] \textbf{Protocolo}
 
 \begin{enumerate}
-\item \textbf{Classes de imagens originais}: \textit{Deer} e \textit{Ship} com 5000 imagens cada. Essas imagens possuem dimensão 32x32 pixels, o que dificulta a representatividade da extração de características (ver Figura \ref{fig:resultados:5.1:base}).
+\item \textbf{Classes de imagens originais}: \textit{Deer} e \textit{Ship} com 5000 imagens cada \cite{Krizhevsky2009}. Essas imagens possuem dimensão 32x32 pixels, o que dificulta a representatividade da extração de características (ver Figura \ref{fig:resultados:5.1:base}).
 
 \begin{minipage}{\linewidth}
   \begin{figure}[H]
@@ -1049,7 +1048,7 @@ Por fim, este experimento foi realizado com duas classes contendo uma grande qua
 \begin{minipage}{\linewidth}
 \begin{table}[H]
 \begin{center}
-\caption{Resultados de \textit{f1-score} para as classes \emph{Tubarão} e \emph{Peixe}, utilizando \emph{Gleam} como método para conversão em escala de cinza e \emph{HOG} para extração de características}
+\caption{Resultados de \textit{f1-score} para as classes \textit{Deer} e \textit{Ship}, utilizando \emph{Gleam} como método para conversão em escala de cinza e \emph{HOG} para extração de características}
 \label{tab:resultados:5:melhor}
 \begin{tabular}{|l|c|c|}
 \hline
@@ -1083,14 +1082,14 @@ Ao realizar o teste \textit{post-hoc} de Tukey, foi encontrado $\textit{p-value}
 
 \end{itemize}
 
-\subsubsection{Classes similares: Tubarão e Peixe}
+\subsubsection{Classes similares: \textit{Shark} e \textit{Fish}}
 
 \begin{itemize}
 %-------------------------------------------------------------------------------
 \item[] \textbf{Protocolo}
 
 \begin{enumerate}
-\item \textbf{Classes de imagens originais}: \textit{Shark} e \textit{Fish} com 1300 imagens cada. Essas classes são exemplificadas na Figura \label{fig:resultados:5.2:base}.
+\item \textbf{Classes de imagens originais}: \textit{Shark} e \textit{Fish} com 1300 imagens cada \cite{Russakovsky2015}. Essas classes são exemplificadas na Figura \label{fig:resultados:5.2:base}.
 
 \begin{minipage}{\linewidth}
 \begin{figure}[H]
