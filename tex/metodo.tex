@@ -10,7 +10,7 @@ Os métodos de geração artificial para o rebalanceamento de classes de imagens
   \begin{center}
     \includegraphics[width=0.7\linewidth]{\detokenize {figuras/rebalance.pdf}}
   \end{center}
-  \caption[Geração artificial da classe minoritária para rebalancear as classes. Para cada imagem necessária para igualar o número de imagens da base, $1 \leq n \leq 16$ imagens originais são dadas como entrada para uma operação de geração artificial. A nova imagem é utilizada como treinamento da base.]{Geração artificial da classe minoritária para rebalancear as classes. Para cada imagem necessária para igualar o número de imagens da base, $1 \leq n \leq 16$ imagens originais são dadas como entrada para uma operação de geração artificial. A nova imagem é utilizada como treinamento da base. \textit{Fonte: Elaborado pela autora.}}
+  \caption[Geração artificial da classe minoritária para rebalancear as classes. Para cada imagem necessária para igualar o número de imagens da base, $1 \leq n \leq 16$ imagens originais são dadas como entrada para uma operação de geração artificial. A nova imagem é utilizada como treinamento da base.]{Geração artificial da classe minoritária para rebalancear as classes. Para cada imagem necessária para igualar o número de imagens da base, $1 \leq n \leq 16$ imagens originais são dadas como entrada para uma operação de geração artificial. A nova imagem é utilizada como treinamento da base. \\ \textit{Fonte: Elaborado pela autora.}}
   \label{fig:escolha}
 \end{figure}
 
@@ -19,7 +19,7 @@ Os métodos de geração artificial para o rebalanceamento de classes de imagens
 %  \begin{center}
 %    \includegraphics[width=1\linewidth]{\detokenize {figuras/geral.pdf}}
 %  \end{center}
-%   \caption[]{\textit{Fonte: Elaborado pela autora.}}
+%   \caption[]{\\ \textit{Fonte: Elaborado pela autora.}}
 %  \label{fig:escolha}
 % \end{figure}
 
@@ -50,7 +50,7 @@ Também conhecido como filtro de suavização, o borramento é uma operação de
       \includegraphics[width=.4\linewidth]{\detokenize{figuras/geracao/blur-b.png}}
     }
   \end{center}
-  \caption[Geração artificial utilizando borramento com filtro bilateral.]{Geração artificial utilizando borramento com filtro bilateral. \textit{Fonte:~Elaborado pela autora.}}
+  \caption[Geração artificial utilizando borramento com filtro bilateral.]{Geração artificial utilizando borramento com filtro bilateral. \\ \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:gen:blur}
 \end{figure}
 
@@ -136,7 +136,7 @@ Diferente da suavização, o processamento de aguçamento procura enfatizar as t
       \includegraphics[width=.4\linewidth]{\detokenize{figuras/geracao/unsharp-b.png}}
     }
   \end{center}
-  \caption[Geração artificial utilizando \textit{unsharp masking}.]{Geração artificial utilizando \textit{unsharp masking}. \textit{Fonte:~Elaborado pela autora.}}
+  \caption[Geração artificial utilizando \textit{unsharp masking}.]{Geração artificial utilizando \textit{unsharp masking}. \\ \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:gen:unsharp}
 \end{figure}
 
@@ -164,7 +164,7 @@ O ruído de Poisson ocorre na contagem de fótons de dispositivos ópticos. Ele 
       \includegraphics[width=.4\linewidth]{\detokenize{figuras/geracao/noise-b.png}}
     }
   \end{center}
-  \caption[Geração artificial utilizando adição de ruído de Poisson.]{Geração artificial utilizando adição de ruído de Poisson. \textit{Fonte:~Elaborado pela autora.}}
+  \caption[Geração artificial utilizando adição de ruído de Poisson.]{Geração artificial utilizando adição de ruído de Poisson. \\ \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:gen:noise}
 \end{figure}
 
@@ -272,7 +272,7 @@ na imagem original (ver Algoritmo~\ref{alg:smotevisual}). O efeito que esse proc
       \includegraphics[width=.5\linewidth]{\detokenize{figuras/geracao/smote-c.png}}
     }
   \end{center}
-  \caption[Geração artificial utilizando o método SMOTE no espaço visual.]{Geração artificial utilizando o método SMOTE no espaço visual. \textit{Fonte:~Elaborado pela autora.}}
+  \caption[Geração artificial utilizando o método SMOTE no espaço visual.]{Geração artificial utilizando o método SMOTE no espaço visual. \\ \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:gen:smotevisual}
 \end{figure}
 
@@ -323,7 +323,7 @@ Algoritmo~\ref{alg:blend}. O efeito dessa mistura pode ser visto na Figura~\ref{
       \includegraphics[width=.3\linewidth]{\detokenize{figuras/geracao/blend-c.png}}
     }
   \end{center}
-  \caption[Geração artificial utilizando uma mistura ponderada de duas imagens.]{Geração artificial utilizando uma mistura ponderada de duas imagens. \textit{Fonte:~Elaborado pela autora.}}
+  \caption[Geração artificial utilizando uma mistura ponderada de duas imagens.]{Geração artificial utilizando uma mistura ponderada de duas imagens. \\ \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:gen:blend}
 \end{figure}
 
@@ -354,7 +354,7 @@ A combinação de \textit{thresholds} é uma composição do fundo (\textit{back
       \includegraphics[width=.3\linewidth]{\detokenize{figuras/geracao/threshold-c.png}}
     }
   \end{center}
-  \caption[Geração artificial utilizando uma mistura limiarizada de duas imagens.]{Geração artificial utilizando uma mistura limiarizada de duas imagens. \textit{Fonte:~Elaborado pela autora.}}
+  \caption[Geração artificial utilizando uma mistura limiarizada de duas imagens.]{Geração artificial utilizando uma mistura limiarizada de duas imagens. \\ \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:gen:threshold}
 \end{figure}
 
@@ -407,7 +407,7 @@ A combinação de regiões salientes é muito similar com o método anterior de 
       \includegraphics[width=.3\linewidth]{\detokenize{figuras/geracao/saliency-c.png}}
     }
   \end{center}
-  \caption[Geração artificial utilizando uma mistura de duas imagens a partir da saliência da primeira imagem.]{Geração artificial utilizando uma mistura de duas imagens a partir da saliência da primeira imagem. \textit{Fonte:~Elaborado pela autora.}}
+  \caption[Geração artificial utilizando uma mistura de duas imagens a partir da saliência da primeira imagem.]{Geração artificial utilizando uma mistura de duas imagens a partir da saliência da primeira imagem. \\ \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:gen:saliency}
 \end{figure}
 
@@ -461,7 +461,7 @@ Essa geração pretende compor informações de diversas imagens em uma única. 
     \centering
     \includegraphics[width=0.6\linewidth]{\detokenize{figuras/geracao/composition.png}}
   \end{center}
-  \caption[Geração artificial utilizando uma composição de imagens.]{Geração artificial utilizando uma composição de imagens. \textit{Fonte:~Elaborado pela autora.}}
+  \caption[Geração artificial utilizando uma composição de imagens.]{Geração artificial utilizando uma composição de imagens. \\ \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:gen:composition}
 \end{figure}
 
@@ -519,7 +519,7 @@ Essa geração pretende compor informações de diversas imagens em uma única. 
 %  \begin{center}
 %    \includegraphics[width=1\linewidth]{\detokenize {figuras/exemplos_corel.png}}
 %  \end{center}
-%   \caption[Base de imagens COREL-1000.]{Base de imagens COREL-1000 utilizada. Estão representadas as 10 classes da base. \textit{Fonte: Elaborado pela autora.}}
+%   \caption[Base de imagens COREL-1000.]{Base de imagens COREL-1000 utilizada. Estão representadas as 10 classes da base. \\ \textit{Fonte: Elaborado pela autora.}}
 %  \label{fig:corel}
 % \end{figure}
 %
