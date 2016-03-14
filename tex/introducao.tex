@@ -19,7 +19,7 @@ O desbalanceamento de classes também se apresenta como um obstáculo para que a
 
 Com o objetivo de promover o rebalanceamento de classes, algumas pesquisas sobre os efeitos da sobreamostragem em dados de aprendizado de máquina já foram realizadas~\cite{Kuncheva2004,Chawla2002}. O método mais divulgado na literatura é conhecido como \sigla{SMOTE}{\textit{Synthetic Minority Over-sampling Technique}}. Este método propõe a geração de exemplos artificiais a partir dos vetores de características originais das classes minoritárias. Por outro lado, não há registro conhecido de um estudo dessas técnicas em dados de informação \emph{visual} para o rebalanceamento de classes. A geração de imagens artificiais (ou sintéticas) é uma tarefa comum, mas não para o rebalanceamento de classes. Em \citeonline{Xie2016}, os autores utilizam um modelo generativo de uma CNN (\textit{Convolutional Neural Network}) para sintetizar imagens realistas. Essas imagens foram geradas, mas não utilizadas como entrada para um algoritmo de classificação ou no treinamento da própria rede. Propõe-se, portanto, a geração de imagens artificiais a partir do processamento das imagens originais, com o objetivo de rebalancear a base de imagens e consequentemente o modelo criado para a classificação. A fim de validar o método proposto, este é comparado com o SMOTE.
 
-De maneira sumária, \textbf{esta pesquisa busca melhorar a classificação de imagens, com foco no rebalanceamento de classes e na quantização de imagens, ambos aplicados antes da extração de características.} Os resultados obtidos, posteriormente apresentados nos Capítulos \ref{cap:resultados-quantizacao} e \ref{cap:resultados-geracao}, demonstram o potencial do processamento de imagens antes da extração de características.
+De maneira sumária, \textbf{esta pesquisa busca melhorar a classificação de imagens, com foco no rebalanceamento de classes e na quantização de imagens, ambos aplicados antes da extração de características.} Os resultados obtidos, posteriormente apresentados nos Capítulos \ref{cap:quantization} e \ref{cap:geracao-artificial}, demonstram o potencial do processamento de imagens antes da extração de características.
 
 % Além disso, é fornecido uma visualização do espaço de características após o rebalanceamento das classes, crucial para analisar se as novas características extraídas são relevantes, ou seja, se adicionam informações que estavam latentes ao aprendizado. Os resultados também demonstram que a quantização das imagens permite obter vetores de características mais compactos e, ao mesmo tempo, com maior capacidade de discriminação entre classes.
 
@@ -79,13 +79,9 @@ Esta dissertação inicia apresentando os fundamentos necessários para a defini
 \begin{description}
 \item [Capítulo~\ref{cap:revisao}:] são conceituados os principais fundamentos necessários para o desenvolvimento desta pesquisa: pré-processamento de imagens, extração de características, desbalanceamento de classes, redução de dimensionalidade e a classificação de imagens.
 
-\item [Capítulo~\ref{cap:quantization}:] a redução do número de intensidades de cor utilizando métodos de quantização antes da etapa de extração de características é descrita.
+\item [Capítulo~\ref{cap:quantization}:] a redução do número de intensidades de cor utilizando métodos de quantização antes da etapa de extração de características é descrita. Além disso, os resultados obtidos com a quantização de imagens são apresentados e discutidos.
 
-\item [Capítulo~\ref{cap:metodo}:] descreve-se os métodos de processamento utilizados para a geração artificial de imagens -- sobre as imagens originais -- com o objetivo de rebalancear classes.
-
-\item [Capítulo~\ref{cap:resultados-quantizacao}:] os resultados obtidos com a quantização de imagens são apresentados e discutidos.
-
-\item [Capítulo~\ref{cap:resultados-geracao}:] os experimentos com a geração de imagens artificiais para o rebalanceamento de classes são apresentados e seus resultados discutidos.
+\item [Capítulo~\ref{cap:geracao-artificial}:] descreve-se os métodos de processamento utilizados para a geração artificial de imagens -- sobre as imagens originais -- com o objetivo de rebalancear classes. Os experimentos com a geração de imagens artificiais para o rebalanceamento de classes são apresentados e seus resultados discutidos.
 
 \item [Capítulo~\ref{cap:conclusoes}:] conclui as contribuições deste trabalho e apresenta os trabalhos futuros.
 
