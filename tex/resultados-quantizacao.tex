@@ -12,7 +12,7 @@ Os resultados devem refletir melhoras nas etapas subsequentes, como uma melhor a
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experimentos}
 
-O objetivo desta seção é mostrar os efeitos da etapa de quantização e como ela pode ser utilizada para reduzir a dimensionalidade do espaço de características. A Figura~\ref{fig:quant:flowResult} demonstra o fluxo das operações, juntamente com os métodos utilizados nos experimentos.
+O objetivo desta seção é mostrar os efeitos da etapa de quantização e como ela pode ser utilizada para reduzir a dimensionalidade do espaço de características ou a complexidade em etapas posteriores do \textit{pipeline} de classificação. A Figura~\ref{fig:quant:flowResult} demonstra o fluxo das operações, juntamente com os métodos utilizados nos experimentos.
 
 \begin{figure}[!htbp]
   \begin{center}
@@ -72,14 +72,14 @@ Os experimentos foram realizados com uma validação cruzada de \textit{10-fold}
     \item \textit{Auto Color Correlogram} (ACC): a métrica de distância utilizada entre os pixels $p(x,y)$ e $q(s,t)$ é a tabuleiro de xadrez $D_8(p,q) = Max(|x-s| + d, |y-t| + d)$ para quatro distâncias $d =$ 1, 3, 5 e 7;
     \item \textit{Border-Interior Classification} (BIC): com uma vizinhança de quatro pixels;
     \item \textit{Color Coherence Vector} (CCV): adotando um valor de $\mathit{threshold} = 25$ para a classificação dos pixels entre coerentes e incoerentes;
-    \item Haralick: o pixel vizinho para o qual iniciar a computar a matriz de correlação foi o pixel à direita.
+    \item Haralick-6: o pixel vizinho para o qual iniciar a computar a matriz de co-ocorrência foi o pixel à direita.
   \end{itemize}
 \item \textbf{Redução da dimensionalidade}: a projeção utilizando \textit{Locality Preserving Projections} (LPP) foi realizada com o parâmetro $k =$ 128, 64, 32 e 16 dimensões e 10 vizinhos. Esse parâmetro foi determinado empiricamente e não influencia consideravelmente a acurácia.
-\item \textbf{Classificação}: realizada através do método \sigla{SVM}{\textit{Support Vector Machines}}. Os parâmetros para essa etapa foram encontrados utilizando uma \textit{grid search} no conjunto de treino.
+\item \textbf{Classificação}: realizada com o classificador \textit{Support Vector Machines} (SVM). Os parâmetros para essa etapa foram encontrados utilizando uma \textit{grid search} no conjunto de treinamento.
 \end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Resultados e Discussão}
+\section{Resultados e Discussão}
 
 A Figura \ref{fig:quant:results} ilustra a acurácia média para o primeiro conjunto de experimentos: para cada combinação de base de dados e método de extração, são demonstrados seis resultados de acurácia correspondentes à quantização para 256, 128, 64, 32, 16 e 8 cores. Com base nessa figura é possível identificar que o método para obter a imagem quantizada tem um impacto significativo na acurácia da classificação. Além disso, a redução de 256 para um menor número de cores normalmente manteve as acurácias e em alguns casos resultou em uma ligeira melhora, especialmente para os níveis de 128 e 64.
 

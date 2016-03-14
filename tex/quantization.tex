@@ -3,7 +3,7 @@
 
 Sistemas de reconhecimento de imagens comumente utilizam uma imagem em níveis de cinza ($2^3 = 8$ bits, $2^8 = 256$ intensidades) para as etapas subsequentes à extração de características. Dá-se o nome de quantização à etapa responsável por esta redução no nível de cores em uma imagem. Ao aplicar a quantização na etapa de pré-processamento, é esperada a redução da complexidade do vetor de características logo no início do processo, beneficiando todos os passos subsequentes.
 
-Com o objetivo de analisar o impacto do uso da quantização, foram utilizados diferentes parâmetros de quantização, combinados com quatro métodos de extração de cor e um de textura. Esses métodos foram escolhidos de acordo com os resultados apresentados por \citeonline{Penatti2012}, com exceção dos métodos HOG e LBP, também descritores frequentemente utilizados na literatura \cite{Wang2009a}.
+Com o objetivo de analisar o impacto do uso da quantização, foram utilizados diferentes parâmetros de quantização, combinados com quatro métodos de extração de cor e um de textura. Esses métodos foram escolhidos de acordo com os resultados apresentados por \citeonline{Penatti2012} e \citeonline{Wang2009a}.
 
 Este capítulo aborda a quantização de imagens antes da extração de características, assim como os métodos utilizados, já apresentados na Seção~\ref{sec:quantizacao}.
 
@@ -21,7 +21,7 @@ O pipeline de reconhecimento de imagens comumente envolve um passo de conversão
   \label{fig:quant:quantizationFlow}
 \end{figure}
 
-Cada método de quantização se comporta diferentemente para uma dada imagem RGB. Por exemplo, o método \emph{Intensidade} mapeia todas as permutações dos mesmos valores em RGB para a mesma cor. Dessa forma, produz um plano no espaço RGB conforme mostrado na Figura \ref{fig:quant:plano}. O efeito do método \emph{Gleam} é similar, mas dada a natureza da função \textit{gamma} (i.e. transformação não linear que define a relação entre o valor do pixel e sua real luminância), cobre uma superfície curva. Tal resultado também é alcançado utilizando o método \emph{Intensidade'}. Independente do método utilizado, o resultado é o mapeamento de características cromáticas bem diferentes em valores de intensidades similares. Ou seja, cores distintas podem ser convertidas em cores próximas, podendo aumentar a confusão entre objetos. Pode-se imaginar esse efeito em uma imagem natural que retrata céu e grama. Considere a confusão das intensidades resultantes da região de céu e grama (e.g RGB(0, 0, 255) e RGB(0, 255, 0), respectivamente): apesar de terem intensidades bem distintas em RGB, os valores em apenas um canal de cor podem estar relativamente próximos. Os métodos \emph{Luminância} e \emph{Luma} procuram aprimorar essa quantização ao ponderar a combinação linear dos canais. Esses métodos são normalmente considerados melhores por se aproximarem ao modelo visual humano, que pondera as cores através do número de cones sensíveis às cores vermelho, verde e azul. O método MSB também tenta enfatizar as diferenças cromáticas, ao ordenar os bits de cores em um único canal. Para mais detalhes sobre tais métodos, consulte Seção \ref{sec:quantizacao}.
+Cada método de quantização se comporta diferentemente para uma dada imagem RGB. Por exemplo, o método \emph{Intensidade} (Equação \ref{eq:intensidade}) mapeia todas as permutações dos mesmos valores em RGB para a mesma cor. Dessa forma, produz um plano no espaço RGB conforme mostrado na Figura \ref{fig:quant:plano}. O efeito do método \emph{Gleam} (Equação \ref{eq:gleam}) é similar, mas dada a natureza da função \textit{gamma} (i.e. transformação não linear que define a relação entre o valor do pixel e sua real luminância), cobre uma superfície curva. Tal resultado também é alcançado utilizando o método \emph{Intensidade'} (método \emph{Intensidade} corrigido por \textit{gamma}). Independente do método utilizado, o resultado é o mapeamento de características cromáticas bem diferentes em valores de intensidades similares. Ou seja, cores distintas podem ser convertidas em cores próximas, podendo aumentar a confusão entre objetos. Pode-se imaginar esse efeito em uma imagem natural que retrata céu e grama. Considere a confusão das intensidades resultantes da região de céu e grama (e.g RGB(0, 0, 255) e RGB(0, 255, 0), respectivamente): apesar de terem intensidades bem distintas em RGB, os valores em apenas um canal de cor podem estar relativamente próximos. Os métodos \emph{Luminância} (Equação \ref{eq:luminancia}) e \emph{Luma} (Equação \ref{eq:luma}) procuram aprimorar essa quantização ao ponderar a combinação linear dos canais. Esses métodos são normalmente considerados melhores por se aproximarem ao modelo visual humano, que pondera as cores através do número de cones sensíveis às cores vermelho, verde e azul. O método MSB também tenta enfatizar as diferenças cromáticas, ao ordenar os bits de cores em um único canal. Para mais detalhes sobre tais métodos, consulte Seção \ref{sec:quantizacao}.
 
 \begin{figure}[!htbp]
   \begin{center}
@@ -32,7 +32,7 @@ Cada método de quantização se comporta diferentemente para uma dada imagem RG
   \label{fig:quant:plano}
 \end{figure}
 
-Exemplos de imagens obtidas após os métodos de quantização apresentados anteriormente podem ser vistos na Figura \ref{fig:quant:quantizacoes}. A barra de gradientes abaixo da imagem dos pincéis demonstra como os métodos de quantização se comportam dada a variação da cor. É possível notar que os métodos \emph{Luminância} e MSB conseguiram melhor discriminar as cores. Além disso, o mapa de cores MSB obteve um maior número de cores únicas, quando comparado aos demais métodos.
+Exemplos de imagens obtidas após os métodos de quantização apresentados anteriormente podem ser vistos na Figura \ref{fig:quant:quantizacoes}. A barra de gradientes abaixo da imagem dos pincéis demonstra como os métodos de quantização se comportam dada a variação da cor. É possível notar que os métodos \emph{Luminância} e MSB conseguiram melhor discriminar as cores. Além disso, o mapa de cores MSB obteve um maior número de intensidades únicas, quando comparado aos demais métodos.
 
 \begin{figure}[!htbp]
   \begin{center}
@@ -43,10 +43,10 @@ Exemplos de imagens obtidas após os métodos de quantização apresentados ante
     \subfloat[Gleam]{
       \includegraphics[width=.18\linewidth]{\detokenize{figuras/quantizacao/fig_quantGleam.png}}
     }
-    \subfloat[Intensidade]{
+    \subfloat[Intensidade']{
       \includegraphics[width=.18\linewidth]{\detokenize{figuras/quantizacao/fig_quantIntensity.png}}
     }
-    \subfloat[Luminance]{
+    \subfloat[Luminância']{
       \includegraphics[width=.18\linewidth]{\detokenize{figuras/quantizacao/fig_quantLuminance.png}}
     }
     \subfloat[MSB]{
@@ -54,7 +54,7 @@ Exemplos de imagens obtidas após os métodos de quantização apresentados ante
     }
     \hspace{0.1\textwidth}
   \end{center}
-  \caption[Resultado da aplicação de métodos de quantização. A imagem original \protect\subref{fig:quant:original} resultou em versões de um canal de cor com 232 cores únicas para o método (e) MSB e 184 cores para os demais métodos. Ao analisar-se as barras de gradiente, assim como as paletas de cores, observa-se que os métodos \emph{Luminância} e MSB conseguiram uma melhor discriminação entre cores.]{Resultado da aplicação de métodos de quantização. A imagem original \protect\subref{fig:quant:original} resultou em versões de um canal de cor com 232 cores únicas para o método (e) MSB e 184 cores para os demais métodos. Ao analisar-se as barras de gradiente, assim como as paletas de cores, observa-se que os métodos \emph{Luminância} e MSB conseguiram uma melhor discriminação entre cores. \\ \textit{Fonte:~\cite{Ponti2016}.}}
+  \caption[Resultado da aplicação de métodos de quantização. A imagem original \protect\subref{fig:quant:original} resultou em versões de um canal de cor com 232 intensidades únicas para o método (e) MSB e 184 cores para os demais métodos. Ao analisar-se as barras de gradiente, assim como as paletas de cores, observa-se que os métodos \emph{Luminância'} e MSB conseguiram uma melhor discriminação entre cores.]{Resultado da aplicação de métodos de quantização. A imagem original \protect\subref{fig:quant:original} resultou em versões de um canal de cor com 232 cores únicas para o método (e) MSB e 184 cores para os demais métodos. Ao analisar-se as barras de gradiente, assim como as paletas de cores, observa-se que os métodos \emph{Luminância'} e MSB conseguiram uma melhor discriminação entre cores. \\ \textit{Fonte:~\cite{Ponti2016}.}}
   \label{fig:quant:quantizacoes}
 \end{figure}
 

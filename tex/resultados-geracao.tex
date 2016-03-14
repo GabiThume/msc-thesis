@@ -35,9 +35,10 @@ Procurando estabilidade dos resultados obtidos com a geração das imagens artif
 
 \meutodo{Tenho que escrever o caption}
 
-A medida estatística mais comum para avaliação é a razão do número de acertos pela quantidade de imagens testadas. Essa medida, conhecida por \underline{acurácia}, pode não refletir propriamente os resultados em um cenário de bases desbalanceadas. Isso se deve ao fato de que se a classe minoritária não obtiver nenhum resultado correto e a classe majoritária tiver 100\% de acertos, tal acurária poderá ser muito alta, mesmo considerando que nenhuma imagem da classe minoritária foi corretamente classificada. Dessa forma, considera que os erros são igualmente importantes. Mas em se tratando de bases desbalanceadas, deve-se diferenciar o erro em, por exemplo, diagnosticar um paciente doente -- classe minoritária -- como sendo saudável e um paciente saudável -- classe majoritária -- como estando doente \cite{Batista2004}. No primeiro caso, o paciente corre risco de diagnóstico tardil, enquanto o paciente saudável realiza outros testes para refutação.
+A acurácia pode não refletir propriamente os resultados em um cenário de bases desbalanceadas. Isso se deve ao fato de que se a classe minoritária não obtiver nenhum resultado correto e a classe majoritária tiver 100\% de acertos, tal acurária poderá ser muito alta, mesmo considerando que nenhuma imagem da classe minoritária foi corretamente classificada. Dessa forma, considera que os erros são igualmente importantes.
+ % Mas em se tratando de bases desbalanceadas, deve-se diferenciar o erro em, por exemplo, diagnosticar um paciente doente -- classe minoritária -- como sendo saudável e um paciente saudável -- classe majoritária -- como estando doente \cite{Batista2004}. No primeiro caso, o paciente corre risco de diagnóstico tardil, enquanto o paciente saudável realiza outros testes para refutação.
 
-Pode-se estender essa medida obtendo-se a \underline{acurácia $k$-fold}: medida de acerto baseada na divisão do conjunto de objetos em teste e treinamento, realizando a repetição dos experimentos $n$ vezes e obtendo a média e o desvio padrão. A acurácia de cada experimento é obtida por
+Pode-se estender essa medida obtendo-se a acurácia balanceada: medida de acerto baseada na divisão do conjunto de objetos em teste e treinamento, realizando a repetição dos experimentos $n$ vezes e obtendo a média e o desvio padrão. A acurácia de cada experimento é obtida por
 
     \begin{equation*}
       Acc = 1 - \frac{\sum_{i=1}^{c} E(i)}{2c},
@@ -54,7 +55,7 @@ Pode-se estender essa medida obtendo-se a \underline{acurácia $k$-fold}: medida
 
 % consideramos positivos a minoritaria
 
-Uma outra medida, que pode efetivamente avaliar a performance de classificação em cenários desbalanceados, é a \underline{medida-F1} (conhecida como \textit{F1-Measure} ou \textit{F1-Score}):
+Uma outra medida, que pode efetivamente avaliar a performance de classificação em cenários desbalanceados, é o \textit{F1-Score}:
 
 \begin{equation*}
   F1 = 2 \frac{PR}{P+R}.
@@ -72,9 +73,7 @@ Essa medida combina precisão e revocação como medida de efetividade da classi
   R = \frac{VP}{VP + FN}.
 \end{equation*}
 
-A partir dessas medidas estatísticas, o teste HSD de Tukey pode ser utilizado para determinar se há diferença significativa em uma amostra de resultados gerados.
-
-\meutodo{Explicar melhor? aonde colocar p-value < 0,05 e a hipótese nula?}
+A partir dessas medidas estatísticas, o teste \textit{Honest Significant Difference} (HSD) de Tukey pode ser utilizado para determinar se há diferença significativa em uma amostra de resultados gerados. A hipótese nula a ser testada por estes experimentos é que não há diferença estatística relevante entre as observações de \textit{F1-Scores}. Para analisar se o teste da hipótese é significativo, pode ser utilizado o \textit{p-value}, que indica o quão estatisticamente significante o resultado é: quanto menor o seu valor, maior a evidência contra a hipótese nula (utiliza-se um limiar de 0,05).
 
 % A partir dessas medidas, o \underline{teste estatístico de Friedman} pode ser usado para determinar se há diferença significante em uma amostra de resultados gerados \cite{friedman2010}. As performances dos algoritmos são analisados e um \textit{rank} é atribuído para cada conjunto de dados. Ele considera que a hipótese nula a ser testada é que não há diferença estatística relevante entre as observações. Para analisar se o teste da hipótese é significativo, pode ser utilizado o \underline{p-valor}, que indica o quão estatisticamente significante o resultado é: quanto menor o seu valor, maior a evidência contra a hipótese nula (geralmente o limiar utilizado é de 0,05).
 
@@ -84,12 +83,13 @@ A seguir, para cada experimento realizado são descritos: a base de imagens util
 \FloatBarrier
 \subsection{Experimento 1: duas classes bem discriminadas}
 
-Neste experimento foram utilizadas duas classes com cores bem distintas entre elas, ou seja, de fácil diferenciação. Por tal razão, um sub-experimento de visualização foi realizado para análise do espaço de características. Como o foco é na visualização de tal espaço, é relevante ter o modelo do espaço ideal das classes balanceadas. Por conta disso, esse experimento em específico não trata de uma base naturalmente desbalanceada.
+Neste experimento foram utilizadas duas classed de fácil diferenciação, porém com alguma sobreposição. Por tal razão, um sub-experimento de visualização foi realizado para análise do espaço de características.
+% Como o foco é na visualização de tal espaço, é relevante ter o modelo do espaço ideal das classes balanceadas. Por conta disso, esse experimento em específico não trata de uma base naturalmente desbalanceada.
 
 %-------------------------------------------------------------------------------
 \subsubsection{Protocolo}
 \begin{enumerate}
-\item \textbf{Imagens originais}: classes \emph{Cavalo} e \emph{Elefante} da base de imagens Corel, exemplificadas na Figura \ref{fig:resultados:1:base} \cite{Wang2001}. A principal característica dessas imagens é a diferença de cores. Apesar de haverem casos de confusão, são classes que podem ser consideradas bem discriminadas.
+\item \textbf{Imagens originais}: classes \emph{Cavalo} e \emph{Elefante} da base de imagens Corel, exemplificadas na Figura \ref{fig:resultados:1:base} \cite{Wang2001}. A principal característica dessas imagens é a diferença de cores, com um pequeno grau de sobreposição.
 
 \begin{minipage}{\linewidth}
 \begin{figure}[H]
@@ -133,9 +133,9 @@ Neste experimento foram utilizadas duas classes com cores bem distintas entre el
 
 \item \textbf{Extração de características}: classificação de pixels de borda e interior (BIC) para a visualização. Todos os métodos de extração foram testados para a análise estatística.
 
-\item \textbf{Classificação}: Inicialmente o classificador \textit{Naive Bayes} foi explorado, apresentando melhora na acurácia ao apenas replicar as imagens. Esse comportamento não é desejado em um classificador para a avaliação de rebalanceamento de classes. Por essa razão e por permitir uma análise da melhora no comportamento da classificação, o classificador supervisionado KNN com $K=1$ (para mais detalhes ver Seção~\ref{sec:knn}) foi utilizado.
+\item \textbf{Classificação}: o classificador supervisionado KNN com $K=1$ (para mais detalhes ver Seção~\ref{sec:knn}) foi utilizado.
 
-\item \textbf{Projeção multidimensional}: dois componentes principais encontrados ao aplicar PCA (Seção~\ref{sec:pca}) nos vetores de características para redução de dimensionalidade foram projetados.
+\item \textbf{Projeção multidimensional para visualização}: dois componentes principais encontrados ao aplicar PCA (Seção~\ref{sec:pca}) nos vetores de características para redução de dimensionalidade foram projetados.
 \end{enumerate}
 
 %-------------------------------------------------------------------------------
@@ -313,7 +313,7 @@ Desbalanceado         & 88.258567          & 5.538461               \\ \hline
 \end{center}
 \end{figure}
 
-Considerando a análise da melhor combinação dos métodos de representação da imagem, foi verificado também a performance dos rebalanceamentos em um cenário mais complexo: o de maior variância dos \textit{F1-Scores}, dadas as 40 combinações da validação. A Figura \ref{fig:resultados:1:pior} mostra o gráfico de \textit{boxplot} referente aos resultados da Tabela \ref{fig:resultados:1:tabpior}. O melhor método de rebalanceamento para tal cenário foi o de geração artificial de imagens de adição de \emph{ruído}, exemplificado na Figura \ref{fig:resultados:1:ruido}. Referente aos resultados da Tabela~\ref{fig:resultados:1:tabpior}, o par de métodos \emph{MSB} e \emph{HOG} obteve maior valor de variância -- para conversão de escala de cinza e extração de características, respectivamente.
+Considerando a análise da melhor combinação dos métodos de representação da imagem, foi verificada também a performance dos rebalanceamentos em um cenário mais complexo: o de maior variância dos \textit{F1-Scores}, dadas as 40 combinações da validação. A Figura \ref{fig:resultados:1:pior} mostra o gráfico de \textit{boxplot} referente aos resultados da Tabela \ref{fig:resultados:1:tabpior}. O melhor método de rebalanceamento para tal cenário foi o de geração artificial de imagens de adição de \emph{ruído}, exemplificado na Figura \ref{fig:resultados:1:ruido}. Referente aos resultados da Tabela~\ref{fig:resultados:1:tabpior}, o par de métodos \emph{MSB} e \emph{HOG} obteve maior valor de variância -- para conversão de escala de cinza e extração de características, respectivamente.
 
 \begin{figure}[!htbp]
     \begin{center}
@@ -371,7 +371,7 @@ Desbalanceado       & 55.667145          & 13.341421              \\ \hline
 Para o resultado da combinação dos melhores métodos de conversão em escala de cinza e extração de características, o teste \textit{post-hoc} HSD de Tukey revelou que não há diferença estatística entre a base desbalanceada e o SMOTE ($\textit{p-value} = 0.2073$). Porém, indicou que existe uma significância entre o desbalanceamento e a geração artificial ($\textit{p-value} = 0.0062$). Isso significa que o melhor método para rebalancear essas classes é a geração artificial utilizando o método de misturas de duas imagens. Ainda de acordo com o teste, não há evidência estatística da relevância do resultado da combinação de maior variância. Portanto, todos os próximos experimentos relatam apenas os resultados da melhor combinação.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Experimento 2: duas classes de difícil diferenciação}
+\subsection{Experimento 2: duas classes sobrepostas}
 
 O experimento anterior considerou classes relativamente distintas. Por isso, classes de difícil diferenciação também foram testadas e são reportadas a seguir.
 

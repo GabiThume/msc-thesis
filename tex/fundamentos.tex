@@ -8,7 +8,7 @@ Inicialmente, a Seção~\ref{sec:preprocessamento} apresenta alguns dos principa
 \section{Pré-processamento de imagens}
 \label{sec:preprocessamento}
 
-Uma imagem digital $I$ pode ser definida como uma função $f(x,y)$, onde $x$ e $y$ são as coordenadas cartesianas de um determinado ponto e $f$ a intensidade (brilho) da imagem naquele ponto. Essa imagem é composta por finitos elementos chamados de pixels que podem ser diretamente acessados através de sua posição $x$ e $y$. Digitalmente, uma imagem é representada por uma matriz de valores com $M$ linhas e $N$ colunas onde cada elemento representa a sua intensidade. Uma imagem colorida $I$ do sistema RGB possui três canais de cores representantes das cores vermelha, verde e azul. Cada elemento $I(x,y)$ corresponde a uma tripla $(r, g, b)$ de números, com $0 \leq r \leq 255$, $0 \leq g \leq 255$ e $0 \leq b \leq 255$, onde 0 é a intensidade de cor mais escura e 255 a mais clara. A combinação dessas intensidades resulta na cor do pixel \cite{Gonzalez2007}. A Figura \ref{fig:pixel} mostra uma visualização ampliada dos pixels de uma imagem digital.
+Uma imagem $I$ pode ser definida como uma função $f(x,y)$, onde $x$ e $y$ são as coordenadas espaciais de um determinado ponto e $f$ a intensidade da imagem naquele ponto. Quando ambos $x$, $y$ e os valores de intensidade são finitos e discretos, trata-se de uma imagem digital. Essa imagem é composta por finitos elementos chamados de pixels que podem ser diretamente acessados através de sua posição $x$ e $y$. Digitalmente, uma imagem é representada por uma matriz de valores com $M$ linhas e $N$ colunas onde cada elemento representa a sua intensidade. Uma imagem colorida $I$ do sistema RGB possui três canais de cores representantes das cores vermelha, verde e azul. Cada elemento $I(x,y)$ corresponde a uma tripla $(r, g, b)$ de números, com $0 \leq r \leq 255$, $0 \leq g \leq 255$ e $0 \leq b \leq 255$, onde 0 é a intensidade de cor mais escura e 255 a mais clara. A combinação dessas intensidades resulta na cor do pixel \cite{Gonzalez2007}. A Figura \ref{fig:pixel} mostra uma visualização ampliada dos pixels de uma imagem digital.
 
 \begin{figure}[!htbp]
  \begin{center}
@@ -190,27 +190,31 @@ Muitos métodos de extração de características são preparados para receber i
 
 \begin{description}
 \item [Intensidade:] consiste em computar a média entre os canais RGB da imagem a partir de
-\begin{equation*}
+\begin{equation}
 	Q_{Intensidade} = \frac{1}{3}(R + G + B),
-\end{equation*}
+  \label{eq:intensidade}
+\end{equation}
 \noindent e então realizar a correção por \textit{gamma}, obtendo assim o método \emph{Intensidade'}.
 
 \item [Gleam:] ao corrigir por \textit{gamma} cada canal antes de realizar a combinação linear, tem-se o método:
-\begin{equation*}
+\begin{equation}
 	Q_{Gleam} = \frac{1}{3}(R' + G' + B'),
-\end{equation*}
+  \label{eq:gleam}
+\end{equation}
 \noindent onde $R'$, $G'$ e $B'$ são os canais R, G e B corrigidos por \textit{gamma}.
 
 \item [Luminância:] computa uma soma ponderada dos canais de cor. Esse método foi desenvolvido para levar em conta a percepção visual humana. O olho humano percebe verde melhor que vermelho, e vermelho melhor que azul:
-\begin{equation*}
+\begin{equation}
 	Q_{\text{Luminância}} = 0.299R + 0.587G + 0.114B,
-\end{equation*}
+  \label{eq:luminancia}
+\end{equation}
 \noindent e então realizar a correção por \textit{gamma}, obtendo assim o método \emph{Luminância'}.
 
 \item [Luma:]  similar ao anterior, utilizado nas televisões de alta definição:
-\begin{equation*}
+\begin{equation}
 	Q_{Luma} = 0.2126R' + 0.7152G' + 0.0722B',
-\end{equation*}
+  \label{eq:luma}
+\end{equation}
 \noindent onde $R'$, $G'$ e $B'$ são os canais R, G e B corrigidos por \textit{gamma}.
 
 \item [\sigla{MSB}{\textit{Most Significant Bits}}:] ao invés de realizar uma combinação linear dos canais de cores, ordena os bits dos canais coloridos em um único canal. Computa quantos bits de cada canal de cor contribuem para a imagem final e extrai os bits do código binário dos canais originais \cite{Ponti-Jr2013}.
@@ -225,7 +229,7 @@ A Figura \ref{fig:quantizacao} apresenta a conversão na escala de cinza obtida 
 \subfloat[Original]{
   \includegraphics[width=.3\linewidth]{\detokenize{figuras/quantizacao/Lenna.png}}
 }
-\subfloat[Intensidade]{
+\subfloat[Intensidade']{
   \includegraphics[width=.3\linewidth]{\detokenize{figuras/quantizacao/Intensity_gray.png}}
   \label{fig:intensidade}
 }
@@ -234,7 +238,7 @@ A Figura \ref{fig:quantizacao} apresenta a conversão na escala de cinza obtida 
   \label{fig:gleam}
 }
 \newline
-\subfloat[Luminância]{
+\subfloat[Luminância']{
   \includegraphics[width=.3\linewidth]{\detokenize{figuras/quantizacao/Luminance_gray.png}}
   \label{fig:Luminance}
 }
@@ -247,11 +251,9 @@ A Figura \ref{fig:quantizacao} apresenta a conversão na escala de cinza obtida 
   \label{fig:msb}
 }
  \end{center}
- \caption[Conversão para a escala de cinza com os métodos utilizados nessa pesquisa. O método MSB resulta em uma imagem com 8 bits (64 cores) e os outros em 256 cores.]{Conversão para a escala de cinza com os métodos utilizados nessa pesquisa. O método MSB resulta em uma imagem com 8 bits (64 cores) e os outros em 256 cores. \\ \textit{Fonte:~Elaborado pela autora.}}
+ \caption[Conversão para a escala de cinza com os métodos utilizados nessa pesquisa. Os métodos resultam em uma imagem com 8 bits (256 cores).]{Conversão para a escala de cinza com os métodos utilizados nessa pesquisa. Os métodos resultam em uma imagem com 8 bits (256 cores). \\ \textit{Fonte:~Elaborado pela autora.}}
  \label{fig:quantizacao}
 \end{figure}
-
-\meutodo{Porque o MSB resultou em 64 cores e não 256?}
 
 %--------------------------------------------------------------------------------
 % \subsection{Reconstrução}
@@ -296,13 +298,13 @@ Exemplos de métodos conhecidos capazes de descrever outras características sã
 \begin{description}
 \item[\sigla{GCH}{\textit{Global Color Histogram}}:] calcula o histograma global dos níveis de intensidade da imagem. É a alternativa mais simples para representar as informações de uma imagem~\cite{Gonzalez2007}. Produz um vetor de $N$ dimensões, sendo $N$ o número de intensidades.
 
-\item[\sigla{CCV}{\textit{Color Coherence Vector}}:] captura informações sobre como as cores são organizadas em regiões conectadas, de acordo com um \textit{threshold}. Classifica os pixels da imagem em coerentes e incoerentes, computa os respectivos histogramas e os concatena \cite{ccv}. Dessa forma, o vetor de características produzido possui $2N$ dimensões.
+\item[\sigla{CCV}{\textit{Color Coherence Vector}}:] captura informações sobre como as cores são organizadas em regiões conectadas, de acordo com um \textit{threshold} (Foi utilizado $T = 25$, sugerido pelos autores). Classifica os pixels da imagem em coerentes e incoerentes, computa os respectivos histogramas e os concatena \cite{ccv}. Dessa forma, o vetor de características produzido possui $2N$ dimensões.
 
 O vetor de coerência de cor armazena o número de pixels coerentes e de incoerentes para cada cor. Pixels coerentes fazem parte de uma região contígua enquanto incoerentes não. Seu funcionamento pode ser resumido nos seguintes passos:
 
 \begin{enumerate}
-  \item Borra levemente a imagem ao substituir os pixels pela média do pixel e seus oito vizinhos;
-  \item Discretiza o espaço de cor de forma que a imagem contenha apenas $n$ cores distintas;
+  \item Suaviza a imagem com filtro de média 3x3;
+  \item Discretiza o espaço de cor de forma que a imagem contenha apenas $n \leq 256$ cores distintas;
   \item Classifica os pixels entre coerentes e incoerentes: se o tamanho do seu componente conectado for maior ou igual um \textit{threshold} é coerente; caso contrário, incoerente;
   \item Computa dois histogramas:
   \begin{itemize}
@@ -330,7 +332,7 @@ O vetor de coerência de cor armazena o número de pixels coerentes e de incoere
 
 \item[\sigla{ACC}{\textit{Auto Color Correlogram}}:] captura a correlação espacial entre cores idênticas. Para tal, computa a probabilidade de encontrar dois pixels com a mesma cor, a uma distância $d$ um do outro \cite{acc}. O vector resultante consiste na concatenação dos auto-correlogramas, um para cada distância. Neste estudo, são consideradas quatro distâncias: 1, 3, 5 e 7; resultando em um vetor com $4N$ características.
 
-\item[Haralick-6:] descreve a textura das imagens, ou seja, diferenças locais em níveis de intensidade~\cite{Haralick1973}. O vetor resultante possui seis dimensões que representam as seguintes características:
+\item[Haralick-6:] descreve a textura das imagens, ou seja, diferenças locais em níveis de intensidade~\cite{Haralick1973}. O estudo original sugere 28 características, porém apenas seis delas são utilizadas nesta pesquisa. Isso porque estas possuem independência entre si. O vetor resultante possui seis dimensões que representam as seguintes características:
 
 \begin{enumerate}
   \item \emph{Probabilidade máxima:} maior resposta na matriz de co-ocorrência. Intervalo:~$[0,1]$;
@@ -679,7 +681,7 @@ A tarefa de classificação de imagens consiste em tentar predizer a classe de u
 \subsection{\textit{K-Nearest Neighbors}}
 \label{sec:knn}
 
-O classificador \sigla{K-NN}{\textit{K-Nearest Neighbors}} considera a proximidade entre os dados para realizar predições. Baseia-se na premissa de que os objetos do mesmo conceito são semelhantes. O seu funcionamento está descrito no Algoritmo \ref{alg:knn}. Na fase de treinamento, apenas armazena os exemplos rotulados do conjunto de dados de treinamento. Quando um novo exemplo deve ser classificado, calcula a distância entre os vetores de características do novo exemplo e aqueles já rotulados. O novo exemplo é então classificado como sendo da classe do exemplo de treinamento com menor distância~\cite{Boiman2008}.
+O classificador \sigla{K-NN}{\textit{K-Nearest Neighbors}} considera a proximidade entre os dados para realizar predições. Baseia-se na premissa de que os objetos do mesmo conceito são semelhantes. O seu funcionamento está descrito no Algoritmo \ref{alg:knn}. Na fase de treinamento, apenas armazena os exemplos rotulados do conjunto de dados de treinamento. Quando um novo exemplo deve ser classificado, calcula a distância entre os vetores de características do novo exemplo e aqueles já rotulados. O novo exemplo é então classificado como sendo da classe do exemplo de treinamento com menor distância~\cite{Boiman2008}. Com $K = 1$, a predição da classe corresponde ao exemplo mais próximo. Trata-se de um classificador que utiliza todas as instâncias do modelo.
 
 \begin{algorithm}[!htbp]
   \caption{K-NN: método de classificação supervisionada}
@@ -698,17 +700,19 @@ O classificador \sigla{K-NN}{\textit{K-Nearest Neighbors}} considera a proximida
   }
 \end{algorithm}
 
-Com $K = 1$, a predição da classe corresponde ao exemplo mais próximo. Ao contrário de classificadores ``caixa preta'' (e.g. redes neurais), esse classificador permite o acompanhamento e análise do espaço de características representativo das imagens. Ao mesmo tempo, trata-se de um classificador que salienta a diferença entre as classes.
+% Ao contrário de classificadores ``caixa preta'' (e.g. redes neurais), esse classificador permite o acompanhamento e análise do espaço de características representativo das imagens. Ao mesmo tempo, trata-se de um classificador que salienta a diferença entre as classes.
 
-\meutodo{Adicionar uma seção apresentando o classificador SVM? Já que ele é
-usado nos experimentos de quantização.}
+\subsection{\textit{Support Vector Machines}}
+\label{sec:svm}
+
+O classificador \sigla{SVM}{\textit{Support Vector Machines}} encontra um hiperplano que separa os dados de forma que possua a maior distância possível entre os vetores de treinamento mais próximos. Dessa forma, todos os vetores da mesma classe estão do mesmo lado do hiperplano. Dados os dados rotulados, o algoritmo fornece como saída o hiperplano ótimo que categoriza novos exemplos. Encontrar o melhor hiperplano é um problema de otimização que pode ser resolvido com multiplicadores de Lagrange \cite{Chapelle1999a}.
+
+Os exemplos de treinamento que estão mais próximos do hiperplano são chamados vetores de suporte. Eles são importantes porque são os mais difíceis de classificar. Por isso, depois do treinamento todos os dados podem ser descartados, exceto os vetores de suporte que são utilizados para a classificação \cite{Marsland2015}. Ao lidar com imagens, caso a dimensão do espaço original for maior que o tamanho do conjunto de treinamento, os dados de treinamento são geralmente linearmente separáveis \cite{Chapelle1999a}.
 
 %-------------------------------------------------------------------------------
 \section{Redução de dimensionalidade}
 \label{sec:reducaodimensionalidade}
 % http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=4368165
-
-A visualização do espaço de características obtido após a geração artificial de imagens pode ajudar a verificar se as novas imagens melhoram a definição da classe minoritária em relação ao espaço original (inclusive antes de imagens serem removidas para provocar o desbalanceamento). Ou seja, se o método utilizado revelou características latentes. Dessa forma, ao projetar os novos vetores no espaço das imagens originais, é possível analisar qual método -- SMOTE ou geração de imagens no campo visual -- mais se assemelha à distribuição original dos dados.
 
 Considerando que um vetor de características extraído com extratores comuns pode possuir entre 6 (e.g.\ Haralick) e 512 (e.g.\ BIC) características, a visualização de um exemplo requer que seja realizado o mapeamento desses valores em apenas duas dimensões. Para isso, uma redução de dimensionalidade mapeia os vetores de $N$ dimensões para um espaço 1D, 2D ou 3D. A partir desses novos vetores, pode então ser criada alguma representação visual que tente manter a relação de distância entre os novos e os originais~\cite{Paulovich2007}.
 
@@ -719,7 +723,7 @@ Considerando que um vetor de características extraído com extratores comuns po
 % http://sebastianraschka.com/Articles/2014_pca_step_by_step.html
 % http://arxiv.org/pdf/1404.1100v1.pdf
 
-O \sigla{PCA}{\textit{Principal Component Analysis}} é uma técnica não supervisionada que pode ser utilizada para reduzir a dimensionalidade dos dados com a máxima variância possível. Cada imagem, originalmente representada por um vetor com $N$ características, pode então ser representada por apenas um ou mais valores. Essa redução permite a projeção dessas imagens no espaço de características. O objetivo é extrair as informações mais importantes dos dados e representá-las como um conjunto de variáveis ortogonais chamadas de componentes principais. Para isso encontra-se uma outra base: uma combinação linear da base original, que melhor representa os dados ao assumir que as direções das maiores variâncias são as mais importantes. Ou seja, a variância associada com cada direção quantifica o quão principal é aquela direção \cite{Abdi2010}. Pode-se, portanto, enumerar os passos necessários para o PCA sendo:
+O \sigla{PCA}{\textit{Principal Component Analysis}} é uma técnica não supervisionada que pode ser utilizada para reduzir a dimensionalidade dos dados com a máxima variância possível. Cada imagem, originalmente representada por um vetor com $N$ características, pode então ser representada por apenas um ou mais valores.  O objetivo é representar os dados como um conjunto de variáveis ortogonais chamadas de componentes principais. Para isso encontra-se uma outra base: uma combinação linear da base original, que melhor representa os dados ao assumir que as direções das maiores variâncias são as mais importantes. Ou seja, a variância associada com cada direção quantifica o quão principal é aquela direção \cite{Abdi2010}. Pode-se, portanto, enumerar os passos necessários para o PCA sendo:
 
 \begin{enumerate}
 \item Centraliza todos os atributos na origem ao subtrair a média de cada dimensão;
@@ -758,7 +762,11 @@ O \sigla{PCA}{\textit{Principal Component Analysis}} é uma técnica não superv
 \noindent onde $D$ é a matriz diagonal na qual seus elementos são as somas das colunas de $W$ e $L$ é a matriz Laplaciana $L = D - W$. $X$ é a matriz original dos dados e $\vec{a}$ é o vetor solução (matriz de projeção), ordenado pelos autovalores $\lambda$.
 \end{enumerate}
 
-\meutodo{Adicionar as métricas estatísticas aqui? Ou deixar nos resultados? Precisa falar sobre ANOVA e HSD de Tukey?}
+\subsection{Redução para visualização}
+
+A visualização do espaço de características obtido após a geração artificial de imagens pode ajudar a verificar se as novas imagens melhoram a definição da classe minoritária em relação ao espaço original (inclusive antes de imagens serem removidas para provocar o desbalanceamento). Ou seja, se o método utilizado revelou características latentes. Dessa forma, ao projetar os novos vetores no espaço das imagens originais, é possível analisar qual método -- SMOTE ou geração de imagens no campo visual -- mais se assemelha à distribuição original dos dados.
+% Essa redução permite a projeção dessas imagens no espaço de características.
+
 
 %--------------------------------------------------------------------------------
 \section{Considerações finais}
