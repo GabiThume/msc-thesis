@@ -13,7 +13,7 @@ Uma imagem $I$ pode ser definida como uma função $f(x,y)$, onde $x$ e $y$ são
 \begin{figure}[!htbp]
  \begin{center}
    \includegraphics[width=0.4\linewidth]{figuras/pixel.jpg}
- \caption[Visualização pixelizada de uma imagem da base Corel.]{Visualização pixelizada de uma imagem da base Corel \cite{Wang2001}. \\ \textit{Fonte:~Elaborado pela autora.}}
+ \caption[Visualização pixelizada de uma imagem da base Corel-1000.]{Visualização pixelizada de uma imagem da base Corel-1000 \cite{Wang2001}. \\ \textit{Fonte:~Elaborado pela autora.}}
  \label{fig:pixel}
  \end{center}
 \end{figure}
@@ -38,7 +38,7 @@ Como exemplo do uso de métodos de pré-processamento, considere imagens de alga
 \begin{enumerate}
 \item As imagens -- originalmente em RGB -- são convertidas para uma escala de cinza;
 \item A dimensão da imagem é reduzida para diminuir o tempo de execução dos passos subsequentes de processamento;
-\item O constraste é ``ajustado'', para aumentar a diferença das intensidades dos pixels da imagem e corrigir o brilho;
+\item O contraste é ``ajustado'', para aumentar a diferença das intensidades dos pixels da imagem e corrigir o brilho;
 \item A imagem é filtrada, removendo ruídos causados pelo processo de captura;
 \item O contorno é realçado, pois a forma é uma das características mais importantes para discriminar algas (e outros objetos);
 \item Por fim, o histograma é equalizado.
@@ -150,9 +150,9 @@ Na Figura \ref{fig:pre-sharp} está demonstrado o efeito do algoritmo de \textit
 
 % Uma variação do \textit{Unsharp Mask} é uma versão adaptativa apresentada por \cite{Polesel2000}. Essa solução pretende reduzir a sensibilidade a ruido e também evitar a adição de artefatos, com o objetivo de enfatizar os detalhes que contém contraste médio e sem aplicar sharpening em áreas suaves. O resultado disso é uma imagem com maior dinâmica em áreas de detalhe e sem mudança em áreas uniformes. Para classificar uma dada região entre essas três classes (alto, médio e nenhum detalhe) foi calculado a variância local de um bloco 3x3 pixels. Esse algoritmo utiliza dois filtros direcionais com coeficientes atualizados por uma estratégia de adaptação de Gauss-Newton.
 
-Um exemplo clássico de utilização de realce, é para compensar a variação de iluminação em diversas imagens. Em \citeonline{Gross2003}, os autores propuseram um algoritmo para o reconhecimento de faces invariante à iluminação. Eles ressaltam que, desconsiderando a variação da posição, a iluminação é o fator de maior impacto na aparência das faces. A luz varia durante o dia, entre um dia e outro, e entre diferentes ambientes. Isso afeta o conjunto de imagens a ser analisado, que passa a conter imagens com diferentes constrastes, o que pode acentuar ou diminuir certas características faciais.
+Um exemplo clássico de utilização de realce, é para compensar a variação de iluminação em diversas imagens. Em \citeonline{Gross2003}, os autores propuseram um algoritmo para o reconhecimento de faces invariante à iluminação. Eles ressaltam que, desconsiderando a variação da posição, a iluminação é o fator de maior impacto na aparência das faces. A luz varia durante o dia, entre um dia e outro, e entre diferentes ambientes. Isso afeta o conjunto de imagens a ser analisado, que passa a conter imagens com diferentes contrastes, o que pode acentuar ou diminuir certas características faciais.
 
-O constraste é a diferença de intensidade entre os níveis de maior e menor intensidade na imagem. Imagens com baixa resolução podem ser geradas a partir de uma iluminação pobre ou outros problemas com a captura. Dessa forma, o processo de ``esticar'' o contraste expande os níveis de intensidade da imagem \cite{Gonzalez2007}.
+O contraste é a diferença de intensidade entre os níveis de maior e menor intensidade na imagem. Imagens com baixa resolução podem ser geradas a partir de uma iluminação pobre ou outros problemas com a captura. Dessa forma, o processo de ``esticar'' o contraste expande os níveis de intensidade da imagem \cite{Gonzalez2007}.
 
 É possível aumentar o contraste de uma imagem ao manipular o seu histograma $h$, que pode ser definido como
 \begin{equation*}
@@ -240,7 +240,7 @@ A Figura \ref{fig:quantizacao} apresenta a conversão na escala de cinza obtida 
 \newline
 \subfloat[Luminância']{
   \includegraphics[width=.3\linewidth]{\detokenize{figuras/quantizacao/Luminance_gray.png}}
-  \label{fig:Luminance}
+  \label{fig:luminance}
 }
 \subfloat[Luma]{
   \includegraphics[width=.3\linewidth]{\detokenize{figuras/quantizacao/Luma_gray.png}}
@@ -314,7 +314,7 @@ O vetor de coerência de cor armazena o número de pixels coerentes e de incoere
   \item Concatena os histogramas.
 \end{enumerate}
 
-\item[\sigla{BIC}{\textit{Border-interior classification}}:] computa dois histogramas, um para pixels definidos como borda e outro como interior. Se um pixel possuir a mesma cor que seus vizinhos, é pixel de interior; caso contrário, será pixel de borda. Os histogramas são concatenados, gerando um vetor de $2N$ dimensões \cite{bic}. Para computar tal vetor, as operações realizadas são:
+\item[\sigla{BIC}{\textit{Border-Interior Classification}}:] computa dois histogramas, um para pixels definidos como borda e outro como interior. Se um pixel possuir a mesma cor que seus vizinhos, é pixel de interior; caso contrário, será pixel de borda. Os histogramas são concatenados, gerando um vetor de $2N$ dimensões \cite{bic}. Para computar tal vetor, as operações realizadas são:
 
 \begin{enumerate}
   \item Os pixels são classificados entre borda e interior:
@@ -336,14 +336,14 @@ O vetor de coerência de cor armazena o número de pixels coerentes e de incoere
 
 \begin{enumerate}
   \item \emph{Probabilidade máxima:} maior resposta na matriz de co-ocorrência. Intervalo:~$[0,1]$;
-  \item \emph{Correlação:} descreve as correlações entre as linhas e colunas da matrix.\\ Intervalo:~$[-1,1]$;
+  \item \emph{Correlação:} descreve as correlações entre as linhas e colunas da matriz.\\ Intervalo:~$[-1,1]$;
   \item \emph{Contraste:} mede as variações locais dos níveis de cinza da matriz.\\ Intervalo:~$[0, (colors-1)^2]$;
   \item \emph{Uniformidade:} soma dos elementos quadrados. Também conhecido como energia ou segundo momento angular. Intervalo:~$[0,1]$;
   \item \emph{Homogeneidade:} mede a proximidade da distribuição dos elementos em relação à diagonal. Intervalo:~$[0,1]$;
   \item \emph{Entropia:} descreve a aleatoriedade. Intervalo:~$[0, 2*log_2 colors]$.
 \end{enumerate}
 
-\item [\sigla{HOG}{\textit{Histogram of oriented gradients}}:] calcula a frequência da ocorrência da orientação dos gradientes em janelas na imagem \cite{Dalal2005}:
+\item [\sigla{HOG}{\textit{Histogram of Oriented Gradients}}:] calcula a frequência da ocorrência da orientação dos gradientes em janelas na imagem \cite{Dalal2005}:
 
 \begin{enumerate}
   \item Divide a janela da imagem em células;
@@ -745,10 +745,10 @@ O \sigla{PCA}{\textit{Principal Component Analysis}} é uma técnica não superv
 \end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{\textit{Locality preserving projections}}
+\subsection{\textit{Locality Preserving Projections}}
 \label{sec:lpp}
 
-\sigla{LPP}{\textit{Locality preserving projections}} é um algoritmo linear de redução de dimensionalidade com propriedades de preservação da estrutura local dos dados. Não apresenta a dificuldade dos algoritmos tradicionais (como PCA) de manter o \textit{manifold} não linear dos dados originais \cite{Zhuo2014}. Embora o método mais utilizado para redução da dimensionalidade de forma não-supervisionada seja o PCA, métodos como esse produzem melhores projeções em termos de separação das classes. Em \citeonline{Zhuo2014} o LPP alcançou a melhor relação entre complexidade computacional e a redução da dimensionalidade, enquanto manteve a acurácia. Seu algoritmo segue três passos principais \cite{He2004}:
+\sigla{LPP}{\textit{Locality Preserving Projections}} é um algoritmo linear de redução de dimensionalidade com propriedades de preservação da estrutura local dos dados. Não apresenta a dificuldade dos algoritmos tradicionais (como PCA) de manter o \textit{manifold} não linear dos dados originais \cite{Zhuo2014}. Embora o método mais utilizado para redução da dimensionalidade de forma não-supervisionada seja o PCA, métodos como esse produzem melhores projeções em termos de separação das classes. Em \citeonline{Zhuo2014} o LPP alcançou a melhor relação entre complexidade computacional e a redução da dimensionalidade, enquanto manteve a acurácia. Seu algoritmo segue três passos principais \cite{He2004}:
 
 \begin{enumerate}
 \item Constrói um grafo de adjacências. Os nós $i$ e $j$ possuem uma aresta entre si se fazem parte do conjunto de $k$-vizinhos mais próximos de cada nó (sendo $k$ um parâmetro do algoritmo);
