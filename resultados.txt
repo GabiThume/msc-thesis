@@ -531,28 +531,6 @@ Desbalanceado   &  96.138760 &  1.333680  \\ \hline
 \label{tab:resultados:x:melhor}
 \begin{tabular}{|l|c|c|}
 \hline
-\textbf{BIC Gleam} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
-   Todos        &  59.175302 &  2.532414  \\ \hline
-  Aguçamento    &  58.049800 &  5.800853  \\ \hline
-  Borramento    &  61.067525 &  4.546042  \\ \hline
-  Composição 16 &  60.540642 &  4.572195  \\ \hline
-  Composição 4  &  60.326013 &  4.834876  \\ \hline
-  Limiares      &  60.277397 &  3.093546  \\ \hline
-  Mistura       &  57.930468 &  3.552764  \\ \hline
-  Ruído         &  61.145358 &  2.174345  \\ \hline
-  SMOTE Visual  &  58.898637 &  4.688396  \\ \hline
-  Saliência     &  59.591055 &  2.457358  \\ \hline
- SMOTE          &  60.810838 &  2.992142  \\ \hline
-Desbalanceado   &  60.698560 &  6.584647  \\ \hline
-\end{tabular}
-\end{table}
-
-\begin{table}[!htbp]
-\centering
-\caption{}
-\label{tab:resultados:x:melhor}
-\begin{tabular}{|l|c|c|}
-\hline
 \textbf{HOG MSB} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
    Todos        &  88.616130 &  1.952745  \\ \hline
   Aguçamento    &  98.345625 &  1.755180  \\ \hline
