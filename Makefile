@@ -3,6 +3,7 @@ RM = rm -rf
 all: clean
 	pdflatex monografia
 	makeindex monografia.nlo -s nomencl.ist -o monografia.nls
+	pdflatex monografia
 	bibtex monografia
 	pdflatex monografia
 	pdflatex monografia
@@ -56,4 +57,3 @@ clean:
 	$(RM) *.nlo
 	$(RM) *.nls
 	$(RM) *.DS_Store
-
