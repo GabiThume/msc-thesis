@@ -1576,21 +1576,21 @@ A Tabela \ref{tab:allranking} apresenta o \textit{ranking} dos métodos de rebal
 \centering
 \caption{\textit{Ranking} dos métodos de rebalanceamento ao acumular os resultados de todos os experimentos. Esse valor é dado pela soma da posição de cada método em relação ao \textit{F1-Score}, em ordem ascendente.}
 \label{tab:allranking}
-\begin{tabular}{|l|c|c|c|}
+\begin{tabular}{|l|l|l|}
 \hline
-\textbf{Métodos} & \textbf{Cenários de duas classes} & \textbf{Cenário multiclasses} & \textbf{Todos} \\ \hline
-Todos            & 25                                & 22                            & 47             \\ \hline
-Aguçamento       & \textbf{16}                       & 27                            & 43             \\ \hline
-Borramento       & 44                                & 29                            & 73             \\ \hline
-Composição 16    & 37                                & 32                            & 69             \\ \hline
-Composição 4     & 29                                & 28                            & 57             \\ \hline
-Limiares         & \textbf{17}                       & 18                            & \textbf{35}    \\ \hline
-Mistura          & 25                                & \textbf{14}                   & 39             \\ \hline
-Ruído            & 47                                & 28                            & 75             \\ \hline
-SMOTE Visual     & 47                                & 42                            & 89             \\ \hline
-Saliência        & 22                                & 24                            & 46             \\ \hline
-SMOTE            & 29                                & \textbf{13}                   & 42             \\ \hline
-Desbalanceado    & 52                                & 34                            & 86             \\ \hline
+\multicolumn{1}{|c|}{\textbf{Cenários de duas classes}} & \multicolumn{1}{c|}{\textbf{Cenário Multiclasses}} & \multicolumn{1}{c|}{\textbf{Todos}} \\ \hline
+Aguçamento (16)                                         & SMOTE (13)                                         & Limiares (35)                       \\ \hline
+Limiares (17)                                           & Mistura (14)                                       & Mistura (39)                        \\ \hline
+Saliência (22)                                          & Limiares (18)                                      & SMOTE (42)                          \\ \hline
+Todos (25)                                              & Todos (22)                                         & Aguçamento (43)                     \\ \hline
+Mistura (25)                                            & Saliência (24)                                     & Saliência (46)                      \\ \hline
+Composição 4 (29)                                       & Aguçamento (27)                                    & Todos (47)                          \\ \hline
+SMOTE (29)                                              & Composição 4 (28)                                  & Composição 4 (57)                   \\ \hline
+Composição 16 (37)                                      & Ruído (28)                                         & Composição 16 (69)                  \\ \hline
+Borramento (44)                                         & Borramento (29)                                    & Borramento (73)                     \\ \hline
+Ruído (47)                                              & Composição 16 (32)                                 & Ruído (75)                          \\ \hline
+SMOTE Visual (47)                                       & Desbalanceado (34)                                 & Desbalanceado (86)                  \\ \hline
+Desbalanceado (52)                                      & SMOTE Visual (42)                                  & SMOTE Visual (89)                   \\ \hline
 \end{tabular}
 \end{table}
 
