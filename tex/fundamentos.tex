@@ -1,42 +1,41 @@
 \section{Considerações iniciais}
 
-Neste capítulo são destacados os tópicos mais relevantes para a compreensão da metodologia e análise dos resultados desse trabalho, com foco na preparação das imagens para a extração de características. O problema do desbalanceamento de classes e seu efeito na classificação também são abordados, assim como a extração de características para compreender as propriedades extraídas das imagens. Alguns trabalhos relacionados são utilizados como exemplo, com o objetivo de elucidar tais tópicos.
+Neste capítulo são destacados os tópicos mais relevantes para a compreensão da metodologia e análise dos resultados deste trabalho, com foco na preparação das imagens para a extração de características. O problema do desbalanceamento de classes e seu efeito na classificação também são abordados, assim como a extração de características para compreender as propriedades extraídas das imagens. Trabalhos relacionados são utilizados como exemplo, com o objetivo de elucidar tais tópicos.
 
-Inicialmente, a Seção~\ref{sec:preprocessamento} apresenta alguns dos principais métodos utilizados para o pré-processamento de imagens (i.e.\ remoção de ruído, realce de imagens e convolução), relevantes para o desenvolvimento desta pesquisa. Após, a extração de características é definida na Seção~\ref{sec:extracao}. Tendo como proposta melhor compreender o problema do desbalanceamento de classes, a Seção~\ref{cap:desbalanceamento} exemplifica as operações utilizadas para o rebalanceamento. Nessa seção, além de caracterizar o problema, são apresentadas duas vertentes para solucioná-lo: sobreamostragem e subamostragem. A seção seguinte (\ref{sec:classificacao}) apresenta o classificador de padrões utilizado e a Seção~\ref{sec:reducaodimensionalidade} aborda dois métodos de redução de dimensionalidade utilizados nos experimentos.
+Inicialmente, a Seção~\ref{sec:preprocessamento} apresenta alguns dos principais métodos utilizados para o pré-processamento de imagens (i.e.\ remoção de ruído, realce de imagens e quantização), relevantes para o desenvolvimento desta pesquisa. Após, os métodos para extração de características são definidos na Seção~\ref{sec:extracao}. Tendo como proposta melhor compreender o problema do desbalanceamento de classes, a Seção~\ref{cap:desbalanceamento} exemplifica as operações utilizadas para o rebalanceamento. Nesta seção, além de caracterizar o problema, são apresentadas duas vertentes para solucioná-lo: sobreamostragem e subamostragem. A seção seguinte (\ref{sec:classificacao}) apresenta os classificadores de padrões utilizados e a Seção~\ref{sec:reducaodimensionalidade} aborda dois métodos de redução de dimensionalidade usados nos experimentos.
 
 %--------------------------------------------------------------------------------
 \section{Pré-processamento de imagens}
 \label{sec:preprocessamento}
 
-Uma imagem $I$ pode ser definida como uma função $f(x,y)$, onde $x$ e $y$ são as coordenadas espaciais de um determinado ponto e $f$ a intensidade da imagem naquele ponto. Quando ambos $x$, $y$ e os valores de intensidade são finitos e discretos, trata-se de uma imagem digital. Essa imagem é composta por finitos elementos chamados de pixels que podem ser diretamente acessados através de sua posição $x$ e $y$. Digitalmente, uma imagem é representada por uma matriz de valores com $M$ linhas e $N$ colunas onde cada elemento representa a sua intensidade. Uma imagem colorida $I$ do sistema RGB possui três canais de cores representantes das cores vermelha, verde e azul. Cada elemento $I(x,y)$ corresponde a uma tripla $(r, g, b)$ de números, com $0 \leq r \leq 255$, $0 \leq g \leq 255$ e $0 \leq b \leq 255$, onde 0 é a intensidade de cor mais escura e 255 a mais clara. A combinação dessas intensidades resulta na cor do pixel \cite{Gonzalez2007}. A Figura \ref{fig:pixel} mostra uma visualização ampliada dos pixels de uma imagem digital.
+Uma imagem $I$ pode ser definida como uma função $f(x,y)$, onde $x$ e $y$ são as coordenadas espaciais de um determinado ponto e $f$ a intensidade da imagem naquele ponto. Quando ambos $x$, $y$ e os valores de intensidade são finitos e discretos, trata-se de uma imagem digital. Essa imagem é composta por finitos elementos chamados de pixels que podem ser diretamente acessados através de sua posição $x$ e $y$. Digitalmente, uma imagem é representada por uma matriz de valores com $M$ linhas e $N$ colunas onde cada elemento representa a sua intensidade. Uma imagem colorida $I$ do sistema RGB possui três canais de cores representantes das cores vermelho, verde e azul. Cada elemento $I(x,y)$ corresponde a uma tripla $(r, g, b)$ de números, com $0 \leq r \leq 255$, $0 \leq g \leq 255$ e $0 \leq b \leq 255$, onde 0 é a intensidade de cor mais escura e 255 a mais clara. A combinação dessas intensidades resulta na cor do pixel \cite{Gonzalez2007}. A Figura \ref{fig:pixel} mostra uma visualização ampliada dos pixels de uma imagem digital.
 
 \begin{figure}[!htbp]
  \begin{center}
    \includegraphics[width=0.4\linewidth]{figuras/pixel.jpg}
- \caption[Visualização pixelizada de uma imagem da base Corel-1000.]{Visualização pixelizada de uma imagem da base Corel-1000 \cite{Wang2001}. \\ \textit{Fonte:~Elaborado pela autora.}}
+ \caption[Visualização pixelizada de uma imagem da base Corel-1000. Cada pixel $I(x,y)$ corresponde a uma tripla $(r, g, b)$ de números, com $0 \leq r \leq 255$, $0 \leq g \leq 255$ e $0 \leq b \leq 255$, onde 0 é a intensidade de cor mais escura e 255 a mais clara.]{Visualização pixelizada de uma imagem da base Corel-1000 \cite{Wang2001}. Cada pixel $I(x,y)$ corresponde a uma tripla $(r, g, b)$ de números, com $0 \leq r \leq 255$, $0 \leq g \leq 255$ e $0 \leq b \leq 255$, onde 0 é a intensidade de cor mais escura e 255 a mais clara. \\ \textit{Fonte:~Elaborado pela autora.}}
  \label{fig:pixel}
  \end{center}
 \end{figure}
 
-O processo de aquisição por um sistema de imageamento pode causar diversas imperfeições nas imagens, como pixels ruidosos, brilho inadequado e outras degradações. O pré-processamento de imagens é caracterizado por receber uma imagem de entrada e fornecer uma imagem de saída. Nessa etapa, efeitos indesejáveis podem ser eliminados e certas características realçadas (Figura \ref{fig:preproc}). Considera-se que um determinado critério utilizado para uma imagem pode não ser o mais eficiente para outra, dependendo assim da área de aplicação.
+O processo de aquisição por um sistema de imageamento pode causar diversas imperfeições nas imagens, como pixels ruidosos, brilho inadequado e outras degradações. O pré-processamento de imagens é caracterizado por receber uma imagem de entrada e fornecer uma imagem de saída. Nessa etapa, efeitos indesejáveis podem ser eliminados e certas características realçadas (Figura \ref{fig:preproc}). Considera-se que, um determinado critério utilizado para uma imagem pode não ser o mais eficiente para outra, dependendo da área de aplicação.
 
-\vspace{12pt}
 \begin{figure}[!htbp]
  \begin{center}
    \includegraphics[width=1\linewidth]{figuras/preprocessamento.png}
- \caption[Sobre a imagem RGB de entrada foram realizadas operações de borramento, realce e de equalização de histograma. A imagem à direita é resultante dessas operações.]{O pré-processamento de imagens é caracterizado por receber uma imagem como entrada e fornecer uma imagem de saída. Sobre a imagem RGB de entrada (à esquerda) foram realizadas operações de borramento, realce e de equalização de histograma. A imagem à direita é resultante dessas operações. \\ \textit{Fonte:~Elaborado pela autora.}}
+ \caption[Exemplo de pré-processamento de imagens, caracterizado por receber uma imagem como entrada e fornecer uma imagem de saída. Sobre a imagem RGB de entrada (à esquerda) foram realizadas operações de \emph{borramento}, realce e de equalização de histograma. A imagem à direita é resultante dessas operações. É possível notar que a imagem resultante apresenta melhor contraste e bordas realçadas.]{Exemplo de pré-processamento de imagens, caracterizado por receber uma imagem como entrada e fornecer uma imagem de saída. Sobre a imagem RGB de entrada (à esquerda) foram realizadas operações de \emph{borramento}, realce e de equalização de histograma. A imagem à direita é resultante dessas operações. É possível notar que a imagem resultante apresenta melhor contraste e bordas realçadas. \\ \textit{Fonte:~Elaborado pela autora.}}
  \label{fig:preproc}
  \end{center}
 \end{figure}
 
-Assim, técnicas de pré-processamento tornam os dados mais adequados para posterior análise, ao eliminar ou reduzir problemas como ruídos e imperfeições. Em \citeonline{Ponti2010}, o autor relata que a utilização de métodos de restauração na etapa de pré-processamento da imagem, antes da segmentação, resultou em uma qualidade superior para todos os testes, com valores de erro e desvio padrão menores. No referido estudo, métodos de realce causaram perda de informação e por isso não são indicados para uso em imagens obtidas por microscópio. O método indicado para evitar a amplificação de ruído nessas imagens é o algoritmo iterativo Richardson-Lucy ~\cite{Ponti-Jr2011}. Esse método de restauração utiliza um processo iterativo para recuperar uma imagem degradada que foi borrada por algum processo conhecido. Utiliza uma metodologia probabilística, baseada em \sigla{EM-ML}{\textit{Expectation-Maximization Maximum Likelihood}}, para encontrar uma imagem que maximize a probabilidade de se visualizar a imagem original sem degradação, considerando um modelo de ruído de Poisson. Algoritmos iterativos como o Richardson-Lucy tem a vantagem de permitir soluções parciais, evitando amplificação de ruído.
+Assim, técnicas de pré-processamento tornam os dados mais adequados para posterior análise, ao eliminar ou reduzir problemas como ruídos e imperfeições. Em \citeonline{Ponti2010}, o autor relata que a utilização de métodos de restauração na etapa de pré-processamento da imagem, antes da segmentação, proporcionou qualidade superior em todos os testes, com valores reduzidos de erro e desvio padrão. No referido estudo, métodos de realce causaram perda de informação e por isso não são indicados para uso em imagens obtidas por microscópio, por exemplo. O método indicado para evitar a amplificação de ruído nessas imagens é o algoritmo iterativo Richardson-Lucy ~\cite{Ponti-Jr2011}. Esse método de restauração utiliza um processo iterativo para recuperar uma imagem degradada que foi borrada por algum processo conhecido. Utiliza uma metodologia probabilística, baseada em \sigla{EM-ML}{\textit{Expectation-Maximization Maximum Likelihood}}, para encontrar uma imagem que maximize a probabilidade de se visualizar a imagem original sem degradação, considerando um modelo de ruído de Poisson. Algoritmos iterativos como o Richardson-Lucy tem a vantagem de permitir soluções parciais, evitando amplificação de ruído.
 
 Em contrapartida, \citeonline{6} propuseram uma representação para imagens faciais baseada em características de textura, sem utilizar pré-processamento. Este aparece somente como sugestão de trabalho futuro, como possível correção de problemas do sistema de captura (i.e. suavização causada pela captura fora de foco). O que implica que, apesar dos bons resultados, a melhoria com a utilização de pré-processamento não foi investigada. Pode-se imaginar, portanto, que o uso de pré-processamento pode melhorar os resultados já obtidos, através do realce de textura e eliminação de imperfeições nas imagens.
 
-Como exemplo do uso de métodos de pré-processamento, considere imagens de algas verdes obtidas por um microscópio de alta resolução. Essas algas são mergulhadas em um líquido que normalmente causa problemas de ruído e pouco contraste. Para a preparação dessas imagens, antes da extração de características, \citeonline{Borges2013} cita algumas etapas comuns em processamento de imagens digitais:
+Como exemplo do uso de métodos de pré-processamento, considere imagens de algas verdes obtidas por um microscópio de alta resolução. Essas algas são mergulhadas em um líquido que normalmente causa problemas de ruído e pouco contraste. Para a preparação dessas imagens antes da extração de características, \citeonline{Borges2013} cita algumas etapas comuns em processamento de imagens digitais:
 
 \begin{enumerate}
-\item As imagens -- originalmente em RGB -- são convertidas para uma escala de cinza;
+\item As imagens --- originalmente em RGB --- são convertidas para escala de cinza;
 \item A dimensão da imagem é reduzida para diminuir o tempo de execução dos passos subsequentes de processamento;
 \item O contraste é ``ajustado'', para aumentar a diferença das intensidades dos pixels da imagem e corrigir o brilho;
 \item A imagem é filtrada, removendo ruídos causados pelo processo de captura;
@@ -58,13 +57,13 @@ Esses estudos evidenciam a importância da etapa de pré-processamento de imagen
 Um filtro espacial, também conhecido como \textit{kernel}, máscara ou janela, consiste em uma matriz de vizinhanças e uma operação a ser realizada nos pixels de uma imagem. A filtragem cria um novo pixel com as mesmas coordenadas do centro da vizinhança, contendo o valor resultante da filtragem. Dessa forma, a imagem filtrada contém os pixels resultantes da passagem do centro do filtro espacial por todos os pixels da imagem original. O processo de percorrer a imagem com um filtro espacial é chamado de correlação. A convolução, que pode ser definida como o operador $*$ em
 
 \begin{equation*}
-\text{mapa de características} = \text{imagem de entrada} * \text{filtro},
+\textit{mapa de características} = \textit{imagem de entrada} * \textit{filtro},
 \label{eq:conv}
 \end{equation*}
 
 \noindent trata-se do mesmo processo, mas com o filtro previamente rotacionado em $180^{\circ}$ \cite{Gonzalez2007}.
 
-Os métodos de filtragem possuem como objetivo aperfeiçoar certos aspectos da imagem de entrada. Essa filtragem pode ser realizada no domínio da frequência ou no domínio espacial. Um filtro de suavização típico no domínio espacial é o de Gaussiana, que resulta no borramento e redução de ruído, a fim de remover detalhes da imagem (Figura~\ref{fig:blur}). Esse filtro utiliza uma função Gaussiana para calcular a transformação a ser realizada em cada pixel. A equação que representa a função Gaussiana em duas dimensões é definida por
+Os métodos de filtragem possuem como objetivo aperfeiçoar certos aspectos da imagem de entrada. Essa filtragem pode ser realizada no domínio da frequência ou no domínio espacial. Um filtro de suavização típico no domínio espacial é o de Gaussiana, que resulta no \emph{borramento} e redução de ruído, a fim de remover detalhes da imagem (Figura~\ref{fig:blur}). Esse filtro utiliza uma função Gaussiana para calcular a transformação a ser realizada em cada pixel. A equação que representa a função Gaussiana em duas dimensões é definida por
 \begin{equation*}
     G_{\sigma}(x,y) = \frac{1}{2\pi \sigma^2} e^{-\frac{x^2 + y^2}{2 \sigma^2}},
 \label{eq:Gaussian}
@@ -74,14 +73,13 @@ Os métodos de filtragem possuem como objetivo aperfeiçoar certos aspectos da i
 
 % A filtragem Gaussiana seletiva objetiva borrar áreas da imagem onde há pouco detalhe, porém preservando contraste e pequenas estruturas. Esse tipo de filtragem é dita adaptativa, pois modifica-se o parâmetro $\sigma$ (Equação~\ref{eq:Gaussian}) para cada pixel da imagem. Uma implementação dessa técnica utiliza a variância global da imagem $\sigma_g$ e variâncias locais $\sigma_r$, suavizando com maior intensidade regiões onde a $\sigma_r \leq \sigma_g$, e suavizando menos as regiões onde $\sigma_r > \sigma_g$.
 
-\vspace{12pt}
 \begin{figure}[!hbpt]
   \subfloat[Original]{ \includegraphics[width=.49\linewidth]{\detokenize{figuras/original.png}}
   }
   \subfloat[Filtrada]{
     \includegraphics[width=.49\linewidth]{\detokenize{figuras/blur.png}}
   }
- \caption[Exemplo de filtragem Gaussiana como operação de pré-processamento.]{Exemplo de filtragem gaussiana como operação de pré-processamento. \\ \textit{Fonte:~Elaborado pela autora.}}
+ \caption[Exemplo de filtragem Gaussiana como operação de pré-processamento. Resulta no borramento e redução de ruído, a fim de remover detalhes da imagem.]{Exemplo de filtragem Gaussiana como operação de pré-processamento. Resulta no borramento e redução de ruído, a fim de remover detalhes da imagem. \\ \textit{Fonte:~Elaborado pela autora.}}
  \label{fig:blur}
 \end{figure}
 
@@ -89,7 +87,7 @@ Os métodos de filtragem possuem como objetivo aperfeiçoar certos aspectos da i
 % \subsection{Deconvolução}
 % \label{sub:deconvolucao}
 %
-% O processo de convolução, descrito na seção anterior, também pode ser definido como a passagem de uma imagem por um processo de aquisição que atue como um filtro de passa-baixas, resultando em uma imagem borrada. A deconvolução realiza a inversão desse borramento, o que pode facilitar a segmentação e detecção de características~\cite{Ponti2010}. Para tal, é necessário conhecer previamente ou estimar a função que causou a degradação na imagem, geralmente denotada por $h(\mathbf{u})$, onde $\mathbf{u}$ representa as coordenadas $(x,y,z)$ para um sinal tridimensional.
+% O processo de convolução, descrito na seção anterior, também pode ser definido como a passagem de uma imagem por um processo de aquisição que atue como um filtro de passa-baixas, resultando em uma imagem borrada. A deconvolução realiza a inversão desse \emph{borramento}, o que pode facilitar a segmentação e detecção de características~\cite{Ponti2010}. Para tal, é necessário conhecer previamente ou estimar a função que causou a degradação na imagem, geralmente denotada por $h(\mathbf{u})$, onde $\mathbf{u}$ representa as coordenadas $(x,y,z)$ para um sinal tridimensional.
 %
 % Em casos mais simples é possível utilizar o filtro pseudo-inverso, obtendo o filtro a partir da transformada de Fourier da função $h$, denotada por $H$ em
 % \begin{equation*}
@@ -124,14 +122,14 @@ Os métodos de filtragem possuem como objetivo aperfeiçoar certos aspectos da i
 %--------------------------------------------------------------------------------
 \subsection{Realce de imagens}
 
-O realce de imagens é o processo de modificar uma imagem para que se torne mais adequada para uma aplicação específica do que na sua forma original. Diferentemente da restauração -- que leva em consideração o processo de formação da imagem --- é subjetivo, porque depende do sujeito que está analisando a imagem dissernir a qualidade desse realce \cite{Gonzalez2007}.
+O realce de imagens é o processo de modificar uma imagem para que se torne mais adequada para uma aplicação específica do que na sua forma original. Diferentemente da restauração --- que leva em consideração o processo de formação da imagem --- é subjetivo, porque depende do sujeito que está analisando a imagem dissernir a qualidade desse realce \cite{Gonzalez2007}.
 
-Na Figura \ref{fig:pre-sharp} está demonstrado o efeito do algoritmo de \textit{unsharp masking}, utilizando como borramento um filtro de média. Com o objetivo de realçar imagens, os passos deste método são:
+Na Figura \ref{fig:pre-sharp} está demonstrado o efeito do algoritmo de \textit{unsharp masking}, utilizando como \emph{borramento} um filtro de média. Com o objetivo de realçar imagens, os passos deste método são:
 
 \begin{enumerate}
 \item Borramento da imagem original;
 \item Cálculo da diferença entre a imagem suavizada e a original;
-\item Soma dessa diferença à imagem original.
+\item Adição dessa diferença à imagem original.
 \end{enumerate}
 
 \begin{figure}[!htbp]
@@ -144,7 +142,7 @@ Na Figura \ref{fig:pre-sharp} está demonstrado o efeito do algoritmo de \textit
     \label{fig:unsharp}
   }
  \end{center}
- \caption[A imagem original, já em escala de cinza, foi realçada utilizando o método \textit{unsharp masking}.]{A imagem original, já em escala de cinza, foi realçada utilizando o método \textit{unsharp masking}. \\ \textit{Fonte:~Elaborado pela autora.}}
+ \caption[Exemplo de realce de imagens. A imagem original, já em escala de cinza, foi realçada utilizando o método \textit{unsharp masking}. É possível notar como detalhes de borda foram enfatizados pelo método.]{Exemplo de realce de imagens. A imagem original, já em escala de cinza, foi realçada utilizando o método \textit{unsharp masking}. É possível notar como detalhes de borda foram enfatizados pelo método. \\ \textit{Fonte:~Elaborado pela autora.}}
  \label{fig:pre-sharp}
 \end{figure}
 
@@ -152,7 +150,7 @@ Na Figura \ref{fig:pre-sharp} está demonstrado o efeito do algoritmo de \textit
 
 Um exemplo clássico de utilização de realce, é para compensar a variação de iluminação em diversas imagens. Em \citeonline{Gross2003}, os autores propuseram um algoritmo para o reconhecimento de faces invariante à iluminação. Eles ressaltam que, desconsiderando a variação da posição, a iluminação é o fator de maior impacto na aparência das faces. A luz varia durante o dia, entre um dia e outro, e entre diferentes ambientes. Isso afeta o conjunto de imagens a ser analisado, que passa a conter imagens com diferentes contrastes, o que pode acentuar ou diminuir certas características faciais.
 
-O contraste é a diferença de intensidade entre os níveis de maior e menor intensidade na imagem. Imagens com baixa resolução podem ser geradas a partir de uma iluminação pobre ou outros problemas com a captura. Dessa forma, o processo de ``esticar'' o contraste expande os níveis de intensidade da imagem \cite{Gonzalez2007}.
+O contraste é a diferença de intensidade entre os níveis de maior e menor intensidade na imagem. Imagens com baixa resolução podem ser geradas a partir de uma iluminação pobre ou outras complicações durante a captura. Dessa forma, o processo de ``esticar'' o contraste expande os níveis de intensidade da imagem \cite{Gonzalez2007}.
 
 É possível aumentar o contraste de uma imagem ao manipular o seu histograma $h$, que pode ser definido como
 \begin{equation*}
@@ -186,7 +184,7 @@ s_k = T(i_k) = \frac{L-1}{MN} \sum_{j=0}^{k}n_j,
 \subsection{Quantização}
 \label{sec:quantizacao}
 
-Muitos métodos de extração de características são preparados para receber imagens de entrada em escala de cinza ou em apenas um canal de cor. Se existir a necessidade de utilizar a imagem RGB, as características são extraídas para cada canal de cor separadamente e posteriormente são concatenadas. Isso ocorre porque a complexidade de lidar com um pixel representado em três dimensões é muito maior do que em apenas uma dimensão. Assim, os métodos de quantização visam, de alguma forma, reduzir os canais de cores ($2^{3} \times 3 = 24$ bits) em apenas um ($2^{3} \times 1 = 8$ bits). \citeonline{Kanan2012} demonstraram que os métodos para a conversão de uma imagem colorida para escala de cinza influenciam a performance no reconhecimento de imagens. Eles também salientam que o método utilizado deveria estar claramente descrito nas publicações da área. Os métodos de conversão para escala de cinza utilizados nessa dissertação foram escolhidos com base em \citeonline{Kanan2012}: \emph{Gleam} e as versões corrigidas por \textit{gamma} de \emph{Intensidade} e \emph{Luminância}: \emph{Intensidade'} e \emph{Luminância'}. A operação \textit{gamma} utilizada $z' = z^{1/2.2}$ é a padrão. Os métodos de conversão para escala de cinza, utilizados nesta pesquisa, são descritos a seguir.
+Muitos métodos de extração de características são preparados para receber imagens em escala de cinza ou em apenas um canal de cor. Se existir a necessidade de utilizar a imagem RGB, as características são extraídas para cada canal de cor separadamente e posteriormente são concatenadas. Isso ocorre porque a complexidade de lidar com um pixel representado em três dimensões é muito maior do que em apenas uma dimensão. Assim, os métodos de quantização visam, de alguma forma, reduzir os canais de cores ($2^{3} \times 3 = 24$ bits) em apenas um ($2^{3} \times 1 = 8$ bits). \citeonline{Kanan2012} demonstraram que os métodos para a conversão de uma imagem colorida para escala de cinza influenciam o desempenho do reconhecimento de imagens. Eles também salientam que o método utilizado deveria estar claramente descrito nas publicações da área. Os métodos de conversão para escala de cinza utilizados nesta dissertação foram escolhidos com base em \citeonline{Kanan2012}: \emph{Luma}, \emph{Gleam} e as versões corrigidas por \textit{gamma} de \emph{Intensidade} e \emph{Luminância}:  \emph{Intensidade'} e \emph{Luminância'}. A operação \textit{gamma} utilizada $z' = z^{1/2.2}$ é a padrão. Os métodos de conversão para escala de cinza, utilizados nesta pesquisa, são descritos a seguir.
 
 \begin{description}
 \item [Intensidade:] consiste em computar a média entre os canais RGB da imagem a partir de
@@ -194,16 +192,16 @@ Muitos métodos de extração de características são preparados para receber i
 	Q_{Intensidade} = \frac{1}{3}(R + G + B),
   \label{eq:intensidade}
 \end{equation}
-\noindent e então realizar a correção por \textit{gamma}, obtendo assim o método \emph{Intensidade'}.
+\noindent e então realizar a correção por \textit{gamma}, obtendo assim o método  \emph{Intensidade'}.
 
-\item [Gleam:] ao corrigir por \textit{gamma} cada canal antes de realizar a combinação linear, tem-se o método:
+\item [Gleam:] ao corrigir por \textit{gamma} cada canal antes de realizar a combinação linear, tem-se o método
 \begin{equation}
 	Q_{Gleam} = \frac{1}{3}(R' + G' + B'),
   \label{eq:gleam}
 \end{equation}
 \noindent onde $R'$, $G'$ e $B'$ são os canais R, G e B corrigidos por \textit{gamma}.
 
-\item [Luminância:] computa uma soma ponderada dos canais de cor. Esse método foi desenvolvido para levar em conta a percepção visual humana. O olho humano percebe verde melhor que vermelho, e vermelho melhor que azul:
+\item [Luminância:] computa a soma ponderada dos canais de cor. Esse método foi desenvolvido para levar em conta a percepção visual humana. O olho humano percebe verde melhor que vermelho, e vermelho melhor que azul:
 \begin{equation}
 	Q_{\text{Luminância}} = 0.299R + 0.587G + 0.114B,
   \label{eq:luminancia}
@@ -217,11 +215,11 @@ Muitos métodos de extração de características são preparados para receber i
 \end{equation}
 \noindent onde $R'$, $G'$ e $B'$ são os canais R, G e B corrigidos por \textit{gamma}.
 
-\item [\sigla{MSB}{\textit{Most Significant Bits}}:] ao invés de realizar uma combinação linear dos canais de cores, ordena os bits dos canais coloridos em um único canal. Computa quantos bits de cada canal de cor contribuem para a imagem final e extrai os bits do código binário dos canais originais \cite{Ponti-Jr2013}.
+\item [\sigla{MSB}{\textit{Most Significant Bits}}:] ao invés de realizar uma combinação linear dos canais de cores, ordena os bits dos canais coloridos em um único canal. Após, calcula quantos bits de cada canal de cor contribuem para a imagem final. Por fim, extrai os bits do código binário dos canais originais \cite{Ponti-Jr2013}.
 
 \end{description}
 
-A Figura \ref{fig:quantizacao} apresenta a conversão na escala de cinza obtida com o uso desses métodos. A análise específica da aplicação de cada método é discutida no Capítulo \ref{cap:quantization}.
+A Figura \ref{fig:quantizacao} apresenta a conversão em escala de cinza obtida com o uso desses métodos. A análise específica da utilização de cada método é discutida no Capítulo \ref{cap:quantization}.
 
 
 \begin{figure}[!htbp]
@@ -238,7 +236,7 @@ A Figura \ref{fig:quantizacao} apresenta a conversão na escala de cinza obtida 
   \label{fig:gleam}
 }
 \newline
-\subfloat[Luminância']{
+\subfloat[\emph{Luminância'}]{
   \includegraphics[width=.3\linewidth]{\detokenize{figuras/quantizacao/Luminance_gray.png}}
   \label{fig:luminance}
 }
@@ -298,14 +296,14 @@ Exemplos de métodos conhecidos capazes de descrever outras características sã
 \begin{description}
 \item[\sigla{GCH}{\textit{Global Color Histogram}}:] calcula o histograma global dos níveis de intensidade da imagem. É a alternativa mais simples para representar as informações de uma imagem~\cite{Gonzalez2007}. Produz um vetor de $N$ dimensões, sendo $N$ o número de intensidades.
 
-\item[\sigla{CCV}{\textit{Color Coherence Vector}}:] captura informações sobre como as cores são organizadas em regiões conectadas, de acordo com um \textit{threshold} (Foi utilizado $T = 25$, sugerido pelos autores). Classifica os pixels da imagem em coerentes e incoerentes, computa os respectivos histogramas e os concatena \cite{ccv}. Dessa forma, o vetor de características produzido possui $2N$ dimensões.
+\item[\sigla{CCV}{\textit{Color Coherence Vector}}:] captura informações sobre como as cores são organizadas em regiões conectadas, de acordo com um \textit{threshold} (foi utilizado $T = 25$, sugerido pelos autores do método). Classifica os pixels da imagem em coerentes e incoerentes, computa os respectivos histogramas e os concatena \cite{ccv}. Dessa forma, o vetor de características produzido possui $2N$ dimensões.
 
 O vetor de coerência de cor armazena o número de pixels coerentes e de incoerentes para cada cor. Pixels coerentes fazem parte de uma região contígua enquanto incoerentes não. Seu funcionamento pode ser resumido nos seguintes passos:
 
 \begin{enumerate}
   \item Suaviza a imagem com filtro de média 3x3;
   \item Discretiza o espaço de cor de forma que a imagem contenha apenas $n \leq 256$ cores distintas;
-  \item Classifica os pixels entre coerentes e incoerentes: se o tamanho do seu componente conectado for maior ou igual um \textit{threshold} é coerente; caso contrário, incoerente;
+  \item Classifica os pixels entre coerentes e incoerentes: se o tamanho do seu componente conectado for maior ou igual a um \textit{threshold}, é coerente; caso contrário, incoerente;
   \item Computa dois histogramas:
   \begin{itemize}
     \item Histograma de pixels coerentes;
@@ -317,7 +315,7 @@ O vetor de coerência de cor armazena o número de pixels coerentes e de incoere
 \item[\sigla{BIC}{\textit{Border-Interior Classification}}:] computa dois histogramas, um para pixels definidos como borda e outro como interior. Se um pixel possuir a mesma cor que seus vizinhos, é pixel de interior; caso contrário, será pixel de borda. Os histogramas são concatenados, gerando um vetor de $2N$ dimensões \cite{bic}. Para computar tal vetor, as operações realizadas são:
 
 \begin{enumerate}
-  \item Os pixels são classificados entre borda e interior:
+  \item Classifica os pixeis entre borda e interior:
   \begin{itemize}
     \item \emph{Borda:} se está na borda da imagem ou se ao menos um dos seus quatro vizinhos tem uma cor diferente do que o próprio pixel;
     \item \emph{Interior:} se seus quatro vizinhos possuem a mesma cor.
@@ -330,46 +328,53 @@ O vetor de coerência de cor armazena o número de pixels coerentes e de incoere
   \item Concatena os histogramas.
 \end{enumerate}
 
-\item[\sigla{ACC}{\textit{Auto Color Correlogram}}:] captura a correlação espacial entre cores idênticas. Para tal, computa a probabilidade de encontrar dois pixels com a mesma cor, a uma distância $d$ um do outro \cite{acc}. O vector resultante consiste na concatenação dos auto-correlogramas, um para cada distância. Neste estudo, são consideradas quatro distâncias: 1, 3, 5 e 7; resultando em um vetor com $4N$ características.
+\item[\sigla{ACC}{\textit{Auto Color Correlogram}}:] captura a correlação espacial entre cores idênticas. Para tal, computa a probabilidade de encontrar dois pixels com a mesma cor, a uma distância $d$ um do outro \cite{acc}. O vector resultante consiste na concatenação dos auto-correlogramas, um para cada distância. Neste estudo, são consideradas quatro distâncias para $d$: 1, 3, 5 e 7; resultando em um vetor com $4N$ características.
 
-\item[Haralick-6:] descreve a textura das imagens, ou seja, diferenças locais em níveis de intensidade~\cite{Haralick1973}. O estudo original sugere 28 características, porém apenas seis delas são utilizadas nesta pesquisa. Isso porque estas possuem independência entre si. O vetor resultante possui seis dimensões que representam as seguintes características:
+\item[Haralick-6:] descreve a textura das imagens, ou seja, diferenças locais em níveis de intensidade~\cite{Haralick1973}. O estudo original sugere 14 características, porém apenas seis delas são utilizadas nesta pesquisa. Isso porque essas características possuem independência entre si. O vetor resultante possui seis dimensões que representam as seguintes características:
 
-\begin{enumerate}
+\begin{itemize}
   \item \emph{Probabilidade máxima:} maior resposta na matriz de co-ocorrência. Intervalo:~$[0,1]$;
   \item \emph{Correlação:} descreve as correlações entre as linhas e colunas da matriz.\\ Intervalo:~$[-1,1]$;
-  \item \emph{Contraste:} mede as variações locais dos níveis de cinza da matriz.\\ Intervalo:~$[0, (colors-1)^2]$;
+  \item \emph{Contraste:} mede as variações locais dos níveis de cinza da matriz.\\ Intervalo:~$[0, (intensidades-1)^2]$;
   \item \emph{Uniformidade:} soma dos elementos quadrados. Também conhecido como energia ou segundo momento angular. Intervalo:~$[0,1]$;
   \item \emph{Homogeneidade:} mede a proximidade da distribuição dos elementos em relação à diagonal. Intervalo:~$[0,1]$;
-  \item \emph{Entropia:} descreve a aleatoriedade. Intervalo:~$[0, 2*log_2 colors]$.
-\end{enumerate}
+  \item \emph{Entropia:} descreve a aleatoriedade. Intervalo:~$[0, 2*log_{2} intensidades]$.
+\end{itemize}
 
-\item [\sigla{HOG}{\textit{Histogram of Oriented Gradients}}:] calcula a frequência da ocorrência da orientação dos gradientes em janelas na imagem \cite{Dalal2005}:
+\item [\sigla{HOG}{\textit{Histogram of Oriented Gradients}}:] calcula a frequência da ocorrência da orientação dos gradientes em janelas da imagem \cite{Dalal2005}:
 
 \begin{enumerate}
-  \item Divide a janela da imagem em células;
-  \item Computa os gradientes;
-  \item Cada pixel calcula uma ponderação para um canal do histograma de orientação de bordas baseado na orientação do gradiente do elemento em que está centrado. Esses valores são acumulados em \textit{bins} sobre as regiões espaciais de células e formam o histograma;
-  \item As ocorrências são interpoladas bilinearmente entre os centros de vizinhança do \textit{bin} em orientação e posição;
-  \item Normaliza o contraste dos blocos da janela que se sobrepõem. Dessa forma cada célula é normalizada em relação a diferentes blocos;
-  \item Concatena os histogramas de todas as células.
+  \item Divide a janela da imagem em regiões chamadas células;
+  \item Computa os gradientes de primeira ordem para cada célula. O método mais comum para tal é aplicar a máscara da derivada 1D centralizada em cada pixel, nas direções horizontal e vertical;
+  \item Para cada célula, computa o histograma das orientações dos gradientes de todos os pixels da célula;
+  \item Normaliza o contraste de ``blocos'' da janela, que se sobrepõem. Dessa forma, cada célula é normalizada em relação a diferentes blocos;
+  \item Concatena os histogramas de todos os blocos.
 \end{enumerate}
+
+O método HOG resulta em um vetor de características com o número de dimensões sendo
+\begin{equation*}
+N = \textit{blocos por imagem}\times\textit{tamanho do bloco}\times\textit{número de bins},
+\end{equation*}
+\noindent onde o \textit{número de bins} é o tamanho do histograma de uma célula. Esses parâmetros são dados como entrada para o algoritmo.
 
 \item [\sigla{LBP}{\textit{Local Binary Patterns}} utilizando padrões uniformes:] baseia-se em reconhecer que padrões de textura uniformes são propriedades fundamentais da textura local da imagem. O histograma da sua ocorrência provou-se ser um bom extrator de características. Computa um histograma de ocorrência dos padrões locais binários em uma vizinhança da imagem, detectando micro-estruturas cuja distribuição é estimada pelo histograma \cite{Ojala2002}:
 
 \begin{enumerate}
-  \item Divide a janela da imagem em células;
-  \item Compara cada pixel em uma célula com seus vizinhos. Esse passo resulta em um código binário de oito dígitos;
-  \item Computa o histograma da célula;
+  \item Divide a imagem em células;
+  \item Compara cada pixel em uma célula com seus oito vizinhos. Quando o pixel do centro tiver intensidade maior que o vizinho, escreve 0; caso contrário, 1. Esse passo resulta em um código binário de oito dígitos;
+  \item Computa o histograma da célula. Cada padrão uniforme possui um \textit{bin} e todos os padrões não uniformes constituem um único \textit{bin};
   \item Normaliza o histograma;
-  \item Concatena os histogramas de todas as células.
+  \item Concatena os histogramas de todas as células. Resulta em um vetor de características para a imagem.
 \end{enumerate}
+
+Considerando que são 58 padrões uniformes, o tamanho do vetor de cada célula é de 59 dimensões. Assim, o vetor resultante do método LBP é $N = \textit{número de células} \times 59$.
 
 \end{description}
 
 % %-------------------------------------------------------------------------------\section{Características latentes}
 % \label{sec:latentes}
 %
-% Assim como o método de quantização se mostrou relevante na classificação, nesta dissertação são estudados diversos métodos de pré-processamento de imagens, como filtros de borramento e deconvolução, com o objetivo de obter imagens processadas que sejam mais bem caracterizadas para a etapa de classificação (ou seja, aumentando a variância entre as classes, sem aumentar a variância intra-classe). O enfoque está em como realçar determinadas características, como por exemplo cor, textura e forma. A esses atributos pode-se dar o nome de características latentes, não visíveis na imagem original. Identificar e realçar tais características é objetivo deste estudo. Essa abordagem se diferencia das técnicas multi-resolução, pois não pretende encontrar apenas características em versões de diferentes resoluções (convoluídas com filtros passa-baixa), e sim também em versões deconvoluídas ou transformadas por outros operadores.
+% Assim como o método de quantização se mostrou relevante na classificação, nesta dissertação são estudados diversos métodos de pré-processamento de imagens, como filtros de \emph{borramento} e deconvolução, com o objetivo de obter imagens processadas que sejam mais bem caracterizadas para a etapa de classificação (ou seja, aumentando a variância entre as classes, sem aumentar a variância intra-classe). O enfoque está em como realçar determinadas características, como por exemplo cor, textura e forma. A esses atributos pode-se dar o nome de características latentes, não visíveis na imagem original. Identificar e realçar tais características é objetivo deste estudo. Essa abordagem se diferencia das técnicas multi-resolução, pois não pretende encontrar apenas características em versões de diferentes resoluções (convoluídas com filtros passa-baixa), e sim também em versões deconvoluídas ou transformadas por outros operadores.
 %
 % Se uma das principais características que diferenciam classes de uma certa base utiliza a sua forma, é possível utilizar o método de diferença de Gaussianas para ressaltá-la.
 % % Considerando, por exemplo, uma série de imagens filtradas por um filtro Gaussiano definido como $f_1(x,y) = G_{\sigma}(f(x,y))$.
@@ -479,7 +484,7 @@ O vetor de coerência de cor armazena o número de pixels coerentes e de incoere
 %
 % A capacidade humana de reconhecer novos padrões está diretamente relacionada com a capacidade de generalização, que para tal, utiliza hierarquias \cite{thesisDeep}. Nessa linha, o aprendizado profundo ou \textit{deep learning} é caracterizado por explorar o aprendizado ao simular o funcionamento do cérebro humano. Essa área está diretamente relacionada com aprendizado de máquina e inteligência artificial e lida com o aprendizado através de múltiplas camadas.
 %
-% Explicitar quais são as regras para aprender um determinado conceito pode se tornar impossível. No caso de um avião, por exemplo, ``voar'' pode ser uma regra decomposta em ``possuir largura maior que altura'' e ``ser aerodinâmico''. Essas subdivisões geram múltiplos níveis que possuem maior complexidade e abstração, de maneira similar ao aprendizado por camadas. Uma rede neural artificial utiliza imagens como treinamento para automaticamente inferir quais são as regras para o reconhecimento. São chamadas de redes neurais profundas ou \textit{deep neural networks} as redes que possuem uma estrutura de muitas camadas -- duas ou mais ocultas \cite{neuralNielsen}. Assim, dada uma imagem como entrada, o problema é subdividido em problemas mais simples de serem resolvidos, podendo chegar ao nível de pixels isolados.
+% Explicitar quais são as regras para aprender um determinado conceito pode se tornar impossível. No caso de um avião, por exemplo, ``voar'' pode ser uma regra decomposta em ``possuir largura maior que altura'' e ``ser aerodinâmico''. Essas subdivisões geram múltiplos níveis que possuem maior complexidade e abstração, de maneira similar ao aprendizado por camadas. Uma rede neural artificial utiliza imagens como treinamento para automaticamente inferir quais são as regras para o reconhecimento. São chamadas de redes neurais profundas ou \textit{deep neural networks} as redes que possuem uma estrutura de muitas camadas --- duas ou mais ocultas \cite{neuralNielsen}. Assim, dada uma imagem como entrada, o problema é subdividido em problemas mais simples de serem resolvidos, podendo chegar ao nível de pixels isolados.
 %
 % As redes neurais artificiais consistem em um método para solucionar problemas de forma a simular o comportamento do cérebro humano. Ao tentar uma determinada solução e errar, essas redes aprendem e podem tentar novamente. Ou seja, adquirem conhecimento através da experiência. Elas contém neurônios de entrada, ocultos e de saída. Aprender nesse contexto significa encontrar os pesos que fazem com que a rede neural exiba o comportamento esperado \cite{Schmidhuber2014}.
 %
@@ -517,7 +522,7 @@ O vetor de coerência de cor armazena o número de pixels coerentes e de incoere
 % \end{figure}
 %
 % % Normalmente o kernel é muito menor que a imagem, o que resulta em menos parâmetros a serem armazenados, o que reduz o uso de memória e melhorando a eficiência.
-% % Cada membro do kernel é usado em todas as posições da entrada, provocando invariância a translação. Por isso só é interessante usar uma camada de convolução quando o que é para ser aprendido é invariante a translação. Em alguns casos, como detecção de faces, não é tão interessante -- deve procurar a sombrancelha em cima e o queixo embaixo.
+% % Cada membro do kernel é usado em todas as posições da entrada, provocando invariância a translação. Por isso só é interessante usar uma camada de convolução quando o que é para ser aprendido é invariante a translação. Em alguns casos, como detecção de faces, não é tão interessante --- deve procurar a sombrancelha em cima e o queixo embaixo.
 % % Ao processar dados temporais, o resultado de séries de convoluções produzem uma espécie de timeline ou mapa que mostra quando e aonde características diferentes aparecem na entrada.
 % % Não é invariante a escala e a rotação.
 % % É possível aprender invariâncias utilizando pool sobre as saídas das convoluções. Essa etapa sumiariza as respostas sobre uma vizinhança inteira, assim é possível utiilizar menos unidades de pooling do que unidades de detecção, resultando em um downsampling.
@@ -527,7 +532,7 @@ O vetor de coerência de cor armazena o número de pixels coerentes e de incoere
 %
 % De acordo com \citeonline{Bengio-et-al-2014-Book}, durante a propagação são realizadas as convoluções e propagadas pelo resto da rede para então computar uma função de perda, que mede quão bem o sistema de aprendizado funcionou para cada exemplo. Na retropropagação, recebe-se um gradiente para atualizar os pesos. O gradiente descendente estocástico atualiza o sistema de aprendizagem com base no erro medido para um único exemplo. Apesar de a convergência ser mais ruidosa do que calcular a média sobre todos os erros, diminui-se um custo constante do calculo de custo.
 %
-% Normalmente, o classificador é a última camada totalmente conectada, que computa o produto de um vetor de características \cite{Bengio-et-al-2014-Book}. \citeonline{Mahendran2014} reportam que as camadas inteiramente conectadas podem ser invertidas a uma imagem resultante da composição de partes similares às encontradas na imagem original, mas não idênticas. Enfatizam também que todas as camadas de convolução mantém uma representação fiel da imagem. Essa característica permite a análise de quais atributos são relevantes para o aprendizado da base de imagens, tarefa crucial para esta pesquisa.
+% Normalmente, o classificador é a última camada totalmente conectada, que computa o produto de um vetor de características \cite{Bengio-et-al-2014-Book}. \citeonline{Mahendran2014} reportam que as camadas inteiramente conectadas podem ser invertidas a uma imagem resultante da \emph{composição} de partes similares às encontradas na imagem original, mas não idênticas. Enfatizam também que todas as camadas de convolução mantém uma representação fiel da imagem. Essa característica permite a análise de quais atributos são relevantes para o aprendizado da base de imagens, tarefa crucial para esta pesquisa.
 %
 %
 % % % --------------------------------------------------------------------------------
@@ -559,7 +564,7 @@ O vetor de coerência de cor armazena o número de pixels coerentes e de incoere
 %
 % Possuindo uma arquitetura muito mais simples que a CNN, é composta por duas camadas de neurônios: uma visível e outra oculta. Os pixels correspondem às unidades visíveis e os detectores de características às unidades ocultas. A sua restritividade se deve ao fato da falta de conectividade entre os neurônios de uma mesma camada, mas cada unidade visível é conectada a todas as unidades ocultas. Assim, a camada oculta, de detectores de características, modela a correlação entre os pixels.
 %
-% A aprendizagem de uma RBM começa em um estado aleatório e atualiza seus pesos até encontrar uma distribuição que esteja em equilíbrio. Essa convergência ocorre quando o erro entre os exemplos treinados -- fase positiva -- e suas reconstruções -- fase negativa -- é menor que um certo limiar. Dessa forma, a cada iteração, um novo exemplo é treinado ao repetir iterativamente esses dois estágios e atualizar seus pesos \cite{Hinton2006}.
+% A aprendizagem de uma RBM começa em um estado aleatório e atualiza seus pesos até encontrar uma distribuição que esteja em equilíbrio. Essa convergência ocorre quando o erro entre os exemplos treinados --- fase positiva --- e suas reconstruções --- fase negativa --- é menor que um certo limiar. Dessa forma, a cada iteração, um novo exemplo é treinado ao repetir iterativamente esses dois estágios e atualizar seus pesos \cite{Hinton2006}.
 %
 % \begin{description}
 % \item [Fase positiva:] fixa a camada visível e computa o valor dos neurônios ocultos. A probabilidade de um neurônio oculto ser ativado (se torne igual a 1) é dada pela função
@@ -610,18 +615,19 @@ O vetor de coerência de cor armazena o número de pixels coerentes e de incoere
 
 Nesta seção é definido o problema do desbalanceamento de classes e apresentados os trabalhos relacionados que possuem duas diferentes abordagens: sobreamostragem (\textit{over-sampling}) e subamostragem (\textit{under-sampling}).
 
-Em conjuntos de dados desbalanceados, determinadas classes possuem um número muito maior de instâncias do que outras. As classes com mais elementos são chamadas de classes majoritárias, e as com menos elementos, de minoritárias. O desempenho de algoritmos de Aprendizado de Máquina é prejudicado quando tratam de bases de dados desbalanceadas. Esses algoritmos tendem a favorecer a classificação de um novo objeto à classe majoritária, pois esta fica muito melhor representada após o treinamento do que a minoritária. Considera-se, então, que esse problema é um obstáculo para a classificação satisfatória. Porém, como apontado por \cite{Batista2004}, o desbalanceamento não é o único responsável por reduzir o desempenho de algoritmos de aprendizagem. Eles sugerem que é possível haver uma ótima classificação mesmo contendo alto desbalanceamento na base de dados. Assim, a motivação do estudo de vários algoritmos para rebalanceamento não é apenas balancear os dados de treinamento, mas obter uma melhor diferenciação entre as classes. Isso porque o desbalanceamento por si só pode não ser um problema, mas em conjunto com a sobreposição de classes pode diminuir significativamente a acurácia da classificação da classe minoritária.
+Em conjuntos de dados desbalanceados, determinadas classes possuem um número muito maior de instâncias do que outras. As classes com mais elementos são chamadas de classes majoritárias, e as com menos elementos, de minoritárias. O desempenho de algoritmos de Aprendizado de Máquina é prejudicado quando tratam de bases de dados desbalanceadas. Esses algoritmos tendem a favorecer a classificação de um novo objeto à classe majoritária, pois esta fica muito melhor representada após o treinamento do que a minoritária. Considera-se, então, que esse problema é um obstáculo para a classificação satisfatória. Porém, como apontado por \citeonline{Batista2004}, o desbalanceamento não é o único responsável por reduzir o desempenho de algoritmos de aprendizagem. Eles sugerem que é possível haver uma ótima classificação mesmo contendo alto desbalanceamento na base de dados. Assim, a motivação do estudo de vários algoritmos para rebalanceamento não é apenas balancear os dados de treinamento, mas obter uma melhor diferenciação entre as classes. Isso porque o desbalanceamento por si só pode não ser um problema, mas em conjunto com a sobreposição de classes pode diminuir significativamente a acurácia da classificação da classe minoritária.
 
 % Os resultados reportados também mostram que a poda de árvores de decisão raramente levou a alguma melhora na classificação.
 
-\cite{Castro2011} destacam que duas abordagens têm sido utilizadas para solucionar esse problema: pré-processar os dados de forma a rebalancear as distribuições das classes, ao reamostrar os dados; ou então modificar métodos de aprendizado -- como através da adição de melhores funções de custo na classificação. Em geral, são reportados melhores resultados obtidos por algoritmos de \textit{over-sampling}, os quais consistem em reamostrar os dados aumentando o número de elementos da classe minoritária \cite{Batista2004}. Esta pesquisa tem como enfoque o \textbf{pré-processamento dos dados}, com um viés no rebalanceamento de classes através da \textbf{geração de imagens artificiais} (antes da extração de características).
+\citeonline{Castro2011} destacam que duas abordagens têm sido utilizadas para solucionar esse problema: pré-processar os dados de forma a rebalancear as distribuições das classes, ao reamostrar os dados; ou então modificar métodos de aprendizado --- e.g. através da adição de melhores funções de custo na classificação. Em geral, são reportados melhores resultados obtidos por algoritmos de \textit{over-sampling}, os quais consistem em reamostrar os dados, aumentando o número de elementos da classe minoritária \cite{Batista2004}.
+% Esta pesquisa tem como enfoque o \textbf{pré-processamento dos dados}, com um viés no rebalanceamento de classes através da \textbf{geração de imagens artificiais} (antes da extração de características).
 
 \subsection{Sobreamostragem}
 \label{sec:smote}
 
-Realizar uma sobreamostragem (\textit{over-sampling}) em um determinado conjunto de dados significa aumentar -- utilizando alguma estratégia -- o número de elementos desse conjunto. Em \citeonline{Chawla2002}, a simples replicação de exemplos pertencentes à classe minoritária não melhorou a classificação. Isso se deve ao reconhecimento de regiões muito específicas, causando \textit{overfitting}.
+Realizar uma sobreamostragem (\textit{over-sampling}) em um determinado conjunto de dados significa aumentar --- utilizando alguma estratégia --- o número de elementos desse conjunto. Em \citeonline{Chawla2002}, a simples replicação de exemplos pertencentes à classe minoritária não melhorou a classificação. Isso se deve ao reconhecimento de regiões muito específicas, causando \textit{overfitting}.
 
-O \textit{Synthetic Minority Over-sampling Technique} (SMOTE) é um método desenvolvido por \citeonline{Chawla2002} para rebalancear classes ao gerar artificialmente novos elementos, ao invés de apenas replicá-los. O Algoritmo \ref{alg:smote} é aplicado sobre os vetores de características previamente extraídos, com operações de perturbação dos dados de treino no espaço de características, e não no espaço dos dados. A diferença entre o vetor de características de um elemento e do seu vizinho mais próximo é multiplicada por um número $0 \le  x \le 1$. Esse valor é adicionado ao vetor original, criando um novo elemento.
+O \textit{Synthetic Minority Over-sampling Technique} (SMOTE) é um método desenvolvido por \citeonline{Chawla2002} para rebalancear classes ao gerar artificialmente novos elementos, ao invés de apenas replicá-los. O Algoritmo \ref{alg:smote} é aplicado sobre os vetores de características previamente extraídos, com operações de perturbação dos dados de treino no espaço de características, e não no espaço dos dados. A diferença entre o vetor de características de um elemento e do seu vizinho mais próximo é multiplicada por um valor $x$, sendo $0 \le  x \le 1$. Esse valor é adicionado ao vetor original, criando um novo elemento.
 
 \begin{algorithm}[!htbp]
   \caption{SMOTE: método para rebalancear classes}
@@ -629,32 +635,31 @@ O \textit{Synthetic Minority Over-sampling Technique} (SMOTE) é um método dese
   \SetAlgoLined
   \Entrada{Imagem colorida $I$ em formato RGB}
   \Saida{Exemplos sintéticos $S$}
-  $N \gets \text{vizinhos(minoritária)}$\;
+  $N \gets \textit{vizinhos(classe minoritária)}$\;
   \ParaCada{exemplo da classe minoritária}{
-    $nn \gets \text{vizinho aleatório de N}$\;
-    $\text{novo\_elemento} \gets \emptyset $\;
+    $nn \gets \textit{vizinho aleatório de N}$\;
+    $\textit{novo\_elemento} \gets \emptyset $\;
 
-    \ParaCada{\text{característica} $(x,y)$ do exemplo}{
-      $\text{diferença} \gets nn(x,y) - exemplo(x,y)$\;
-      $\text{gap} \gets \text{número aleatório entre 0 e 1}$\;
-      $\text{novo\_elemento}(x,y) \gets exemplo(x,y) + gap*\text{diferença}$\;
+    \ParaCada{\textit{característica} $(x,y)$ do exemplo}{
+      $\textit{diferença} \gets nn(x,y) - exemplo(x,y)$\;
+      $\textit{gap} \gets \textit{número aleatório entre 0 e 1}$\;
+      $\textit{novo\_elemento}(x,y) \gets exemplo(x,y) + gap*\textit{diferença}$\;
     }
-    $S \gets S \cup \text{novo\_elemento}$\;
+    $S \gets S \cup \textit{novo\_elemento}$\;
   }
 \end{algorithm}
 
-Como pode ser visualizado na Figura~\ref{fig:smote}, essa abordagem provoca a geração de um elemento resultante da interpolação dos dois vetores originais. Os exemplos sintéticos forçam uma região de decisão maior e mais geral para serem aprendidas como exemplos da classe minoritária. Dessa forma, o SMOTE provê mais elementos para o classificador aprender, ao contrário da replicação de dados. Como trabalhos futuros, os autores apontam que diferentes estratégias para criar esses exemplos sintéticos podem melhorar a performance da classificação. Inclusive salientando exemplos que foram erroneamente classificados.
+Como pode ser visualizado na Figura~\ref{fig:smote}, essa abordagem provoca a geração de um elemento resultante da interpolação dos dois vetores originais. Os exemplos sintéticos forçam uma região de decisão maior e mais geral para serem aprendidas como exemplos da classe minoritária. Dessa forma, o SMOTE provê mais elementos para o classificador aprender, ao contrário da replicação de dados. Como trabalhos futuros, os autores apontam que diferentes estratégias para criar esses exemplos sintéticos podem melhorar o desempenho da classificação. Inclusive salientando exemplos que foram erroneamente classificados.
 
 \begin{figure}[!htbp]
   \begin{center}
     \includegraphics[width=0.7\linewidth]{figuras/smote.pdf}
   \end{center}
-  \caption[Método SMOTE: interpolação entre dois exemplos vizinhos no espaço de características.]{Método SMOTE: interpolação entre dois exemplos vizinhos no espaço de características. \\ \textit{Fonte: Elaborado pela autora.}}
+  \caption[Método SMOTE: interpolação entre dois exemplos vizinhos no espaço de características. A diferença entre o vetor de características de um elemento e do seu vizinho mais próximo é multiplicada por um valor $x$, sendo $0 \le  x \le 1$. Esse valor é adicionado ao vetor original, criando um novo elemento entre eles.]{Método SMOTE: interpolação entre dois exemplos vizinhos no espaço de características. A diferença entre o vetor de características de um elemento e do seu vizinho mais próximo é multiplicada por um valor $x$, sendo $0 \le  x \le 1$. Esse valor é adicionado ao vetor original, criando um novo elemento entre eles.\\ \textit{Fonte: Elaborado pela autora.}}
   \label{fig:smote}
 \end{figure}
 
-Uma variação desse algoritmo, denominada Borderline-SMOTE1 \cite{Han2005}, considera que elementos fora da linha de borda de cada classe pouco contribuem para a classificação. Por isso, propôe a geração de elementos sintéticos utilizando apenas elementos de borda. Considera que se os vizinhos mais próximos são da classe majoritária, o exemplo é ruído, e se há mais vizinhos da classe majoritária do que da minoritária, considera esse elemento como sendo de borda. Como trabalho futuro, destacam a necessidade de considerar diferentes estratégias para definir em quais elementos realizar o over-sampling.
-
+Uma variação desse algoritmo, denominada Borderline-SMOTE1 \cite{Han2005}, considera que elementos fora da linha de borda de cada classe pouco contribuem para a classificação. Por isso, propõe a geração de elementos sintéticos utilizando apenas elementos de borda. Considera que se os vizinhos mais próximos são da classe majoritária, o exemplo é ruído, e se há mais vizinhos da classe majoritária do que da minoritária, considera esse elemento como sendo de borda. Como trabalho futuro, destacam a necessidade de considerar diferentes estratégias para definir quais elementos utilizar para realizar o \textit{over-sampling}.
 
 \subsection{Subamostragem}
 
@@ -662,11 +667,62 @@ Ao contrário da sobreamostragem, a subamostragem visa diminuir o número de ele
 
 Métodos para remoção de exemplos da classe majoritária normalmente apresentam resultados piores do que métodos de sobreamostragem, conforme relatado por \citeonline{Batista2004} e \citeonline{Japkowicz2002}. Um dos motivos pela preferência natural à sobreamostragem é o fato de que ao realizar subamostragem pode-se remover informações essenciais dos dados originais. Mas não há uma estratégia única que funcione melhor para todos os cenários.
 
+
+%-------------------------------------------------------------------------------
+\section{Redução de dimensionalidade}
+\label{sec:reducaodimensionalidade}
+% http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=4368165
+
+Considerando que um vetor de características extraído com extratores comuns pode possuir entre 6 (e.g.\ Haralick) e 512 (e.g.\ BIC) características, a visualização de um exemplo requer que seja realizado o mapeamento desses valores em apenas duas dimensões. Para isso, a redução de dimensionalidade mapeia os vetores de $N$ dimensões para um espaço 1D, 2D ou 3D. A partir desses novos vetores, pode então ser criada alguma representação visual que tente manter a relação de distância entre os novos e os originais~\cite{Paulovich2007}.
+\meutodo{falar da importancia da reducao pra classificacao tbm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Análise de componentes principais}
+\label{sec:pca}
+
+% http://sebastianraschka.com/Articles/2014_pca_step_by_step.html
+% http://arxiv.org/pdf/1404.1100v1.pdf
+
+\sigla{PCA}{\textit{Principal Component Analysis}} é uma técnica não supervisionada que pode ser utilizada para reduzir a dimensionalidade dos dados com a máxima variância possível. Cada imagem, originalmente representada por um vetor com $N$ características, pode então ser representada por apenas um ou mais valores.  O objetivo é representar os dados como um conjunto de variáveis ortogonais chamadas de componentes principais. Para isso, encontra-se uma outra base: uma combinação linear da base original, que melhor representa os dados ao assumir que as direções das maiores variâncias são as mais importantes. Ou seja, a variância associada com cada direção quantifica o quão principal é aquela direção \cite{Abdi2010}. Pode-se, portanto, enumerar os passos necessários para o PCA como:
+
+\begin{enumerate}
+\item Centraliza todos os atributos na origem ao subtrair a média de cada dimensão;
+\item Calcula a matriz de covariância $C_x$ dada por
+\begin{equation}
+    C_x = X X^T,
+\end{equation}
+\noindent onde $X$ é a matriz de dados original e $X^T$ sua transposta;
+
+\item Encontra os autovalores e autovetores de $C_x$. Um autovetor $\vec{u}$ de uma matriz $A$ pode ser definido por $A\vec{u} = \lambda \vec{u}$, onde $\lambda$ é um autovalor escalar associado ao autovetor. Um vetor $\vec{u}$ é um autovetor da matriz $A$ se o tamanho do vetor --- e não sua direção --- é modificado quando multiplicado por $A$. Os autovalores podem ser representados na diagonal de uma matriz $\lambda$ (com outros valores como zero) e o conjunto dos autovetores de $A$ em uma matriz $U$. Assim, $A = U \lambda U^T$;
+
+\item Então, os autovetores são ordenados de forma decrescente de acordo com seus autovalores correspondentes e escolhe-se os $k$ principais autovetores (i.e.\ maiores autovalores) para formar uma matriz $P$ de dimensão $n \times k$, onde cada coluna representa um autovetor. O valor $k$ será a quantidade de dimensões do novo espaço de atributos;
+ % O novo espaço de atributos pode ser encontrado multiplicando a transposta dessa matriz pela transposta dos atributos originais. - caso seja svd
+\item O novo subespaço pode ser encontrado multiplicando essa matriz $P$ pela matriz original, de acordo com a equação $Y = PX$, onde $X$ representa o conjunto de dados original, $Y$ é uma nova representação desses dados e $P$ a matriz ortonormal que transforma $X$ em $Y$. As linhas de $P$ são os componentes principais de $X$.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\textit{Locality Preserving Projections}}
+\label{sec:lpp}
+
+\sigla{LPP}{\textit{Locality Preserving Projections}} é um algoritmo linear de redução de dimensionalidade com propriedades de preservação da estrutura local dos dados. Não apresenta a dificuldade dos algoritmos tradicionais (como PCA) de manter o \textit{manifold} não linear dos dados originais \cite{Zhuo2014}. Embora o método mais utilizado para redução da dimensionalidade de forma não-supervisionada seja o PCA, métodos como esse produzem melhores projeções em termos de separação das classes. Em \citeonline{Zhuo2014} o LPP obteve a melhor relação entre complexidade computacional e a redução da dimensionalidade, enquanto manteve a acurácia. Seu algoritmo segue três passos principais \cite{He2004}:
+
+\begin{enumerate}
+\item Constrói um grafo de adjacências. Os nós $i$ e $j$ possuem uma aresta entre si se fazem parte do conjunto de $k$-vizinhos mais próximos de cada nó (sendo $k$ um parâmetro do algoritmo);
+
+\item Encontra os pesos $W_{ij} = 1$ se os vértices $i$ e $j$ estão próximos, ou seja, conectados por uma aresta, e $W_ij = 0$ caso contrário;
+
+\item Computa os autovalores e autovetores
+\begin{equation}
+    X L X^T \vec{a} = \lambda X D X^T \vec{a},
+\end{equation}
+\noindent onde $D$ é a matriz diagonal na qual seus elementos são as somas das colunas de $W$ e $L$ é a matriz Laplaciana $L = D - W$. $X$ é a matriz original dos dados e $\vec{a}$ é o vetor solução (matriz de projeção), ordenado pelos autovalores $\lambda$.
+\end{enumerate}
+
 %-------------------------------------------------------------------------------
 \section{Classificador de padrões}
 \label{sec:classificacao}
 
-A tarefa de classificação de imagens consiste em tentar predizer a classe de uma determinada imagem. Na etapa de treinamento o método recebe como entrada um conjunto de imagens rotulado com suas respectivas classes; com o modelo treinado é possível realizar a classificação de exemplos de rótulo desconhecido; num experimento são preditas as classes de um conjunto de imagens de teste.
+A tarefa de classificação de imagens consiste em tentar predizer a classe de uma determinada imagem. Na etapa de treinamento o método recebe como entrada um conjunto de imagens rotulado com suas respectivas classes. Com o modelo treinado, é possível realizar a classificação de exemplos de rótulo desconhecido. Assim, em um experimento são preditas as classes de um conjunto de imagens de teste.
 
 % \subsection{Naive Bayes}
 
@@ -681,7 +737,7 @@ A tarefa de classificação de imagens consiste em tentar predizer a classe de u
 \subsection{\textit{K-Nearest Neighbors}}
 \label{sec:knn}
 
-O classificador \sigla{K-NN}{\textit{K-Nearest Neighbors}} considera a proximidade entre os dados para realizar predições. Baseia-se na premissa de que os objetos do mesmo conceito são semelhantes. O seu funcionamento está descrito no Algoritmo \ref{alg:knn}. Na fase de treinamento, apenas armazena os exemplos rotulados do conjunto de dados de treinamento. Quando um novo exemplo deve ser classificado, calcula a distância entre os vetores de características do novo exemplo e aqueles já rotulados. O novo exemplo é então classificado como sendo da classe do exemplo de treinamento com menor distância~\cite{Boiman2008}. Com $K = 1$, a predição da classe corresponde ao exemplo mais próximo. Trata-se de um classificador que utiliza todas as instâncias do modelo.
+O classificador \sigla{K-NN}{\textit{K-Nearest Neighbors}} considera a proximidade entre os dados para realizar as predições. Baseia-se na premissa de que os objetos do mesmo conceito são semelhantes. O seu funcionamento está descrito no Algoritmo \ref{alg:knn}. Na fase de treinamento, apenas armazena os exemplos rotulados do conjunto de dados de treinamento. Quando um novo exemplo deve ser classificado, calcula a distância entre os vetores de características do novo exemplo e aqueles já rotulados. O novo exemplo é então classificado como sendo da classe do exemplo de treinamento com menor distância~\cite{Boiman2008}. Com $K = 1$, a predição da classe corresponde ao exemplo mais próximo. Trata-se de um classificador que utiliza todas as instâncias do modelo.
 
 \begin{algorithm}[!htbp]
   \caption{K-NN: método de classificação supervisionada}
@@ -705,75 +761,16 @@ O classificador \sigla{K-NN}{\textit{K-Nearest Neighbors}} considera a proximida
 \subsection{\textit{Support Vector Machines}}
 \label{sec:svm}
 
-Uma SVM encontra um hiperplano separador no espaço de características otimizando a máxima distância para o exemplo de treinamento mais próximo de cada classe. A versão atual do classificador, que permite sobreposição entre classes (também conhecida como versão \textit{soft-margin}), foi proposta por \cite{Vapnik e Cortes (1995}). O algoritmo utiliza exemplos de treinamento, resolvendo um problema de otimização formulado por meio de multiplicadores de Lagrange e um sistema de equações \textit{Karush Kuhn Tucker} (KKT).
+Uma SVM encontra um hiperplano separador no espaço de características otimizando a máxima distância para o exemplo de treinamento mais próximo de cada classe. A versão atual do classificador, que permite sobreposição entre classes (também conhecida como versão \textit{soft-margin}), foi proposta por \cite{Cortes1995}. O algoritmo utiliza exemplos de treinamento, resolvendo um problema de otimização formulado por meio de multiplicadores de Lagrange e um sistema de equações \textit{Karush Kuhn Tucker} (KKT).
 
-Os exemplos de treinamento utilizados para computar o hiperplano são chamados vetores de suporte. Por isso, depois do treinamento todos os dados podem ser descartados, exceto os vetores de suporte que são utilizados para a etapa de classificação \cite{Marsland2015}.
+Os exemplos de treinamento utilizados para computar o hiperplano são chamados vetores de suporte. Por isso, após o treinamento, todos os dados podem ser descartados, exceto os vetores de suporte que são utilizados para a etapa de classificação \cite{Marsland2015}.
 
-Comumente, dados em um espaço de características de entrada não são linearmente separáveis. Nesses casos pode-se mapear o espaço original em um espaço de dimensão maior no qual os dados são presumivelmente separáveis por um hiperplano. Esse mapeamento é comumente projetado de forma que produtos internos possam ser computados nas variáveis do espaço original definindo-as em termos de uma função \textit{kernel}. Ao lidar com características obtidas a partir de imagens, a dimensão do espaço original é normalmente de alta dimensão (\leq 1000) se comparada com o tamanho do conjunto de treinamento. Por isso, os dados de treinamento são geralmente linearmente separáveis \cite{Chapelle1999a}.
-
-%-------------------------------------------------------------------------------
-\section{Redução de dimensionalidade}
-\label{sec:reducaodimensionalidade}
-% http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=4368165
-
-Considerando que um vetor de características extraído com extratores comuns pode possuir entre 6 (e.g.\ Haralick) e 512 (e.g.\ BIC) características, a visualização de um exemplo requer que seja realizado o mapeamento desses valores em apenas duas dimensões. Para isso, uma redução de dimensionalidade mapeia os vetores de $N$ dimensões para um espaço 1D, 2D ou 3D. A partir desses novos vetores, pode então ser criada alguma representação visual que tente manter a relação de distância entre os novos e os originais~\cite{Paulovich2007}.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Análise de componentes principais}
-\label{sec:pca}
-
-% http://sebastianraschka.com/Articles/2014_pca_step_by_step.html
-% http://arxiv.org/pdf/1404.1100v1.pdf
-
-O \sigla{PCA}{\textit{Principal Component Analysis}} é uma técnica não supervisionada que pode ser utilizada para reduzir a dimensionalidade dos dados com a máxima variância possível. Cada imagem, originalmente representada por um vetor com $N$ características, pode então ser representada por apenas um ou mais valores.  O objetivo é representar os dados como um conjunto de variáveis ortogonais chamadas de componentes principais. Para isso encontra-se uma outra base: uma combinação linear da base original, que melhor representa os dados ao assumir que as direções das maiores variâncias são as mais importantes. Ou seja, a variância associada com cada direção quantifica o quão principal é aquela direção \cite{Abdi2010}. Pode-se, portanto, enumerar os passos necessários para o PCA sendo:
-
-\begin{enumerate}
-\item Centraliza todos os atributos na origem ao subtrair a média de cada dimensão;
-\item Calcula a matriz de covariância $C_x$ dada por
-\begin{equation}
-    C_x = X X^T,
-\end{equation}
-\noindent onde $X$ é a matriz de dados original e $X^T$ sua transposta;
-
-\item Encontra os autovalores e autovetores de $C_x$. Um autovetor $\vec{u}$ de uma matriz $A$ pode ser definido por $A\vec{u} = \lambda \vec{u}$, onde $\lambda$ é um autovalor escalar associado ao autovetor. Um vetor $\vec{u}$ é um autovetor da matriz $A$ se o tamanho do vetor -- e não sua direção -- é modificado quando multiplicado por $A$. Os autovalores podem ser representados na diagonal de uma matriz $\lambda$ (com outros valores como zero) e o conjunto dos autovetores de $A$ em uma matriz $U$. Assim,
-
-\begin{equation}
-    A = U \lambda U^T;
-\end{equation}
-
-\item Então, os autovetores são ordenados de forma decrescente de acordo com seus autovalores correspondentes e escolhe-se os $k$ principais autovetores (i.e.\ maiores autovalores) para formar uma matriz $P$ de dimensão $n \times k$, onde cada coluna representa um autovetor. O valor $k$ será a quantidade de dimensões do novo espaço de atributos;
- % O novo espaço de atributos pode ser encontrado multiplicando a transposta dessa matriz pela transposta dos atributos originais. - caso seja svd
-\item O novo subespaço pode ser encontrado multiplicando essa matriz $P$ pela matriz original, de acordo com a equação $Y = PX$, onde $X$ representa o conjunto de dados original, $Y$ é uma nova representação desses dados e $P$ a matriz ortonormal que transforma $X$ em $Y$. As linhas de $P$ são os componentes principais de $X$.
-\end{enumerate}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{\textit{Locality Preserving Projections}}
-\label{sec:lpp}
-
-\sigla{LPP}{\textit{Locality Preserving Projections}} é um algoritmo linear de redução de dimensionalidade com propriedades de preservação da estrutura local dos dados. Não apresenta a dificuldade dos algoritmos tradicionais (como PCA) de manter o \textit{manifold} não linear dos dados originais \cite{Zhuo2014}. Embora o método mais utilizado para redução da dimensionalidade de forma não-supervisionada seja o PCA, métodos como esse produzem melhores projeções em termos de separação das classes. Em \citeonline{Zhuo2014} o LPP alcançou a melhor relação entre complexidade computacional e a redução da dimensionalidade, enquanto manteve a acurácia. Seu algoritmo segue três passos principais \cite{He2004}:
-
-\begin{enumerate}
-\item Constrói um grafo de adjacências. Os nós $i$ e $j$ possuem uma aresta entre si se fazem parte do conjunto de $k$-vizinhos mais próximos de cada nó (sendo $k$ um parâmetro do algoritmo);
-
-\item Encontra os pesos $W_{ij} = 1$ se os vértices $i$ e $j$ estão próximos, ou seja, conectados por uma aresta, e $W_ij = 0$ caso contrário;
-
-\item Computa os autovalores e autovetores
-\begin{equation}
-    X L X^T \vec{a} = \lambda X D X^T \vec{a},
-\end{equation}
-\noindent onde $D$ é a matriz diagonal na qual seus elementos são as somas das colunas de $W$ e $L$ é a matriz Laplaciana $L = D - W$. $X$ é a matriz original dos dados e $\vec{a}$ é o vetor solução (matriz de projeção), ordenado pelos autovalores $\lambda$.
-\end{enumerate}
-
-\subsection{Redução para visualização}
-
-A visualização do espaço de características obtido após a geração artificial de imagens pode ajudar a verificar se as novas imagens melhoram a definição da classe minoritária em relação ao espaço original (inclusive antes de imagens serem removidas para provocar o desbalanceamento). Ou seja, se o método utilizado revelou características latentes. Dessa forma, ao projetar os novos vetores no espaço das imagens originais, é possível analisar qual método -- SMOTE ou geração de imagens no campo visual -- mais se assemelha à distribuição original dos dados.
-% Essa redução permite a projeção dessas imagens no espaço de características.
-
+Comumente, dados em um espaço de características de entrada não são linearmente separáveis. Nesses casos pode-se mapear o espaço original em um espaço de dimensão maior no qual os dados são presumivelmente separáveis por um hiperplano. Esse mapeamento é comumente projetado de forma que produtos internos possam ser computados nas variáveis do espaço original definindo-as em termos de uma função \textit{kernel}. Ao lidar com características obtidas a partir de imagens, a dimensão do espaço original é normalmente de alta dimensão ($\leq 1000$) se comparada com o tamanho do conjunto de treinamento. Por isso, os dados de treinamento são geralmente linearmente separáveis \cite{Chapelle1999a}.
 
 %--------------------------------------------------------------------------------
 \section{Considerações finais}
 
-Deu-se destaque à discussão das etapas de pré-processamento para a quantização de imagens, além das abordagens existentes para o rebalanceamento de classes. Esse capítulo apresentou métodos para exemplificação, além de trabalhos relacionados. A extração de características foi abordada, apresentando os principais descritores utilizados nesta pesquisa. A lacuna destacada é que existem características não passíveis de extração por descritores convencionais. Esses fundamentos permitem compreender o contexto no qual esta dissertação está inserida. Os próximos capítulos abrangem a metodologia proposta.
+Deu-se destaque à discussão das etapas de pré-processamento para a quantização de imagens, além das abordagens existentes para o rebalanceamento de classes. Este capítulo apresentou métodos para exemplificação, além de trabalhos relacionados. A extração de características foi abordada, apresentando os principais descritores utilizados nesta pesquisa. A lacuna destacada é que existem características não passíveis de extração por descritores convencionais. Esses fundamentos permitem compreender o contexto no qual esta dissertação está inserida. Os próximos capítulos abrangem a metodologia proposta.
 
 % Para isso, as redes de convolução são apresentadas, pois possuem capacidade de aprender as características relevantes das imagens de entrada. Justificando, assim, seu uso para análise das propriedades das bases de imagens. Podem também indicar possíveis operações para auxiliar na geração de imagens artificiais. Ainda, a memória associativa aprendida por máquinas de Boltzmann restritas pode ser indicadora de quais imagens geradas adicionam informações ao aprendizado.
-%A geração dessas imagens visa rebalancear classes que diferem em número de imagens, e detalhes sobre esse problema também foram fundamentados nesse capítulo.
+%A geração dessas imagens visa rebalancear classes que diferem em número de imagens, e detalhes sobre esse problema também foram fundamentados neste capítulo.

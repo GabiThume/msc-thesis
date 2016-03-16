@@ -1,56 +1,35 @@
 \section{Considerações iniciais}
 
 O processo de manipular imagens para que elas se tornem mais satisfatórias para um
-determinado objetivo depende do domínio de aplicação. Ou seja, não existe uma teoria geral para melhorar qualquer tipo de imagem \cite{Gonzalez2007}; um método que processa melhor uma imagem bem definida por suas cores difere do processamento de imagens texturizadas, às quais um processamento sobre a intensidade dos pixels da imagem -- como uma operação de borramento -- pode ocasionar perda da textura. Assim, justifica-se a exploração de um vasto número de métodos de processamento de imagens e bases.
+determinado objetivo depende do domínio de aplicação. Ou seja, não existe uma teoria geral para melhorar qualquer imagem \cite{Gonzalez2007}; um método que processa melhor uma imagem bem definida por suas cores difere do processamento de imagens texturizadas, às quais um processamento sobre a intensidade dos pixels da imagem --- como uma operação de \emph{borramento} --- pode ocasionar perda da textura. Assim, justifica-se a exploração de um vasto número de métodos de processamento de imagens e bases.
 
-Nesse capítulo oito métodos de processamento de imagens são utilizados com o fim de obter imagens artificiais para subamostrar classes minoritárias em problemas de classificação, rebalanceando as bases de dados antes da extração de características. Isso é realizado com dois propósitos: 1) para compensar a baixa disponibilidade de exemplos de uma determinada classe, e 2) permitir a extração de informações antes não disponíveis nas imagens originais por meio da combinação ou perturbação das imagens de entrada.
+Neste capítulo oito métodos de processamento de imagens são utilizados com o fim de obter imagens artificiais para subamostrar classes minoritárias em problemas de classificação, rebalanceando as bases de imagens antes da extração de características. Isso é realizado com dois propósitos: 1) para compensar a baixa disponibilidade de exemplos de uma determinada classe, e 2) permitir a extração de informações antes não disponíveis nas imagens originais por meio da combinação ou perturbação das imagens de entrada.
 
-Dada a quantidade de imagens necessárias para rebalancear a base original, são geradas novas imagens a partir de um conjunto de métodos. Como demonstrado na Figura~\ref{fig:escolha}, dado o conjunto de treinamento da classe (ou classes) com menor número total de imagens, é realizado o rebalanceamento ao aplicar os métodos descritos neste capítulo e posteriormente essas imagens resultantes são utilizadas para extração de características e treinamento.
+Dada a quantidade de imagens necessárias para rebalancear a base original, são geradas novas imagens a partir de um conjunto de métodos. Como demonstrado na Figura~\ref{fig:escolha}, dado o conjunto de treinamento da classe (ou classes) com menor número total de imagens, é realizado o rebalanceamento ao aplicar os métodos descritos neste capítulo. Posteriormente, essas imagens resultantes têm suas características extraídas e são utilizadas no treinamento da classe minoritária.
 
 \begin{figure}[!htbp]
   \begin{center}
     \includegraphics[width=0.7\linewidth]{\detokenize {figuras/rebalance.pdf}}
   \end{center}
-  \caption[Geração artificial da classe minoritária para rebalancear as classes. Para cada imagem necessária para igualar o número de imagens da base, $1 \leq n \leq 16$ imagens originais são dadas como entrada para uma operação de geração artificial. A nova imagem é utilizada como treinamento da base.]{Geração artificial da classe minoritária para rebalancear as classes. Para cada imagem necessária para igualar o número de imagens da base, $1 \leq n \leq 16$ imagens originais são dadas como entrada para uma operação de geração artificial. A nova imagem é utilizada como treinamento da base. \\ \textit{Fonte: Elaborado pela autora.}}
+  \caption[Geração artificial da classe minoritária para rebalancear a base de imagens. Para cada imagem necessária para igualar o número de imagens da base, $1 \leq n \leq 16$ imagens originais são dadas como entrada para uma operação de geração artificial. A nova imagem é utilizada como treinamento da base.]{Geração artificial da classe minoritária para rebalancear a base de imagens. Para cada imagem necessária para igualar o número de imagens da base, $1 \leq n \leq 16$ imagens originais são dadas como entrada para uma operação de geração artificial. A nova imagem é utilizada como treinamento da base. \\ \textit{Fonte: Elaborado pela autora.}}
   \label{fig:escolha}
 \end{figure}
 
+Os resultados encontrados ao rebalancear classes a partir da geração de imagens artificiais são também apresentados neste capítulo. Para cada experimento realizado, são descritos: o protocolo utilizado (i.e. base de imagens, os métodos de conversão para escala de cinza e extração de características), os resultados encontrados e a discussão da relevância de tais resultados.
 
-%  \begin{figure}[hbpt]
-%  \begin{center}
-%    \includegraphics[width=1\linewidth]{\detokenize {figuras/geral.pdf}}
-%  \end{center}
-%   \caption[]{\\ \textit{Fonte: Elaborado pela autora.}}
-%  \label{fig:escolha}
-% \end{figure}
-
-% As etapas para a geração das imagens artificiais, passo \ref{item} da seção anterior, foram:
-%
-% \begin{enumerate}
-% \item Selecionar uma imagem aleatoriamente do conjunto de treino;
-% \item Selecionar uma operação aleatória entre: borramento, adição de ruído, \textit{unsharp mask}, mistura ou composição;
-% \begin{enumerate}
-% \item Caso seja selecionada a composição: encontrar uma outra imagem aleatória, selecionar um quadrante dessa imagem e novamente uma operação entre: borramento, adição de ruído, \textit{unsharp mask} ou mistura;
-% \end{enumerate}
-% \item Aplicar essa operação na imagem previamente selecionada e adicionar essa imagem gerada ao conjunto de treino;
-% \item Repetir os passos 2 a 4 até que as classes estejam igualmente balanceadas.
-% \end{enumerate}
-
-Os resultados encontrados ao rebalancear classes a partir da geração de imagens artificiais são também apresentados neste capítulo. Para cada experimento realizado, são descritos: o protocolo utilizado (i.e. base de imagens e os métodos de conversão para escala de cinza e extração de características), os resultados encontrados e a discussão da relevância de tais resultados.
-
-Foram realizados diversos experimentos direcionados a explorar o rebalanceamento com métodos de processamento, para melhorar a acurácia da classificação de bases de imagens. Como entrada são utilizadas imagens provenientes de diversas coleções disponíveis na literatura. Como resultado, são calculadas medidas estatísticas da classificação dessas bases de imagens após o rebalanceamento destas. Tal processamento é realizado antes da extração de características, e portanto no campo visual. Espera-se que os resultados encontrados proporcionem melhoras na etapa subsequente de classificação.
+Foram realizados diversos experimentos direcionados a explorar o rebalanceamento com os métodos de processamento, com o objetivo de melhorar a acurácia da classificação de bases de imagens. Como entrada são utilizadas imagens provenientes de diversas coleções disponíveis na literatura. Como resultado, são calculadas medidas estatísticas da classificação dessas bases de imagens após o rebalanceamento destas. Tal processamento é realizado antes da extração de características, e portanto no campo visual. Espera-se que os resultados encontrados proporcionem melhoras na etapa subsequente de classificação.
 
 \section{Métodos para geração artificial de imagens}
 
-Os métodos de geração artificial para o rebalanceamento de classes de imagens são descritos nesta seção. Os experimentos, posteriormente destacados na Seção~\ref{sec:resultados-geracao}, foram realizados utilizando as operações de: borramento; mistura ponderada; \textit{unsharp masking}; composição; combinação de \textit{thresholds}; combinação com saliência; SMOTE visual; e adição de ruído.
+Os métodos de geração artificial para o rebalanceamento de classes de imagens são descritos nesta seção. Os experimentos, posteriormente destacados na Seção~\ref{sec:resultados-geracao}, foram realizados utilizando as operações de: \emph{borramento}; \emph{mistura ponderada}; \textit{aguçamento}; \emph{composição}; \emph{mistura limiarizada}; \emph{mistura saliente}; \emph{SMOTE visual}; e \emph{adição de ruído}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Borramento}
 
-Também conhecido como filtro de suavização, o borramento é uma operação de processamento comumente utilizada com o objetivo de filtrar uma imagem, removendo ruídos e detalhes não relevantes. Normalmente esse tipo de filtro provoca também um certo borramento das bordas, como pode ser observado na Figura~\ref{fig:blur}. Esse comportamento não é esperado quando queremos gerar novas imagens, pois informações relevantes podem ser removidas. Com o intuito de preservar as bordas, a operação de borramento \textbf{filtro bilateral} pode ser utilizada. Ela substitui o valor do pixel $I(x,y)$ pela média dos pixels vizinhos de intensidade similar \cite{Tomasi1998}. Ou seja, é uma média ponderada das intensidades que considera a diferença dos valores entre vizinhos para preservar bordas. Assim, para um pixel influenciar outro, deve estar próximo no espaço de coordenadas e possuir intensidade similar. O Algoritmo~\ref{alg:blur} descreve os passos desse filtro na sua versão mais simples, de força bruta. Considere $W$ o termo de normalização, e $G$ o filtro de Gaussianas. A Figura~\ref{fig:gen:blur} exemplifica o seu funcionamento: à esquerda está demonstrada a imagem original e à direita a imagem borrada.
+Também conhecido como suavização, o \emph{borramento} é uma operação de processamento comumente utilizada com o objetivo de filtrar uma imagem, removendo ruídos e detalhes não relevantes. Normalmente esse tipo de filtragem provoca também um certo borramento das bordas, como pôde ser observado anteriormente na Figura~\ref{fig:blur}. Esse comportamento não é esperado quando queremos gerar novas imagens, pois informações relevantes podem ser removidas. Com o intuito de preservar as bordas, a operação de borramento \textbf{filtro bilateral} pode ser utilizada. Ela substitui o valor do pixel $I(x,y)$ pela média dos pixels vizinhos de intensidade similar \cite{Tomasi1998}. Ou seja, é uma média ponderada das intensidades que considera a diferença dos valores entre vizinhos para preservar bordas. Assim, para um pixel influenciar outro, deve estar próximo no espaço de coordenadas e possuir intensidade similar. O Algoritmo~\ref{alg:blur} descreve os passos desse filtro na sua versão mais simples, de força bruta. Considere $W$ o termo de normalização, e $G$ o filtro de Gaussianas. A Figura~\ref{fig:gen:blur} exemplifica o seu funcionamento: à esquerda está demonstrada a imagem original e à direita a imagem borrada.
 
 \begin{algorithm}[!htbp]
-  \caption{Geração artificial: borramento com filtro bilateral}
+  \caption{Geração artificial: \emph{borramento} com filtro bilateral}
   \label{alg:blur}
   \SetAlgoLined
   \Entrada{
@@ -89,7 +68,7 @@ Também conhecido como filtro de suavização, o borramento é uma operação de
       \includegraphics[width=.4\linewidth]{\detokenize{figuras/geracao/blur-b.png}}
     }
   \end{center}
-  \caption[Geração artificial utilizando borramento com filtro bilateral.]{Geração artificial utilizando borramento com filtro bilateral. \\ \textit{Fonte:~Elaborado pela autora.}}
+  \caption[Geração artificial utilizando \emph{borramento} com filtro bilateral. A imagem (b) possui detalhes borrados, porém preservando as bordas.]{Geração artificial utilizando \emph{borramento} com filtro bilateral. A imagem (b) possui detalhes borrados, porém preservando as bordas. \\ \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:gen:blur}
 \end{figure}
 
@@ -104,10 +83,10 @@ Também conhecido como filtro de suavização, o borramento é uma operação de
 \FloatBarrier
 \subsection{Aguçamento}
 
-Diferente da suavização, o processamento de aguçamento procura enfatizar as transições de intensidade. Um método bem conhecido para atingir tal objetivo é o \textit{unsharp mask}. Ele borra a imagem, subtrai a imagem borrada da original e adiciona essa diferença na imagem original, dado um peso $k$ (ver Algoritmo \ref{alg:unsharp}). A imagem resultante, ilustrada na Figura~\ref{fig:gen:unsharp}, é uma versão realçada da imagem original. Isso porque adiciona à imagem justamente o que é removido com um filtro de suavização.
+Diferente da suavização, o processamento de \emph{aguçamento} procura enfatizar as transições de intensidade. Um método bem conhecido para atingir tal objetivo é o \textit{unsharp mask}. Ele borra a imagem, subtrai a imagem borrada da original e adiciona essa diferença na imagem original, dado um peso $k$ (ver Algoritmo \ref{alg:unsharp}). A imagem resultante, ilustrada na Figura~\ref{fig:gen:unsharp}, é uma versão realçada da imagem original. Isso porque adiciona à imagem justamente o que é removido com um filtro de suavização.
 
 \begin{algorithm}[!htbp]
-  \caption{Geração artificial: aguçamento}
+  \caption{Geração artificial: \emph{aguçamento}}
   \label{alg:unsharp}
   \SetAlgoLined
   \Entrada{
@@ -120,7 +99,7 @@ Diferente da suavização, o processamento de aguçamento procura enfatizar as t
     \item[] Imagem aguçada $I_{\textit{aguçada}}$\\
   \end{itemize}
   }
-  $I_{\textit{borrada}} \gets \textit{filtro\_de\_suavização}(I_{\textit{original}})$
+  $I_{\textit{borrada}} \gets \textit{filtro de suavização}(I_{\textit{original}})$
 
   \ParaCada{pixel $(x,y)$ em $I_{\textit{original}}$}{
   $I_{\textit{diferença}} \gets I_{\textit{original}}(x,y) - I_{\textit{borrada}}(x,y)$\;
@@ -138,7 +117,7 @@ Diferente da suavização, o processamento de aguçamento procura enfatizar as t
       \includegraphics[width=.4\linewidth]{\detokenize{figuras/geracao/unsharp-b.png}}
     }
   \end{center}
-  \caption[Geração artificial utilizando \textit{unsharp masking}.]{Geração artificial utilizando \textit{unsharp masking}. \\ \textit{Fonte:~Elaborado pela autora.}}
+  \caption[Geração artificial utilizando \textit{unsharp masking}. A imagem resultante (b) apresenta saliência nas transições de intensidade.]{Geração artificial utilizando \textit{unsharp masking}. A imagem resultante (b) apresenta saliência nas transições de intensidade. \\ \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:gen:unsharp}
 \end{figure}
 
@@ -147,13 +126,13 @@ Diferente da suavização, o processamento de aguçamento procura enfatizar as t
 
   \item[Limitações] É possível que existam pixels com valor negativo no resultado final. Isso pode causar o aparecimento de uma áurea em volta das bordas, efeito não desejado \cite{Gonzalez2007}.
 
-  \item[Métodos relacionados] Outros algoritmos de aguçamento conhecidos são: utilizar primeira derivada (grandiente), ou a segunda derivada da imagem (Laplaciano).
+  \item[Métodos relacionados] Outros algoritmos conhecidos para o aguçamento de imagens são: utilizar primeira derivada (gradiente), ou a segunda derivada da imagem (Laplaciano).
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \FloatBarrier
 \subsection{Adição de ruído}
 
-O ruído de Poisson ocorre na contagem de fótons de dispositivos ópticos. Ele segue a distribuição de Poisson, que representa o número de ocorrências de um evento em um dado instante de tempo \cite{Knuth1997}. O efeito da adição de ruído pode ser visto na Figura~\ref{fig:gen:noise}.
+O ruído de Poisson ocorre na contagem de fótons de dispositivos ópticos. Ele segue a distribuição de Poisson, que representa o número de ocorrências de um evento em um dado instante de tempo \cite{Knuth1997}. O efeito da \emph{adição de ruído} pode ser visto na Figura~\ref{fig:gen:noise}.
 
 \begin{figure}[!htbp]
   \begin{center}
@@ -165,7 +144,7 @@ O ruído de Poisson ocorre na contagem de fótons de dispositivos ópticos. Ele 
       \includegraphics[width=.4\linewidth]{\detokenize{figuras/geracao/noise-b.png}}
     }
   \end{center}
-  \caption[Geração artificial utilizando adição de ruído de Poisson.]{Geração artificial utilizando adição de ruído de Poisson. \\ \textit{Fonte:~Elaborado pela autora.}}
+  \caption[Geração artificial utilizando \emph{adição de ruído} de Poisson. Regiões claras de (b) apresentam mais ruído que as regiões escuras.]{Geração artificial utilizando \emph{adição de ruído} de Poisson. Regiões claras de (b) apresentam mais ruído que as regiões escuras. \\ \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:gen:noise}
 \end{figure}
 
@@ -177,7 +156,7 @@ O ruído de Poisson ocorre na contagem de fótons de dispositivos ópticos. Ele 
 Uma possível implementação para encontrar os valores de Poisson foi desenvolvida por \citeonline{Knuth1997} e pode ser vista no Algoritmo~\ref{alg:noise}. A diferença do cálculo da distribuição de Poisson para sua adição em uma imagem, é que para calcular o valor de ruído em um pixel, esse pixel é considerado a média dessa distribuição. Ou seja, $\mu \equiv I_{original}(x,y)$. Para intensidades próximas a zero, o limite será $L \approx 1$ e, portanto, a probabilidade $p$ estará muito próxima do limite e o contador $k$ terá um valor baixo. Dessa forma, para intensidades escuras haverá pouco ruído. Por outro lado, em intensidades próximas a 255, $p \approx 0$. Assim, são necessárias muitas interações até $p > L$ e maior será a intensidade resultante $k-1$.
 
 \begin{algorithm}[!htbp]
-  \caption{Geração artificial: adição de ruído de Poisson}
+  \caption{Geração artificial: \emph{adição de ruído} de Poisson}
   \label{alg:noise}
   \SetAlgoLined
   \Entrada{
@@ -187,7 +166,7 @@ Uma possível implementação para encontrar os valores de Poisson foi desenvolv
   }
   \Saida{
   \begin{itemize}
-    \item[] Imagem ruidosa $I_{ruidosa}$\\
+    \item[] Imagem gerada $I_{gerada}$\\
   \end{itemize}
   }
 
@@ -198,7 +177,7 @@ Uma possível implementação para encontrar os valores de Poisson foi desenvolv
     $k \gets 0$\;
     \DoWhile{$p > L$}{
     $k \gets k + 1$\;
-    $p \gets p * \text{número aleatório uniforme entre 0 e 1}$\;
+    $p \gets p * \textit{número aleatório uniforme entre 0 e 1}$\;
     }
     $I_{ruidosa}(x,y) \gets k - 1$\;
     }
@@ -207,20 +186,20 @@ Uma possível implementação para encontrar os valores de Poisson foi desenvolv
 
 \begin{description}
   \item[Parâmetros e suas variações] Para a adição desse ruído em uma imagem, não é fornecido nenhum parâmetro. O ruído é calculado para cada pixel.
-  \item[Limitações] A adição de ruído é normalmente indesejável. Porém, a utilizamos para englobar um processamento de imagens que, de certa forma, se contrapõe ao borramento.
+  \item[Limitações] A adição de ruído é normalmente indesejável. Porém, a utilizamos para englobar um processamento de imagens que, de certa forma, se contrapõe ao \emph{borramento}.
   \item[Métodos relacionados] Esse método está relacionado com diversos outros ruídos, como o sal e pimenta, por exemplo.
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \FloatBarrier
-\subsection{SMOTE visual}
+\subsection{\emph{SMOTE visual}}
 
-Conforme visto na Seção \ref{sec:smote}, o SMOTE é um método de rebalanceamento aplicado após a extração de características. É proposta uma alternativa, chamada de SMOTE visual, onde imita-se o funcionamento do SMOTE, porém no nível de pixels. A diferença é que não é feito entre as imagens mais próximas, mas sim entre duas imagens escolhidas de forma aleatória do conjunto de treinamento da classe minoritária.
+Conforme visto na Seção \ref{sec:smote}, o SMOTE é um método de rebalanceamento aplicado após a extração de características. É proposta uma alternativa, chamada de \emph{SMOTE visual}, onde imita-se o funcionamento do SMOTE, porém no nível de pixels. A diferença é que não é feito entre as imagens mais próximas, mas sim entre duas imagens escolhidas de forma aleatória do conjunto de treinamento da classe minoritária.
 
-Para cada pixel é calculado a diferença entre as duas imagens. Essa diferença é então multiplicada por um número aleatório no intervalo $[0-1]$ e adicionado
+Para cada pixel é calculado a diferença entre as duas imagens. Essa diferença é então multiplicada por um número aleatório no intervalo $[0-1]$ e adicionada
 na imagem original (ver Algoritmo~\ref{alg:smotevisual}). O efeito que esse processamento causa na imagem pode ser visualizado na Figura~\ref{fig:gen:smotevisual}.
 
 \begin{algorithm}[!htbp]
-  \caption{Geração artificial: SMOTE visual}
+  \caption{Geração artificial: \emph{SMOTE visual}}
   \label{alg:smotevisual}
   \SetAlgoLined
   \Entrada{
@@ -267,24 +246,24 @@ na imagem original (ver Algoritmo~\ref{alg:smotevisual}). O efeito que esse proc
       \includegraphics[height=4cm,keepaspectratio]{\detokenize{figuras/geracao/smote-c.png}}
     }
   \end{center}
-  \caption[Geração artificial utilizando o método SMOTE no espaço visual.]{Geração artificial utilizando o método SMOTE no espaço visual. \\ \textit{Fonte:~Elaborado pela autora.}}
+  \caption[Geração artificial utilizando o método SMOTE no espaço visual. É possível notar a sobreposição de uma ``sombra'' da Figura (b) em (a). ]{Geração artificial utilizando o método SMOTE no espaço visual. É possível notar a sobreposição de uma ``sombra'' da Figura (b) em (a). \\ \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:gen:smotevisual}
 \end{figure}
 
 \begin{description}
   \item[Limitações] Esse método adiciona texturas e bordas que não estavam originalmente nas imagens.
 
-  \item[Métodos relacionados] Esse método é visualmente parecido com o de mistura ponderada, apresentado na próxima seção.
+  \item[Métodos relacionados] Esse método é visualmente parecido com o de \emph{mistura ponderada}, apresentado na próxima seção.
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \FloatBarrier
 \subsection{Mistura ponderada}
 
 Essa geração calcula a soma ponderada de duas imagens, de acordo com o
-Algoritmo~\ref{alg:blend}. O efeito dessa mistura pode ser visto na Figura~\ref{fig:gen:blend}, onde dadas duas imagens como entrada, a imagem da direita corresponde à soma delas.
+Algoritmo~\ref{alg:blend}. O efeito dessa mistura pode ser visto na Figura~\ref{fig:gen:blend}, onde dadas duas imagens como entrada, a imagem de saída corresponde à soma delas.
 
 \begin{algorithm}[!htbp]
-  \caption{Geração artificial: mistura ponderada}
+  \caption{Geração artificial: \emph{mistura ponderada}}
   \label{alg:blend}
   \SetAlgoLined
   \Entrada{
@@ -293,13 +272,13 @@ Algoritmo~\ref{alg:blend}. O efeito dessa mistura pode ser visto na Figura~\ref{
       \item[] Segunda imagem colorida $I_2$ em formato RGB
     \end{itemize}
   }
-  \Saida{Imagem gerada $G$}
+  \Saida{Imagem gerada $I_{gerada}$}
 
-  {$\alpha \gets \text{número aleatório entre 10 e 80}$\;}
+  {$\alpha \gets \textit{número aleatório entre 10 e 90}$\;}
   {$\beta \gets 100 - \alpha$\;}
 
   \ParaCada{pixel $(x,y)$} {
-  $\text{G}(x,y) \gets \beta.I(x,y) + \alpha.I_2(x,y)$\;
+  $I_{gerada}(x,y) \gets \beta I(x,y) + \alpha I_2(x,y)$\;
   }
 \end{algorithm}
 
@@ -315,22 +294,22 @@ Algoritmo~\ref{alg:blend}. O efeito dessa mistura pode ser visto na Figura~\ref{
       \includegraphics[width=.3\linewidth]{\detokenize{figuras/geracao/blend-c.png}}
     }
   \end{center}
-  \caption[Geração artificial utilizando uma mistura ponderada de duas imagens.]{Geração artificial utilizando uma mistura ponderada de duas imagens. \\ \textit{Fonte:~Elaborado pela autora.}}
+  \caption[Geração artificial utilizando uma \emph{mistura ponderada} de duas imagens. A imagem (c) representa a mistura de (a) e (b).]{Geração artificial utilizando uma \emph{mistura ponderada} de duas imagens. A imagem (c) representa a mistura de (a) e (b). \\ \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:gen:blend}
 \end{figure}
 
 \begin{description}
-  \item[Parâmetros e suas variações] Os parâmetros $\alpha$ e $\beta$ são escolhidos de forma aleatória. Um valor entre 10\% e 80\% é escolhido para $\alpha$; e $\beta$ equivale ao valor restante para completar 100\%.
+  \item[Parâmetros e suas variações] Os parâmetros $\alpha$ e $\beta$ são escolhidos de forma aleatória. Um valor entre 10\% e 90\% é escolhido para $\alpha$; e $\beta$ equivale ao valor restante para completar 100\%.
 
   \item[Limitações] Assim como todas as gerações artificiais que envolvem a mistura de imagens, efeitos são adicionados às imagens originais. Dependendo da combinação dos métodos de descrição, quantização e classificação, isso pode piorar a acurácia da classificação.
 
-  \item[Métodos relacionados] É um método de combinação de imagens primitivo. Algoritmos similares são muito mais complexos, como os de \textit{threshold} e saliência descritos a seguir.
+  \item[Métodos relacionados] É um método de combinação de imagens primitivo. Algoritmos similares são muito mais complexos, como os de limiares e saliência descritos a seguir.
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \FloatBarrier
 \subsection{Mistura limiarizada}
 
-A combinação de \textit{thresholds} é uma composição do fundo (\textit{background}) de uma imagem e do objeto da cena (\textit{foreground}) de outra imagem. A Figura~\ref{fig:gen:threshold} mostra a mistura dos \textit{thresholds} de duas imagens originais para compor uma nova imagem. O Algoritmo~\ref{alg:threshold} descreve as operações necessárias para realizar tal processamento.
+A \emph{mistura limiarizada} é uma \emph{composição} do fundo (\textit{background}) de uma imagem e do objeto da cena (\textit{foreground}) de outra imagem. A Figura~\ref{fig:gen:threshold} mostra a mistura dos \textit{thresholds} de duas imagens originais para compor uma nova imagem. O Algoritmo~\ref{alg:threshold} descreve as operações necessárias para realizar tal processamento, que utiliza OTSU para encontrar o \textit{foreground} da primeira imagem. Após, operações morfológicas são realizadas para melhorar a definição dos limiares.
 
 \begin{figure}[!htbp]
   \begin{center}
@@ -344,12 +323,12 @@ A combinação de \textit{thresholds} é uma composição do fundo (\textit{back
       \includegraphics[width=.3\linewidth]{\detokenize{figuras/geracao/threshold-c.png}}
     }
   \end{center}
-  \caption[Geração artificial utilizando uma mistura limiarizada de duas imagens.]{Geração artificial utilizando uma mistura limiarizada de duas imagens. \\ \textit{Fonte:~Elaborado pela autora.}}
+  \caption[Geração artificial utilizando uma \emph{mistura limiarizada} de duas imagens. A imagem resultante (c) é uma composição do \textit{foreground} da primeira imagem sobre o \textit{background} da segunda.]{Geração artificial utilizando uma \emph{mistura limiarizada} de duas imagens. A imagem resultante (c) é uma composição do \textit{foreground} da primeira imagem sobre o \textit{background} da segunda. \\ \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:gen:threshold}
 \end{figure}
 
 \begin{algorithm}[!htbp]
-  \caption{Geração artificial: mistura limiarizada}
+  \caption{Geração artificial: \emph{mistura limiarizada}}
   \label{alg:threshold}
   \SetAlgoLined
   \Entrada{
@@ -358,29 +337,29 @@ A combinação de \textit{thresholds} é uma composição do fundo (\textit{back
       \item[] Imagem colorida $I_2$ em formato RGB
     \end{itemize}
   }
-  \Saida{Imagem gerada $G$}
+  \Saida{Imagem gerada $I_{gerada}$}
 
-  $I_{cinza} \gets \text{escala de cinza}(I)$\;
+  $I_{cinza} \gets \textit{escala de cinza}(I)$\;
   $I_{threshold} \gets OTSU(I_{cinza})$\;
-  $I_{morfologica} \gets \text{abertura e dilatação} (I_{threshold})$\;
-  $I_{foreground} \gets \text{aplica máscara}(I_{morfologica}, I) $\;
-  $I_{morfologica} \gets \text{oposto}(I_{morfologica})$\;
-  $I_{background} \gets \text{aplica máscara}(I_{morfologica}, I_2) $\;
-  $G \gets I_{background} + I_{foreground}$\;
+  $I_{morfologica} \gets \textit{abertura e dilatação} (I_{threshold})$\;
+  $I_{foreground} \gets \textit{aplica máscara}(I_{morfologica}, I) $\;
+  $I_{morfologica} \gets \textit{oposto}(I_{morfologica})$\;
+  $I_{background} \gets \textit{aplica máscara}(I_{morfologica}, I_2) $\;
+  $I_{gerada} \gets I_{background} + I_{foreground}$\;
 \end{algorithm}
 
 \begin{description}
   \item[Parâmetros e suas variações] No âmbito desta pesquisa, os parâmetros estão fixos, mas é possível modificar o tamanho dos elementos estruturantes que fazem as operações de abertura e dilatação para remover pequenas regiões.
 
-  \item[Limitações] Dependendo da quantidade de informações da imagem, o \textit{threshold de OTSU} pode não conseguir extrair nenhuma informação relevante ou mesmo a imagem toda.
+  \item[Limitações] Dependendo da quantidade de informações da imagem, o \textit{threshold} de OTSU pode não conseguir extrair nenhuma informação relevante ou mesmo indicar a imagem inteira.
 
-  \item[Métodos relacionados] Essa geração está fortemente correlacionada com a mistura a partir da saliência da imagem, apresentada a seguir.
+  \item[Métodos relacionados] Essa geração está fortemente correlacionada com a \emph{mistura} a partir da saliência da imagem, apresentada a seguir.
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \FloatBarrier
 \subsection{Mistura saliente}
 
-A combinação de regiões salientes é muito similar com o método anterior de combinação de \textit{thresholds}, porém, utiliza um algoritmo mais rebuscado que detecta o mapa de saliência da imagem baseado no método \textit{Graph-Based Manifold Ranking}~\cite{Yang2013}. A Figura~\ref{fig:gen:saliency} mostra a combinação da região saliente da imagem original à esquerda com a imagem central, resultando na imagem combinada à direita.
+A combinação de regiões salientes é muito similar com o método anterior de \emph{mistura limiarizada}, porém, utiliza um algoritmo mais rebuscado que detecta o mapa de saliência da imagem baseado no método \textit{Graph-Based Manifold Ranking}~\cite{Yang2013}. A Figura~\ref{fig:gen:saliency} mostra a combinação da região saliente da imagem original à esquerda com a imagem central, resultando na imagem combinada à direita.
 
 \begin{figure}[!htbp]
   \begin{center}
@@ -394,14 +373,14 @@ A combinação de regiões salientes é muito similar com o método anterior de 
       \includegraphics[width=.3\linewidth]{\detokenize{figuras/geracao/saliency-c.png}}
     }
   \end{center}
-  \caption[Geração artificial utilizando uma mistura de duas imagens a partir da saliência da primeira imagem.]{Geração artificial utilizando uma mistura de duas imagens a partir da saliência da primeira imagem. \\ \textit{Fonte:~Elaborado pela autora.}}
+  \caption[Geração artificial utilizando a \emph{mistura saliente} de duas imagens a partir da saliência da primeira imagem. A imagem resultante (c) apresenta a região saliente de (b) sobreposta em (a).]{Geração artificial utilizando a \emph{mistura saliente} de duas imagens a partir da saliência da primeira imagem. A imagem resultante (c) apresenta a região saliente de (b) sobreposta em (a). \\ \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:gen:saliency}
 \end{figure}
 
-As operações aplicadas na imagem para extrair a região mais saliente são: segmentação pelo método SLIC; rotulação por conectividade; \textit{threshold de OTSU}; e operações morfológicas. O Algoritmo~\ref{alg:saliency} apresenta os passos para o cálculo do \textit{background} e \textit{foreground}.
+As operações aplicadas na imagem para extrair a região mais saliente são: segmentação pelo método \sigla{SLIC}{\textit{Simple Linear Iterative Clustering}}; rotulação por conectividade; \textit{threshold} de OTSU; e operações morfológicas. O Algoritmo~\ref{alg:saliency} apresenta os passos para o cálculo do \textit{background} e \textit{foreground}.
 
 \begin{algorithm}[!htbp]
-  \caption{Geração artificial: mistura saliente}
+  \caption{Geração artificial: \emph{mistura saliente}}
   \label{alg:saliency}
   \SetAlgoLined
   \Entrada{
@@ -410,20 +389,20 @@ As operações aplicadas na imagem para extrair a região mais saliente são: se
       \item[] Imagem colorida $I_2$ em formato RGB
     \end{itemize}
   }
-  \Saida{Imagem gerada $G$}
+  \Saida{Imagem gerada $I_{gerada}$}
 
   $I_{\text{rotulada por segmento}} \gets SLIC(I)$\;
-  $I_{\text{mapa de saliência}} \gets \text{rotulação por conectividade}(I_{\text{rotulada por segmento}})$\;
-  $I_{threshold} \gets OTSU(I_{\text{mapa de saliência}})$\;
-  $I_{morfologica} \gets \text{abertura e dilatação} (I_{threshold})$\;
-  $I_{foreground} \gets \text{aplica máscara}(I_{morfologica}, I) $\;
-  $I_{morfologica} \gets \text{oposto}(I_{morfologica})$\;
-  $I_{background} \gets \text{aplica máscara}(I_{morfologica}, I_2) $\;
-  $G \gets I_{background} + I_{foreground}$\;
+  $I_{\text{mapa de saliência}} \gets \textit{rotulação por conectividade}(I_{\textit{rotulada por segmento}})$\;
+  $I_{threshold} \gets OTSU(I_{\textit{mapa de saliência}})$\;
+  $I_{morfologica} \gets \textit{abertura e dilatação} (I_{threshold})$\;
+  $I_{foreground} \gets \textit{aplica máscara}(I_{morfologica}, I) $\;
+  $I_{morfologica} \gets \textit{oposto}(I_{morfologica})$\;
+  $I_{background} \gets \textit{aplica máscara}(I_{morfologica}, I_2) $\;
+  $I_{gerada} \gets I_{background} + I_{foreground}$\;
 \end{algorithm}
 
 \begin{description}
-  \item[Parâmetros e suas variações] Assim como no método anterior, os parâmetros são relacionados ao tamanho do elemento estruturante para a abertura e dilatação e estão fixos.
+  \item[Parâmetros e suas variações] Assim como no método anterior, os parâmetros são relacionados ao tamanho do elemento estruturante para a abertura e dilatação e são fixos para os experimentos desta pesquisa.
 
   \item[Limitações] Não é garantido que o algoritmo de saliência consiga extrair
   a melhor região, ou mesmo que sempre haja uma região saliente.
@@ -434,52 +413,52 @@ As operações aplicadas na imagem para extrair a região mais saliente são: se
 \FloatBarrier
 \subsection{Composição}
 
-Essa geração pretende compor informações de diversas imagens em uma única. Assim é feito um mosaico com várias imagens, conforme pode ser visto na  Figura~\ref{fig:gen:composition}. Para cada quadrado a ser preenchido, sorteia uma imagem do conjunto de treinamento; realiza uma operação de borramento, aguçamento, mistura ponderada ou SMOTE visual; e adiciona essa imagem no quadrado respectivo. Os passos para tal composição estão descritos no Algoritmo~\ref{alg:composition}.
+Essa geração pretende compor informações de diversas imagens em uma única. Assim é feito um mosaico com várias imagens, conforme pode ser visto na  Figura~\ref{fig:gen:composition}. Para cada quadrado a ser preenchido, sorteia uma imagem do conjunto de treinamento; realiza uma operação de \emph{borramento}, \emph{aguçamento}, \emph{mistura ponderada} ou \emph{SMOTE visual}; e adiciona essa imagem no quadrado respectivo. Os passos para tal \emph{composição} estão descritos no Algoritmo~\ref{alg:composition}.
 
 \begin{figure}[!htbp]
   \begin{center}
     \centering
     \includegraphics[width=0.6\linewidth]{\detokenize{figuras/geracao/composition.png}}
   \end{center}
-  \caption[Geração artificial utilizando uma composição de imagens.]{Geração artificial utilizando uma composição de imagens. \\ \textit{Fonte:~Elaborado pela autora.}}
+  \caption[Geração artificial utilizando uma \emph{composição} de imagens. Várias imagens, dispostas em um mosaico, formam a imagem resultante. Cada célula do mosaico sofre uma operação, sorteada no momento da geração da imagem.]{Geração artificial utilizando uma \emph{composição} de imagens. Várias imagens, dispostas em um mosaico, formam a imagem resultante. Cada célula do mosaico sofre uma operação, sorteada no momento da geração da imagem. \\ \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:gen:composition}
 \end{figure}
 
 \begin{algorithm}[!htbp]
-  \caption{Geração artificial: composição}
+  \caption{Geração artificial: \emph{composição}}
   \label{alg:composition}
   \SetAlgoLined
-  \Saida{Imagem gerada $G$}
+  \Saida{Imagem gerada $I_{gerada}$}
   \Enqto{total < \text{número de quadrados $q$}}{
-  $I \gets \text{imagem aleatória do conjunto de treinamento}$\;
-  $\text{operação} \gets 1 + (rand() \% 3 )$\;
-  \Selec{\text{operação}} {
+  $I \gets \textit{imagem aleatória do conjunto de treinamento}$\;
+  $\textit{operação} \gets \textit{número aleatório entre 1 e 4}$\;
+  \Selec{\textit{operação}} {
   \uCaso{1} {
-  $I \gets borramento(I)$\;
+  $I \gets \emph{borramento}(I)$\;
   }
   \uCaso{2} {
-  $I \gets \text{mistura ponderada}(I)$\;
+  $I \gets \textit{mistura ponderada}(I)$\;
   }
   \uCaso{3} {
-  $I \gets \text{aguçamento}(I)$\;
+  $I \gets \textit{aguçamento}(I)$\;
   }
   \uCaso{4} {
-  $I \gets \text{visual SMOTE}(I)$\;
+  $I \gets \textit{SMOTE visual}(I)$\;
   }
   }
-  $x \gets \text{posição aleatória em x de I}$\;
-  $y \gets \text{posição aleatória em y de I}$\;
-  $qx \gets \text{posição atual para o quadrado em x de G}$\;
-  $qy \gets \text{posição atual para o quadrado em y de G}$\;
-  $G(qx, qy) \gets I(x,y)$\;
+  $x \gets \textit{posição aleatória em x de } I$\;
+  $y \gets \textit{posição aleatória em y de } I$\;
+  $qx \gets \textit{posição atual para o quadrado em x de } I_{gerada}$\;
+  $qy \gets \textit{posição atual para o quadrado em y de } I_{gerada}$\;
+  $I_{gerada}(qx, qy) \gets I(x,y)$\;
   $total++$\;
   }
 \end{algorithm}
 
 \begin{description}
-  \item[Parâmetros e suas variações] O parâmetro $q$ controla quantos quadrados serão criados na nova imagem. Nesta pesquisa foram realizados testes com 4 e 16 quadrados.
+  \item[Parâmetros e suas variações] O parâmetro $q$ controla quantos quadrados são criados na imagem resultante. Nesta pesquisa, foram realizados experimentos com 4 e 16 quadrados.
 
-  \item[Limitações] O término brusco de uma imagem para início da outra, ao formar a grade de imagens, tem efeitos colaterais de inserção de textura que não excedam a vantagem de compor uma mesma imagem com várias cores, texturas e formas das imagens originais.
+  \item[Limitações] O término brusco de uma imagem para início da outra, ao formar a grade de imagens, tem efeitos colaterais de inserção de textura que, em alguns casos, não excedam a vantagem de compor uma mesma imagem com várias cores, texturas e formas das imagens originais.
 
   \item[Métodos relacionados] Fazer uma composição de imagens em quadrantes pode estar relacionado com a composição ao utilizar saliência.
 
@@ -529,7 +508,7 @@ Essa geração pretende compor informações de diversas imagens em uma única. 
 
 
 
-% \item ACC: com um conjunto de quatro distâncias $D = {1, 3, 5, 7}$ e a distância tabuleiro de xadrez $D_8(p,q) = Max(|x-s|, |y-t|)$ entre os pixeis $p(x,y)$ e $q(s,t)$;
+% \item ACC: com um conjunto de quatro distâncias $D = {1, 3, 5, 7}$ e a distância tabuleiro de xadrez $D_8(p,q) = Max(|x-s|, |y-t|)$ entre os pixels $p(x,y)$ e $q(s,t)$;
 % \item \emph{BIC}: com uma vizinhança de quatro pixels;
 % \item CCV: adotando um valor de $\mathit{threshold} = 25$ para a classificação dos pixels entre coerentes e incoerentes;
 % \item \emph{Haralick-6}: o pixel vizinho para o qual computar a matriz de correlação foi definido como sendo o pixel à direita.
@@ -538,45 +517,40 @@ Essa geração pretende compor informações de diversas imagens em uma única. 
 \section{Experimentos}
 \label{sec:resultados-geracao}
 
-Essa seção descreve os resultados encontrados ao rebalancear as classes de imagens aplicando os processamentos -- descritos na seção anterior -- nas imagens originais. As imagens geradas são então utilizadas como treinamento da classe minoritária. A Figura \ref{fig:fluxo} destaca o fluxo de operações realizadas para a análise do impacto da geração de imagens no rebalanceamento de classes. O mesmo protocolo de conversão para escala de cinza, extração de características e classificação foi seguido para três sub-experimentos: base desbalanceada; base rebalanceada com interpolação dos vetores de características (método SMOTE); e base rebalanceada com a geração artificial de imagens. Alguns experimentos foram realizados com bases de imagens originalmente balanceadas. Para tais casos, foi necessário desbalancear a base para testar o rebalanceamento.
+Esta seção descreve os resultados encontrados ao rebalancear as classes de imagens aplicando os processamentos --- descritos na seção anterior --- nas imagens originais. As imagens geradas são então utilizadas como treinamento da classe minoritária. A Figura \ref{fig:fluxo} destaca o fluxo de operações realizadas para a análise do impacto da geração de imagens no rebalanceamento de classes. O mesmo protocolo de conversão para escala de cinza, extração de características e classificação foi seguido para três sub-experimentos: base desbalanceada; base rebalanceada com interpolação dos vetores de características (método SMOTE); e base rebalanceada com a geração artificial de imagens. Alguns experimentos foram realizados com bases de imagens originalmente balanceadas. Para tais casos, foi necessário desbalancear a base para testar o rebalanceamento.
 
 \begin{figure}[!htbp]
 \centering
 \includegraphics[scale=1.2]{\detokenize{figuras/flow_main.pdf}}
-\caption[Fluxo de operações para obtenção dos resultados do rebalanceamento de classes]{Fluxo de operações para obtenção dos resultados do rebalanceamento de classes. \\ \textit{Fonte:~Elaborado pela autora.}}
+\caption[Fluxo de operações para obtenção dos resultados do rebalanceamento de classes. O mesmo protocolo de conversão para escala de cinza, extração de características e classificação foi seguido para três sub-experimentos: base desbalanceada; base rebalanceada com interpolação dos vetores de características (método SMOTE); e base rebalanceada com a geração artificial de imagens.]{Fluxo de operações para obtenção dos resultados do rebalanceamento de classes. O mesmo protocolo de conversão para escala de cinza, extração de características e classificação foi seguido para três sub-experimentos: base desbalanceada; base rebalanceada com interpolação dos vetores de características (método SMOTE); e base rebalanceada com a geração artificial de imagens. \\ \textit{Fonte:~Elaborado pela autora.}}
 \label{fig:fluxo}
 \end{figure}
 
-Procurando estabilidade dos resultados obtidos com a geração das imagens artificiais, foi identificada a necessidade de controlar a remoção de imagens da base no momento da criação da base desbalanceada. Assim, os resultados foram obtidos a partir de uma forma de validação \textit{K-fold} com o objetivo de prover mais robustez ao sistema. A Figura \ref{fig:folds} ilustra como tal validação é realizada, utilizando como exemplo uma base com duas classes de imagens. Primeiramente as imagens são separadas de forma aleatória em $k = 5$ \textit{folds} em cada classe. Em seguida, as duas classes compõem 40 configurações, consistindo em todas as possibilidades de: um fold para teste e os outros como treino para a classe que permanecerá balanceada; e um de teste e apenas um de treino para a classe que os métodos de processamento irão rebalancear. Tal validação é repetida para todas as classes, ou seja, cada classe tem a possibilidade de ser a minoritária. Se originalmente a base é naturalmente desbalanceada, um \textit{fold} é utilizado para teste e os demais como treino para todas as classes.
+Procurando estabilidade dos resultados obtidos com a geração das imagens artificiais, foi identificada a necessidade de controlar a remoção de imagens da base no momento da criação da base desbalanceada. Assim, os resultados foram obtidos a partir de uma forma de validação \textit{k-fold} com o objetivo de prover mais robustez ao sistema. A Figura \ref{fig:folds} ilustra como tal validação é realizada, utilizando como exemplo uma base com duas classes de imagens. Primeiramente as imagens são separadas de forma aleatória em $k = 5$ \textit{folds} em cada classe. Em seguida, as duas classes compõem 40 configurações, consistindo em todas as possibilidades de: um fold para teste e os outros como treino para a classe que permanecerá balanceada; e um de teste e apenas um de treino para a classe que os métodos de processamento irão rebalancear. Tal validação é repetida para todas as classes, ou seja, cada classe tem a possibilidade de ser a minoritária. Se originalmente a base é naturalmente desbalanceada, um \textit{fold} é utilizado para teste e os demais como treino para todas as classes.
 
 \begin{figure}[!htbp]
 \centering
 \includegraphics[scale=0.3]{\detokenize{figuras/folds_chart.png}}
-\caption[Primeiramente as imagens são separadas de forma aleatória em $k = 5$ \textit{folds} em cada classe. Em seguida, as duas classes compõem 40 configurações, consistindo em todas as possibilidades de: um fold para teste e os outros como treino para a classe que permanecerá balanceada; e um de teste e apenas um de treino para a classe que os métodos de processamento irão rebalancear. Tal validação é repetida para todas as classes, ou seja, cada classe tem a possibilidade de ser a minoritária.]{Primeiramente as imagens são separadas de forma aleatória em $k = 5$ \textit{folds} em cada classe. Em seguida, as duas classes compõem 40 configurações, consistindo em todas as possibilidades de: um fold para teste e os outros como treino para a classe que permanecerá balanceada; e um de teste e apenas um de treino para a classe que os métodos de processamento irão rebalancear. Tal validação é repetida para todas as classes, ou seja, cada classe tem a possibilidade de ser a minoritária. \\ \textit{Fonte:~Elaborado pela autora.}}
+\caption[Ilustração de como os experimentos de geração de imagens artificiais foram realizados. Primeiramente as imagens são separadas de forma aleatória em $k = 5$ \textit{folds} em cada classe. Em seguida, as duas classes compõem 40 configurações, consistindo em todas as possibilidades de: um fold para teste e os outros como treino para a classe que permanecerá balanceada; e um de teste e apenas um de treino para a classe que os métodos de processamento irão rebalancear. Tal validação é repetida para todas as classes, ou seja, cada classe tem a possibilidade de ser a minoritária.]{Ilustração de como os experimentos de geração de imagens artificiais foram realizados. Primeiramente as imagens são separadas de forma aleatória em $k = 5$ \textit{folds} em cada classe. Em seguida, as duas classes compõem 40 configurações, consistindo em todas as possibilidades de: um fold para teste e os outros como treino para a classe que permanecerá balanceada; e um de teste e apenas um de treino para a classe que os métodos de processamento irão rebalancear. Tal validação é repetida para todas as classes, ou seja, cada classe tem a possibilidade de ser a minoritária. \\ \textit{Fonte:~Elaborado pela autora.}}
 \label{fig:folds}
 \end{figure}
 
-A acurácia pode não refletir propriamente os resultados em um cenário de bases desbalanceadas. Isso se deve ao fato de que se a classe minoritária não obtiver nenhum resultado correto e a classe majoritária tiver 100\% de acertos, tal acurária poderá ser muito alta, mesmo considerando que nenhuma imagem da classe minoritária foi corretamente classificada. Dessa forma, considera que os erros são igualmente importantes.
- % Mas em se tratando de bases desbalanceadas, deve-se diferenciar o erro em, por exemplo, diagnosticar um paciente doente -- classe minoritária -- como sendo saudável e um paciente saudável -- classe majoritária -- como estando doente \cite{Batista2004}. No primeiro caso, o paciente corre risco de diagnóstico tardil, enquanto o paciente saudável realiza outros testes para refutação.
+A acurácia pode não refletir propriamente os resultados em um cenário de bases desbalanceadas. Isso se deve ao fato de que se a classe minoritária não obtiver nenhum resultado correto e a classe majoritária tiver 100\% de acertos, tal acurária poderá ser muito alta, mesmo considerando que nenhuma imagem da classe minoritária foi corretamente classificada. Dessa forma, considera que os erros são igualmente importantes. Pode-se estender essa medida obtendo-se a acurácia balanceada: medida de acerto baseada na divisão do conjunto de objetos em teste e treinamento, realizando a repetição dos experimentos $n$ vezes e obtendo a média e o desvio padrão. A acurácia de cada experimento é obtida por
 
-Pode-se estender essa medida obtendo-se a acurácia balanceada: medida de acerto baseada na divisão do conjunto de objetos em teste e treinamento, realizando a repetição dos experimentos $n$ vezes e obtendo a média e o desvio padrão. A acurácia de cada experimento é obtida por
+\begin{equation*}
+  Acc = 1 - \frac{\sum_{i=1}^{c} E(i)}{2c},
+\label{eq:Accuracy}
+\end{equation*}
 
-    \begin{equation*}
-      Acc = 1 - \frac{\sum_{i=1}^{c} E(i)}{2c},
-    \label{eq:Accuracy}
-    \end{equation*}
+\noindent  que considera problemas de desbalanceamento de classes, onde $c$ é o número de classes e $E(i) = e_{i,1} + e_{i,2}$ é o erro relativo a $c$, calculado por
 
-    \noindent  que considera problemas de desbalanceamento de classes, onde $c$ é o número de classes e $E(i) = e_{i,1} + e_{i,2}$ é o erro relativo a $c$, calculado por
+\begin{equation*}
+  e_{i,1} = \frac{FP(i)}{N-N(i)} \,\,\,\,\, \text{ e } \,\,\,\,\, e_{i,2} = \frac{FN(i)}{N(i)}, i=1,...,c,
+\label{eq:Errors}
+\end{equation*}
+\noindent onde $FN(i)$ são os exemplos pertencentes à classe $i$ e incorretamente classificados (falsos negativos), e $FP(i)$ são os exemplos erroneamente rotulados como~$i$ (falsos positivos). Os experimentos consideram a classe minoritária como positiva e a minoritária como negativa.
 
-    \begin{equation*}
-      e_{i,1} = \frac{FP(i)}{N-N(i)} \,\,\,\,\, \text{ e } \,\,\,\,\, e_{i,2} = \frac{FN(i)}{N(i)}, i=1,...,c,
-    \label{eq:Errors}
-    \end{equation*}
-   \noindent onde $FN(i)$ são os exemplos pertencentes a $i$ e incorretamente classificados (falsos negativos), e $FP(i)$ são os exemplos erroneamente rotulados como~$i$ (falsos positivos).
-
-% consideramos positivos a minoritaria
-
-Uma outra medida, que pode efetivamente avaliar a performance de classificação em cenários desbalanceados, é o \textit{F1-Score}:
+Uma outra medida, que pode efetivamente avaliar o desempenho da classificação em cenários desbalanceados, é o \textit{F1-Score}:
 
 \begin{equation*}
   F1 = 2 \frac{PR}{P+R}.
@@ -588,7 +562,7 @@ Essa medida combina precisão e revocação como medida de efetividade da classi
   P = \frac{VP}{VP + FP},
 \end{equation*}
 
-\noindent onde $VP$ são os exemplos positivos corretamente classificados. Dos exemplos classificados como positivos, essa medida indica quantos realmente são. Ao mesmo tempo, a revocação é a medida de completude. Essa métrica indica quantos exemplos positivos foram corretamente classificados. Pode ser determinada por:
+\noindent onde $VP$ são os exemplos positivos corretamente classificados. Dos exemplos classificados como positivos, essa medida indica quantos realmente são. Ao mesmo tempo, a revocação é a medida de completude. Essa métrica indica quantos exemplos positivos foram corretamente classificados, sendo determinada por:
 
 \begin{equation*}
   R = \frac{VP}{VP + FN}.
@@ -602,15 +576,15 @@ A seguir, para cada experimento realizado são descritos: a base de imagens util
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \FloatBarrier
-\subsection{Experimento 1: duas classes bem discriminadas}
+\subsection{Experimento 1: duas classes discriminadas}
 
-Neste experimento foram utilizadas duas classed de fácil diferenciação, porém com alguma sobreposição. Por tal razão, um sub-experimento de visualização foi realizado para análise do espaço de características.
+Neste experimento foram utilizadas duas classes de fácil diferenciação, porém com alguma sobreposição. Um sub-experimento de visualização foi realizado para análise do espaço de características.
 % Como o foco é na visualização de tal espaço, é relevante ter o modelo do espaço ideal das classes balanceadas. Por conta disso, esse experimento em específico não trata de uma base naturalmente desbalanceada.
 
 %-------------------------------------------------------------------------------
 \subsubsection{Protocolo}
 \begin{enumerate}
-\item \textbf{Imagens originais}: classes \emph{Horse} e \emph{Elefant} da base de imagens Corel, exemplificadas na Figura \ref{fig:resultados:1:base} \cite{Wang2001}. A principal característica dessas imagens é a diferença de cores, com um pequeno grau de sobreposição.
+\item \textbf{Imagens originais}: classes \emph{Horse} e \emph{Elefant} da base de imagens Corel, exemplificadas na Figura \ref{fig:resultados:1:base} \cite{Wang2001}. A principal característica dessas imagens é a diferença de cores, contendo pequeno grau de sobreposição.
 
 \begin{minipage}{\linewidth}
 \begin{figure}[H]
@@ -622,15 +596,15 @@ Neste experimento foram utilizadas duas classed de fácil diferenciação, poré
       \includegraphics[width=0.45\linewidth]{\detokenize{figuras/cavalo-original2.png}}
     }
 
-    \caption[Classes \emph{Horse} e \emph{Elefant} utilizadas neste experimento. São duas classes bem discriminadas com 100 imagens cada, originalmente da base de imagens Corel-1000.]{Classes \emph{Horse} e \emph{Elefant} utilizadas neste experimento. São duas classes bem discriminadas com 100 imagens cada, originalmente da base de imagens Corel-1000. \\ \textit{Fonte:~\citeonline{Hu2013}.}}
+    \caption[Classes \emph{Horse} e \emph{Elefant} utilizadas no experimento. São duas classes bem discriminadas com 100 imagens cada, originalmente da base de imagens Corel-1000.]{Classes \emph{Horse} e \emph{Elefant} utilizadas no experimento. São duas classes bem discriminadas com 100 imagens cada, originalmente da base de imagens Corel-1000. \\ \textit{Fonte:~\citeonline{Hu2013}.}}
     \label{fig:resultados:1:base}
 \end{center}
 \end{figure}
 \end{minipage}
 
-\item \textbf{Desbalanceamento}: para o sub-experimento de visualização, cada classe foi dividida em 50\% para treino e 50\% para teste, de maneira aleatória. Após, a classe \emph{Horse} sofreu remoção de 50\% do seu conjunto de treino, tornando-a desbalanceada. Já para a análise estatística do experimento, todas as 40 configurações de folds com $k=5$ foram realizadas (padronização anteriormente descrita na Figura~\ref{fig:folds}).
+\item \textbf{Desbalanceamento}: para o sub-experimento de visualização, cada classe foi dividida em 50\% para treino e 50\% para teste, de maneira aleatória. Após, a classe \emph{Horse} sofreu remoção de 50\% do seu conjunto de treino, tornando-a desbalanceada. Já para a análise estatística do experimento, todas as 40 configurações de \textit{folds} com $k=5$ foram realizadas (padronização anteriormente descrita na Figura~\ref{fig:folds}).
 
-\item \textbf{Método para geração artificial}: para a visualização do espaço de características foi utilizado o método de mistura de duas imagens originais, exemplificado na Figura~\ref{fig:mistura}. Para a análise do boxplot de \textit{F1-Scores}, todas as gerações foram testadas e os resultados são reportados a seguir.
+\item \textbf{Método para geração artificial}: para a visualização do espaço de características foi utilizado o método de \emph{mistura} de duas imagens originais, exemplificado na Figura~\ref{fig:mistura}. Para a análise do \textit{boxplot} de \textit{F1-Scores}, todas as gerações foram testadas e os resultados são reportados a seguir.
 
 \begin{minipage}{\linewidth}
 \begin{figure}[H]
@@ -641,16 +615,16 @@ Neste experimento foram utilizadas duas classed de fácil diferenciação, poré
     \subfloat[Original]{
       \includegraphics[width=.33\linewidth]{\detokenize{figuras/cavalo-original2.png}}
     }
-    \subfloat[Mistura]{
+    \subfloat[Imagem artificial]{
       \includegraphics[width=.33\linewidth]{\detokenize{figuras/cavalo-blend.png}}
     }
-    \caption[Exemplo da geração artificial de imagens com o método de mistura para as classes \emph{Elefant} e \emph{Horse} da Corel-1000.]{Exemplo da geração artificial de imagens com o método de mistura para as classes \emph{Elefant} e \emph{Horse} da Corel-1000. \\ \textit{Fonte:~Elaborado pela autora.}}
+    \caption[Exemplo da geração artificial de imagens com o método de \emph{mistura} para as classes \emph{Elefant} e \emph{Horse} da base Corel-1000. A imagem resultante (c) é composta pela mistura de (a) e (b).]{Exemplo da geração artificial de imagens com o método de \emph{mistura} para as classes \emph{Elefant} e \emph{Horse} da base Corel-1000. A imagem resultante (c) é composta pela mistura de (a) e (b). \\ \textit{Fonte:~Elaborado pela autora.}}
     \label{fig:mistura}
 \end{center}
 \end{figure}
 \end{minipage}
 
-\item \textbf{Conversão em escala de cinza}: método Intensidade' para a visualização. Todas as combinações de extração e conversão em escala de cinza foram testadas, portanto todos os métodos de conversão foram utilizados.
+\item \textbf{Conversão em escala de cinza}: método \emph{Intensidade'} para a visualização. Todas as combinações de extração e conversão em escala de cinza foram testadas, portanto todos os métodos de conversão foram utilizados.
 
 \item \textbf{Extração de características}: classificação de pixels de borda e interior (BIC) para a visualização. Todos os métodos de extração foram testados para a análise estatística.
 
@@ -660,8 +634,9 @@ Neste experimento foram utilizadas duas classed de fácil diferenciação, poré
 \end{enumerate}
 
 %-------------------------------------------------------------------------------
-\FloatBarrier
 \subsubsection{Visualização}
+
+A visualização do espaço de características obtido após a geração artificial de imagens pode ajudar a verificar se as novas imagens melhoram a definição da classe minoritária em relação ao espaço original. Ou seja, se o método utilizado revelou características latentes. Dessa forma, ao projetar os novos vetores no espaço das imagens originais, é possível analisar qual método --- SMOTE ou geração de imagens no campo visual --- mais se assemelha à distribuição original dos dados.
 
 As classes \emph{Elefant} e \emph{Horse} possuem 100 imagens cada. O primeiro passo foi remover imagens de uma das classes, tornando a base desbalanceada. Na Figura~\ref{fig:desbalanceado} está ilustrada a remoção de 50\% das imagens de treino da classe \emph{Horse}, originalmente balanceada. Essa e as próximas projeções desta seção foram obtidas com a técnica para redução de dimensionalidade PCA, descrita na Seção~\ref{sec:pca}, e são referentes aos dois componentes principais com maiores autovalores.
 
@@ -673,25 +648,25 @@ As classes \emph{Elefant} e \emph{Horse} possuem 100 imagens cada. O primeiro pa
     \subfloat[Desbalanceado]{
       \includegraphics[width=.5\linewidth]{\detokenize{figuras/visualizacao/desbalanceado-fixed.png}}
     }
-    \caption[À esquerda a projeção dos dois componentes principais obtidos com a aplicação de PCA nas classes \emph{Elefant} -- em azul -- e \emph{Horse} -- em verde. À direita, as mesmas classes após a remoção de 50\% das imagens de treino da classe \emph{Horse}. A diferença dos marcadores consiste na definição de imagens para treino e teste não existente nas classes originais.]{À esquerda a projeção dos dois componentes principais obtidos com a aplicação de PCA nas classes \emph{Elefant} -- em azul -- e \emph{Horse} -- em verde. À direita, as mesmas classes após a remoção de 50\% das imagens de treino da classe \emph{Horse}. A diferença dos marcadores consiste na definição de imagens para treino e teste não existente nas classes originais. \\ \textit{Fonte:~Elaborado pela autora.}}
+    \caption[À esquerda a projeção dos dois componentes principais obtidos com a aplicação de PCA nas classes \emph{Elefant} --- em azul --- e \emph{Horse} --- em verde. À direita, as mesmas classes após a remoção de 50\% das imagens de treino da classe \emph{Horse}. A diferença dos marcadores consiste na definição de imagens para treino e teste não existente nas classes originais.]{À esquerda a projeção dos dois componentes principais obtidos com a aplicação de PCA nas classes \emph{Elefant} --- em azul --- e \emph{Horse} --- em verde. À direita, as mesmas classes após a remoção de 50\% das imagens de treino da classe \emph{Horse}. A diferença dos marcadores consiste na definição de imagens para treino e teste não existente nas classes originais. \\ \textit{Fonte:~Elaborado pela autora.}}
     \label{fig:desbalanceado}
 \end{center}
 \end{figure}
 
-Os resultados da classificação dos três experimentos (desbalanceado, SMOTE e geração artificial) utilizando KNN com $K=1$ reportou que o \textit{F1-Score} da geração de imagens utilizando o método de mistura teve um ganho satisfatório em relação ao rebalanceamento no espaço de características com o SMOTE (apresentado na Figura \ref{fig:resultados:1:vis}). Foi utilizado \emph{BIC} como método de extração de características e Intensidade' como método de conversão em escala de cinza. Para essa combinação, a geração de imagens utilizando mistura se mostrou favorável e portanto a visualização do espaço de características apresenta esse método como geração.
+Os resultados da classificação dos três experimentos (desbalanceado, SMOTE e geração artificial) utilizando K-NN com $K=1$ reportou que o \textit{F1-Score} da geração de imagens utilizando o método de \emph{mistura} obteve um ganho de mais de 10\% em relação ao rebalanceamento no espaço de características com o SMOTE. Foi utilizado \emph{BIC} como método de extração de características e \emph{Intensidade'} como método de conversão em escala de cinza. Para essa combinação, a geração de imagens utilizando \emph{mistura} se mostrou favorável e portanto a visualização do espaço de características apresenta esse método como geração.
 
-\begin{figure}[!htbp]
-  \begin{center}
-      \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/1/BIC_Intensity_elefante-cavalo.png}}
-    \caption[Resultados de \textit{F1-Score} para as classes \emph{Horse} e \emph{Elefant} da base Corel-1000. Foi utilizado \emph{BIC} como método de extração de características e Intensidade' como método de conversão em escala de cinza. Para essa combinação, a geração de imagens utilizando mistura se mostrou favorável.]{Resultados de \textit{F1-Score} para as classes \emph{Horse} e \emph{Elefant} da base Corel-1000. Foi utilizado \emph{BIC} como método de extração de características e Intensidade' como método de conversão em escala de cinza. Para essa combinação, a geração de imagens utilizando \emph{mistura} se mostrou favorável. \\ \textit{Fonte:~Elaborado pela autora.}}
-    \label{fig:resultados:1:vis}
-\end{center}
-\end{figure}
+% \begin{figure}[!htbp]
+%   \begin{center}
+%       \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/1/BIC_Intensity_elefante-cavalo.png}}
+%     \caption[Resultados de \textit{F1-Score} para as classes \emph{Horse} e \emph{Elefant} da base Corel-1000. Foi utilizado \emph{BIC} como método de extração de características e \emph{Intensidade'} como método de conversão em escala de cinza. Para essa combinação, a geração de imagens utilizando \emph{mistura} se mostrou favorável.]{Resultados de \textit{F1-Score} para as classes \emph{Horse} e \emph{Elefant} da base Corel-1000. Foi utilizado \emph{BIC} como método de extração de características e \emph{Intensidade'} como método de conversão em escala de cinza. Para essa combinação, a geração de imagens utilizando \emph{mistura} se mostrou favorável. \\ \textit{Fonte:~Elaborado pela autora.}}
+%     \label{fig:resultados:1:vis}
+% \end{center}
+% \end{figure}
 
 % \meutodo{necessário a tabela reference aos F1-Scores da figura acima? está comentado}
 % \begin{table}[!htbp]
 % \centering
-% \caption{Resultados de \textit{F1-Score} para as classes \emph{Horse} e \emph{Elefant}, utilizando Intensidade' como método para conversão em escala de cinza e \emph{BIC} para extração de características.}
+% \caption{Resultados de \textit{F1-Score} para as classes \emph{Horse} e \emph{Elefant}, utilizando \emph{Intensidade'} como método para conversão em escala de cinza e \emph{BIC} para extração de características.}
 % \label{fig:resultados:1:tabvis}
 % \begin{tabular}{|l|c|c|}
 % \hline
@@ -711,13 +686,13 @@ Os resultados da classificação dos três experimentos (desbalanceado, SMOTE e 
 % \end{tabular}
 % \end{table}
 
-Para verificar se a geração de imagens inseriu mais informação na classe minoritária do que apenas povoar os espaços entre os exemplos (i.e.\ SMOTE), a classe rebalanceada utilizando ambos métodos está demonstrada na Figura~\ref{fig:compara_vis_treino_fixed}. Em laranja estão representados os novos exemplos de treinamento, projetados no plano da base original balanceada.
+Para verificar se a geração de imagens inseriu mais informação na classe minoritária do que apenas povoar os espaços entre os exemplos, a classe rebalanceada utilizando ambos métodos está demonstrada na Figura~\ref{fig:compara_vis_treino_fixed}. Em laranja estão representados os novos exemplos de treinamento, projetados no plano da base original balanceada.
 
 \begin{figure}[!htbp]
   \begin{center}
-    \subfloat[Smote]{      \includegraphics[width=.5\linewidth]{\detokenize{figuras/visualizacao/smote-treino-fixed.png}}
+    \subfloat[SMOTE]{      \includegraphics[width=.5\linewidth]{\detokenize{figuras/visualizacao/smote-treino-fixed.png}}
     }
-    \subfloat[Geração artificial]{      \includegraphics[width=.5\linewidth]{\detokenize{figuras/visualizacao/geracao-treino-fixed.png}}
+    \subfloat[Geração artificial de imagens]{      \includegraphics[width=.5\linewidth]{\detokenize{figuras/visualizacao/geracao-treino-fixed.png}}
     }
   \caption[Comparação dos exemplos de treinamento da geração com SMOTE e no campo visual. Em laranja estão representados os novos exemplos, projetados no plano da base original balanceada.]{Comparação dos exemplos de treinamento da geração com SMOTE e no campo visual. Em laranja estão representados os novos exemplos, projetados no plano da base original balanceada. \\ \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:compara_vis_treino_fixed}
@@ -739,9 +714,9 @@ Após o treinamento realizado com as novas imagens geradas e as originais, o con
 \end{center}
 \end{figure}
 
-De uma forma geral, pode-se dizer que a geração de imagens melhorou a definição da classe minoritária e foi o método que mais se assemelhou à distribuição dos dados originais. Além disso, um dos problemas do SMOTE pode ser verificado nessas projeções: \textbf{ao realizar a interpolação dos vetores de características originais, exemplos podem ser criados em regiões do espaço que fazem parte da outra classe}. Ficou claro também que o método SMOTE não possui capacidade de extrapolar a sua região, como pode ser observado no grupo de exemplos gerados à direita do espaço de características. O SMOTE gerou novos elementos próximos a uma linha reta, enquanto a geração de imagens proporcionou uma abrangência maior em volta desse espaço, com maior dispersão.
+De uma forma geral, pode-se dizer que a geração de imagens melhorou a definição da classe minoritária e foi o método que mais se assemelhou à distribuição dos dados originais. Além disso, um dos problemas do SMOTE pode ser verificado nessas projeções: \textbf{ao realizar a interpolação dos vetores de características originais, exemplos podem ser criados em regiões do espaço que fazem parte da outra classe}. Ficou claro também que o método SMOTE não apresentou capacidade de extrapolar a sua região, como pode ser observado no grupo de exemplos à direita do espaço de características. O SMOTE gerou novos elementos próximos a uma linha reta, enquanto a geração de imagens proporcionou uma abrangência maior em volta desse espaço, com maior dispersão.
 
-Na Figura \ref{fig:region} é possível visualizar a região de decisão, observando suas modificações frente aos métodos. Pode ser observado que em ambas técnicas a região da classe minoritária apresenta-se melhor representada. Além disso, é possível verificar que o SMOTE ocasionou uma certa invasão do espaço de características da classe majoritária.
+Na Figura \ref{fig:region} é possível visualizar a região de decisão, observando suas modificações frente aos métodos. Pode ser observado que, em ambas técnicas, a região da classe minoritária apresenta-se melhor representada. Além disso, é possível verificar que o SMOTE ocasionou uma certa invasão do espaço de características da classe majoritária.
 
 \begin{figure}[!htbp]
     \begin{center}
@@ -773,7 +748,7 @@ Em todas as figuras anteriores relacionadas a essa visualização, os exemplos f
     \subfloat[Geração artificial]{
       \includegraphics[width=.5\linewidth]{\detokenize{figuras/visualizacao/geracao-treino.png}}
     }
-  \caption[Melhores subespaços encontrados após a geração de novos exemplos para o SMOTE e para a geração artificial de imagens, e após a remoção de imagens para a projeção dos dados desbalanceados. Pode-se notar que a geração de imagens artificiais proporciona a criação de um subespaço que melhor discretiza as classes, quando comparado com SMOTE ou com a base desbalanceada.]{Melhores subespaços encontrados após a geração de novos exemplos para o SMOTE e para a geração artificial de imagens, e após a remoção de imagens para a projeção dos dados desbalanceados. Pode-se notar que a geração de imagens artificiais proporciona a criação de um subespaço que melhor discretiza as classes, quando comparado com SMOTE ou com a base desbalanceada. \\ \textit{Fonte:~Elaborado pela autora.}}
+  \caption[Melhores subespaços encontrados após a geração de novos exemplos para o SMOTE, para a geração artificial de imagens, e após a remoção de imagens para a projeção dos dados desbalanceados. Pode-se notar que a geração de imagens artificiais proporciona a criação de um subespaço que melhor discretiza as classes, quando comparado com SMOTE ou com a base desbalanceada.]{Melhores subespaços encontrados após a geração de novos exemplos para o SMOTE, para a geração artificial de imagens, e após a remoção de imagens para a projeção dos dados desbalanceados. Pode-se notar que a geração de imagens artificiais proporciona a criação de um subespaço que melhor discretiza as classes, quando comparado com SMOTE ou com a base desbalanceada. \\ \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:compara_vis_treino}
 \end{figure}
 
@@ -781,7 +756,7 @@ Como relatado no início desse experimento, o extrator de características utili
 
 \begin{figure}[!htbp]
     \begin{center}
-      \includegraphics[width=.7\linewidth]{\detokenize{figuras/visualizacao/vis-images.png}}
+      \includegraphics[width=.8\linewidth]{\detokenize{figuras/visualizacao/vis-images.png}}
     \end{center}
   \caption[Visualização do impacto do método de extração de características na separação entre classes. Possível verificar que o BIC utiliza as intensidades como principal representação de uma imagem.]{Visualização do impacto do método de extração de características na separação entre classes. Possível verificar que o BIC utiliza as intensidades como principal representação de uma imagem. \\ \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:vis_images}
@@ -790,12 +765,11 @@ Como relatado no início desse experimento, o extrator de características utili
 %-------------------------------------------------------------------------------
 \subsubsection{Resultados}
 
-Para análise estatística, todas as combinações de conversão para escala de cinza e métodos de extração de características foram testados. A combinação \emph{Gleam} e ACC obteve o melhor \textit{F1-Score} para as classes \emph{Elevante} e \emph{Horse}. O \textit{boxplot} apresentado na Figura \ref{fig:resultados:1:melhor} retrata a média dos \textit{F1-Scores} das 40 combinações deste experimento. A Tabela \ref{fig:resultados:1:tabmelhor} mostra os valores de tal métrica para o cálculo dos testes estatísticos. Como pode ser observado, o método de \emph{composição}, exemplificado na Figura \ref{fig:resultados:1:mistura}, obteve o melhor \textit{F1-Score}. Como reportado anteriormente para o método BIC, a melhor geração para essas classes é o método de mistura. Interessante notar que, a preferência pelo método de geração parece estar relacionada ao método de extração. Isso se deve, possivelmente, pelo fato de o melhor método de extração indicar as características mais relevantes das imagens.
-
+Para análise estatística, todas as combinações de conversão para escala de cinza e métodos de extração de características foram testados. A combinação \emph{Gleam} e ACC obteve o melhor \textit{F1-Score} para as classes \emph{Elevante} e \emph{Horse}. O \textit{boxplot} apresentado na Figura \ref{fig:resultados:1:melhor} retrata a média dos \textit{F1-Scores} das 40 combinações deste experimento. A Tabela \ref{fig:resultados:1:tabmelhor} mostra os valores de tal métrica para o cálculo dos testes estatísticos. Como pode ser observado, o método de \textit{composição}, exemplificado na Figura \ref{fig:resultados:1:mistura}, obteve o melhor \textit{F1-Score}. Como reportado anteriormente para o método BIC, a melhor geração para essas classes foi o método de \emph{mistura}. Interessante notar que, ao menos para este caso, a preferência pelo método de geração parece estar relacionada ao método de extração. Isso se deve, possivelmente, ao fato de o melhor método de extração indicar as características mais relevantes das imagens.
 
 \begin{figure}[!htbp]
   \begin{center}
-      \includegraphics[width=0.8\linewidth]{\detokenize{figuras/resultados/1/ACC_Gleam_elefante-cavalo.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/1/ACC_Gleam_elefante-cavalo.png}}
   \end{center}
   \caption[Conversão em escala de cinza com \emph{Gleam} e ACC como método de extração de características. Nota-se que o método de geração baseado em Composição 4 obteve maior valor de \textit{F1-Score}.]{Conversão em escala de cinza com \emph{Gleam} e ACC como método de extração de características. Nota-se que o método de geração baseado em Composição 4 obteve maior valor de \textit{F1-Score}. \\ \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:resultados:1:melhor}
@@ -826,19 +800,19 @@ Desbalanceado         & 88.258567          & 5.538461               \\ \hline
 
 \begin{figure}[!htbp]
     \begin{center}
-    \subfloat[Composição]{
-      \includegraphics[width=.5\linewidth]{\detokenize{figuras/resultados/1/resultado-composicao.png}}
+    \subfloat[Imagem gerada]{
+      \includegraphics[width=.6\linewidth]{\detokenize{figuras/resultados/1/resultado-composicao.png}}
     }
-   \caption[Geração artificial com o método \emph{composição} com quatro imagens da classe \textit{Elefant}.]{Geração artificial com o método \emph{composição} com quatro imagens da classe \textit{Elefant}. \\ \textit{Fonte:~Elaborado pela autora.}}
+   \caption[A imagem gerada apresenta uma \emph{composição} de quatro imagens da classe \textit{Elefant}.]{A imagem gerada apresenta uma \emph{composição} de quatro imagens da classe \textit{Elefant}. \\ \textit{Fonte:~Elaborado pela autora.}}
    \label{fig:resultados:1:mistura}
 \end{center}
 \end{figure}
 
-Considerando a análise da melhor combinação dos métodos de representação da imagem, foi verificada também a performance dos rebalanceamentos em um cenário mais complexo: o de maior variância dos \textit{F1-Scores}, dadas as 40 combinações da validação. A Figura \ref{fig:resultados:1:pior} mostra o gráfico de \textit{boxplot} referente aos resultados da Tabela \ref{fig:resultados:1:tabpior}. O melhor método de rebalanceamento para tal cenário foi o de geração artificial de imagens de adição de \emph{ruído}, exemplificado na Figura \ref{fig:resultados:1:ruido}. Referente aos resultados da Tabela~\ref{fig:resultados:1:tabpior}, o par de métodos MSB e HOG obteve maior valor de variância -- para conversão de escala de cinza e extração de características, respectivamente.
+Considerando a análise da melhor combinação dos métodos de representação da imagem, foi verificado também o desempenho dos rebalanceamentos em um cenário mais complexo: o de maior variância dos \textit{F1-Scores}, dadas as 40 combinações da validação. A Figura~\ref{fig:resultados:1:pior} mostra o gráfico de \textit{boxplot} referente aos resultados da Tabela~\ref{fig:resultados:1:tabpior}. O melhor método de rebalanceamento para tal cenário foi o de geração artificial de imagens de \textit{adição de ruído}, exemplificado na Figura~\ref{fig:resultados:1:ruido}. O par de métodos MSB e HOG obteve maior valor de variância --- para conversão de escala de cinza e extração de características, respectivamente.
 
 \begin{figure}[!htbp]
     \begin{center}
-      \includegraphics[width=0.8\linewidth]{\detokenize{figuras/resultados/1/HOG_MSB_elefante-cavalo.png}}
+      \includegraphics[width=\linewidth]{\detokenize{figuras/resultados/1/HOG_MSB_elefante-cavalo.png}}
     \end{center}
     \caption[Conversão em escala de cinza com MSB e HOG como método de extração de características. Essa combinação de métodos obteve a maior variância de \textit{F1-Score}. Nota-se que o método de \textit{adição de ruído} apresentou-se como o melhor.]{Conversão em escala de cinza com MSB e HOG como método de extração de características.  Essa combinação de métodos obteve a maior variância de \textit{F1-Score}. Nota-se que a \textit{adição de ruído} apresentou-se como o melhor método. \\ \textit{Fonte:~Elaborado pela autora.}}
     \label{fig:resultados:1:pior}
@@ -846,7 +820,7 @@ Considerando a análise da melhor combinação dos métodos de representação d
 
 \begin{table}[!htbp]
 \begin{center}
-\caption{Resultados de \textit{F1-Score} para as classes \emph{Horse} e \emph{Elefant}, utilizando MSB como método para conversão em escala de cinza e HOG para extração de características. O método de adição de ruído foi aquele que obteve melhor valor de \textit{F1-Score}.}
+\caption{Resultados de \textit{F1-Score} para as classes \emph{Horse} e \emph{Elefant}, utilizando MSB como método para conversão em escala de cinza e HOG para extração de características. O método de \emph{adição de ruído} foi aquele que obteve melhor valor de \textit{F1-Score}.}
 \label{fig:resultados:1:tabpior}
 \begin{tabular}{|l|c|c|}
 \hline
@@ -872,16 +846,16 @@ Desbalanceado       & 55.667145          & 13.341421              \\ \hline
     \subfloat[Original]{
       \includegraphics[width=.5\linewidth]{\detokenize{figuras/resultados/1/original-ruido.png}}
     }
-    \subfloat[Ruído]{
+    \subfloat[Imagem gerada]{
       \includegraphics[width=.5\linewidth]{\detokenize{figuras/resultados/1/resultado-ruido.png}}
     }
- \caption[Imagem gerada utilizando \emph{adição de ruído} em imagens da classe \emph{Horse}]{Imagem gerada utilizando \emph{adição de ruído} em imagens da classe \emph{Horse}. \\ \textit{Fonte:~Elaborado pela autora.}}
+ \caption[Imagem gerada utilizando \emph{adição de ruído} em imagens da classe \emph{Horse}. Regiões mais escuras apresentam maior ruído na imagem resultante (b). ]{Imagem gerada utilizando \emph{adição de ruído} em imagens da classe \emph{Horse}. Regiões mais escuras apresentam maior ruído na imagem resultante (b). \\ \textit{Fonte:~Elaborado pela autora.}}
  \label{fig:resultados:1:ruido}
  \end{center}
 \end{figure}
 
 %-------------------------------------------------------------------------------
-\FloatBarrier
+% \FloatBarrier
 \subsubsection{Discussão}
 
 % Tukey HSD Post-hoc Test...
@@ -889,12 +863,12 @@ Desbalanceado       & 55.667145          & 13.341421              \\ \hline
 % Group 1 vs Group 3: Diff=3.5150, 95%CI=0.8497 to 6.1802, p=0.0062
 % Group 2 vs Group 3: Diff=1.5997, 95%CI=-1.0656 to 4.2650, p=0.3315
 
-Para o resultado da combinação dos melhores métodos de conversão em escala de cinza e extração de características, o teste \textit{post-hoc} HSD de Tukey revelou que não há diferença estatística entre a base desbalanceada e o SMOTE ($\textit{p-value} = 0.2073$). Porém, indicou que existe uma significância entre o desbalanceamento e a geração artificial ($\textit{p-value} = 0.0062$). Isso significa que o melhor método para rebalancear essas classes é a geração artificial utilizando o método de misturas de duas imagens. Ainda de acordo com o teste, não há evidência estatística da relevância do resultado da combinação de maior variância. Portanto, todos os próximos experimentos relatam apenas os resultados da melhor combinação.
+Para o resultado da combinação dos melhores métodos de conversão em escala de cinza e extração de características, o teste \textit{post-hoc} HSD de Tukey revelou que não há diferença estatística entre a base desbalanceada e o SMOTE ($\textit{p-value} = 0.2073$). Mas indicou que existe uma significância entre o desbalanceamento e a geração artificial ($\textit{p-value} = 0.0062$). Isso significa que o melhor método para rebalancear essas classes é a geração artificial utilizando o método de \emph{mistura}s de duas imagens. Ainda de acordo com o teste, não há evidência estatística da relevância do resultado da combinação de maior variância. Portanto, todos os próximos experimentos relatam apenas os resultados da melhor combinação.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Experimento 2: duas classes sobrepostas}
 
-O experimento anterior considerou classes relativamente distintas. Por isso, classes de difícil diferenciação também foram testadas e são reportadas a seguir.
+O experimento anterior considerou classes relativamente distintas. Por isso, classes de difícil diferenciação também foram testadas e são reportadas a seguir, com o objetivo de verificar o desempenho do método.
 
 \subsubsection{Protocolo}
 \begin{enumerate}
@@ -904,12 +878,12 @@ O experimento anterior considerou classes relativamente distintas. Por isso, cla
 \begin{figure}[H]
   \begin{center}
     \subfloat[Mountain]{
-      \includegraphics[width=.48\linewidth]{\detokenize{figuras/resultados/2/montanha.png}}
+      \includegraphics[width=.5\linewidth]{\detokenize{figuras/resultados/2/montanha.png}}
     }
     \subfloat[Beach]{
-      \includegraphics[width=.48\linewidth]{\detokenize{figuras/resultados/2/praia.png}}
+      \includegraphics[width=.5\linewidth]{\detokenize{figuras/resultados/2/praia.png}}
     }
-    \caption[Imagens representativas das classes \textit{Beach} e \textit{Mountain} da base de imagens Corel-1000.]{Imagens representativas das classes \textit{Beach} e \textit{Mountain} da base de imagens Corel-1000. \\ \textit{Fonte:~\citeonline{Wang2001}.}}
+    \caption[Imagens representativas das classes \textit{Beach} e \textit{Mountain} da base de imagens Corel-1000. Tais classes apresentam sobreposição de características por ambas apresentarem paisagens naturais. O objetivo desse experimento é verificar o desempenho da geração artificial em um problema de difícil classificação.]{Imagens representativas das classes \textit{Beach} e \textit{Mountain} da base de imagens Corel-1000. Tais classes apresentam sobreposição de características por ambas apresentarem paisagens naturais. O objetivo desse experimento é verificar o desempenho da geração artificial em um problema de difícil classificação. \\ \textit{Fonte:~\citeonline{Wang2001}.}}
     \label{fig:resultados:2:base}
 \end{center}
 \end{figure}
@@ -917,7 +891,7 @@ O experimento anterior considerou classes relativamente distintas. Por isso, cla
 
 \item \textbf{Desbalanceamento}: as duas classes contém 100 imagens cada, portanto são balanceadas. Para esse experimento, foram utilizadas as 40 combinações de desbalanceamento dos $k=5$ folds.
 
-\item \textbf{Método para geração artificial}: todos os métodos de geração foram testados. Os que obtiveram melhores resultados foram os métodos de: saliência, aguçamento e a utilização de todos os tipos de gerações aleatórios. A Figura~\ref{fig:resultados:2:saliencia} exemplifica uma geração artificial deste experimento, utilizando o método de \emph{saliência}.
+\item \textbf{Método para geração artificial}: todos os métodos de geração foram testados. Os que obtiveram melhores resultados foram os métodos de: saliência, \emph{aguçamento} e a utilização de todos os tipos de gerações aleatórios. A Figura~\ref{fig:resultados:2:saliencia} exemplifica uma geração artificial deste experimento, utilizando o método de \emph{saliência}.
 
 \begin{minipage}{\linewidth}
 \begin{figure}[H]
@@ -931,7 +905,7 @@ O experimento anterior considerou classes relativamente distintas. Por isso, cla
     \subfloat[Saliência]{
       \includegraphics[width=.33\linewidth]{\detokenize{figuras/resultados/2/resultado-saliencia.png}}
     }
- \caption[Geração artificial utilizando o método de \emph{saliência} em duas imagens da classe \textit{Beach} da base de imagens Corel-1000.]{Geração artificial utilizando o método de \emph{saliência} em duas imagens da classe \textit{Beach} da base de imagens Corel-1000. \\ \textit{Fonte:~Elaborado pela autora.}}
+ \caption[Geração artificial utilizando o método de \emph{saliência} em duas imagens da classe \textit{Beach} da base de imagens Corel-1000. Detalhes salientes da imagem (b) aparecem sobrepostos à imagem (a) na imagem resultante (c).]{Geração artificial utilizando o método de \emph{saliência} em duas imagens da classe \textit{Beach} da base de imagens Corel-1000. Detalhes salientes da imagem (b) aparecem sobrepostos à imagem (a) na imagem resultante (c). \\ \textit{Fonte:~Elaborado pela autora.}}
  \label{fig:resultados:2:saliencia}
  \end{center}
 \end{figure}
@@ -947,7 +921,7 @@ O experimento anterior considerou classes relativamente distintas. Por isso, cla
 %-------------------------------------------------------------------------------
 \subsubsection{Resultados}
 
-A combinação dos métodos \emph{Luma} e CCV resultou em melhores valores de \textit{F1-Score}. Como pode ser visto na Tabela \ref{tab:resultados:2:melhor}, diversos métodos de geração artificial de imagens obtiveram resultados melhores que o SMOTE, e na sua maioria maiores do que a base desbalanceada. Destacam-se os métodos de saliência, mistura e composição.
+A combinação dos métodos \emph{Luma} e CCV resultou em melhores valores de \textit{F1-Score}. Como pode ser visto na Tabela \ref{tab:resultados:2:melhor}, diversos métodos de geração artificial de imagens obtiveram resultados melhores que o SMOTE, e na sua maioria maiores do que a base desbalanceada. Destacam-se os métodos de \emph{mistura saliente}, \emph{mistura ponderada} e \emph{composição}.
 
 %Na Figura \ref{fig:resultados:2:melhor} é possível verificar o \textit{boxplot} dos \textit{F1-Scores} para as classes desbalanceadas, rebalanceadas com SMOTE após a extração de características e rebalanceadas com os métodos de geração artificial como primeiro passo do \textit{pipeline}.
 
@@ -955,17 +929,17 @@ A combinação dos métodos \emph{Luma} e CCV resultou em melhores valores de \t
 %   \begin{center}
 %\includegraphics[width=\linewidth]{\detokenize{figuras/resultados/2/BIC_Luminance_praia-montanha.png}}
 %   \end{center}
-%   \caption[Boxplot das classes \textit{Beach} e \textit{Mountain} para a conversão em escala de cinza com Luminância e BIC como método de extração de características.]{Boxplot das classes \textit{Beach} e \textit{Mountain} para a conversão em escala de cinza com Luminância e BIC como método de extração de características. \\ \textit{Fonte:~Elaborado pela autora.}}
+%   \caption[Boxplot das classes \textit{Beach} e \textit{Mountain} para a conversão em escala de cinza com\emph{Luminância'} e BIC como método de extração de características.]{Boxplot das classes \textit{Beach} e \textit{Mountain} para a conversão em escala de cinza com\emph{Luminância'} e BIC como método de extração de características. \\ \textit{Fonte:~Elaborado pela autora.}}
 %   \label{fig:resultados:2:melhor}
 % \end{figure}
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \begin{center}
-\caption{Resultados de \textit{F1-Score} para as classes \textit{Beach} e \textit{Mountain}, utilizando \emph{Luma} como método para conversão em escala de cinza e CCV para extração de características.}
+\caption{Resultados de \textit{F1-Score} para as classes \textit{Beach} e \textit{Mountain}, utilizando \emph{Luma} como método para conversão em escala de cinza e CCV para extração de características. As gerações com aguçamento e saliência obtiveram os melhores resultados.}
 \label{tab:resultados:2:melhor}
 \begin{tabular}{|l|c|c|}
 \hline
-\textbf{Luma \& CCV} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+\textbf{\emph{Luma} \& CCV} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
    Todos        & \textbf{66.015325} & 5.621643  \\ \hline
   Aguçamento    & \textbf{66.684300} & 5.619944  \\ \hline
   Borramento    & 62.186430 & 6.509084  \\ \hline
@@ -982,43 +956,21 @@ Desbalanceado   & 59.640090 & 8.675836  \\ \hline
 \end{center}
 \end{table}
 
-% \begin{minipage}{\linewidth}
-%   \begin{figure}[H]
-%     \subfloat[Original]{
-%       \includegraphics[width=.33\linewidth]{\detokenize{figuras/resultados/2/original-mistura.png}}
-%     }
-%     \subfloat[Original]{
-%       \includegraphics[width=.33\linewidth]{\detokenize{figuras/resultados/2/original2-mistura.png}}
-%     }
-%     \subfloat[Mistura]{
-%       \includegraphics[width=.33\linewidth]{\detokenize{figuras/resultados/2/resultado-mistura.png}}
-%     }
-%     \caption[Geração artificial utilizando o método de \emph{mistura} em duas imagens da classe \textit{Mountain} da base de imagens Corel-1000.]{Geração artificial utilizando o método de \emph{mistura} em duas imagens da classe \textit{Mountain} da base de imagens Corel-1000. \\ \textit{Fonte:~Elaborado pela autora.}}
-%     \label{fig:resultados:2:mistura}
-%   \end{figure}
-% \end{minipage}
-
 %-------------------------------------------------------------------------------
 \subsubsection{Discussão}
 
 De acordo com o teste HSD de Tukey realizado, foi encontrado $\textit{p-value} = 0.0003$ na comparação da base desbalanceada com a base rebalanceada utilizando o método SMOTE e $\textit{p-value} = 0.0000$ com a geração artificial. Isso indica que ambos os métodos obtiveram relevância estatística quando comparados ao original. Porém, ao comparar o SMOTE com a geração artificial, o teste resultou em $\textit{p-value} = 0.7122$. Tal valor indica que não há diferença significativa entre os métodos SMOTE e os métodos de geração artificial de imagens.
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\FloatBarrier
+% \FloatBarrier
 \subsection{Experimento 3: multiclasses}
 
-Os dois experimentos anteriores analisaram o rebalanceamento de apenas duas classes. Este experimento apresenta a geração artificial de imagens aplicada a três bases multiclasses: Corel, Caltech101 e Produce. Seus resultados são discutidos individualmente.
+Os dois experimentos anteriores analisaram o rebalanceamento de apenas duas classes. Este experimento apresenta a geração artificial de imagens aplicada a três bases multiclasses: Corel, Caltech101-600 e Produce. Seus resultados são discutidos individualmente.
+
+As bases são originalmente balanceadas, portanto a cada combinação dos \textit{folds}, uma classe é considerada minoritária e três dos seus \textit{folds} são descartados. Restando, dessa forma, um para treino e um para teste. Isso permitiu testar as bases como desbalanceadas.
 
 \subsubsection{Base de imagens Corel}
 
-\subsubsubsection{Protocolo}
-
-\begin{enumerate}
-\item \textbf{Imagens originais}: esse experimento foi realizado com a base de imagens Corel-1000, composta por fotografias que representam 10 classes: tribos africanas, praia, construções, ônibus, dinossauros, flores, elefantes, cavalos, montanhas e tipos de comidas \cite{Wang2001}. Para fins de exemplificação, são apresentadas imagens que representam essas classes na Figura \ref{fig:resultados:3:base}.
-
-\begin{minipage}{\linewidth}
 \begin{figure}[H]
   \begin{center}
     \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_COREL_dataset.jpg}}
@@ -1026,11 +978,15 @@ Os dois experimentos anteriores analisaram o rebalanceamento de apenas duas clas
     \label{fig:resultados:3:base}
 \end{center}
 \end{figure}
-\end{minipage}
+
+\subsubsubsection{Protocolo}
+
+\begin{enumerate}
+\item \textbf{Imagens originais}: esse experimento foi realizado com a base de imagens Corel-1000, composta por fotografias que representam 10 classes: tribos africanas, praia, construções, ônibus, dinossauros, flores, elefantes, cavalos, montanhas e tipos de comidas \cite{Wang2001}. Para fins de exemplificação, são apresentadas imagens que representam essas classes na Figura \ref{fig:resultados:3:base}.
 
 \item \textbf{Desbalanceamento}: realizaram-se 200 combinações de desbalanceamento dos 5 \textit{folds} para as 10 classes.
 
-\item \textbf{Método para geração artificial}: o método que atingiu o maior \textit{F1-Score} de geração artificial foi a mistura. Por esse motivo, ela está exemplificada na Figura \ref{fig:resultados:3.1:mistura}.
+\item \textbf{Método para geração artificial}: o método que atingiu o maior \textit{F1-Score} de geração artificial foi a \emph{mistura}. Por esse motivo, ela está exemplificada na Figura \ref{fig:resultados:3.1:mistura}.
 
 \begin{minipage}{\linewidth}
 \begin{figure}[H]
@@ -1041,10 +997,10 @@ Os dois experimentos anteriores analisaram o rebalanceamento de apenas duas clas
     \subfloat[Original]{
       \includegraphics[width=.33\linewidth]{\detokenize{figuras/resultados/3/original2-mistura.png}}
     }
-    \subfloat[Mistura]{
+    \subfloat[Imagem gerada]{
       \includegraphics[width=.33\linewidth]{\detokenize{figuras/resultados/3/resultado-mistura.png}}
     }
-    \caption[Geração artificial de mistura para imagens da base Corel-1000.]{Geração artificial de mistura para imagens da base Corel-1000. \\ \textit{Fonte:~Elaborado pela autora.}}
+    \caption[Geração artificial de \emph{mistura} para imagens da base Corel-1000. A imagem resultante (c) apresenta uma mistura das imagens (a) e (b).]{Geração artificial de \emph{mistura} para imagens da base Corel-1000. A imagem resultante (c) apresenta uma mistura das imagens (a) e (b). \\ \textit{Fonte:~Elaborado pela autora.}}
     \label{fig:resultados:3.1:mistura}
 \end{center}
 \end{figure}
@@ -1060,11 +1016,11 @@ Os dois experimentos anteriores analisaram o rebalanceamento de apenas duas clas
 %-------------------------------------------------------------------------------
 \subsubsubsection{Resultados}
 
-Ao realizar o experimento com as 10 classes da base Corel, a combinação de \emph{Gleam} para conversão em escala de cinza; e LBP como método de extração de características, resultou em melhores \textit{F1-Scores}. A base Corel-1000 é originalmente balanceada, portanto a cada combinação dos \textit{folds}, uma classe era considerada minoritária e três dos seus \textit{folds} eram descartados (restando um para treino e um para teste). Isso permitiu testar a base como desbalanceada. A Tabela \ref{tab:resultados:3.1} mostra a média e o desvio padrão dos \textit{F1-Scores} encontrados nesse experimento. Note que a geração artificial com o método \emph{mistura} obteve \textit{F1-Score} similar ao SMOTE.
+Ao realizar o experimento com as 10 classes da base Corel, a combinação de \emph{Gleam} para conversão em escala de cinza; e LBP como método de extração de características, resultou em melhores \textit{F1-Scores}. A Tabela \ref{tab:resultados:3.1} apresenta a média e o desvio padrão dos \textit{F1-Scores} encontrados nesse experimento. Note que a geração artificial com o método \emph{mistura} obteve \textit{F1-Score} similar ao SMOTE.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \begin{center}
-\caption{Resultados de \textit{F1-Score} para as 10 classes da Corel, utilizando \emph{Gleam} como método para conversão em escala de cinza e LBP para extração de características. Note que a geração artificial com o método \emph{mistura} obteve \textit{F1-Score} similar ao SMOTE.}
+\caption{Resultados de \textit{F1-Score} para as 10 classes da Corel, utilizando \emph{Gleam} como método para conversão em escala de cinza e LBP para extração de características. A geração artificial com o método \emph{mistura} obteve \textit{F1-Score} similar ao SMOTE.}
 \label{tab:resultados:3.1}
 \begin{tabular}{|l|c|c|}
 \hline
@@ -1088,43 +1044,42 @@ Desbalanceado   &  60.362256 &  2.290263  \\ \hline
 %-------------------------------------------------------------------------------
 \subsubsubsection{Discussão}
 
-O rebalanceamento com o método de \emph{mistura} e com o SMOTE tiveram uma performance quase idêntica (i.e. $\textit{p-value} = 0.9948$). Mas apesar de \textit{F1-Scores} também parecerem similares à base desbalanceada, o teste HSD de Tukey confirmou que há diferença estatística significante entre eles ($\textit{p-value} = 0.0000$). Dessa forma, tanto o SMOTE quanto a geração artificial rebalancearam a base satisfatoriamente.
+O rebalanceamento com o método de \emph{mistura} e com o SMOTE tiveram um desempenho quase idêntico (i.e. $\textit{p-value} = 0.9948$). Mas apesar dos \textit{F1-Scores} também parecerem similares à base desbalanceada, o teste HSD de Tukey confirmou que há diferença estatística significante entre eles ($\textit{p-value} = 0.0$). Dessa forma, tanto o SMOTE quanto a geração artificial rebalancearam a base satisfatoriamente.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Base de imagens Caltech101}
+\subsubsection{Base de imagens Caltech101-600}
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[width=0.7\linewidth]{\detokenize{figuras/quantizacao/fig_Caltech101_dataset.jpg}}
+    \caption[Conjunto de seis classes balanceadas: aviões, bonsais, candelabros, tartarugas, motocicletas e relógios da base de imagens Caltech101-600.]{Conjunto de seis classes balanceadas: aviões, bonsais, candelabros, tartarugas, motocicletas e relógios da base de imagens Caltech~\cite{Fei-Fei2007}. \\
+    \textit{Fonte:~\citeonline{Ponti2016}.}}
+    \label{fig:resultados:3.2:base}
+\end{center}
+\end{figure}
 
 \subsubsubsection{Protocolo}
 
 \begin{enumerate}
 \item \textbf{Imagens originais}: foi utilizada a base Caltech101-600 \cite{Fei-Fei2007}. Desta base, foi utilizado um conjunto de seis classes balanceadas: aviões, bonsais, candelabros, tartarugas, motocicletas e relógios. Imagens que representam essas classes são apresentadas na Figura \ref{fig:resultados:3.2:base}.
 
-\begin{minipage}{\linewidth}
-\begin{figure}[H]
-  \begin{center}
-    \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_Caltech101_dataset.jpg}}
-    \caption[Conjunto de seis classes balanceadas: aviões, bonsais, candelabros, tartarugas, motocicletas e relógios da base de imagens Caltech101.]{Conjunto de seis classes balanceadas: aviões, bonsais, candelabros, tartarugas, motocicletas e relógios da base de imagens Caltech~\cite{Fei-Fei2007}. \\
-    \textit{Fonte:~\citeonline{Ponti2016}.}}
-    \label{fig:resultados:3.2:base}
-\end{center}
-\end{figure}
-\end{minipage}
+\item \textbf{Desbalanceamento}: 120 combinações de 5 \textit{folds} para as 6 classes foram testadas. Cobrindo, assim, todas as possibilidades para garantir que cada imagem pudesse pertencer a majoritária, minoritária, treino, teste ou não ser utilizada na classificação.
 
-\item \textbf{Desbalanceamento}: 120 combinações de 5 fold para as 6 classes) foram realizadas. Cobrindo, assim, todas as possibilidades para garantir que cada imagem pudesse pertencer a majoritária, minoritária, treino, teste ou não ser utilizada na classificação.
-\item \textbf{Método para geração artificial}: o melhor resultado em termos de geração artificial foi utilizando todas as gerações. A Figura   \ref{fig:resultados:3.2:limiares} apresenta um exemplo da geração com mistura de limiares, uma das possíveis gerações artificiais.
+\item \textbf{Método para geração artificial}: o melhor resultado em termos de geração artificial foi utilizando todas as gerações. A Figura   \ref{fig:resultados:3.2:limiares} apresenta um exemplo da geração com \emph{mistura de limiares}, uma das possíveis gerações artificiais.
 
 \begin{minipage}{\linewidth}
   \begin{figure}[H]
     \begin{center}
     \subfloat[Original]{
-      \includegraphics[height=1.7cm,keepaspectratio]{\detokenize{figuras/resultados/3/original-limiares.png}}
+      \includegraphics[height=1.85cm,keepaspectratio]{\detokenize{figuras/resultados/3/original-limiares.png}}
     }
     \subfloat[Original]{
-      \includegraphics[height=1.7cm,keepaspectratio]{\detokenize{figuras/resultados/3/original2-limiares.png}}
+      \includegraphics[height=1.85cm,keepaspectratio]{\detokenize{figuras/resultados/3/original2-limiares.png}}
     }
-    \subfloat[Mistura limiarizada]{
-      \includegraphics[height=1.7cm,keepaspectratio]{\detokenize{figuras/resultados/3/resultado-limiares.png}}
+    \subfloat[Imagem gerada]{
+      \includegraphics[height=1.85cm,keepaspectratio]{\detokenize{figuras/resultados/3/resultado-limiares.png}}
     }
-    \caption[Exemplo de uma geração artificial utilizando o método de \emph{combinação de limiares} para a base Caltech101.]{Exemplo de uma geração artificial utilizando o método de \emph{combinação de limiares} para a base Caltech101. \\ \textit{Fonte:~Elaborado pela autora.}}
+    \caption[Exemplo de uma geração artificial utilizando o método de \emph{mistura limiarizada} para a base Caltech101-600.]{Exemplo de uma geração artificial utilizando o método de \emph{mistura limiarizada} para a base Caltech101-600. \\ \textit{Fonte:~Elaborado pela autora.}}
     \label{fig:resultados:3.2:limiares}
   \end{center}
   \end{figure}
@@ -1138,15 +1093,15 @@ O rebalanceamento com o método de \emph{mistura} e com o SMOTE tiveram uma perf
 %-------------------------------------------------------------------------------
 \subsubsubsection{Resultados}
 
-Considerando que essa base possui 6 classes, 120 sub-experimentos foram necessários para cobrir todas as possibilidades de desbalanceamento. Os resultados de tais experimentos são apresentados na Tabela \ref{tab:resultados:3.2}. É possível notar que tanto o SMOTE quanto a geração artificial utilizando todos os métodos obtiveram um \textit{F1-Score} melhor que a versão desbalanceada. Interessante notar que a combinação aleatória uniforme de todos os métodos obteve um \textit{F1-Score} melhor do que cada método individualmente.
+Considerando que essa base possui 6 classes, 120 sub-experimentos foram necessários para cobrir todas as possibilidades de desbalanceamento. Os resultados de tais experimentos são apresentados na Tabela \ref{tab:resultados:3.2}. É possível notar que tanto o SMOTE quanto a geração artificial utilizando todos os métodos obtiveram um \textit{F1-Score} melhor que a versão desbalanceada. A combinação aleatória uniforme de todos os métodos obteve um \textit{F1-Score} melhor do que cada método individualmente.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \begin{center}
-\caption{Resultados do experimento com a base Caltech101. É possível notar que tanto o SMOTE quanto a geração artificial utilizando todos os métodos obtiveram um \textit{F1-Score} melhor que a versão desbalanceada.}
+\caption{Resultados do experimento com a base Caltech101-600. É possível notar que tanto o SMOTE quanto a geração artificial utilizando todos os métodos obtiveram um \textit{F1-Score} melhor que a versão desbalanceada.}
 \label{tab:resultados:3.2}
 \begin{tabular}{|l|c|c|}
 \hline
-\textbf{HOG \& Intensidade'} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+\textbf{HOG \& \emph{Intensidade'}} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
    Todos        &  \textbf{77.591493} &  3.387543  \\ \hline
   Aguçamento    &  76.982412 &  3.482750  \\ \hline
   Borramento    &  75.736587 &  3.812333  \\ \hline
@@ -1166,7 +1121,7 @@ Desbalanceado   &  75.732382 &  3.833682  \\ \hline
 %-------------------------------------------------------------------------------
 \subsubsubsection{Discussão}
 
-Com o teste \textit{post-hoc} HSD de Tukey ficou comprovada a suposição de que os resultados do SMOTE e da geração artificial utilizando todos os métodos não possuem diferença estatística. Isso porque resultaram em $\textit{p-value} = 0.9333$. Porém, entre o desbalanceado e o SMOTE ou a geração obteve-se $\textit{p-value} < 0.000$. O que indica que todos os métodos de rebalanceamento foram satisfatórios para a base Caltech101.
+Com o teste \textit{post-hoc} HSD de Tukey ficou comprovada a suposição de que os resultados do SMOTE e da geração artificial utilizando todos os métodos não possuem diferença estatística. Isso porque resultaram em $\textit{p-value} = 0.9333$. Porém, entre o desbalanceado e o SMOTE ou a geração obteve-se $\textit{p-value} < 0.0$. O que indica que todos os métodos de rebalanceamento foram satisfatórios para a base Caltech101-600.
 
 % Desbalanceado vs SMOTE: Diff=2.0230, 95%CI=0.9330 to 3.1131, \textit{p-value} =0.0000
 % Desbalanceado vs Geração artificial: Diff=1.8591, 95%CI=0.7691 to 2.9491, \textit{p-value} =0.0002
@@ -1175,20 +1130,18 @@ Com o teste \textit{post-hoc} HSD de Tukey ficou comprovada a suposição de que
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Base de imagens Produce}
 
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_Produce_dataset.jpg}}
+    \caption[Base de imagens Produce, composta por imagens de vegetais e frutas tropicais. A base possui classes com fundo similar, porém com variações na iluminação, número de objetos, cor e escala.]{Base de imagens Produce, composta por imagens de vegetais e frutas tropicais \cite{Rocha2010}. A base possui classes com fundo similar, porém com variações na iluminação, número de objetos, cor e escala. \\ \textit{Fonte:~\citeonline{Ponti2016}.}}
+    \label{fig:resultados:3.3:base}
+\end{center}
+\end{figure}
+
 \subsubsubsection{Protocolo}
 
 \begin{enumerate}
 \item \textbf{Imagens originais}: base de imagens Produce, composta por imagens de vegetais e frutas tropicais \cite{Rocha2010}. Posuem fundo similar mas muitas mudanças na iluminação, no número de objetos e na escala. Amostras das imagens dessa base são apresentadas na Figura \ref{fig:resultados:3.3:base}. Essa base contem 14 classes e um total de 1400 imagens.
-
-\begin{minipage}{\linewidth}
-\begin{figure}[H]
-  \begin{center}
-    \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_Produce_dataset.jpg}}
-    \caption[Base de imagens Produce, composta por imagens de vegetais e frutas tropicais.]{Base de imagens Produce, composta por imagens de vegetais e frutas tropicais \cite{Rocha2010}. \\ \textit{Fonte:~\citeonline{Ponti2016}.}}
-    \label{fig:resultados:3.3:base}
-\end{center}
-\end{figure}
-\end{minipage}
 
 \item \textbf{Desbalanceamento}: considerando que a base Produce é balanceada, 280 combinações dos 5 \textit{folds} das 14 classes foram testadas. Dessa forma todas as classes tiveram chance de serem a classe minoritária e, assim, rebalanceadas.
 \item \textbf{Método para geração artificial}: o melhor método de geração para a base Produce foi a \emph{mistura}, exemplificada na Figura \ref{fig:resultados:3.3:mistura}.
@@ -1202,17 +1155,17 @@ Com o teste \textit{post-hoc} HSD de Tukey ficou comprovada a suposição de que
     \subfloat[Original]{
       \includegraphics[width=.32\linewidth]{\detokenize{figuras/resultados/3/original2-mistura-produce.png}}
     }
-    \subfloat[Mistura]{
+    \subfloat[Imagem gerada]{
       \includegraphics[width=.32\linewidth]{\detokenize{figuras/resultados/3/resultado-mistura-produce.png}}
     }
-    \caption[Exemplo de geração artificial utilizando a mistura de duas imagens para a base Produce.]{Exemplo de geração artificial utilizando a mistura de duas imagens para a base Produce. \\ \textit{Fonte:~Elaborado pela autora.}}
+    \caption[Exemplo de geração artificial utilizando a \emph{mistura} de duas imagens para a base Produce.]{Exemplo de geração artificial utilizando a \emph{mistura} de duas imagens para a base Produce. \\ \textit{Fonte:~Elaborado pela autora.}}
     \label{fig:resultados:3.3:mistura}
     \end{center}
   \end{figure}
 \end{minipage}
 
 \item \textbf{Conversão em escala de cinza}: todas as combinações de métodos foram testadas. \emph{Luma} destacou-se como o melhor método para converter a imagem em escala de cinza.
-\item \textbf{Extração de características}: todos os métodos foram testados. O LBP obteve os melhores resultados.
+\item \textbf{Extração de características}: todos os métodos foram testados. O LBP obteve os melhores resultados como método para extrair as características.
 \item \textbf{Classificação}: classificador KNN com $K=1$.
 \end{enumerate}
 
@@ -1221,13 +1174,13 @@ Com o teste \textit{post-hoc} HSD de Tukey ficou comprovada a suposição de que
 
 A Tabela \ref{tab:resultados:3.3} apresenta a média e o desvio padrão dos \textit{F1-Scores} encontrados nos 280 sub-experimentos para a base Produce. Esses cobrem todas as possibilidades de desbalanceamento. O método de \emph{mistura} resultou no melhor \textit{F1-Score}.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \begin{center}
 \caption{Resultados de \textit{F1-Scores} para a base de imagens Produce. O método \emph{mistura} apresentou-se como o melhor.}
 \label{tab:resultados:3.3}
 \begin{tabular}{|l|c|c|}
 \hline
-\textbf{LBP Luma} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+\textbf{LBP \emph{Luma}} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
    Todos        &  91.682606 &  1.985052  \\ \hline
   Aguçamento    &  91.463371 &  2.039631  \\ \hline
   Borramento    &  91.493838 &  2.022884  \\ \hline
@@ -1247,63 +1200,62 @@ Desbalanceado   &  91.489904 &  2.028988  \\ \hline
 %-------------------------------------------------------------------------------
 \subsubsubsection{Discussão}
 
-O teste \textit{post-hoc} HSD de Tukey indicou que há relevância estatística entre os \textit{F1-Scores} da base desbalanceada quando comparada com o rebalanceamento utilizando o método de mistura ($ \textit{p-value} = 0.0087$). Mas comparado com SMOTE, o $\textit{p-value} = 0.0607$ indica que não há diferença significante entre ele e a versão original. Ainda assim, o teste resultou em $\textit{p-value} = 0.7658$ para a comparação entre o SMOTE e a geração artificial, indicando que não há significância entre os dois. De qualquer forma, tais resultados indicam que a geração artificial de \emph{mistura} obteve resultado significativo.
+O teste \textit{post-hoc} HSD de Tukey indicou que há relevância estatística entre os \textit{F1-Scores} da base desbalanceada quando comparada com o rebalanceamento utilizando o método de \emph{mistura} ($ \textit{p-value} = 0.0087$). Mas comparado com SMOTE, o $\textit{p-value} = 0.0607$ indica que não há diferença significante entre ele e a versão original. Ainda assim, o teste resultou em $\textit{p-value} = 0.7658$ para a comparação entre o SMOTE e a geração artificial, indicando que não há significância entre os dois. De qualquer forma, tais resultados indicam que a geração artificial de \emph{mistura} obteve resultado significativo.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\FloatBarrier
+% \FloatBarrier
 \subsection{Experimento 4: classes naturalmente desbalanceadas}
 
 Os experimentos anteriores foram realizados em bases já balanceadas, com o desbalancemento sendo provocado. Este experimento utiliza duas combinações de classes de imagens naturalmente desbalanceadas.
 
 % Os sub-experimentos foram realizados de forma diferente que os anteriores. Isso foi realizado indicando que o número de imagens faltantes são do \textit{fold} que não seria utilizado, caso fosse o caso de bases balanceadas (experimentos anteriores). Ou seja, todas as classes ainda continuam com \textit{5-folds} cada.
 
-\subsubsection{Duas classes}
+\subsubsection{Duas classes desbalanceadas: \textit{Eiffel Tower} e \textit{Rome antica}}
 
-Esse experimento aponta os resultados para duas classes naturalmente desbalanceadas.
+% Esse experimento aponta os resultados para duas classes naturalmente desbalanceadas.
+
+\begin{figure}[H]
+  \begin{center}
+    \subfloat[\textit{Eiffel Tower}]{
+      \includegraphics[height=4cm,keepaspectratio]{\detokenize{figuras/resultados/4/class13-1.png}}
+    }
+    \subfloat[\textit{Rome antica}]{
+      \includegraphics[height=4cm,keepaspectratio]{\detokenize{figuras/resultados/4/class41-2.png}}
+    }
+    \caption[Imagens das classes naturalmente desbalanceadas \textit{Eiffel Tower}, com 1607 imagens, e \textit{Rome antica}, com apenas 125 imagens.]{Imagens das classes naturalmente desbalanceadas \textit{Eiffel Tower}, com 1607 imagens, e \textit{Rome antica}, com apenas 125 imagens. \\ \textit{Fonte:~\citeonline{Hu2013}.}}
+    \label{fig:resultados:4.1:base}
+\end{center}
+\end{figure}
 
 \subsubsubsection{Protocolo}
 
 \begin{enumerate}
-\item \textbf{Imagens originais}: as classes utilizadas para esse experimento foram \textit{Eiffel Tower} com 1607 imagens, e \textit{Rome antica} com apenas 125 imagens \cite{Hu2013}.
-
-\begin{minipage}{\linewidth}
-\begin{figure}[H]
-  \begin{center}
-    \subfloat[\textit{Eiffel Tower}]{
-      \includegraphics[height=5cm,keepaspectratio]{\detokenize{figuras/resultados/4/class13-1.png}}
-    }
-    \subfloat[\textit{Rome antica}]{
-      \includegraphics[height=5cm,keepaspectratio]{\detokenize{figuras/resultados/4/class41-2.png}}
-    }
-    \caption[Imagens das classes \textit{Eiffel Tower} e \textit{Rome antica}.]{Imagens das classes \textit{Eiffel Tower} e \textit{Rome antica}. \\ \textit{Fonte:~\citeonline{Hu2013}.}}
-    \label{fig:resultados:4.1:base}
-\end{center}
-\end{figure}
-\end{minipage}
+\item \textbf{Imagens originais}: as classes utilizadas para esse experimento foram \textit{Eiffel Tower} com 1607 imagens, e \textit{Rome antica} com apenas 125 imagens \cite{Hu2013}. Essas classes possuem fundo similar, mas formas distintas.
 
 \item \textbf{Desbalanceamento}: natural da base. A classe minoritária é a \textit{Rome antica} com 125 imagens. Dessa forma, a cada combinação dos \textit{folds}, $1607 - 125 = 1482$ imagens foram geradas para rebalancear a base.
-\item \textbf{Método para geração artificial}: todas as gerações foram testadas, a que obteve melhor resultado foi a mistura. Essa geração está exemplificada na Figura \ref{fig:resultados:4.1:geracao}.
+
+\item \textbf{Método para geração artificial}: todas as gerações foram testadas, a que obteve melhor resultado foi a \emph{mistura}. Essa geração está exemplificada na Figura \ref{fig:resultados:4.1:geracao}.
 
 \begin{minipage}{\linewidth}
   \begin{figure}[H]
     \begin{center}
     \subfloat[Original]{
-      \includegraphics[height=3.5cm,keepaspectratio]{\detokenize{figuras/resultados/4/original-mistura.png}}
+      \includegraphics[height=3.8cm,keepaspectratio]{\detokenize{figuras/resultados/4/original-mistura.png}}
     }
     \subfloat[Original]{
-      \includegraphics[height=3.5cm,keepaspectratio]{\detokenize{figuras/resultados/4/original2-mistura.png}}
+      \includegraphics[height=3.8cm,keepaspectratio]{\detokenize{figuras/resultados/4/original2-mistura.png}}
     }
-    \subfloat[Mistura]{
-      \includegraphics[height=3.5cm,keepaspectratio]{\detokenize{figuras/resultados/4/resultado-mistura.png}}
+    \subfloat[Imagem gerada]{
+      \includegraphics[height=3.8cm,keepaspectratio]{\detokenize{figuras/resultados/4/resultado-mistura.png}}
     }
-    \caption[Exemplo de geração artificial utilizando a mistura de duas imagens para a base Produce.]{Exemplo de geração artificial utilizando a mistura de duas imagens para a base Produce. \\ \textit{Fonte:~Elaborado pela autora.}}
+    \caption[Exemplo de geração artificial utilizando a \emph{mistura} de duas imagens para a base Produce.]{Exemplo de geração artificial utilizando a \emph{mistura} de duas imagens para a base Produce. \\ \textit{Fonte:~Elaborado pela autora.}}
     \label{fig:resultados:4.1:geracao}
     \end{center}
   \end{figure}
 \end{minipage}
 
 \item \textbf{Conversão em escala de cinza}: todos os métodos foram testados. O que obteve melhor \textit{F1-Score} foi o MSB.
-\item \textbf{Extração de características}: todos os métodos para extração foram testados. Porém, HOG foi o melhor método para tal.
+\item \textbf{Extração de características}: de todos os métodos para extração testados, o HOG obteve os melhores resultados. Isso confirma que as classes são diferenciadas pela sua forma.
 \item \textbf{Classificação}: KNN com $K=1$.
 \end{enumerate}
 
@@ -1312,9 +1264,9 @@ Esse experimento aponta os resultados para duas classes naturalmente desbalancea
 
 O rebalanceamento foi realizado de forma a balancear a classe minoritária \textit{Rome antica}. A Tabela \ref{tab:resultados:4.1} apresenta os resultados de tal rebalanceamento. Nela estão os resultados de média e desvio padrão do rebalanceamento realizado com a combinação dos \textit{folds} das duas classes. O método que obteve maior valor de \textit{F1-Score} foi o de geração artificial com o método de \emph{mistura} de duas imagens.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \begin{center}
-\caption{Resultados de \textit{F1-Score} para as classes \textit{Eiffel Tower} e \textit{Rome antica}, naturalmente desbalanceadas.}
+\caption{Resultados de \textit{F1-Score} para as classes \textit{Eiffel Tower} e \textit{Rome antica}, naturalmente desbalanceadas. O método \textit{mistura} destacou-se como o melhor método para rebalanceamento dessas classes.}
 \label{tab:resultados:4.1}
 \begin{tabular}{|l|c|c|}
 \hline
@@ -1345,42 +1297,40 @@ Desbalanceado   &  97.173480 &  2.760269  \\ \hline
 
 Apesar de valores de \textit{F1-Score} próximos, de acordo com o teste \textit{post-hoc} de Tukey, foi encontrado $\textit{p-value} = 0.0030$ para a base desbalanceada quando comparado com o rebalanceamento com SMOTE. Isso indica que há significância estatística relevante entre eles. O teste também indicou que há significância entre a base desbalanceada e ela rebalanceada com a geração artificial ($\textit{p-value} = 0.0000$). Porém, se comparados o SMOTE e a geração artificial temos $\textit{p-value} = 0.2255$, indicando que não há diferença significante.
 
-\subsubsection{Multiclasses}
-Esse experimento aponta os resultados para três classes naturalmente desbalanceadas.
+\subsubsection{Multiclasses desbalanceadas: \textit{Trafalgar Square}, \textit{Madeleine Church} e \textit{Pantheon}}
+% Esse experimento apresenta os resultados encontrados ao utilizar três classes naturalmente desbalanceadas.
+
+\begin{figure}[H]
+  \begin{center}
+    \subfloat[Trafalgar Square]{
+      \includegraphics[height=3.8cm,keepaspectratio]{\detokenize{figuras/resultados/4/trafalgar.png}}
+    }
+    \subfloat[Madeleine Church]{
+      \includegraphics[height=3.8cm,keepaspectratio]{\detokenize{figuras/resultados/4/madeleine.png}}
+    }
+    \subfloat[Pantheon]{
+      \includegraphics[height=3.8cm,keepaspectratio]{\detokenize{figuras/resultados/4/pantheon.png}}
+    }
+    \caption[Imagens representativas das classes \textit{Trafalgar Square}, \textit{Madeleine Church} e \textit{Pantheon}. Elas contêm tanto imagens parecidas (difícil classificação), quanto imagens bem divergentes (fácil diferenciação).]{Imagens representativas das classes \textit{Trafalgar Square}, \textit{Madeleine Church} e \textit{Pantheon}. Elas contêm tanto imagens parecidas (difícil classificação), quanto imagens bem divergentes (fácil diferenciação). \\ \textit{Fonte:~\citeonline{Hu2013}.}}
+    \label{fig:resultados:4.2:base}
+\end{center}
+\end{figure}
 
 \subsubsubsection{Protocolo}
 \begin{enumerate}
 
-\item \textbf{Imagens originais}: foram utilizadas \textit{Trafalgar Square}, \textit{Madeleine Church} e \textit{Pantheon} \cite{Hu2013}. Essas classes são apresentadas na Figura \ref{fig:resultados:4.2:base}. Vale notar que algumas imagens são muito parecidas (difícil classificação), mas as classes também contêm imagens bem divergentes (fácil diferenciação).
+\item \textbf{Imagens originais}: foram utilizadas \textit{Trafalgar Square}, \textit{Madeleine Church} e \textit{Pantheon} \cite{Hu2013}. Essas classes são apresentadas na Figura \ref{fig:resultados:4.2:base}. Elas contêm tanto imagens parecidas (difícil classificação), quanto imagens bem divergentes (fácil diferenciação).
 
-\begin{minipage}{\linewidth}
-\begin{figure}[H]
-  \begin{center}
-    \subfloat[Trafalgar Square]{
-      \includegraphics[height=3.5cm,keepaspectratio]{\detokenize{figuras/resultados/4/trafalgar.png}}
-    }
-    \subfloat[Madeleine Church]{
-      \includegraphics[height=3.5cm,keepaspectratio]{\detokenize{figuras/resultados/4/madeleine.png}}
-    }
-    \subfloat[Pantheon]{
-      \includegraphics[height=3.5cm,keepaspectratio]{\detokenize{figuras/resultados/4/pantheon.png}}
-    }
-    \caption[Imagens representativas das classes \textit{Trafalgar Square}, \textit{Madeleine Church} e \textit{Pantheon}.]{Imagens representativas das classes \textit{Trafalgar Square}, \textit{Madeleine Church} e \textit{Pantheon}. \\ \textit{Fonte:~\citeonline{Hu2013}.}}
-    \label{fig:resultados:4.2:base}
-\end{center}
-\end{figure}
-\end{minipage}
+\item \textbf{Desbalanceamento}: natural da base. A classe \textit{Trafalgar Square} contém 132 imagens, a \textit{Madeleine Church} 316 e a \textit{Pantheon} 23. Para rebalancear foram necessárias $316 - 132 = 147$ imagens para a \textit{Trafalgar Square} e $316 - 23 = 234$ para a classe \textit{Pantheon}.
 
-\item \textbf{Desbalanceamento}: natural da base. A classe \textit{Trafalgar Square} contém 132 imagens, a \textit{Madeleine Church} 316 e a \textit{Pantheon} 23. Assim, para rebalancear, foram necessários gerar $316 - 132 = 147$ imagens para a \textit{Trafalgar Square} e $316 - 23 = 234$ para a classe \textit{Pantheon}.
-
-\item \textbf{Método para geração artificial}: todas as gerações foram testadas, mas a melhor foi a de composição de quatro imagens, retratada na Figura \ref{fig:resultados:4.2:geracao}.
+\item \textbf{Método para geração artificial}: todas as gerações foram testadas, mas a melhor foi a de \emph{composição} de quatro imagens, retratada na Figura \ref{fig:resultados:4.2:geracao}.
 
 \begin{figure}[!htbp]
   \begin{center}
   \subfloat{
     \includegraphics[width=.5\linewidth]{\detokenize{figuras/resultados/4/resultado-composicao.png}}
   }
-  \caption[Exemplo de geração artificial realizada com a composição de quatro imagens para a classe \textit{Pantheon}.]{Exemplo de geração artificial realizada com a composição de quatro imagens para a classe \textit{Pantheon}. \\ \textit{Fonte:~Elaborado pela autora.}}
+  \caption[Exemplo de geração artificial realizada com a \emph{composição} de quatro imagens para a classe \textit{Pantheon}.]{Exemplo de geração artificial realizada com a \emph{composição} de quatro imagens para a classe \textit{Pantheon}. \\ \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:resultados:4.2:geracao}
   \end{center}
 \end{figure}
@@ -1393,9 +1343,9 @@ Esse experimento aponta os resultados para três classes naturalmente desbalance
 %-------------------------------------------------------------------------------
 \subsubsubsection{Resultados}
 
-Os melhores métodos para extração e conversão em escala de cinza foram HOG e \emph{Gleam}, respectivamente. O método de geração artificial de imagens que obteve o melhor \textit{F1-Score} foi a composição de quatro imagens e a Tabela \ref{tab:resultados:4.2} apresenta tais resultados. O método SMOTE piorou significativamente a classificação, mas a geração artificial ficou muito similar a classificação sem gerar imagem nenhuma.
+Os melhores métodos para extração e conversão em escala de cinza foram HOG e \emph{Gleam}, respectivamente. O método de geração artificial de imagens que obteve o melhor \textit{F1-Score} foi a \emph{composição} de quatro imagens e a Tabela \ref{tab:resultados:4.2} apresenta tais resultados. O método SMOTE piorou significativamente a classificação, mas a geração artificial ficou muito similar a classificação sem gerar imagem nenhuma.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \begin{center}
 \caption{Resultados utilizando os métodos HOG e \textit{Gleam} para as classes \textit{Trafalgar Square}, \textit{Madeleine Church} e \textit{Pantheon}. O método SMOTE piorou significativamente a classificação, mas a geração artificial ficou muito similar a classificação sem gerar imagem nenhuma.}
 \label{tab:resultados:4.2}
@@ -1420,43 +1370,36 @@ Desbalanceado   &  70.621480 &  8.314352  \\ \hline
 
 %-------------------------------------------------------------------------------
 \subsubsubsection{Discussão}
-% Tukey HSD Post-hoc Test...
-% Desbalanceado vs SMOTE: Diff=-8.2986, 95%CI=-11.4785 to -5.1187, \textit{p-value} =0.0000
-% Desbalanceado vs Geração artificial: Diff=0.2156, 95%CI=-2.9643 to 3.3956, \textit{p-value} =0.9858
-% SMOTE vs Geração artificial: Diff=8.5143, 95%CI=5.3343 to 11.6942, \textit{p-value} =0.0000
-
-Utilizando o teste \textit{post-hoc} de Tukey, foi encontrado $\textit{p-value} = 0.0000$ para a base desbalanceada versus o rebalanceamento com SMOTE. Isso indica que há significância estatística relevante entre eles. O teste também indicou que não há significância entre a base desbalanceada e ela rebalanceada com a geração artificial ($\textit{p-value} = 0.9858$). Além disso, se comparados o SMOTE e a geração artificial temos $\textit{p-value} = 0.0000$, indicando que há diferença significante. Ou seja, o método SMOTE foi significativamente pior que a base original e o método de geração artificial teve uma melhora não estatisticamente significativa.
+Utilizando o teste \textit{post-hoc} de Tukey, foi encontrado $\textit{p-value} = 0.0$ para a base desbalanceada versus o rebalanceamento com SMOTE. Isso indica que há significância estatística relevante entre eles. O teste também indicou que não há significância entre a base desbalanceada e ela rebalanceada com a geração artificial ($\textit{p-value} = 0.9858$). Além disso, se comparados o SMOTE e a geração artificial temos $\textit{p-value} = 0.0$, indicando que há diferença significante. Ou seja, o método SMOTE foi significativamente pior que a base original e o método de geração artificial teve uma melhora não estatisticamente significativa.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\FloatBarrier
+% \FloatBarrier
 \subsection{Experimento 5: classes com muitas imagens}
 
 Por fim, este experimento foi realizado com duas classes contendo uma grande quantidade de imagens.
 
-\subsubsection{Classes bem discriminadas}
-Esse experimento relata os resultados encontrados para duas classes balanceadas, com grande número de imagens cada.
+\subsubsection{Classes balanceadas, distintas e com grande número de imagens}
+% Esse experimento relata os resultados encontrados para duas classes balanceadas, com grande número de imagens cada.
+
+\begin{figure}[H]
+  \begin{center}
+  \subfloat[Cervo]{
+    \includegraphics[width=.1\linewidth]{\detokenize{figuras/resultados/5/cervo.png}}
+  }
+  \subfloat[Navio]{
+    \includegraphics[width=.1\linewidth]{\detokenize{figuras/resultados/5/navio.png}}
+  }
+  \caption[Imagens representativas das classes \textit{Deer} e \textit{Ship}. São imagens em baixa resolução (32x32 pixels), o que dificulta o seu processamento e posterior clasificação.]{Imagens representativas das classes \textit{Deer} e \textit{Ship}. São imagens em baixa resolução (32x32 pixels), o que dificulta o seu processamento e posterior clasificação. \\ \textit{Fonte:~\citeonline{Krizhevsky2009}}.}
+  \label{fig:resultados:5.1:base}
+  \end{center}
+\end{figure}
 
 \subsubsubsection{Protocolo}
 
 \begin{enumerate}
 \item \textbf{Imagens originais}: classes \textit{Deer} e \textit{Ship}, cada uma com 5000 imagens cada \cite{Krizhevsky2009}. Essas imagens possuem dimensão de apenas 32x32 pixels, o que dificulta a representatividade da extração de características (ver Figura \ref{fig:resultados:5.1:base}).
 
-\begin{minipage}{\linewidth}
-  \begin{figure}[H]
-    \begin{center}
-    \subfloat[Cervo]{
-      \includegraphics[width=.1\linewidth]{\detokenize{figuras/resultados/5/cervo.png}}
-    }
-    \subfloat[Navio]{
-      \includegraphics[width=.1\linewidth]{\detokenize{figuras/resultados/5/navio.png}}
-    }
-    \caption[Imagens representativas das classes \textit{Deer} e \textit{Ship}.]{Imagens representativas das classes \textit{Deer} e \textit{Ship}. \\ \textit{Fonte:~\citeonline{Krizhevsky2009}}.}
-    \label{fig:resultados:5.1:base}
-    \end{center}
-\end{figure}
-\end{minipage}
-
-\item \textbf{Desbalanceamento}: são classes balanceadas. Por conta disso, todas as combinações dos 5 \textit{folds} foram testadas (40).
+\item \textbf{Desbalanceamento}: são classes balanceadas. Por conta disso, todas as combinações dos 5 \textit{folds} foram testadas.
 
 \item \textbf{Método para geração artificial}: a operação de \textit{aguçamento} obteve maiores valores de \textit{F1-Score} dentre todos os métodos de rebalanceamento.
 
@@ -1469,7 +1412,7 @@ Esse experimento relata os resultados encontrados para duas classes balanceadas,
 %     \subfloat[Aguçcamento]{
 %       \includegraphics[height=3.5cm,keepaspectratio]{\detokenize{figuras/resultados/5/resultado-agucamento.png}}
 %     }
-%     \caption[Exemplo de geração artificial utilizando a mistura de duas imagens para a base Produce.]{Exemplo de geração artificial utilizando a mistura de duas imagens para a base Produce. \\ \textit{Fonte:~Elaborado pela autora.}}
+%     \caption[Exemplo de geração artificial utilizando a \emph{mistura} de duas imagens para a base Produce.]{Exemplo de geração artificial utilizando a \emph{mistura} de duas imagens para a base Produce. \\ \textit{Fonte:~Elaborado pela autora.}}
 %     \label{fig:resultados:5.1:geracao}
 %     \end{center}
 %   \end{figure}
@@ -1485,11 +1428,11 @@ Esse experimento relata os resultados encontrados para duas classes balanceadas,
 %-------------------------------------------------------------------------------
 \subsubsubsection{Resultados}
 
-Os resultados encontrados ao rebalancear as classes \textit{Deer} e \textit{Ship} estão apresentados na Tabela \ref{tab:resultados:5.1}. O método de rebalanceamento com \emph{aguçamento} resultou em maior valor de \textit{F1-Score}.
+Os resultados encontrados ao rebalancear as classes \textit{Deer} e \textit{Ship} estão apresentados na Tabela \ref{tab:resultados:5.1}. Os rebalanceamentos com imagens artificiais geradas com os métodos \emph{aguçamento} \textit{mistura limiarizada} e \textit{mistura ponderada} apresentaram os melhores resultados.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \begin{center}
-\caption{Resultados de \textit{F1-Score} para as classes \textit{Deer} e \textit{Ship}, utilizando \emph{Gleam} como método para conversão em escala de cinza e HOG para extração de características}
+\caption{Resultados de \textit{F1-Score} para as classes \textit{Deer} e \textit{Ship}, utilizando \emph{Gleam} como método para conversão em escala de cinza e HOG para extração de características. As gerações de imagens com \textit{aguçamento}, \textit{mistura limiarizada} e \textit{mistura ponderada} obtiveram os melhores resultados.}
 \label{tab:resultados:5.1}
 \begin{tabular}{|l|c|c|}
 \hline
@@ -1499,8 +1442,8 @@ Os resultados encontrados ao rebalancear as classes \textit{Deer} e \textit{Ship
   Borramento    &  88.150530 &  1.006920  \\ \hline
   Composição 16 &  88.086065 &  0.987147  \\ \hline
   Composição 4  &  88.360675 &  0.949842  \\ \hline
-  Limiares      &  89.356875 &  0.942907  \\ \hline
-  Mistura       &  89.445505 &  0.939809  \\ \hline
+  Limiares      &  \textbf{89.356875} &  0.942907  \\ \hline
+  Mistura       &  \textbf{89.445505} &  0.939809  \\ \hline
   Ruído         &  86.762190 &  1.165064  \\ \hline
   SMOTE Visual  &  88.395965 &  1.081594  \\ \hline
   Saliência     &  88.136675 &  0.988034  \\ \hline
@@ -1513,54 +1456,47 @@ Desbalanceado   &  88.121310 &  0.985599  \\ \hline
 %-------------------------------------------------------------------------------
 \subsubsubsection{Discussão}
 
-% Tukey HSD Post-hoc Test...
-% Desbalanceado vs SMOTE: Diff=-24.9374, 95%CI=-25.7736 to -24.1012, \textit{p-value} =0.0000
-% Desbalanceado vs Geração artificial: Diff=1.3518, 95%CI=0.5155 to 2.1880, \textit{p-value} =0.0006
-% SMOTE vs Geração artificial: Diff=26.2892, 95%CI=25.4529 to 27.1254, \textit{p-value} =0.0000
+Ao realizar o teste \textit{post-hoc} de Tukey, foi encontrado $\textit{p-value} = 0.0$ para a base desbalanceada quando comparada com o rebalanceamento com SMOTE. Isso indica que há significância estatística relevante entre eles e também entre a base desbalanceada e ela rebalanceada com a geração artificial ($\textit{p-value} = 0.0006$). Além disso, se comparados o SMOTE e a geração artificial tem-se $\textit{p-value} = 0.0$, indicando que há diferença significante. Assim, os resultados apontam que SMOTE piorou significativamente a classificação, enquanto a geração artificial forneceu uma melhora considerável.
 
-Ao realizar o teste \textit{post-hoc} de Tukey, foi encontrado $\textit{p-value} = 0.0000$ para a base desbalanceada quando comparada com o rebalanceamento com SMOTE. Isso indica que há significância estatística relevante entre eles e também entre a base desbalanceada e ela rebalanceada com a geração artificial ($\textit{p-value} = 0.0006$). Além disso, se comparados o SMOTE e a geração artificial tem-se $\textit{p-value} = 0.0000$, indicando que há diferença significante. Assim, os resultados apontam que SMOTE piorou significativamente a classificação, enquanto a geração artificial causou uma melhora considerável.
+\subsubsection{Classes balanceadas, similares e com grande número de imagens}
+% Esse experimento indica os resultados para duas classes balanceadas, com grande número de imagens cada.
 
-\subsubsection{Classes similares}
-Esse experimento indica os resultados para duas classes balanceadas, com grande número de imagens cada.
+\begin{figure}[H]
+  \begin{center}
+    \subfloat[Tubarão]{
+      \includegraphics[height=4cm,keepaspectratio]{\detokenize{figuras/resultados/5/tubarao.png}}
+    }
+    \subfloat[Peixe]{
+      \includegraphics[height=4cm,keepaspectratio]{\detokenize{figuras/resultados/5/peixe.png}}
+    }
+    \caption[Imagens das classes \textit{Shark} e \textit{Fish}. Essas classes apresentam fundo similar.]{Imagens das classes \textit{Shark} e \textit{Fish}. Essas classes apresentam fundo similar. \\ \textit{Fonte:~\citeonline{Russakovsky2015}.}}
+    \label{fig:resultados:5.2:base}
+\end{center}
+\end{figure}
 
 \subsubsubsection{Protocolo}
 
 \begin{enumerate}
 \item \textbf{Imagens originais}: classes \textit{Shark} e \textit{Fish} com 1300 imagens cada \cite{Russakovsky2015}. Essas classes são exemplificadas na Figura \ref{fig:resultados:5.2:base}.
 
-\begin{minipage}{\linewidth}
-\begin{figure}[H]
-  \begin{center}
-    \subfloat[Tubarão]{
-      \includegraphics[height=4.5cm,keepaspectratio]{\detokenize{figuras/resultados/5/tubarao.png}}
-    }
-    \subfloat[Peixe]{
-      \includegraphics[height=4.5cm,keepaspectratio]{\detokenize{figuras/resultados/5/peixe.png}}
-    }
-    \caption[Imagens das classes \textit{Shark} e \textit{Fish}.]{Imagens das classes \textit{Shark} e \textit{Fish}. \\ \textit{Fonte:~\citeonline{Russakovsky2015}.}}
-    \label{fig:resultados:5.2:base}
-\end{center}
-\end{figure}
-\end{minipage}
-
 \item \textbf{Desbalanceamento}: as duas classes estão balanceadas. Assim, esse experimento realizou a combinação dos 5 \textit{folds} de cada classe para testar o rebalanceamento.
 
-\item \textbf{Método para geração artificial}: a \emph{combinação de limiares} (ver Figura \ref{fig:resultados:5.2:geracao}) foi o método de geração artificial que obteve maior \textit{F1-Score}.
+\item \textbf{Método para geração artificial}: a \emph{mistura limiarizada} foi o método de geração artificial que obteve maior \textit{F1-Score}, exemplificada na Figura~\ref{fig:resultados:5.2:geracao}.
 
-\begin{minipage}{\linewidth}
-  \begin{figure}[H]
+% \begin{minipage}{\linewidth}
+  \begin{figure}[!htbp]
     \begin{center}
     \subfloat[Original]{
-      \includegraphics[height=4.5cm,keepaspectratio]{\detokenize{figuras/resultados/5/original-limiares.png}}
+      \includegraphics[height=4cm,keepaspectratio]{\detokenize{figuras/resultados/5/original-limiares.png}}
     }
-    \subfloat[Combinação de limiares]{
-      \includegraphics[height=4.5cm,keepaspectratio]{\detokenize{figuras/resultados/5/resultado-limiares.png}}
+    \subfloat[Imagem gerada]{
+      \includegraphics[height=4cm,keepaspectratio]{\detokenize{figuras/resultados/5/resultado-limiares.png}}
     }
-    \caption[Exemplo de geração artificial utilizando a mistura de duas imagens para a base Produce.]{Exemplo de geração artificial utilizando a mistura de duas imagens para a classe \textit{Fish}. \\ \textit{Fonte:~Elaborado pela autora.}}
+    \caption[Exemplo de geração artificial utilizando a \emph{mistura limiarizada} de duas imagens para a classe \textit{Fish}. Por se tratarem de imagens com \textit{foreground} facilmente destacado, a combinação de limiares oferece uma mistura interessante dos objetos.]{Exemplo de geração artificial utilizando a \emph{mistura limiarizada} de duas imagens para a classe \textit{Fish}. Por se tratarem de imagens com \textit{foreground} facilmente destacado, a combinação de limiares oferece uma mistura interessante dos objetos. \\ \textit{Fonte:~Elaborado pela autora.}}
     \label{fig:resultados:5.2:geracao}
     \end{center}
   \end{figure}
-\end{minipage}
+% \end{minipage}
 
 \item \textbf{Conversão em escala de cinza}: todos os métodos de conversão em escala de cinza foram testados. O que resultou em melhor \textit{F1-Score} foi o \emph{Luma}.
 
@@ -1572,15 +1508,15 @@ Esse experimento indica os resultados para duas classes balanceadas, com grande 
 %-------------------------------------------------------------------------------
 \subsubsubsection{Resultados}
 
-A Tabela \ref{tab:resultados:5.2} apresenta a média e o desvio padrão encontrados ao rebalancear as classes \textit{Shark} e \textit{Fish}. Pode ser verificado que a geração artificial com o método de \emph{mistura} aparenta ser o melhor método para rebalanceá-las.
+A Tabela \ref{tab:resultados:5.2} apresenta a média e o desvio padrão encontrados ao rebalancear as classes \textit{Shark} e \textit{Fish}. Pode ser verificado que a geração artificial com a \emph{mistura limiarizada} aparenta ser o melhor método para rebalanceá-las.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \begin{center}
-\caption{Resultados de \textit{F1-Score} para as classes \textit{Shark} e \textit{Fish}. A geração artificial com o método de \emph{mistura} aparenta ser o melhor método para rebalanceá-las.}
+\caption{Resultados de \textit{F1-Score} para as classes \textit{Shark} e \textit{Fish}. A geração artificial com a \emph{mistura limiarizada} apresenta-se como o melhor método para rebalanceá-las.}
 \label{tab:resultados:5.2}
 \begin{tabular}{|l|c|c|}
 \hline
-\textbf{LBP Luma} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
+\textbf{LBP \emph{Luma}} & \textbf{Média}     & \textbf{Desvio Padrão} \\ \hline
    Todos        &  77.128293 &  2.064232  \\ \hline
   Aguçamento    &  76.862198 &  1.786898  \\ \hline
   Borramento    &  73.919025 &  1.942236  \\ \hline
@@ -1600,12 +1536,7 @@ Desbalanceado   &  73.378227 &  2.110355  \\ \hline
 %-------------------------------------------------------------------------------
 \subsubsubsection{Discussão}
 
-% Tukey HSD Post-hoc Test...
-% Desbalanceado vs SMOTE: Diff=4.6887, 95%CI=3.6261 to 5.7513, \textit{p-value} =0.0000
-% Desbalanceado vs Geração artificial: Diff=4.9522, 95%CI=3.8896 to 6.0148, \textit{p-value} =0.0000
-% SMOTE vs Geração artificial: Diff=0.2636, 95%CI=-0.7990 to 1.3262, \textit{p-value} =0.8264
-
-Como esperado, de acordo com o teste \textit{post-hoc} de Tukey foi encontrado $\textit{p-value} = 0.0000$ para a base desbalanceada quando comparada com o SMOTE. Isso indica que há significância estatística relevante entre eles. Tal teste também indicou que há significância entre a base desbalanceada e ela rebalanceada com a geração artificial ($\textit{p-value} = 0.0000$). Porém, não há diferença significante na comparação entre o SMOTE e a geração artificial ($\textit{p-value} = 0.8264$). Assim, ambos métodos rebalancearam as classes satisfatoriamente.
+Como esperado, de acordo com o teste \textit{post-hoc} de Tukey foi encontrado $\textit{p-value} = 0.0$ para a base desbalanceada quando comparada com o SMOTE. Isso indica que há significância estatística relevante entre eles. Tal teste também indicou que há significância entre a base desbalanceada e ela rebalanceada com a geração artificial ($\textit{p-value} = 0.0$). Porém, não há diferença significante na comparação entre o SMOTE e a geração artificial ($\textit{p-value} = 0.8264$). Assim, ambos métodos rebalancearam as classes satisfatoriamente.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \FloatBarrier
@@ -1631,9 +1562,9 @@ Como esperado, de acordo com o teste \textit{post-hoc} de Tukey foi encontrado $
 
 %-------------------------------------------------------------------------------
 
-% Também foi possível notar que algumas operações não provocaram a melhora da classificação. A operação de adição de ruído para geração artificial, a posterior extração utilizando CCV e a quantização por MSB, destacou-se como o pior resultado, apresentado na Figura~\ref{fig:resultpior}. Outros casos que não obtiveram o resultado esperado envolveram as operações de borramento e de \textit{unsharp masking}.
+% Também foi possível notar que algumas operações não provocaram a melhora da classificação. A operação de \emph{adição de ruído} para geração artificial, a posterior extração utilizando CCV e a quantização por MSB, destacou-se como o pior resultado, apresentado na Figura~\ref{fig:resultpior}. Outros casos que não obtiveram o resultado esperado envolveram as operações de \emph{borramento} e de \textit{unsharp masking}.
 
-% Após a realização dos testes, as operações que melhor se destacaram foram: utilizar todas as operações, apenas mistura e apenas composição. E as operações que resultaram em uma classificação pior do que o uso do SMOTE foram: utilizar apenas borramento, ruído ou \textit{unsharp masking}. Com o teste estatístico de Friedman foi possível verificar que o ACC foi o extrator que melhor se beneficiou das características geradas; e CCV e GCH os menos beneficiados. \enlargethispage{-\baselineskip} A Tabela \ref{tab:result} apresenta os \textit{rankings} encontrados por este teste para todas as execuções das melhores operações. O p-valor computado corresponde a $4.24E^{-11}$, assim a hipótese nula de que não há diferença entre as execuções foi rejeitada. Vale destacar que para algumas execuções, o teste de Friedman retornou o \textit{ranking}: geração artificial (1), SMOTE (2) e imagens originais (3), ou seja, sem que SMOTE e a geração artificial concorressem pela mesma posição, diferente da tabela apresentada.
+% Após a realização dos testes, as operações que melhor se destacaram foram: utilizar todas as operações, apenas \emph{mistura} e apenas \emph{composição}. E as operações que resultaram em uma classificação pior do que o uso do SMOTE foram: utilizar apenas \emph{borramento}, ruído ou \textit{unsharp masking}. Com o teste estatístico de Friedman foi possível verificar que o ACC foi o extrator que melhor se beneficiou das características geradas; e CCV e GCH os menos beneficiados. \enlargethispage{-\baselineskip} A Tabela \ref{tab:result} apresenta os \textit{rankings} encontrados por este teste para todas as execuções das melhores operações. O p-valor computado corresponde a $4.24E^{-11}$, assim a hipótese nula de que não há diferença entre as execuções foi rejeitada. Vale destacar que para algumas execuções, o teste de Friedman retornou o \textit{ranking}: geração artificial (1), SMOTE (2) e imagens originais (3), ou seja, sem que SMOTE e a geração artificial concorressem pela mesma posição, diferente da tabela apresentada.
 %
 % \begin{table}[htb]
 % \centering
@@ -1660,6 +1591,6 @@ Como esperado, de acordo com o teste \textit{post-hoc} de Tukey foi encontrado $
 %-------------------------------------------------------------------------------
 \section{Considerações finais}
 
-Esse capítulo descreveu como o rebalanceamento é realizado, através da geração de imagens artificiais para a classe (ou classes) minoritárias, utilizando-as assim para o treinamento. Os métodos para gerar tais imagens foram apresentados e exemplificados. Foram também descritos os algoritmos, parâmetros utilizados, limitações e métodos relacionados a cada um destes algoritmos.
+Este capítulo descreveu como o rebalanceamento é realizado, através da geração de imagens artificiais para a classe minoritária e utilizando-a para o treinamento. Os métodos para gerar tais imagens foram apresentados e exemplificados. Foram também descritos os algoritmos e seus parâmetros, limitações e métodos relacionados.
 
-Este estudo apresentou evidências experimentais de que, em problemas de duas classes, pode haver ganho estatístico do \textit{F1-Score} ao gerar imagens, quando comparado à geração de exemplos artificiais no espaço de atributos (ou seja, depois que as características já foram extraídas das imagens). Além disso, na maioria dos experimentos, a geração artificial obteve significância estatística relevante quando comparada a base desbalanceada. Com os experimentos realizados foi possível notar que a geração de imagens artificiais pode gerar novas informações para a classificação das imagens. O que indica que um estudo aprofundado de cada contexto pode relatar quais operações podem ser aplicadas nas imagens originais de forma a auxiliar o cenário de bases desbalanceadas.
+Este estudo apresentou evidências experimentais de que pode haver ganho estatístico do \textit{F1-Score} ao gerar imagens, quando comparado à geração de exemplos artificiais no espaço de atributos (ou seja, depois que as características já foram extraídas das imagens). Além disso, na maioria dos experimentos, a geração artificial obteve significância estatística relevante quando comparada a base desbalanceada. Com os experimentos realizados foi possível notar que a geração de imagens artificiais pode gerar novas informações para a classificação das imagens. O que indica que um estudo aprofundado de cada contexto pode relatar quais operações podem ser aplicadas nas imagens originais de forma a auxiliar o cenário de bases desbalanceadas.
