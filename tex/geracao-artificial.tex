@@ -581,7 +581,7 @@ Neste experimento foram utilizadas duas classes de fácil diferenciação, poré
 %-------------------------------------------------------------------------------
 \subsubsection*{Protocolo}
 \begin{enumerate}
-\item \textbf{Imagens originais}: classes \emph{Horse} e \emph{Elephant} da base de imagens Corel, exemplificadas na Figura \ref{fig:resultados:1:base} \cite{Wang2001}. A principal característica dessas imagens é a diferença de cores, contendo pequeno grau de sobreposição.
+\item \textbf{Imagens originais}: classes \emph{Horse} e \emph{Elephant} da base de imagens Corel-1000, exemplificadas na Figura \ref{fig:resultados:1:base} \cite{Wang2001}. A principal característica dessas imagens é a diferença de cores, contendo pequeno grau de sobreposição.
 
 
 \begin{figure}[!htbp]
@@ -961,7 +961,7 @@ De acordo com o teste HSD de Tukey realizado, foi encontrado $\textit{p-value} =
 % \FloatBarrier
 \subsection{Experimento 3: multiclasses}
 
-Os dois experimentos anteriores analisaram o rebalanceamento de apenas duas classes. Este experimento apresenta a geração artificial de imagens aplicada a três bases multiclasses: Corel, Caltech101-600 e Produce. Seus resultados são discutidos individualmente.
+Os dois experimentos anteriores analisaram o rebalanceamento de apenas duas classes. Este experimento apresenta a geração artificial de imagens aplicada a três bases multiclasses: Corel-1000, Caltech101-600 e Produce. Seus resultados são discutidos individualmente.
 
 As bases são originalmente balanceadas, portanto a cada combinação dos \textit{folds}, uma classe é considerada minoritária e três dos seus \textit{folds} são descartados. Restando, dessa forma, um para treino e um para teste. Isso permitiu testar as bases como desbalanceadas.
 
@@ -1010,11 +1010,11 @@ As bases são originalmente balanceadas, portanto a cada combinação dos \texti
 %-------------------------------------------------------------------------------
 \subsubsubsection*{Resultados}
 
-Ao realizar o experimento com as 10 classes da base Corel, a combinação de \emph{Gleam} para conversão em escala de cinza; e LBP como método de extração de características, resultou em melhores \textit{F1-Scores}. A Tabela \ref{tab:resultados:3.1} apresenta a média e o desvio padrão dos \textit{F1-Scores} encontrados nesse experimento. Note que a geração artificial com o método \emph{mistura} obteve \textit{F1-Score} similar ao SMOTE.
+Ao realizar o experimento com as 10 classes da base Corel-1000, a combinação de \emph{Gleam} para conversão em escala de cinza; e LBP como método de extração de características, resultou em melhores \textit{F1-Scores}. A Tabela \ref{tab:resultados:3.1} apresenta a média e o desvio padrão dos \textit{F1-Scores} encontrados nesse experimento. Note que a geração artificial com o método \emph{mistura} obteve \textit{F1-Score} similar ao SMOTE.
 
 \begin{table}[!htbp]
 \begin{center}
-\caption{Resultados de \textit{F1-Score} para as 10 classes da Corel, utilizando \emph{Gleam} como método para conversão em escala de cinza e LBP para extração de características. A geração artificial com o método \emph{mistura} obteve \textit{F1-Score} similar ao SMOTE.}
+\caption{Resultados de \textit{F1-Score} para as 10 classes da Corel-1000, utilizando \emph{Gleam} como método para conversão em escala de cinza e LBP para extração de características. A geração artificial com o método \emph{mistura} obteve \textit{F1-Score} similar ao SMOTE.}
 \label{tab:resultados:3.1}
 \begin{tabular}{|l|c|c|}
 \hline
@@ -1598,24 +1598,25 @@ Essa tabela considera que diferenças não significativas do valor do \textit{F1
 
 \begin{table}[!htbp]
 \centering
-\caption{Apresenta a média dos \textit{F1-Scores} para cada método. É possível verificar que, no cenário multiclasses, apesar de ter sido o melhor método em relação à sua posição, o SMOTE apresentou piores resultados mesmo comparando com as bases desbalanceadas.}
+\caption{Apresenta a média dos \textit{F1-Scores} para cada método, ordenada pela coluna de todos os experimentos. É possível verificar que, no cenário multiclasses, apesar de ter sido o melhor método em relação à sua posição, o SMOTE apresentou piores resultados mesmo comparando com as bases desbalanceadas.}
 \label{tab:allfscore}
 \begin{tabular}{|l|c|c|c|}
 \hline
-\textbf{Métodos} & \textbf{Cenários de duas classes} & \textbf{Cenário Multiclasses} & \textbf{Todos}         \\ \hline
-Todos            & 82,358089                    & 71,943913                & 77,729566         \\ \hline
-Aguçamento       & \textbf{84,473575}           & \textbf{74,817653}       & \textbf{80,182054} \\ \hline
-Borramento       & 82,164793                    & 74,555320                & 78,782805         \\ \hline
-Composição 16    & 82,977849                    & 74,581911                & 79,246321         \\ \hline
-Composição 4     & 83,123738                    & 74,667785                & 79,365536         \\ \hline
-Limiares         & 84,332407                    & 74,472473                & 79,950214         \\ \hline
-Mistura          & 83,124581                    & 74,045886                & 79,089606         \\ \hline
-Ruído            & 81,179246                    & 72,609639                & 77,370532         \\ \hline
-Saliência        & 84,172238                    & 74,248645                & 79,761752         \\ \hline
-SMOTE Visual     & 78,811666                    & 70,439603                & 75,090749         \\ \hline
-SMOTE            & 79,085500                    & 73,329079                & 76,527091         \\ \hline
-Desbalanceado    & 81,314334                    & 74,551505                & 78,308632         \\ \hline
+\multicolumn{1}{|c|}{\textbf{Métodos}} & \textbf{Cenários de duas classes} & \textbf{Cenário Multiclasses} & \textbf{Todos} \\ \hline
+Aguçamento                             & 84,473575                         & 74,817654                     & 80,182055      \\ \hline
+Limiares                               & 84,332408                         & 74,472474                     & 79,950215      \\ \hline
+Saliência                              & 84,172238                         & 74,248645                     & 79,761752      \\ \hline
+Composição 4                           & 83,123738                         & 74,667785                     & 79,365537      \\ \hline
+Composição 16                          & 82,977850                         & 74,581912                     & 79,246322      \\ \hline
+Mistura                                & 83,124582                         & 74,045887                     & 79,089606      \\ \hline
+Borramento                             & 82,164793                         & 74,555320                     & 78,782805      \\ \hline
+Desbalanceado                          & 81,314335                         & 74,551506                     & 78,308633      \\ \hline
+Todos                                  & 82,358089                         & 71,943914                     & 77,729567      \\ \hline
+Ruído                                  & 81,179247                         & 72,609639                     & 77,370532      \\ \hline
+SMOTE                                  & 79,085501                         & 73,329079                     & 76,527091      \\ \hline
+SMOTE Visual                           & 78,811666                         & 70,439604                     & 75,090749      \\ \hline
 \end{tabular}
 \end{table}
+
 
 Este estudo apresentou evidências experimentais de que pode haver ganho estatístico do \textit{F1-Score} ao gerar imagens, quando comparado à geração de exemplos artificiais no espaço de atributos (ou seja, depois que as características já foram extraídas das imagens). Além disso, na maioria dos experimentos, a geração artificial obteve significância estatística relevante quando comparada a base desbalanceada. Com os experimentos realizados foi possível notar que a geração de imagens artificiais pode gerar novas informações para a classificação das imagens. O que indica que um estudo aprofundado de cada contexto pode relatar quais operações podem ser aplicadas nas imagens originais de forma a auxiliar o cenário de bases desbalanceadas.
