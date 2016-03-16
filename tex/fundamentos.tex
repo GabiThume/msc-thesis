@@ -2,7 +2,7 @@
 
 Neste capítulo são destacados os tópicos mais relevantes para a compreensão da metodologia e análise dos resultados deste trabalho, com foco na preparação das imagens para a extração de características. O problema do desbalanceamento de classes e seu efeito na classificação também são abordados, assim como a extração de características para compreender as propriedades extraídas das imagens. Trabalhos relacionados são utilizados como exemplo, com o objetivo de elucidar tais tópicos.
 
-Inicialmente, a Seção~\ref{sec:preprocessamento} apresenta alguns dos principais métodos utilizados para o pré-processamento de imagens (i.e.\ remoção de ruído, realce de imagens e quantização), relevantes para o desenvolvimento desta pesquisa. Após, os métodos para extração de características são definidos na Seção~\ref{sec:extracao}. Tendo como proposta melhor compreender o problema do desbalanceamento de classes, a Seção~\ref{cap:desbalanceamento} exemplifica as operações utilizadas para o rebalanceamento. Nesta seção, além de caracterizar o problema, são apresentadas duas vertentes para solucioná-lo: sobreamostragem e subamostragem. A seção seguinte (\ref{sec:classificacao}) apresenta os classificadores de padrões utilizados e a Seção~\ref{sec:reducaodimensionalidade} aborda dois métodos de redução de dimensionalidade usados nos experimentos.
+Inicialmente, a Seção~\ref{sec:preprocessamento} apresenta alguns dos principais métodos utilizados para o pré-processamento de imagens (i.e.\ remoção de ruído, realce de imagens e quantização), relevantes para o desenvolvimento desta pesquisa. Após, os métodos para extração de características são definidos na Seção~\ref{sec:extracao}. Tendo como proposta melhor compreender o problema do desbalanceamento de classes, a Seção~\ref{cap:desbalanceamento} exemplifica as operações utilizadas para o rebalanceamento. Nesta seção, além de caracterizar o problema, são apresentadas duas vertentes para solucioná-lo: sobreamostragem e subamostragem. A seção seguinte (\ref{sec:reducaodimensionalidade}) aborda dois métodos de redução de dimensionalidade usados nos experimentos e a Seção~\ref{sec:classificacao} apresenta os classificadores de padrões utilizados.
 
 %--------------------------------------------------------------------------------
 \section{Pré-processamento de imagens}
@@ -13,9 +13,9 @@ Uma imagem $I$ pode ser definida como uma função $f(x,y)$, onde $x$ e $y$ são
 \begin{figure}[!htbp]
  \begin{center}
    \includegraphics[width=0.4\linewidth]{figuras/pixel.jpg}
+ \end{center}
  \caption[Visualização pixelizada de uma imagem da base Corel-1000. Cada pixel $I(x,y)$ corresponde a uma tripla $(r, g, b)$ de números, com $0 \leq r \leq 255$, $0 \leq g \leq 255$ e $0 \leq b \leq 255$, onde 0 é a intensidade de cor mais escura e 255 a mais clara.]{Visualização pixelizada de uma imagem da base Corel-1000 \cite{Wang2001}. Cada pixel $I(x,y)$ corresponde a uma tripla $(r, g, b)$ de números, com $0 \leq r \leq 255$, $0 \leq g \leq 255$ e $0 \leq b \leq 255$, onde 0 é a intensidade de cor mais escura e 255 a mais clara. \\ \textit{Fonte:~Elaborado pela autora.}}
  \label{fig:pixel}
- \end{center}
 \end{figure}
 
 O processo de aquisição por um sistema de imageamento pode causar diversas imperfeições nas imagens, como pixels ruidosos, brilho inadequado e outras degradações. O pré-processamento de imagens é caracterizado por receber uma imagem de entrada e fornecer uma imagem de saída. Nessa etapa, efeitos indesejáveis podem ser eliminados e certas características realçadas (Figura \ref{fig:preproc}). Considera-se que, um determinado critério utilizado para uma imagem pode não ser o mais eficiente para outra, dependendo da área de aplicação.
@@ -23,9 +23,9 @@ O processo de aquisição por um sistema de imageamento pode causar diversas imp
 \begin{figure}[!htbp]
  \begin{center}
    \includegraphics[width=1\linewidth]{figuras/preprocessamento.png}
+ \end{center}
  \caption[Exemplo de pré-processamento de imagens, caracterizado por receber uma imagem como entrada e fornecer uma imagem de saída. Sobre a imagem RGB de entrada (à esquerda) foram realizadas operações de \emph{borramento}, realce e de equalização de histograma. A imagem à direita é resultante dessas operações. É possível notar que a imagem resultante apresenta melhor contraste e bordas realçadas.]{Exemplo de pré-processamento de imagens, caracterizado por receber uma imagem como entrada e fornecer uma imagem de saída. Sobre a imagem RGB de entrada (à esquerda) foram realizadas operações de \emph{borramento}, realce e de equalização de histograma. A imagem à direita é resultante dessas operações. É possível notar que a imagem resultante apresenta melhor contraste e bordas realçadas. \\ \textit{Fonte:~Elaborado pela autora.}}
  \label{fig:preproc}
- \end{center}
 \end{figure}
 
 Assim, técnicas de pré-processamento tornam os dados mais adequados para posterior análise, ao eliminar ou reduzir problemas como ruídos e imperfeições. Em \citeonline{Ponti2010}, o autor relata que a utilização de métodos de restauração na etapa de pré-processamento da imagem, antes da segmentação, proporcionou qualidade superior em todos os testes, com valores reduzidos de erro e desvio padrão. No referido estudo, métodos de realce causaram perda de informação e por isso não são indicados para uso em imagens obtidas por microscópio, por exemplo. O método indicado para evitar a amplificação de ruído nessas imagens é o algoritmo iterativo Richardson-Lucy ~\cite{Ponti-Jr2011}. Esse método de restauração utiliza um processo iterativo para recuperar uma imagem degradada que foi borrada por algum processo conhecido. Utiliza uma metodologia probabilística, baseada em \sigla{EM-ML}{\textit{Expectation-Maximization Maximum Likelihood}}, para encontrar uma imagem que maximize a probabilidade de se visualizar a imagem original sem degradação, considerando um modelo de ruído de Poisson. Algoritmos iterativos como o Richardson-Lucy tem a vantagem de permitir soluções parciais, evitando amplificação de ruído.
@@ -74,7 +74,8 @@ Os métodos de filtragem possuem como objetivo aperfeiçoar certos aspectos da i
 % A filtragem Gaussiana seletiva objetiva borrar áreas da imagem onde há pouco detalhe, porém preservando contraste e pequenas estruturas. Esse tipo de filtragem é dita adaptativa, pois modifica-se o parâmetro $\sigma$ (Equação~\ref{eq:Gaussian}) para cada pixel da imagem. Uma implementação dessa técnica utiliza a variância global da imagem $\sigma_g$ e variâncias locais $\sigma_r$, suavizando com maior intensidade regiões onde a $\sigma_r \leq \sigma_g$, e suavizando menos as regiões onde $\sigma_r > \sigma_g$.
 
 \begin{figure}[!hbpt]
-  \subfloat[Original]{ \includegraphics[width=.49\linewidth]{\detokenize{figuras/original.png}}
+  \subfloat[Original]{
+    \includegraphics[width=.49\linewidth]{\detokenize{figuras/original.png}}
   }
   \subfloat[Filtrada]{
     \includegraphics[width=.49\linewidth]{\detokenize{figuras/blur.png}}
@@ -124,7 +125,7 @@ Os métodos de filtragem possuem como objetivo aperfeiçoar certos aspectos da i
 
 O realce de imagens é o processo de modificar uma imagem para que se torne mais adequada para uma aplicação específica do que na sua forma original. Diferentemente da restauração --- que leva em consideração o processo de formação da imagem --- é subjetivo, porque depende do sujeito que está analisando a imagem dissernir a qualidade desse realce \cite{Gonzalez2007}.
 
-Na Figura \ref{fig:pre-sharp} está demonstrado o efeito do algoritmo de \textit{unsharp masking}, utilizando como \emph{borramento} um filtro de média. Com o objetivo de realçar imagens, os passos deste método são:
+Na Figura \ref{fig:pre-sharp} está demonstrado o efeito do algoritmo de \textit{unsharp masking}, utilizando como borramento um filtro de média. Com o objetivo de realçar imagens, os passos deste método são:
 
 \begin{enumerate}
 \item Borramento da imagem original;
@@ -255,8 +256,6 @@ A Figura \ref{fig:quantizacao} apresenta a conversão em escala de cinza obtida 
 
 %--------------------------------------------------------------------------------
 % \subsection{Reconstrução}
-
-% \meutodo{Seção reconstrução? fisher faces}
 
 % Fisherfaces é utilizado para reconhecimento de faces, reconstrói faces para a posterior classificação. No contexto deste estudo, esse método pode ser utilizado para gerar novas imagens a partir das já existentes como para auxiliar no problema do desbalanceamento de classes (descrito na Seção \ref{cap:desbalanceamento}). Especificamente para a sobreamostragem do conjunto de dados de entrada.
 
@@ -492,8 +491,6 @@ Considerando que são 58 padrões uniformes, o tamanho do vetor de cada célula 
 %
 % A simulação desse modelo inspirado biologicamente utilizada hoje é de \citeonline{lecun1998} e chama-se Rede Neural de Convolução (CNN ou ConvNet). Eles simplificaram tal arquitetura para utilizar um algoritmo de retropropagação para o treino. Desde então, essas redes vêm sendo utilizadas para detecção, reconhecimento, restauração, remoção de ruído e segmentação de imagens e vídeos, além de sua aplicação em áudio. Um exemplo de utilização dessa rede inspirada no modelo de LeCun foi desenvolvida pela empresa Google, com o objetivo de detectar faces e placas de carros para proteger a privacidade nas imagens de StreetView \cite{google09}.
 %
-% % \meutodo{Figura da visualização do resultado dos filtros}
-%
 % Apesar de redes profundas representarem o estado da arte em visão computacional, um bom entendimento das suas propriedades ainda está faltando. Alguns artigos recentes como \citeonline{Mahendran2014}, \citeonline{Zeiler2011} \citeonline{Zeiler2013} e \citeonline{Simonyan2013} introduzem técnicas utilizadas para analisar o comportamento e operações internas dessas redes ao visualizá-las. Esta pesquisa situa-se nesse viés, ao analisar as características latentes extraídas por uma rede neural de convolução.
 %
 % Para o uso em bases desbalanceadas, as imagens utilizadas para o rebalanceamento de forma visual podem ser geradas após o estudo das características latentes, encontradas no treinamento da classe minoritária em uma CNN. Essas características também podem ser realçadas de forma a melhorar a classificação de imagens.
@@ -673,8 +670,9 @@ Métodos para remoção de exemplos da classe majoritária normalmente apresenta
 \label{sec:reducaodimensionalidade}
 % http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=4368165
 
-Considerando que um vetor de características extraído com extratores comuns pode possuir entre 6 (e.g.\ Haralick) e 512 (e.g.\ BIC) características, a visualização de um exemplo requer que seja realizado o mapeamento desses valores em apenas duas dimensões. Para isso, a redução de dimensionalidade mapeia os vetores de $N$ dimensões para um espaço 1D, 2D ou 3D. A partir desses novos vetores, pode então ser criada alguma representação visual que tente manter a relação de distância entre os novos e os originais~\cite{Paulovich2007}.
-\meutodo{falar da importancia da reducao pra classificacao tbm}
+Após a etapa de extração de características, é importante obter-se um espaço de características reduzido, ou seja, com menor dimensionalidade. Muitos métodos de aprendizagem de máquina possuem complexidade computacional proporcional ao número de imagens e de dimensões. Além disso, devido a \textit{maldição da dimensionalidade}, um espaço com muitas dimensões pode dificultar a classificação. Ou seja, há um número máximo de características do qual o desempenho do classificador será comprometido. Uma solução é reduzir a dimensão ao utilizar métodos de seleção de atributos ou métodos de redução de dimensionalidade.
+
+Em cenários de reconhecimento de imagens, um vetor de características extraído com extratores comuns pode possuir, por exemplo, 6 (e.g.\ Haralick), 512 (e.g.\ BIC) ou mais características. Caso seja requerida a visualização dessas amostras, é necessário mapear esses valores em apenas duas dimensões. Para isso, a redução de dimensionalidade mapeia os vetores de $N$ dimensões para um espaço 1D ou 2D. A partir desses novos vetores, pode então ser criada alguma representação visual que tente manter a relação de distância entre os novos e os originais~\cite{Paulovich2007}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Análise de componentes principais}
@@ -747,10 +745,10 @@ O classificador \sigla{K-NN}{\textit{K-Nearest Neighbors}} considera a proximida
   \Saida{Classes $C$ dos exemplos de teste preditas}
   $C \gets \emptyset $\;
   \ParaCada{teste $ \in S_{teste}$}{
-    $N \gets k \text{ vizinhos mais próximos} (teste, S_{treino}) $\;
+    $N \gets k \textit{ vizinhos mais próximos} (teste, S_{treino}) $\;
     $D \gets \emptyset $\;
     \ParaCada{vizinho $n \in N$}{
-      $D \gets D \cup \text{distância} (n, teste) $\;
+      $D \gets D \cup \textit{distância} (n, teste) $\;
     }
     $C \gets C \cup menor(D)$\;
   }
@@ -761,16 +759,16 @@ O classificador \sigla{K-NN}{\textit{K-Nearest Neighbors}} considera a proximida
 \subsection{\textit{Support Vector Machines}}
 \label{sec:svm}
 
-Uma SVM encontra um hiperplano separador no espaço de características otimizando a máxima distância para o exemplo de treinamento mais próximo de cada classe. A versão atual do classificador, que permite sobreposição entre classes (também conhecida como versão \textit{soft-margin}), foi proposta por \cite{Cortes1995}. O algoritmo utiliza exemplos de treinamento, resolvendo um problema de otimização formulado por meio de multiplicadores de Lagrange e um sistema de equações \textit{Karush Kuhn Tucker} (KKT).
+Uma SVM encontra um hiperplano separador no espaço de características otimizando a máxima distância para o exemplo de treinamento mais próximo de cada classe. A versão atual do classificador, que permite sobreposição entre classes (também conhecida como versão \textit{soft-margin}), foi proposta por \citeonline{Cortes1995}. O algoritmo utiliza exemplos de treinamento, resolvendo um problema de otimização formulado por meio de multiplicadores de Lagrange e um sistema de equações \textit{Karush Kuhn Tucker} (KKT).
 
 Os exemplos de treinamento utilizados para computar o hiperplano são chamados vetores de suporte. Por isso, após o treinamento, todos os dados podem ser descartados, exceto os vetores de suporte que são utilizados para a etapa de classificação \cite{Marsland2015}.
 
-Comumente, dados em um espaço de características de entrada não são linearmente separáveis. Nesses casos pode-se mapear o espaço original em um espaço de dimensão maior no qual os dados são presumivelmente separáveis por um hiperplano. Esse mapeamento é comumente projetado de forma que produtos internos possam ser computados nas variáveis do espaço original definindo-as em termos de uma função \textit{kernel}. Ao lidar com características obtidas a partir de imagens, a dimensão do espaço original é normalmente de alta dimensão ($\leq 1000$) se comparada com o tamanho do conjunto de treinamento. Por isso, os dados de treinamento são geralmente linearmente separáveis \cite{Chapelle1999a}.
+Comumente, dados em um espaço de características de entrada não são linearmente separáveis. Nesses casos pode-se mapear o espaço original em um espaço de dimensão maior no qual os dados são presumivelmente separáveis por um hiperplano. Esse mapeamento é comumente projetado de forma que produtos internos possam ser computados nas variáveis do espaço original definindo-as em termos de uma função \textit{kernel}. Ao lidar com características obtidas a partir de imagens, a dimensão do espaço original é normalmente de alta dimensão ($\geq 1000$) se comparada com o tamanho do conjunto de treinamento. Por isso, os dados de treinamento são geralmente linearmente separáveis \cite{Chapelle1999a}.
 
 %--------------------------------------------------------------------------------
 \section{Considerações finais}
 
-Deu-se destaque à discussão das etapas de pré-processamento para a quantização de imagens, além das abordagens existentes para o rebalanceamento de classes. Este capítulo apresentou métodos para exemplificação, além de trabalhos relacionados. A extração de características foi abordada, apresentando os principais descritores utilizados nesta pesquisa. A lacuna destacada é que existem características não passíveis de extração por descritores convencionais. Esses fundamentos permitem compreender o contexto no qual esta dissertação está inserida. Os próximos capítulos abrangem a metodologia proposta.
+Deu-se destaque à discussão das etapas de pré-processamento para a quantização de imagens, além das abordagens existentes para o rebalanceamento de classes. Este capítulo apresentou métodos para exemplificação, além de trabalhos relacionados. A extração de características foi abordada, apresentando os principais descritores utilizados nesta pesquisa. A lacuna destacada é que existem características não passíveis de extração por descritores convencionais. Esses fundamentos permitem compreender o contexto no qual esta dissertação está inserida.
 
 % Para isso, as redes de convolução são apresentadas, pois possuem capacidade de aprender as características relevantes das imagens de entrada. Justificando, assim, seu uso para análise das propriedades das bases de imagens. Podem também indicar possíveis operações para auxiliar na geração de imagens artificiais. Ainda, a memória associativa aprendida por máquinas de Boltzmann restritas pode ser indicadora de quais imagens geradas adicionam informações ao aprendizado.
 %A geração dessas imagens visa rebalancear classes que diferem em número de imagens, e detalhes sobre esse problema também foram fundamentados neste capítulo.

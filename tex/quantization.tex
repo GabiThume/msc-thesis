@@ -3,7 +3,7 @@
 
 Sistemas de reconhecimento de imagens comumente utilizam uma imagem em níveis de cinza ($2^3 = 8$ bits, $2^8 = 256$ intensidades) para as etapas subsequentes à extração de características. Dá-se o nome de quantização à etapa responsável por esta redução no nível de cores em uma imagem. Ao aplicar a quantização na etapa de pré-processamento, é esperada a redução da complexidade do vetor de características logo no início do processo, beneficiando todos os passos subsequentes.
 
-Com o objetivo de analisar o impacto do uso da quantização, foram utilizados diferentes parâmetros de quantização, combinados com quatro métodos de extração de cor e um de textura. Esses métodos foram escolhidos de acordo com os resultados apresentados por \citeonline{Penatti2012} e \citeonline{Wang2009a}. Este capítulo aborda a quantização de imagens antes da etapa de extração de características, assim como os métodos utilizados para tal, já apresentados na Seção~\ref{sec:quantizacao}. Após, apresenta os resultados encontrados ao aplicar os métodos de quantização de imagens no \textit{pipeline} de reconhecimento. Para cada experimento realizado são descritos: a base de imagens; o protocolo utilizado; os resultados encontrados e a sua relevância. Os resultados devem refletir melhoras nas etapas subsequentes, como uma melhor acurácia na etapa de classificação ou a redução do tempo de processamento.
+Com o objetivo de analisar o impacto do uso da quantização, foram utilizados diferentes parâmetros de quantização, combinados com quatro métodos de extração de cor e um de textura. Esses métodos foram escolhidos de acordo com os resultados apresentados por \citeonline{Penatti2012} e \citeonline{Wang2009}. Este capítulo aborda a quantização de imagens antes da etapa de extração de características, assim como os métodos utilizados para tal, já apresentados na Seção~\ref{sec:quantizacao}. Após, apresenta os resultados encontrados ao aplicar os métodos de quantização de imagens no \textit{pipeline} de reconhecimento. Para cada experimento realizado são descritos: a base de imagens; o protocolo utilizado; os resultados encontrados e a sua relevância. Os resultados devem refletir melhoras nas etapas subsequentes, como uma melhor acurácia na etapa de classificação ou a redução do tempo de processamento.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -31,7 +31,7 @@ Cada método de quantização se comporta diferentemente para uma dada imagem RG
   \label{fig:quant:plano}
 \end{figure}
 
-Exemplos de imagens obtidas após os métodos de quantização apresentados anteriormente podem ser vistos na Figura \ref{fig:quant:quantizacoes}. A barra de gradientes abaixo da imagem dos pincéis demonstra como os métodos de quantização se comportam dada a variação da cor. É possível notar que os métodos\emph{Luminância'} e MSB conseguiram melhor discriminar as cores. Além disso, o mapa de cores MSB obteve um maior número de intensidades únicas, quando comparado aos demais métodos.
+Exemplos de imagens obtidas após os métodos de quantização apresentados anteriormente podem ser vistos na Figura \ref{fig:quant:quantizacoes}. A barra de gradientes abaixo da imagem dos pincéis demonstra como os métodos de quantização se comportam dada a variação da cor. É possível notar que os métodos \emph{Luminância'} e MSB conseguiram melhor discriminar as cores. Além disso, o mapa de cores MSB obteve um maior número de intensidades únicas, quando comparado aos demais métodos.
 
 \begin{figure}[!htbp]
   \begin{center}
@@ -39,10 +39,10 @@ Exemplos de imagens obtidas após os métodos de quantização apresentados ante
       \includegraphics[width=.18\linewidth]{\detokenize{figuras/quantizacao/fig_quanttest.png}}
       \label{fig:quant:original}
     }
-    \subfloat[Gleam]{
+    \subfloat[\emph{Gleam}]{
       \includegraphics[width=.18\linewidth]{\detokenize{figuras/quantizacao/fig_quantGleam.png}}
     }
-    \subfloat[Intensidade']{
+    \subfloat[\emph{Intensidade'}]{
       \includegraphics[width=.18\linewidth]{\detokenize{figuras/quantizacao/fig_quantIntensity.png}}
     }
     \subfloat[\emph{Luminância'}]{
@@ -126,7 +126,7 @@ Considerando que estes experimentos possuem foco na redução na dimensionalidad
 Os experimentos foram realizados com uma validação cruzada de \textit{10-fold}. Considerando que as bases estão balanceadas e que a seleção de exemplos para a validação cruzada é estratificada, a medida estatística de \textit{acurácia} foi utilizada para avaliar o desempenho da classificação. O seguinte protocolo foi seguido para a obtenção dos resultados:
 
 \begin{enumerate}
-\item \textbf{Quantização}: com os métodos \emph{Intensidade'}, \emph{Gleam},\emph{Luminância'} e MSB.
+\item \textbf{Quantização}: com os métodos \emph{Intensidade'}, \emph{Gleam}, \emph{Luminância'} e MSB.
 \item \textbf{Extração de características}: utilizando os métodos --- e parâmetros escolhidos com base nas recomendações dos artigos que proporam tais métodos --- a seguir:
   \begin{itemize}
     \item \textit{Auto Color Correlogram} (ACC): a métrica de distância utilizada entre os pixels $p(x,y)$ e $q(s,t)$ é a tabuleiro de xadrez $D_8(p,q) = Max(|x-s| + d, |y-t| + d)$ para quatro distâncias $d =$ 1, 3, 5 e 7;
@@ -152,13 +152,11 @@ A Figura \ref{fig:quant:results} ilustra a acurácia média para o primeiro conj
   \label{fig:quant:results}
 \end{figure}
 
-Considerando que a utilização de apenas 16 e 8 cores resultou em uma acurácia muito inferior, o restante dos resultados utilizam 256, 128, 64 e 32 cores. A partir dessa análise geral, uma análise mais específica foi realizada com a combinação dos métodos BIC e MSB; e Haralick e\emph{Luminância'}. O teste estatístico ANOVA foi realizado para comparar as acurácias dos experimentos das Figuras \ref{fig:quant:boxplotBIC} e \ref{fig:quant:boxplotHaralick}. Para identificar se algum método obteve uma diferença significativa no valor de acurácia, foi utilizado o teste \sigla{HSD}{\textit{Honest Significant Difference}} de Tukey. Um nível de significância de $\alpha = 0.01$ foi utilizado. Por conta disso, os \textit{boxplots} em cinza correspondem aos dados com diferença estatística relevante quando comparados com a acurácia de 256 cores, obtendo um $\textit{p-value} < 0.01$.
-
-\meutodo{porque < 0.01 ao invés de 0.05?}
+Considerando que a utilização de apenas 16 e 8 cores resultou em uma acurácia muito inferior, o restante dos resultados utilizam 256, 128, 64 e 32 cores. A partir dessa análise geral, uma análise mais específica foi realizada com a combinação dos métodos BIC e MSB; e Haralick e \emph{Luminância'}. O teste estatístico ANOVA foi realizado para comparar as acurácias dos experimentos das Figuras \ref{fig:quant:boxplotBIC} e \ref{fig:quant:boxplotHaralick}. Para identificar se algum método obteve uma diferença significativa no valor de acurácia, foi utilizado o teste \sigla{HSD}{\textit{Honest Significant Difference}} de Tukey. Um nível de significância de $\alpha = 0.01$ foi utilizado. Por conta disso, os \textit{boxplots} em cinza correspondem aos dados com diferença estatística relevante quando comparados com a acurácia de 256 cores, obtendo um $\textit{p-value} < 0.01$.
 
 % O boxplot para 256, 128, 64 e 32 cores com os métodos \emph{BIC} e MSB está demonstrado na Figura \ref{fig:quant:boxplotBIC}.
 
-De acordo com o teste estatístico representado na Figura \ref{fig:quant:boxplotBIC}, utilizar características de cor (extraídas com o método BIC) e níveis de quantização providos pelo método MSB demonstrou resultados melhores do que o \textit{baseline} de 256 cores para as bases Corel-1000 (128, 64 e 32 cores) e Caltech101-600 (64 cores). O único resultado que piorou significativamente foi para 32 cores da base de imagens Produce. Portanto, converter as imagens para a escala de cinza e reduzir os 256 possíveis valores para apenas 64 provou uma boa escolha de processamento anterior a extração de características. Menores valores podem degradar os resultados em características de textura, como mostrado na Figura \ref{fig:quant:boxplotHaralick}.
+De acordo com o teste estatístico representado na Figura \ref{fig:quant:boxplotBIC}, utilizar características de cor (extraídas com o método BIC) e níveis de quantização providos pelo método MSB demonstrou resultados melhores do que o \textit{baseline} de 256 cores para as bases Corel-1000 (128, 64 e 32 cores) e Caltech101-600 (64 cores). O único resultado que piorou significativamente foi para 32 cores da base de imagens Produce. Portanto, converter as imagens para a escala de cinza e reduzir os 256 possíveis valores para apenas 64 provou uma boa escolha de processamento anterior a extração de características. Ou seja, $d \approx D/4$. Menores valores podem degradar os resultados em características de textura, como mostrado na Figura \ref{fig:quant:boxplotHaralick}.
 
 \begin{figure}[!htbp]
   \begin{center}
@@ -174,7 +172,7 @@ De acordo com o teste estatístico representado na Figura \ref{fig:quant:boxplot
     \centering
     \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_results_individual_boxplotHaralick.png}}
   \end{center}
-  \caption[Acurácia média da classificação após a utilização do método de quantização\emph{Luminância'} considerando 256, 128, 64 e 32 cores com o descritor Haralick. Os boxplots em cinza correspondem às significâncias estatísticas com $\textit{p-value} < 0.01$ quando comparado à acurácia de 256 cores.]{Acurácia média da classificação após a utilização do método de quantização\emph{Luminância'} considerando 256, 128, 64 e 32 cores com o descritor Haralick. Os boxplots em cinza correspondem às significâncias estatísticas com $\textit{p-value} < 0.01$ quando comparado à acurácia de 256 cores. \\ \textit{Fonte:~\citeonline{Ponti2016}.}}
+  \caption[Acurácia média da classificação após a utilização do método de quantização \emph{Luminância'} considerando 256, 128, 64 e 32 cores com o descritor Haralick. Os boxplots em cinza correspondem às significâncias estatísticas com $\textit{p-value} < 0.01$ quando comparado à acurácia de 256 cores.]{Acurácia média da classificação após a utilização do método de quantização \emph{Luminância'} considerando 256, 128, 64 e 32 cores com o descritor Haralick. Os boxplots em cinza correspondem às significâncias estatísticas com $\textit{p-value} < 0.01$ quando comparado à acurácia de 256 cores. \\ \textit{Fonte:~\citeonline{Ponti2016}.}}
   \label{fig:quant:boxplotHaralick}
 \end{figure}
 
@@ -200,7 +198,7 @@ Primeiramente, as imagens foram convertidas para escala de cinza e mantidas com 
     \centering
     \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_results_full.png}}
   \end{center}
-  \caption[Comparação da acurácia alcançada com diferentes métodos de quantização: \emph{Gleam}, \emph{Intensidade'},\emph{Luminância'} e MSB. Inicialmente as imagens foram convertidas para escala de cinza com esses quatro métodos e foram dadas como entrada para todos os métodos de extração. O vetor de características resultante com $D=2310$ sofreu então redução da dimensionalidade com o método LPP para $d = 1160$, $582$, $294$ e $150$.]{Comparação da acurácia alcançada com diferentes métodos de quantização: \emph{Gleam}, \emph{Intensidade'},\emph{Luminância'} e MSB. Inicialmente as imagens foram convertidas para escala de cinza com esses quatro métodos e foram dadas como entrada para todos os métodos de extração. O vetor de características resultante com $D=2310$ sofreu então redução da dimensionalidade com o método LPP para $d = 1160$, $582$, $294$ e $150$. \\ \textit{Fonte:~\citeonline{Ponti2016}.}}
+  \caption[Comparação da acurácia alcançada com diferentes métodos de quantização: \emph{Gleam}, \emph{Intensidade'}, \emph{Luminância'} e MSB. Inicialmente as imagens foram convertidas para escala de cinza com esses quatro métodos e foram dadas como entrada para todos os métodos de extração. O vetor de características resultante com $D=2310$ sofreu então redução da dimensionalidade com o método LPP para $d = 1160$, $582$, $294$ e $150$.]{Comparação da acurácia alcançada com diferentes métodos de quantização: \emph{Gleam}, \emph{Intensidade'}, \emph{Luminância'} e MSB. Inicialmente as imagens foram convertidas para escala de cinza com esses quatro métodos e foram dadas como entrada para todos os métodos de extração. O vetor de características resultante com $D=2310$ sofreu então redução da dimensionalidade com o método LPP para $d = 1160$, $582$, $294$ e $150$. \\ \textit{Fonte:~\citeonline{Ponti2016}.}}
   \label{fig:quant:resultsFull}
 \end{figure}
 
@@ -215,7 +213,7 @@ A utilização de todos os vetores concatenados melhorou a acurácia em relaçã
   \label{fig:quant:resultsFullBoxplot}
 \end{figure}
 
-Os resultados indicam que a quantização pode ser utilizada como redução da dimensão de dados visuais, especialmente utilizando 128 e 64 cores. Como outro experimento, a Figura \ref{fig:quant:fullLPP} mostra as acurácias resultantes da aplicação do LPP sob o vetor obtido após a quantização com MSB utilizando 256 e 64 cores ($d=2310$ e $d=582$, respectivamente). É interessante notar que as projeções LPP em geral foram melhores com as imagens quantizadas em 64 cores com MSB ao invés da original em 256. A razão para isso deve estar no fato da quantização remover informações confusas: ela simplifica as imagens de forma que as cores restantes possam melhor descrever uma certa classe.
+Os resultados indicam que a quantização pode ser utilizada como redução da dimensão de dados visuais, especialmente utilizando 128 e 64 cores. Como outro experimento, a Figura~\ref{fig:quant:fullLPP} mostra as acurácias resultantes da aplicação do LPP sob o vetor obtido após a quantização com MSB utilizando 256 e 64 cores ($d=2310$ e $d=582$, respectivamente). É interessante notar que as projeções LPP em geral foram melhores com as imagens quantizadas em 64 cores com MSB ao invés da original em 256. A razão para isso deve estar no fato da quantização remover informações confusas: ela simplifica as imagens de forma que as cores restantes possam melhor descrever uma certa classe.
 
 \begin{figure}[!htbp]
   \begin{center}
