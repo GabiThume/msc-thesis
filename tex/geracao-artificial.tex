@@ -100,9 +100,11 @@ Diferente da suavização, o processamento de \emph{aguçamento} procura enfatiz
   }
   $I_{\textit{borrada}} \gets \textit{filtro de suavização}(I_{\textit{original}})$
 
-  \ParaCada{pixel $(x,y)$ em $I_{\textit{original}}$}{
-  $I_{\textit{diferença}} \gets I_{\textit{original}}(x,y) - I_{\textit{borrada}}(x,y)$\;
-  $I_{\textit{aguçada}}(x,y) \gets I_{\textit{original}}(x,y) + k \times I_{\textit{diferença}}$\;
+  \ParaCada{canal de cor em $I_{\textit{original}}$}{
+    \ParaCada{pixel $(x,y)$ em $I_{\textit{original}}$}{
+    $I_{\textit{diferença}} \gets I_{\textit{original}}(x,y) - I_{\textit{borrada}}(x,y)$\;
+    $I_{\textit{aguçada}}(x,y) \gets I_{\textit{original}}(x,y) + k \times I_{\textit{diferença}}$\;
+    }
   }
 \end{algorithm}
 
@@ -167,8 +169,8 @@ Uma possível implementação para encontrar os valores de Poisson foi desenvolv
   \end{itemize}
   }
 
-  \ParaCada{canal de cor}{
-    \ParaCada{pixel $(x,y)$}{
+  \ParaCada{canal de cor em $I_{\textit{original}}$}{
+    \ParaCada{pixel $(x,y)$ em $I_{\textit{original}}$}{
     $L \gets exp(-I_{original}(x,y))$\;
     $p \gets 1$\;
     $k \gets 0$\;
@@ -192,7 +194,7 @@ Uma possível implementação para encontrar os valores de Poisson foi desenvolv
 
 Conforme visto na Seção \ref{sec:smote}, o SMOTE é um método de rebalanceamento aplicado após a extração de características. É proposta uma alternativa, chamada de \emph{SMOTE visual}, onde imita-se o funcionamento do SMOTE, porém no nível de pixels. A diferença é que não é feito entre as imagens mais próximas, mas sim entre duas imagens escolhidas de forma aleatória do conjunto de treinamento da classe minoritária.
 
-Para cada pixel é calculado a diferença entre as duas imagens. Essa diferença é então multiplicada por um número aleatório no intervalo $[0-1]$ e adicionada
+Para cada pixel é calculada a diferença entre as duas imagens. Essa diferença é então multiplicada por um número aleatório no intervalo $[0-1]$ e adicionada
 na imagem original (ver Algoritmo~\ref{alg:smotevisual}). O efeito que esse processamento causa na imagem pode ser visualizado na Figura~\ref{fig:gen:smotevisual}.
 
 \begin{algorithm}[!htbp]
@@ -212,22 +214,24 @@ na imagem original (ver Algoritmo~\ref{alg:smotevisual}). O efeito que esse proc
   \end{itemize}
   }
 
-  \ParaCada{pixel $(x,y)$} {
-  $\textit{diferença} \gets I_{original}(x,y) - I_{\textit{segunda\_original}}(x,y)$\;
-  $\text{gap} \gets \textit{número aleatório entre 0 e 1}$\;
-  $I_{gerada}(x,y) \gets I_{original}(x,y) + gap \times \textit{diferença}$\;
-  }
+  \ParaCada{canal de cor em $I_{\textit{original}}$}{
+    \ParaCada{pixel $(x,y)$ em $I_{\textit{original}}$} {
+    $\textit{diferença} \gets I_{original}(x,y) - I_{\textit{segunda\_original}}(x,y)$\;
+    $\text{gap} \gets \textit{número aleatório entre 0 e 1}$\;
+    $I_{gerada}(x,y) \gets I_{original}(x,y) + gap \times \textit{diferença}$\;
+    }
 
-  $\textit{mínimo} \gets \textit{menor valor}(I_{gerada})$\;
+    $\textit{mínimo} \gets \textit{menor valor}(I_{gerada})$\;
 
-  $\textit{máximo} \gets \textit{maior valor}(I_{gerada})$\;
+    $\textit{máximo} \gets \textit{maior valor}(I_{gerada})$\;
 
-  \ParaCada{pixel $(x,y)$} {
-  $I_{gerada}(x,y) \gets I_{gerada}(x,y) - \textit{mínimo}$\;
-  }
+    \ParaCada{pixel $(x,y)$ em $I_{\textit{original}}$} {
+    $I_{gerada}(x,y) \gets I_{gerada}(x,y) - \textit{mínimo}$\;
+    }
 
-  \ParaCada{pixel $(x,y)$} {
-  $I_{gerada}(x,y) \gets I_{gerada}(x,y) \times (255/(\textit{máximo} - \textit{mínimo}))$\;
+    \ParaCada{pixel $(x,y)$ em $I_{\textit{original}}$} {
+    $I_{gerada}(x,y) \gets I_{gerada}(x,y) \times (255/(\textit{máximo} - \textit{mínimo}))$\;
+    }
   }
 \end{algorithm}
 
@@ -714,7 +718,7 @@ Após o treinamento realizado com as novas imagens geradas e as originais, o con
 
 De uma forma geral, pode-se dizer que a geração de imagens melhorou a definição da classe minoritária e foi o método que mais se assemelhou à distribuição dos dados originais. Além disso, um dos problemas do SMOTE pode ser verificado nessas projeções: \textbf{ao realizar a interpolação dos vetores de características originais, exemplos podem ser criados em regiões do espaço que fazem parte da outra classe}. Ficou claro também que o método SMOTE não apresentou capacidade de extrapolar a sua região, como pode ser observado no grupo de exemplos à direita do espaço de características. O SMOTE gerou novos elementos próximos a uma linha reta, enquanto a geração de imagens proporcionou uma abrangência maior em volta desse espaço, com maior dispersão.
 
-Na Figura \ref{fig:region} é possível visualizar a região de decisão, observando suas modificações frente aos métodos. Pode ser observado que, em ambas técnicas, a região da classe minoritária apresenta-se melhor representada. Além disso, é possível verificar que o SMOTE ocasionou uma certa invasão do espaço de características da classe majoritária.
+Na Figura \ref{fig:region} é possível visualizar a região de decisão, observando suas modificações frente aos métodos. Pode ser observado que, em ambas as técnicas, a região da classe minoritária apresenta-se melhor representada. Além disso, é possível verificar que o SMOTE ocasionou uma certa invasão do espaço de características da classe majoritária.
 
 \begin{figure}[!htbp]
     \begin{center}
@@ -728,7 +732,7 @@ Na Figura \ref{fig:region} é possível visualizar a região de decisão, observ
     \subfloat[Geração artificial]{
       \includegraphics[width=.5\linewidth]{\detokenize{figuras/visualizacao/geracao-teste-region.png}}
     }
-  \caption[Região de decisão com K-NN (K = 1). Pode ser observado que em ambas técnicas a região da classe minoritária apresenta-se melhor representada. Além disso, é possível verificar que o SMOTE ocasionou uma certa invasão do espaço de características da classe majoritária.]{Região de decisão com K-NN (K = 1). Pode ser observado que em ambas técnicas a região da classe minoritária apresenta-se melhor representada. Além disso, é possível verificar que o SMOTE ocasionou uma certa invasão do espaço de características da classe majoritária. \\ \textit{Fonte:~Elaborado pela autora.}}
+  \caption[Região de decisão com K-NN (K = 1). Pode ser observado que em ambas as técnicas a região da classe minoritária apresenta-se melhor representada. Além disso, é possível verificar que o SMOTE ocasionou uma certa invasão do espaço de características da classe majoritária.]{Região de decisão com K-NN (K = 1). Pode ser observado que em ambas as técnicas a região da classe minoritária apresenta-se melhor representada. Além disso, é possível verificar que o SMOTE ocasionou uma certa invasão do espaço de características da classe majoritária. \\ \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:region}
 \end{figure}
 
@@ -961,7 +965,7 @@ De acordo com o teste HSD de Tukey realizado, foi encontrado $\textit{p-value} =
 % \FloatBarrier
 \subsection{Experimento 3: multiclasses}
 
-Os dois experimentos anteriores analisaram o rebalanceamento de apenas duas classes. Este experimento apresenta a geração artificial de imagens aplicada a três bases multiclasses: Corel-1000, Caltech101-600 e Produce. Seus resultados são discutidos individualmente.
+Os dois experimentos anteriores analisaram o rebalanceamento de apenas duas classes. Este experimento apresenta a geração artificial de imagens aplicada a três bases multiclasses: Corel-1000, Caltech101-600 e Produce-1400. Seus resultados são discutidos individualmente.
 
 As bases são originalmente balanceadas, portanto a cada combinação dos \textit{folds}, uma classe é considerada minoritária e três dos seus \textit{folds} são descartados. Restando, dessa forma, um para treino e um para teste. Isso permitiu testar as bases como desbalanceadas.
 
@@ -1121,18 +1125,18 @@ Com o teste \textit{post-hoc} HSD de Tukey ficou comprovada a suposição de que
 \subsubsubsection*{Protocolo}
 
 \begin{enumerate}
-\item \textbf{Imagens originais}: base de imagens Produce, composta por imagens de vegetais e frutas tropicais \cite{Rocha2010}. Posuem fundo similar mas muitas mudanças na iluminação, no número de objetos e na escala. Amostras das imagens dessa base são apresentadas na Figura \ref{fig:resultados:3.3:base}. Essa base contem 14 classes e um total de 1400 imagens.
+\item \textbf{Imagens originais}: base de imagens Produce-1400, composta por imagens de vegetais e frutas tropicais \cite{Rocha2010}. Posuem fundo similar mas muitas mudanças na iluminação, no número de objetos e na escala. Amostras das imagens dessa base são apresentadas na Figura \ref{fig:resultados:3.3:base}. Essa base contem 14 classes e um total de 1400 imagens.
 
 \begin{figure}[!htbp]
   \begin{center}
     \includegraphics[width=\linewidth]{\detokenize{figuras/quantizacao/fig_Produce_dataset.jpg}}
 \end{center}
-\caption[Base de imagens Produce, composta por imagens de vegetais e frutas tropicais. A base possui classes com fundo similar, porém com variações na iluminação, número de objetos, cor e escala.]{Base de imagens Produce, composta por imagens de vegetais e frutas tropicais \cite{Rocha2010}. A base possui classes com fundo similar, porém com variações na iluminação, número de objetos, cor e escala. \\ \textit{Fonte:~\citeonline{Ponti2016}.}}
+\caption[Base de imagens Produce-1400, composta por imagens de vegetais e frutas tropicais. A base possui classes com fundo similar, porém com variações na iluminação, número de objetos, cor e escala.]{Base de imagens Produce-1400, composta por imagens de vegetais e frutas tropicais \cite{Rocha2010}. A base possui classes com fundo similar, porém com variações na iluminação, número de objetos, cor e escala. \\ \textit{Fonte:~\citeonline{Ponti2016}.}}
 \label{fig:resultados:3.3:base}
 \end{figure}
 
-\item \textbf{Desbalanceamento}: considerando que a base Produce é balanceada, 280 combinações dos 5 \textit{folds} das 14 classes foram testadas. Dessa forma todas as classes tiveram chance de serem a classe minoritária e, assim, rebalanceadas.
-\item \textbf{Método para geração artificial}: o melhor método de geração para a base Produce foi a \emph{mistura}, exemplificada na Figura \ref{fig:resultados:3.3:mistura}.
+\item \textbf{Desbalanceamento}: considerando que a base Produce-1400 é balanceada, 280 combinações dos 5 \textit{folds} das 14 classes foram testadas. Dessa forma todas as classes tiveram chance de serem a classe minoritária e, assim, rebalanceadas.
+\item \textbf{Método para geração artificial}: o melhor método de geração para a base Produce-1400 foi a \emph{mistura}, exemplificada na Figura \ref{fig:resultados:3.3:mistura}.
 
   \begin{figure}[!htbp]
     \begin{center}
@@ -1146,7 +1150,7 @@ Com o teste \textit{post-hoc} HSD de Tukey ficou comprovada a suposição de que
       \includegraphics[width=.32\linewidth]{\detokenize{figuras/resultados/3/resultado-mistura-produce.png}}
     }
     \end{center}
-    \caption[Exemplo de geração artificial utilizando a \emph{mistura} de duas imagens para a base Produce.]{Exemplo de geração artificial utilizando a \emph{mistura} de duas imagens para a base Produce. \\ \textit{Fonte:~Elaborado pela autora.}}
+    \caption[Exemplo de geração artificial utilizando a \emph{mistura} de duas imagens para a base Produce.]{Exemplo de geração artificial utilizando a \emph{mistura} de duas imagens para a base Produce-1400. \\ \textit{Fonte:~Elaborado pela autora.}}
     \label{fig:resultados:3.3:mistura}
   \end{figure}
 
@@ -1158,11 +1162,11 @@ Com o teste \textit{post-hoc} HSD de Tukey ficou comprovada a suposição de que
 %-------------------------------------------------------------------------------
 \subsubsubsection*{Resultados}
 
-A Tabela \ref{tab:resultados:3.3} apresenta a média e o desvio padrão dos \textit{F1-Scores} encontrados nos 280 sub-experimentos para a base Produce. Esses cobrem todas as possibilidades de desbalanceamento. O método de \emph{mistura} resultou no melhor \textit{F1-Score}.
+A Tabela \ref{tab:resultados:3.3} apresenta a média e o desvio padrão dos \textit{F1-Scores} encontrados nos 280 sub-experimentos para a base Produce-1400. Esses cobrem todas as possibilidades de desbalanceamento. O método de \emph{mistura} resultou no melhor \textit{F1-Score}.
 
 \begin{table}[!htbp]
 \begin{center}
-\caption{Resultados de \textit{F1-Scores} para a base de imagens Produce. O método \emph{mistura} apresentou-se como o melhor.}
+\caption{Resultados de \textit{F1-Scores} para a base de imagens Produce-1400. O método \emph{mistura} apresentou-se como o melhor.}
 \label{tab:resultados:3.3}
 \begin{tabular}{|l|c|c|}
 \hline
@@ -1235,7 +1239,7 @@ Os experimentos anteriores foram realizados em bases já balanceadas, com o desb
       \includegraphics[height=3.8cm,keepaspectratio]{\detokenize{figuras/resultados/4/resultado-mistura.png}}
     }
     \end{center}
-    \caption[Exemplo de geração artificial utilizando a \emph{mistura} de duas imagens para a base Produce.]{Exemplo de geração artificial utilizando a \emph{mistura} de duas imagens para a base Produce. \\ \textit{Fonte:~Elaborado pela autora.}}
+    \caption[Exemplo de geração artificial utilizando a \emph{mistura} de duas imagens para a base Produce-1400.]{Exemplo de geração artificial utilizando a \emph{mistura} de duas imagens para a base Produce-1400. \\ \textit{Fonte:~Elaborado pela autora.}}
     \label{fig:resultados:4.1:geracao}
   \end{figure}
 
@@ -1392,7 +1396,7 @@ Por fim, este experimento foi realizado com duas classes contendo uma grande qua
 %     \subfloat[Aguçcamento]{
 %       \includegraphics[height=3.5cm,keepaspectratio]{\detokenize{figuras/resultados/5/resultado-agucamento.png}}
 %     }
-%     \caption[Exemplo de geração artificial utilizando a \emph{mistura} de duas imagens para a base Produce.]{Exemplo de geração artificial utilizando a \emph{mistura} de duas imagens para a base Produce. \\ \textit{Fonte:~Elaborado pela autora.}}
+%     \caption[Exemplo de geração artificial utilizando a \emph{mistura} de duas imagens para a base Produce-1400.]{Exemplo de geração artificial utilizando a \emph{mistura} de duas imagens para a base Produce-1400. \\ \textit{Fonte:~Elaborado pela autora.}}
 %     \label{fig:resultados:5.1:geracao}
 %     \end{center}
 %   \end{figure}
