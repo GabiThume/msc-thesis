@@ -3,7 +3,7 @@
 O processo de manipular imagens para que elas se tornem mais satisfatórias para um
 determinado objetivo depende do domínio de aplicação. Ou seja, não existe uma teoria geral para melhorar qualquer imagem \cite{Gonzalez2007}; um método que processa melhor uma imagem bem definida por suas cores difere do processamento de imagens texturizadas, às quais um processamento sobre a intensidade dos pixels da imagem --- como uma operação de borramento --- pode ocasionar perda da textura. Assim, justifica-se a exploração de um vasto número de métodos de processamento de imagens e bases.
 
-Neste capítulo oito métodos de processamento de imagens são utilizados com o fim de obter imagens artificiais para subamostrar classes minoritárias em problemas de classificação, rebalanceando as bases de imagens antes da extração de características. Isso é realizado com dois propósitos: 1) para compensar a baixa disponibilidade de exemplos de uma determinada classe, e 2) permitir a extração de informações antes não disponíveis nas imagens originais por meio da combinação ou perturbação das imagens de entrada.
+Neste capítulo oito métodos de processamento de imagens são utilizados com o fim de obter imagens artificiais para sobreamostrar classes minoritárias em problemas de classificação, rebalanceando as bases de imagens antes da extração de características. Isso é realizado com dois propósitos: 1) para compensar a baixa disponibilidade de exemplos de uma determinada classe, e 2) permitir a extração de informações antes não disponíveis nas imagens originais por meio da combinação ou perturbação das imagens de entrada.
 
 Dada a quantidade de imagens necessárias para rebalancear a base original, são geradas novas imagens a partir de um conjunto de métodos. Como demonstrado na Figura~\ref{fig:escolha}, dado o conjunto de treinamento da classe (ou classes) com menor número total de imagens, é realizado o rebalanceamento ao aplicar os métodos descritos neste capítulo. Posteriormente, essas imagens resultantes têm suas características extraídas e são utilizadas no treinamento da classe minoritária.
 
@@ -76,7 +76,7 @@ Também conhecido como suavização, o \emph{borramento} é uma operação de pr
 
   \item[Limitações] Esse filtro tende a remover texturas e criar novos contornos. Dependendo dos valores, pode gerar uma imagem ``cartoonizada''.
 
-  \item[Métodos relacionados] São diversos os métodos de borramento descritos na literatura, como a filtragem Gaussiana e as filtragens de medianas e médias.
+  \item[Métodos relacionados] São diversos os métodos de borramento descritos na literatura, como a filtragem Gaussiana e de médias.
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \FloatBarrier
@@ -152,7 +152,7 @@ O ruído de Poisson ocorre na contagem de fótons de dispositivos ópticos. Ele 
 % $P_\mu)(n) = (e^(-\mu)\mu^(n))/(n!), n >= 0$
 % \end{equation}
 
-Uma possível implementação para encontrar os valores de Poisson foi desenvolvida por \citeonline{Knuth1997} e pode ser vista no Algoritmo~\ref{alg:noise}. A diferença do cálculo da distribuição de Poisson para sua adição em uma imagem, é que para calcular o valor de ruído em um pixel, esse pixel é considerado a média dessa distribuição. Ou seja, $\mu \equiv I_{original}(x,y)$. Para intensidades próximas a zero, o limite será $L \approx 1$ e, portanto, a probabilidade $p$ estará muito próxima do limite e o contador $k$ terá um valor baixo. Dessa forma, para intensidades escuras haverá pouco ruído. Por outro lado, em intensidades próximas a 255, $p \approx 0$. Assim, são necessárias muitas interações até $p > L$ e maior será a intensidade resultante $k-1$.
+Uma possível implementação para encontrar os valores de Poisson foi desenvolvida por \citeonline{Knuth1997} e pode ser vista no Algoritmo~\ref{alg:noise}. A diferença do cálculo da distribuição de Poisson para sua adição em uma imagem é que, para calcular o valor de ruído em um pixel, esse pixel é considerado a média dessa distribuição. Ou seja, $\mu \equiv I_{original}(x,y)$. Para intensidades próximas a zero, o limite será $L \approx 1$ e, portanto, a probabilidade $p$ estará muito próxima do limite e o contador $k$ terá um valor baixo. Dessa forma, para intensidades escuras haverá pouco ruído. Por outro lado, em intensidades próximas a 255, $p \approx 0$. Assim, são necessárias muitas interações até $p > L$ e maior será a intensidade resultante $k-1$.
 
 \begin{algorithm}[!htbp]
   \caption{Geração artificial: \emph{adição de ruído} de Poisson}
@@ -247,7 +247,7 @@ na imagem original (ver Algoritmo~\ref{alg:smotevisual}). O efeito que esse proc
       \includegraphics[height=4cm,keepaspectratio]{\detokenize{figuras/geracao/smote-c.png}}
     }
   \end{center}
-  \caption[Geração artificial utilizando o método SMOTE no espaço visual. É possível notar a sobreposição de uma ``sombra'' da Figura (b) em (a). ]{Geração artificial utilizando o método SMOTE no espaço visual. É possível notar a sobreposição de uma ``sombra'' da Figura (b) em (a). \\ \textit{Fonte:~Elaborado pela autora.}}
+  \caption[Geração artificial utilizando o método SMOTE no espaço visual. É possível notar a sobreposição de uma ``sombra'' da Figura (b) em (a). A imagem (b) foi redimensionada para as dimensões originais da imagem (a).]{Geração artificial utilizando o método SMOTE no espaço visual. É possível notar a sobreposição de uma ``sombra'' da Figura (b) em (a). A imagem (b) foi redimensionada para as dimensões originais da imagem (a).\\ \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:gen:smotevisual}
 \end{figure}
 
@@ -603,7 +603,7 @@ Neste experimento foram utilizadas duas classes de fácil diferenciação, poré
 \end{figure}
 
 
-\item \textbf{Desbalanceamento}: para o sub-experimento de visualização, cada classe foi dividida em 50\% para treino e 50\% para teste, de maneira aleatória. Após, a classe \emph{Horse} sofreu remoção de 50\% do seu conjunto de treino, tornando-a desbalanceada. Já para a análise estatística do experimento, todas as 40 configurações de \textit{folds} com $k=5$ foram realizadas (padronização anteriormente descrita na Figura~\ref{fig:folds}).
+\item \textbf{Desbalanceamento}: para o sub-experimento de visualização, cada classe foi dividida em 50\% para treino e 50\% para teste, de maneira aleatória. Após, a classe \emph{Horse} sofreu remoção de 88\% do seu conjunto de treino, tornando-a desbalanceada. Já para a análise estatística do experimento, todas as 40 configurações de \textit{folds} com $k=5$ foram realizadas (padronização anteriormente descrita na Figura~\ref{fig:folds}).
 
 \item \textbf{Método para geração artificial}: para a visualização do espaço de características foi utilizado o método de \emph{mistura} de duas imagens originais, exemplificado na Figura~\ref{fig:mistura}. Para a análise do \textit{boxplot} de \textit{F1-Scores}, todas as gerações foram testadas e os resultados são reportados a seguir.
 
@@ -639,7 +639,7 @@ Neste experimento foram utilizadas duas classes de fácil diferenciação, poré
 
 A visualização do espaço de características obtido após a geração artificial de imagens pode ajudar a verificar se as novas imagens melhoram a definição da classe minoritária em relação ao espaço original. Ou seja, se o método utilizado revelou características latentes. Dessa forma, ao projetar os novos vetores no espaço das imagens originais, é possível analisar qual método --- SMOTE ou geração de imagens no campo visual --- mais se assemelha à distribuição original dos dados.
 
-As classes \emph{Elephant} e \emph{Horse} possuem 100 imagens cada. O primeiro passo foi remover imagens de uma das classes, tornando a base desbalanceada. Na Figura~\ref{fig:desbalanceado} está ilustrada a remoção de 50\% das imagens de treino da classe \emph{Horse}, originalmente balanceada. Essa e as próximas projeções desta seção foram obtidas com a técnica para redução de dimensionalidade PCA, descrita na Seção~\ref{sec:pca}, e são referentes aos dois componentes principais com maiores autovalores.
+As classes \emph{Elephant} e \emph{Horse} possuem 100 imagens cada. O primeiro passo foi remover imagens de uma das classes, tornando a base desbalanceada. Na Figura~\ref{fig:desbalanceado} está ilustrada a remoção de 88\% das imagens de treino da classe \emph{Horse}, originalmente balanceada. Essa e as próximas projeções desta seção foram obtidas com a técnica para redução de dimensionalidade PCA, descrita na Seção~\ref{sec:pca}, e são referentes aos dois componentes principais com maiores autovalores.
 
 \begin{figure}[!htbp]
   \begin{center}
@@ -650,7 +650,7 @@ As classes \emph{Elephant} e \emph{Horse} possuem 100 imagens cada. O primeiro p
       \includegraphics[width=.48\linewidth]{\detokenize{figuras/visualizacao/desbalanceado-fixed.png}}
     }
 \end{center}
-\caption[À esquerda a projeção dos dois componentes principais obtidos com a aplicação de PCA nas classes \emph{Elephant} --- em azul --- e \emph{Horse} --- em verde. À direita, as mesmas classes após a remoção de 50\% das imagens de treino da classe \emph{Horse}. A diferença dos marcadores consiste na definição de imagens para treino e teste não existente nas classes originais.]{À esquerda a projeção dos dois componentes principais obtidos com a aplicação de PCA nas classes \emph{Elephant} --- em azul --- e \emph{Horse} --- em verde. À direita, as mesmas classes após a remoção de 50\% das imagens de treino da classe \emph{Horse}. A diferença dos marcadores consiste na definição de imagens para treino e teste não existente nas classes originais. \\ \textit{Fonte:~Elaborado pela autora.}}
+\caption[À esquerda a projeção dos dois componentes principais obtidos com a aplicação de PCA nas classes \emph{Elephant} --- em azul --- e \emph{Horse} --- em verde. À direita, as mesmas classes após a remoção de 88\% das imagens de treino da classe \emph{Horse}. A diferença dos marcadores consiste na definição de imagens para treino e teste não existente nas classes originais.]{À esquerda a projeção dos dois componentes principais obtidos com a aplicação de PCA nas classes \emph{Elephant} --- em azul --- e \emph{Horse} --- em verde. À direita, as mesmas classes após a remoção de 88\% das imagens de treino da classe \emph{Horse}. A diferença dos marcadores consiste na definição de imagens para treino e teste não existente nas classes originais. \\ \textit{Fonte:~Elaborado pela autora.}}
 \label{fig:desbalanceado}
 \end{figure}
 
@@ -723,14 +723,14 @@ Na Figura \ref{fig:region} é possível visualizar a região de decisão, observ
 \begin{figure}[!htbp]
     \begin{center}
     \subfloat[Desbalanceado]{
-      \includegraphics[width=.5\linewidth]{\detokenize{figuras/visualizacao/desbalanceado-teste-region.png}}
+      \includegraphics[width=.5\linewidth]{\detokenize{figuras/visualizacao/desbalanceado-treino-region.png}}
     }
     \end{center}
     \subfloat[Smote]{
-      \includegraphics[width=.5\linewidth]{\detokenize{figuras/visualizacao/smote-teste-region.png}}
+      \includegraphics[width=.5\linewidth]{\detokenize{figuras/visualizacao/smote-treino-region.png}}
     }
     \subfloat[Geração artificial]{
-      \includegraphics[width=.5\linewidth]{\detokenize{figuras/visualizacao/geracao-teste-region.png}}
+      \includegraphics[width=.5\linewidth]{\detokenize{figuras/visualizacao/geracao-treino-region.png}}
     }
   \caption[Região de decisão com K-NN (K = 1). Pode ser observado que em ambas as técnicas a região da classe minoritária apresenta-se melhor representada. Além disso, é possível verificar que o SMOTE ocasionou uma certa invasão do espaço de características da classe majoritária.]{Região de decisão com K-NN (K = 1). Pode ser observado que em ambas as técnicas a região da classe minoritária apresenta-se melhor representada. Além disso, é possível verificar que o SMOTE ocasionou uma certa invasão do espaço de características da classe majoritária. \\ \textit{Fonte:~Elaborado pela autora.}}
   \label{fig:region}
@@ -865,7 +865,7 @@ Desbalanceado       & 55.667145          & 13.341421              \\ \hline
 % Group 1 vs Group 3: Diff=3.5150, 95%CI=0.8497 to 6.1802, p=0.0062
 % Group 2 vs Group 3: Diff=1.5997, 95%CI=-1.0656 to 4.2650, p=0.3315
 
-Para o resultado da combinação dos melhores métodos de conversão em escala de cinza e extração de características, o teste \textit{post-hoc} HSD de Tukey revelou que não há diferença estatística entre a base desbalanceada e o SMOTE ($\textit{p-value} = 0.2073$). Mas indicou que existe uma significância entre o desbalanceamento e a geração artificial ($\textit{p-value} = 0.0062$). Isso significa que o melhor método para rebalancear essas classes é a geração artificial utilizando o método de \emph{mistura}s de duas imagens. Ainda de acordo com o teste, não há evidência estatística da relevância do resultado da combinação de maior variância. Portanto, todos os próximos experimentos relatam apenas os resultados da melhor combinação.
+Para o resultado da combinação dos melhores métodos de conversão em escala de cinza e extração de características, o teste \textit{post-hoc} HSD de Tukey revelou que não há diferença estatística entre a base desbalanceada e o SMOTE ($\textit{p-value} = 0.2073$). Mas indicou que existe uma significância entre a base desbalanceada e ela rebalanceada com a geração de imagens artificiais ($\textit{p-value} = 0.0062$). Isso significa que o melhor método para rebalancear essas classes é a geração artificial utilizando o método de \emph{composição} de quatro imagens. Ainda de acordo com o teste, não há evidência estatística da relevância do resultado da combinação de maior variância. Portanto, todos os próximos experimentos relatam apenas os resultados da melhor combinação.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Experimento 2: duas classes sobrepostas}
@@ -959,7 +959,7 @@ Desbalanceado   & 59.640090 & 8.675836  \\ \hline
 %-------------------------------------------------------------------------------
 \subsubsection*{Discussão}
 
-De acordo com o teste HSD de Tukey realizado, foi encontrado $\textit{p-value} = 0.0003$ na comparação da base desbalanceada com a base rebalanceada utilizando o método SMOTE e $\textit{p-value} = 0.0000$ com a geração artificial. Isso indica que ambos os métodos obtiveram relevância estatística quando comparados ao original. Porém, ao comparar o SMOTE com a geração artificial, o teste resultou em $\textit{p-value} = 0.7122$. Tal valor indica que não há diferença significativa entre os métodos SMOTE e os métodos de geração artificial de imagens.
+De acordo com o teste HSD de Tukey realizado, foi encontrado $\textit{p-value} = 0.0003$ na comparação da base desbalanceada com a base rebalanceada utilizando o método SMOTE e $\textit{p-value} = 0.0000$ com a geração artificial. Isso indica que ambos os métodos obtiveram relevância estatística quando comparados à base desbalanceada. Porém, ao comparar o SMOTE com a geração artificial, o teste resultou em $\textit{p-value} = 0.7122$. Tal valor indica que não há diferença significativa entre os métodos SMOTE e os métodos de geração artificial de imagens.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \FloatBarrier
@@ -1117,7 +1117,7 @@ Desbalanceado   &  75.732382 &  3.833682  \\ \hline
 %-------------------------------------------------------------------------------
 \subsubsubsection*{Discussão}
 
-Com o teste \textit{post-hoc} HSD de Tukey ficou comprovada a suposição de que os resultados do SMOTE e da geração artificial utilizando todos os métodos não possuem diferença estatística. Isso porque resultaram em $\textit{p-value} = 0.9333$. Porém, entre o desbalanceado e o SMOTE ou a geração obteve-se $\textit{p-value} < 0.0$. O que indica que todos os métodos de rebalanceamento foram satisfatórios para a base Caltech101-600.
+Com o teste \textit{post-hoc} HSD de Tukey tem-se um indício de que os resultados do SMOTE e da geração artificial utilizando todos os métodos não possuem diferença estatística. Isso porque resultaram em $\textit{p-value} = 0.9333$. Porém, entre o desbalanceado e o SMOTE ou a geração obteve-se $\textit{p-value} < 0.0$. O que indica que todos os métodos de rebalanceamento foram satisfatórios para a base Caltech101-600.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Base de imagens Produce}
@@ -1125,7 +1125,7 @@ Com o teste \textit{post-hoc} HSD de Tukey ficou comprovada a suposição de que
 \subsubsubsection*{Protocolo}
 
 \begin{enumerate}
-\item \textbf{Imagens originais}: base de imagens Produce-1400, composta por imagens de vegetais e frutas tropicais \cite{Rocha2010}. Posuem fundo similar mas muitas mudanças na iluminação, no número de objetos e na escala. Amostras das imagens dessa base são apresentadas na Figura \ref{fig:resultados:3.3:base}. Essa base contem 14 classes e um total de 1400 imagens.
+\item \textbf{Imagens originais}: base de imagens Produce-1400, composta por imagens de vegetais e frutas tropicais \cite{Rocha2010}. Possuem fundo similar mas muitas mudanças na iluminação, no número de objetos e na escala. Amostras das imagens dessa base são apresentadas na Figura \ref{fig:resultados:3.3:base}. Essa base contem 14 classes e um total de 1400 imagens.
 
 \begin{figure}[!htbp]
   \begin{center}
@@ -1239,7 +1239,7 @@ Os experimentos anteriores foram realizados em bases já balanceadas, com o desb
       \includegraphics[height=3.8cm,keepaspectratio]{\detokenize{figuras/resultados/4/resultado-mistura.png}}
     }
     \end{center}
-    \caption[Exemplo de geração artificial utilizando a \emph{mistura} de duas imagens para a base Produce-1400.]{Exemplo de geração artificial utilizando a \emph{mistura} de duas imagens para a base Produce-1400. \\ \textit{Fonte:~Elaborado pela autora.}}
+    \caption[Exemplo de geração artificial utilizando a \emph{mistura} de duas imagens da classe \textit{Rome antica}.]{Exemplo de geração artificial utilizando a \emph{mistura} de duas imagens da classe \textit{Rome antica}. \\ \textit{Fonte:~Elaborado pela autora.}}
     \label{fig:resultados:4.1:geracao}
   \end{figure}
 
@@ -1622,5 +1622,25 @@ SMOTE Visual                           & 78,811666                         & 70,
 \end{tabular}
 \end{table}
 
+\begin{table}[!htbp]
+\centering
+\caption{Média da diferença entre o método de rebalanceamento e a base desbalanceada, considerando todos os experimentos.}
+\begin{tabular}{|l|c|c|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Métodos}} & \textbf{Diferença média da melhoria} & \textbf{Desvio Padrão} \\ \hline
+Aguçamento                             & 16,860795                            & 2,206283     \\ \hline
+Limiares                               & 14,774237                            & 2,190548     \\ \hline
+Saliência                              & 13,078076                            & 2,544774     \\ \hline
+Composição 4                           & 9,512135                             & 1,525219     \\ \hline
+Composição 16                          & 8,439199                             & 1,351292     \\ \hline
+Mistura                                & 7,028758                             & 2,306720     \\ \hline
+Borramento                             & 4,267550                             & 0,819487     \\ \hline
+Desbalanceado                          & 0,000000                             & 0,000000     \\ \hline
+Todos                                  & -5,211596                            & 5,922549     \\ \hline
+Ruído                                  & -8,442906                            & 4,059528     \\ \hline
+SMOTE                                  & -16,033877                           & 9,002886     \\ \hline
+SMOTE Visual                           & -28,960951                           & 6,581923     \\ \hline
+\end{tabular}
+\end{table}
 
 Este estudo apresentou evidências experimentais de que pode haver ganho estatístico do \textit{F1-Score} ao gerar imagens, quando comparado à geração de exemplos artificiais no espaço de atributos (ou seja, depois que as características já foram extraídas das imagens). Além disso, na maioria dos experimentos, a geração artificial obteve significância estatística relevante quando comparada a base desbalanceada. Com os experimentos realizados foi possível notar que a geração de imagens artificiais pode gerar novas informações para a classificação das imagens. O que indica que um estudo aprofundado de cada contexto pode relatar quais operações podem ser aplicadas nas imagens originais de forma a auxiliar o cenário de bases desbalanceadas.
