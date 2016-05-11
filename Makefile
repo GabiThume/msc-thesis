@@ -7,6 +7,7 @@ all: clean
 	bibtex monografia
 	pdflatex monografia
 	pdflatex monografia
+	pdflatex monografia
 
 simples:
 	pdflatex monografia
