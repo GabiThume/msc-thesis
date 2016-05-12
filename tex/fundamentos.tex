@@ -701,7 +701,9 @@ Em cenários de reconhecimento de imagens, um vetor de características extraíd
 \subsection{\textit{Locality Preserving Projections}}
 \label{sec:lpp}
 
-\sigla{LPP}{\textit{Locality Preserving Projections}} é um algoritmo linear de redução de dimensionalidade com propriedades de preservação da estrutura local dos dados. Não apresenta a dificuldade dos algoritmos tradicionais (como PCA) de manter o \textit{manifold} não linear dos dados originais \cite{Zhuo2014}. Embora o método mais utilizado para redução da dimensionalidade de forma não-supervisionada seja o PCA, métodos como esse produzem melhores projeções em termos de separação das classes. Em \citeonline{Zhuo2014} o LPP obteve a melhor relação entre complexidade computacional e a redução da dimensionalidade, enquanto manteve a acurácia. Seu algoritmo segue três passos principais \cite{He2004}:
+\sigla{LPP}{\textit{Locality Preserving Projections}} é um algoritmo linear de redução de dimensionalidade com propriedades de preservação da estrutura local dos dados. Não apresenta a dificuldade dos algoritmos tradicionais (como PCA) de manter o \textit{manifold} não linear dos dados originais \cite{Zhuo2014}. Embora o método mais utilizado para redução da dimensionalidade de forma não-supervisionada seja o PCA, métodos como esse produzem melhores projeções em termos de separação das classes. Em \citeonline{Zhuo2014} o LPP obteve a melhor relação entre complexidade computacional e a redução da dimensionalidade, enquanto manteve a acurácia. Por isso foi considerado pelos autores como o melhor método de redução de dimensionalidade para imagens. Seu algoritmo segue três passos principais \cite{He2004}:
+
+precisa. citar o paper de 2014 da Neurocomputing que define o LPP como o melhor metodo de reducao de dimensionalidade para imagens, por preservar caracteristicas nao-lineares do espaco
 
 \begin{enumerate}
 \item Constrói um grafo de adjacências. Os nós $i$ e $j$ possuem uma aresta entre si se fazem parte do conjunto de $k$-vizinhos mais próximos de cada nó (sendo $k$ um parâmetro do algoritmo);

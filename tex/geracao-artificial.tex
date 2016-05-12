@@ -767,7 +767,7 @@ Como relatado no início desse experimento, o extrator de características utili
 %-------------------------------------------------------------------------------
 \subsubsection*{Resultados}
 
-Para análise estatística, todas as combinações de conversão para escala de cinza e métodos de extração de características foram testados. A combinação \emph{Gleam} e ACC obteve o melhor \textit{F1-Score} para as classes \emph{Elephant} e \emph{Horse}. O \textit{boxplot} apresentado na Figura \ref{fig:resultados:1:melhor} retrata a média dos \textit{F1-Scores} das 40 combinações deste experimento. A Tabela \ref{fig:resultados:1:tabmelhor} mostra os valores de tal métrica para o cálculo dos testes estatísticos. Como pode ser observado, o método de \textit{composição}, exemplificado na Figura \ref{fig:resultados:1:mistura}, obteve o melhor \textit{F1-Score}. Como reportado anteriormente para o método BIC, a melhor geração para essas classes foi o método de \emph{mistura}. Interessante notar que, ao menos para este caso, a preferência pelo método de geração parece estar relacionada ao método de extração. Isso se deve, possivelmente, ao fato de o melhor método de extração indicar as características mais relevantes das imagens.
+Para análise estatística, todas as combinações de conversão para escala de cinza e métodos de extração de características foram testados. A combinação \emph{Gleam} e ACC obteve o melhor \textit{F1-Score} para as classes \emph{Elephant} e \emph{Horse}. O \textit{boxplot} apresentado na Figura \ref{fig:resultados:1:melhor} retrata a média dos \textit{F1-Scores} das 40 combinações deste experimento. A Tabela \ref{fig:resultados:1:tabmelhor} mostra os valores de tal métrica para o cálculo dos testes estatísticos. O método de \textit{composição}, exemplificado na Figura \ref{fig:resultados:1:composicao}, obteve o melhor \textit{F1-Score} para esse cenário.
 
 \begin{figure}[!htbp]
   \begin{center}
@@ -807,7 +807,7 @@ Desbalanceado         & 88.258567          & 5.538461               \\ \hline
     }
   \end{center}
 \caption[A imagem gerada apresenta uma \emph{composição} de quatro imagens da classe \textit{Elephant}.]{A imagem gerada apresenta uma \emph{composição} de quatro imagens da classe \textit{Elephant}. \\ \textit{Fonte:~Elaborado pela autora.}}
-\label{fig:resultados:1:mistura}
+\label{fig:resultados:1:composicao}
 \end{figure}
 
 Considerando a análise da melhor combinação dos métodos de representação da imagem, foi verificado também o desempenho dos rebalanceamentos em um cenário mais complexo: o de maior variância dos \textit{F1-Scores}, dadas as 40 combinações da validação. A Figura~\ref{fig:resultados:1:pior} mostra o gráfico de \textit{boxplot} referente aos resultados da Tabela~\ref{fig:resultados:1:tabpior}. O melhor método de rebalanceamento para tal cenário foi o de geração artificial de imagens de \textit{adição de ruído}, exemplificado na Figura~\ref{fig:resultados:1:ruido}. O par de métodos MSB e HOG obteve maior valor de variância --- para conversão de escala de cinza e extração de características, respectivamente.
@@ -852,7 +852,7 @@ Desbalanceado       & 55.667145          & 13.341421              \\ \hline
       \includegraphics[width=.48\linewidth]{\detokenize{figuras/resultados/1/resultado-ruido.png}}
     }
  \end{center}
- \caption[Imagem gerada utilizando \emph{adição de ruído} em imagens da classe \emph{Horse}. Regiões mais escuras apresentam maior ruído na imagem resultante (b). ]{Imagem gerada utilizando \emph{adição de ruído} em imagens da classe \emph{Horse}. Regiões mais claras apresentam maior ruído na imagem resultante (b). \\ \textit{Fonte:~Elaborado pela autora.}}
+ \caption[Imagem gerada utilizando \emph{adição de ruído} em imagens da classe \emph{Horse}. Regiões mais escuras apresentam maior ruído na imagem resultante (b).]{Imagem gerada utilizando \emph{adição de ruído} em imagens da classe \emph{Horse}. Regiões mais claras apresentam maior ruído na imagem resultante (b).\\ \textit{Fonte:~Elaborado pela autora.}}
  \label{fig:resultados:1:ruido}
 \end{figure}
 
@@ -864,6 +864,8 @@ Desbalanceado       & 55.667145          & 13.341421              \\ \hline
 % Group 1 vs Group 2: Diff=1.9152, 95%CI=-0.7500 to 4.5805, p=0.2073
 % Group 1 vs Group 3: Diff=3.5150, 95%CI=0.8497 to 6.1802, p=0.0062
 % Group 2 vs Group 3: Diff=1.5997, 95%CI=-1.0656 to 4.2650, p=0.3315
+
+Interessante notar que, ao menos para este caso, a preferência pelo método de geração parece estar relacionada ao método de extração. Isso se deve, possivelmente, ao fato de o melhor método de extração indicar as características mais relevantes das imagens. Nesse caso, para as classes \emph{Elephant} e \emph{Horse} nas quais as características de cor parecem ser as mais relevantes, o melhor método de geração foi o de compôr um mosaico de diversas imagens combinado com o método de extração ACC, que captura a correlação espacial entre pixels com a mesma intensidade.
 
 Para o resultado da combinação dos melhores métodos de conversão em escala de cinza e extração de características, o teste \textit{post-hoc} HSD de Tukey revelou que não há diferença estatística entre a base desbalanceada e o SMOTE ($\textit{p-value} = 0.2073$). Mas indicou que existe uma significância entre a base desbalanceada e ela rebalanceada com a geração de imagens artificiais ($\textit{p-value} = 0.0062$). Isso significa que o melhor método para rebalancear essas classes é a geração artificial utilizando o método de \emph{composição} de quatro imagens. Ainda de acordo com o teste, não há evidência estatística da relevância do resultado da combinação de maior variância. Portanto, todos os próximos experimentos relatam apenas os resultados da melhor combinação.
 
@@ -959,6 +961,8 @@ Desbalanceado   & 59.640090 & 8.675836  \\ \hline
 %-------------------------------------------------------------------------------
 \subsubsection*{Discussão}
 
+A operação de \emph{aguçamento} realça as bordas dos elementos da imagem. Enquanto isso, o método de extração de características CCV classifica os pixels dependendo do tamanho desses componentes. Possivelmente definir melhor as regiões da imagem pode ter auxiliado o sistema de reconhecimento.
+
 De acordo com o teste HSD de Tukey realizado, foi encontrado $\textit{p-value} = 0.0003$ na comparação da base desbalanceada com a base rebalanceada utilizando o método SMOTE e $\textit{p-value} = 0.0000$ com a geração artificial. Isso indica que ambos os métodos obtiveram relevância estatística quando comparados à base desbalanceada. Porém, ao comparar o SMOTE com a geração artificial, o teste resultou em $\textit{p-value} = 0.7122$. Tal valor indica que não há diferença significativa entre os métodos SMOTE e os métodos de geração artificial de imagens.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -970,6 +974,7 @@ Os dois experimentos anteriores analisaram o rebalanceamento de apenas duas clas
 As bases são originalmente balanceadas, portanto a cada combinação dos \textit{folds}, uma classe é considerada minoritária e três dos seus \textit{folds} são descartados. Restando, dessa forma, um para treino e um para teste. Isso permitiu testar as bases como desbalanceadas.
 
 \subsubsection{Base de imagens Corel}
+\label{subsec:corel}
 
 \subsubsubsection*{Protocolo}
 
@@ -1042,6 +1047,8 @@ Desbalanceado   &  60.362256 &  2.290263  \\ \hline
 %-------------------------------------------------------------------------------
 \subsubsubsection*{Discussão}
 
+O método de rebalancemento utilizando a \emph{mistura} de duas imagens acaba por modificar as texturas das imagens. O método de extração de características LPP obteve melhor desempenho e a operação de \emph{mistura} melhor definiu as classes minoritárias.
+
 O rebalanceamento com o método de \emph{mistura} e com o SMOTE tiveram um desempenho quase idêntico (i.e. $\textit{p-value} = 0.9948$). Mas apesar dos \textit{F1-Scores} também parecerem similares à base desbalanceada, o teste HSD de Tukey confirmou que há diferença estatística significante entre eles ($\textit{p-value} = 0.0$). Dessa forma, tanto o SMOTE quanto a geração artificial rebalancearam a base satisfatoriamente.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1089,7 +1096,7 @@ O rebalanceamento com o método de \emph{mistura} e com o SMOTE tiveram um desem
 %-------------------------------------------------------------------------------
 \subsubsubsection*{Resultados}
 
-Considerando que essa base possui 6 classes, 120 sub-experimentos foram necessários para cobrir todas as possibilidades de desbalanceamento. Os resultados de tais experimentos são apresentados na Tabela \ref{tab:resultados:3.2}. É possível notar que tanto o SMOTE quanto a geração artificial utilizando todos os métodos obtiveram um \textit{F1-Score} melhor que a versão desbalanceada. A combinação aleatória uniforme de todos os métodos obteve um \textit{F1-Score} melhor do que cada método individualmente.
+Considerando que essa base possui 6 classes, 120 sub-experimentos foram necessários para cobrir todas as possibilidades de desbalanceamento. Os resultados de tais experimentos são apresentados na Tabela \ref{tab:resultados:3.2}. É possível notar que tanto o SMOTE quanto a geração artificial utilizando todos os métodos obtiveram um \textit{F1-Score} melhor que a versão desbalanceada.
 
 \begin{table}[!htbp]
 \begin{center}
@@ -1117,7 +1124,7 @@ Desbalanceado   &  75.732382 &  3.833682  \\ \hline
 %-------------------------------------------------------------------------------
 \subsubsubsection*{Discussão}
 
-Com o teste \textit{post-hoc} HSD de Tukey tem-se um indício de que os resultados do SMOTE e da geração artificial utilizando todos os métodos não possuem diferença estatística. Isso porque resultaram em $\textit{p-value} = 0.9333$. Porém, entre o desbalanceado e o SMOTE ou a geração obteve-se $\textit{p-value} < 0.0$. O que indica que todos os métodos de rebalanceamento foram satisfatórios para a base Caltech101-600.
+A combinação aleatória uniforme de todos os métodos obteve um \textit{F1-Score} melhor do que cada método individualmente. Com o teste \textit{post-hoc} HSD de Tukey tem-se um indício de que os resultados do SMOTE e da geração artificial utilizando todos os métodos não possuem diferença estatística. Isso porque resultaram em $\textit{p-value} = 0.9333$. Porém, entre o desbalanceado e o SMOTE ou a geração obteve-se $\textit{p-value} < 0.0$. O que indica que todos os métodos de rebalanceamento foram satisfatórios para a base Caltech101-600.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Base de imagens Produce}
@@ -1190,7 +1197,7 @@ Desbalanceado   &  91.489904 &  2.028988  \\ \hline
 %-------------------------------------------------------------------------------
 \subsubsubsection*{Discussão}
 
-O teste \textit{post-hoc} HSD de Tukey indicou que há relevância estatística entre os \textit{F1-Scores} da base desbalanceada quando comparada com o rebalanceamento utilizando o método de \emph{mistura} ($ \textit{p-value} = 0.0087$). Mas comparado com SMOTE, o $\textit{p-value} = 0.0607$ indica que não há diferença significante entre ele e a versão original. Ainda assim, o teste resultou em $\textit{p-value} = 0.7658$ para a comparação entre o SMOTE e a geração artificial, indicando que não há significância entre os dois. De qualquer forma, tais resultados indicam que a geração artificial de \emph{mistura} obteve resultado significativo.
+Assim como no experimento da Seção \ref{subsec:corel}, a combinação de extração de características com o método LBP e o rebalanceamento com a operação de \emph{mistura} favoreceu a classificação desse cenário. O teste \textit{post-hoc} HSD de Tukey indicou que há relevância estatística entre os \textit{F1-Scores} da base desbalanceada quando comparada com o rebalanceamento utilizando o método de \emph{mistura} ($ \textit{p-value} = 0.0087$). Mas comparado com SMOTE, o $\textit{p-value} = 0.0607$ indica que não há diferença significante entre ele e a versão original. Ainda assim, o teste resultou em $\textit{p-value} = 0.7658$ para a comparação entre o SMOTE e a geração artificial, indicando que não há significância entre os dois. De qualquer forma, tais resultados indicam que a geração artificial de \emph{mistura} obteve resultado significativo.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \FloatBarrier
@@ -1279,8 +1286,12 @@ Desbalanceado   &  97.173480 &  2.760269  \\ \hline
 
 %-------------------------------------------------------------------------------
 \subsubsubsection*{Discussão}
+
+O método de extração de características HOG calcula a frequência da ocorrência da orientação dos gradientes em janelas da imagem. O método de rebalanceamento utilizando a mistura de duas imagens se sobressaiu, possivelmente devido a modificar as texturas das imagens.
+
 Apesar de valores de \textit{F1-Score} próximos, de acordo com o teste \textit{post-hoc} de Tukey, foi encontrado $\textit{p-value} = 0.0030$ para a base desbalanceada quando comparado com o rebalanceamento com SMOTE. Isso indica que há significância estatística relevante entre eles. O teste também indicou que há significância entre a base desbalanceada e ela rebalanceada com a geração artificial ($\textit{p-value} = 0.0000$). Porém, se comparados o SMOTE e a geração artificial temos $\textit{p-value} = 0.2255$, indicando que não há diferença significante.
 
+%-------------------------------------------------------------------------------
 \subsubsection{Multiclasses desbalanceadas: \textit{Trafalgar Square}, \textit{Madeleine Church} e \textit{Pantheon}}
 % Esse experimento apresenta os resultados encontrados ao utilizar três classes naturalmente desbalanceadas.
 
@@ -1354,6 +1365,7 @@ Desbalanceado   &  70.621480 &  8.314352  \\ \hline
 
 %-------------------------------------------------------------------------------
 \subsubsubsection*{Discussão}
+
 Utilizando o teste \textit{post-hoc} de Tukey, foi encontrado $\textit{p-value} = 0.0$ para a base desbalanceada versus o rebalanceamento com SMOTE. Isso indica que há significância estatística relevante entre eles. O teste também indicou que não há significância entre a base desbalanceada e ela rebalanceada com a geração artificial ($\textit{p-value} = 0.9858$). Além disso, se comparados o SMOTE e a geração artificial temos $\textit{p-value} = 0.0$, indicando que há diferença significante. Ou seja, o método SMOTE foi significativamente pior que a base original e o método de geração artificial teve uma melhora não estatisticamente significativa.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1439,8 +1451,9 @@ Desbalanceado   &  88.121310 &  0.985599  \\ \hline
 %-------------------------------------------------------------------------------
 \subsubsubsection*{Discussão}
 
-Ao realizar o teste \textit{post-hoc} de Tukey, foi encontrado $\textit{p-value} = 0.0$ para a base desbalanceada quando comparada com o rebalanceamento com SMOTE. Isso indica que há significância estatística relevante entre eles e também entre a base desbalanceada e ela rebalanceada com a geração artificial ($\textit{p-value} = 0.0006$). Além disso, se comparados o SMOTE e a geração artificial tem-se $\textit{p-value} = 0.0$, indicando que há diferença significante. Assim, os resultados apontam que SMOTE piorou significativamente a classificação, enquanto a geração artificial forneceu uma melhora considerável.
+Considerando que o método HOG calcula a frequência da ocorrência da orientação dos gradientes da imagem, os métodos de rebalanceamento que se destacaram alteraram essa frequência de modo a melhor definir as classes. Ao realizar o teste \textit{post-hoc} de Tukey, foi encontrado $\textit{p-value} = 0.0$ para a base desbalanceada quando comparada com o rebalanceamento com SMOTE. Isso indica que há significância estatística relevante entre eles e também entre a base desbalanceada e ela rebalanceada com a geração artificial ($\textit{p-value} = 0.0006$). Além disso, se comparados o SMOTE e a geração artificial tem-se $\textit{p-value} = 0.0$, indicando que há diferença significante. Assim, os resultados apontam que SMOTE piorou significativamente a classificação, enquanto a geração artificial forneceu uma melhora considerável.
 
+%-------------------------------------------------------------------------------
 \subsubsection{Classes balanceadas, similares e com grande número de imagens}
 % Esse experimento indica os resultados para duas classes balanceadas, com grande número de imagens cada.
 
@@ -1517,6 +1530,8 @@ Desbalanceado   &  73.378227 &  2.110355  \\ \hline
 %-------------------------------------------------------------------------------
 \subsubsubsection*{Discussão}
 
+Considerando que as classes \textit{Shark} e \textit{Fish} possuem objetos de cena bem definidos, a limiarização utilizando o \textit{threshold} de OTSU acaba por compor as imagens sem provocar efeitos nessa combinação. Como o LBP utiliza histogramas dos padrões de textura, misturar os padrões dos objetos de cena de uma imagem com os de fundo de outra imagem acabou por melhorar a classificação do sistema.
+
 Como esperado, de acordo com o teste \textit{post-hoc} de Tukey foi encontrado $\textit{p-value} = 0.0$ para a base desbalanceada quando comparada com o SMOTE. Isso indica que há significância estatística relevante entre eles. Tal teste também indicou que há significância entre a base desbalanceada e ela rebalanceada com a geração artificial ($\textit{p-value} = 0.0$). Porém, não há diferença significante na comparação entre o SMOTE e a geração artificial ($\textit{p-value} = 0.8264$). Assim, ambos métodos rebalancearam as classes satisfatoriamente.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1574,31 +1589,32 @@ Como esperado, de acordo com o teste \textit{post-hoc} de Tukey foi encontrado $
 
 Este capítulo descreveu como o rebalanceamento é realizado, através da geração de imagens artificiais para a classe minoritária e utilizando-a para o treinamento. Os métodos para gerar tais imagens foram apresentados e exemplificados. Foram também descritos os algoritmos e seus parâmetros, limitações e métodos relacionados.
 
-A Tabela \ref{tab:allranking} apresenta o \textit{ranking} dos métodos de rebalanceamento ao acumular os resultados de todos os experimentos. Esse valor é dado pela soma da posição de cada método em relação ao \textit{F1-Score}, em ordem ascendente. Por exemplo, na Tabela \ref{tab:resultados:shark} o método de \textit{mistura limiarizada} ocupa a primeira posição e o método SMOTE a segunda. No geral, contabilizando todos os experimentos, a \textit{mistura limiarizada} apresenta-se como melhor método de rebalanceamento.
+% A Tabela \ref{tab:allranking} apresenta o \textit{ranking} dos métodos de rebalanceamento ao acumular os resultados de todos os experimentos. Esse valor é dado pela soma da posição de cada método em relação ao \textit{F1-Score}, em ordem ascendente. Por exemplo, na Tabela \ref{tab:resultados:shark} o método de \textit{mistura limiarizada} ocupa a primeira posição e o método SMOTE a segunda. No geral, contabilizando todos os experimentos, a \textit{mistura limiarizada} apresenta-se como melhor método de rebalanceamento.
 
-\begin{table}[!htbp]
-\centering
-\caption{\textit{Ranking} dos métodos de rebalanceamento ao acumular os resultados de todos os experimentos. Esse valor é dado pela soma da posição de cada método em relação ao \textit{F1-Score}, em ordem ascendente.}
-\label{tab:allranking}
-\begin{tabular}{|l|l|l|}
-\hline
-\multicolumn{1}{|c|}{\textbf{Cenários de duas classes}} & \multicolumn{1}{c|}{\textbf{Cenário Multiclasses}} & \multicolumn{1}{c|}{\textbf{Todos}} \\ \hline
-Aguçamento (16)                                         & SMOTE (13)                                         & Limiares (35)                       \\ \hline
-Limiares (17)                                           & Mistura (14)                                       & Mistura (39)                        \\ \hline
-Saliência (22)                                          & Limiares (18)                                      & SMOTE (42)                          \\ \hline
-Todos (25)                                              & Todos (22)                                         & Aguçamento (43)                     \\ \hline
-Mistura (25)                                            & Saliência (24)                                     & Saliência (46)                      \\ \hline
-Composição 4 (29)                                       & Aguçamento (27)                                    & Todos (47)                          \\ \hline
-SMOTE (29)                                              & Composição 4 (28)                                  & Composição 4 (57)                   \\ \hline
-Composição 16 (37)                                      & Ruído (28)                                         & Composição 16 (69)                  \\ \hline
-Borramento (44)                                         & Borramento (29)                                    & Borramento (73)                     \\ \hline
-Ruído (47)                                              & Composição 16 (32)                                 & Ruído (75)                          \\ \hline
-SMOTE Visual (47)                                       & Desbalanceado (34)                                 & Desbalanceado (86)                  \\ \hline
-Desbalanceado (52)                                      & SMOTE Visual (42)                                  & SMOTE Visual (89)                   \\ \hline
-\end{tabular}
-\end{table}
+% \begin{table}[!htbp]
+% \centering
+% \caption{\textit{Ranking} dos métodos de rebalanceamento ao acumular os resultados de todos os experimentos. Esse valor é dado pela soma da posição de cada método em relação ao \textit{F1-Score}, em ordem ascendente.}
+% \label{tab:allranking}
+% \begin{tabular}{|l|l|l|}
+% \hline
+% \multicolumn{1}{|c|}{\textbf{Cenários de duas classes}} & \multicolumn{1}{c|}{\textbf{Cenário Multiclasses}} & \multicolumn{1}{c|}{\textbf{Todos}} \\ \hline
+% Aguçamento (16)                                         & SMOTE (13)                                         & Limiares (35)                       \\ \hline
+% Limiares (17)                                           & Mistura (14)                                       & Mistura (39)                        \\ \hline
+% Saliência (22)                                          & Limiares (18)                                      & SMOTE (42)                          \\ \hline
+% Todos (25)                                              & Todos (22)                                         & Aguçamento (43)                     \\ \hline
+% Mistura (25)                                            & Saliência (24)                                     & Saliência (46)                      \\ \hline
+% Composição 4 (29)                                       & Aguçamento (27)                                    & Todos (47)                          \\ \hline
+% SMOTE (29)                                              & Composição 4 (28)                                  & Composição 4 (57)                   \\ \hline
+% Composição 16 (37)                                      & Ruído (28)                                         & Composição 16 (69)                  \\ \hline
+% Borramento (44)                                         & Borramento (29)                                    & Borramento (73)                     \\ \hline
+% Ruído (47)                                              & Composição 16 (32)                                 & Ruído (75)                          \\ \hline
+% SMOTE Visual (47)                                       & Desbalanceado (34)                                 & Desbalanceado (86)                  \\ \hline
+% Desbalanceado (52)                                      & SMOTE Visual (42)                                  & SMOTE Visual (89)                   \\ \hline
+% \end{tabular}
+% \end{table}
 
-Essa tabela considera que diferenças não significativas do valor do \textit{F1-Score} possuem o mesmo peso que diferenças significantes. A Tabela \ref{tab:allfscore} apresenta a média dos \textit{F1-Scores} para cada método. É possível verificar que, no cenário multiclasses, apesar de ter sido o melhor método em relação à sua posição, o SMOTE apresentou piores resultados mesmo comparando com as bases desbalanceadas. Nesse caso, o melhor método de rebalanceamento é a operação de geração de imagens artificiais com \textit{aguçamento}.
+% Essa tabela considera que diferenças não significativas do valor do \textit{F1-Score} possuem o mesmo peso que diferenças significantes.
+A Tabela \ref{tab:allfscore} apresenta a média dos \textit{F1-Scores} para cada método. É possível verificar que, no cenário multiclasses, apesar de ter sido o melhor método em relação à sua posição, o SMOTE apresentou piores resultados mesmo comparando com as bases desbalanceadas. Nesse caso, o melhor método de rebalanceamento é a operação de geração de imagens artificiais com \textit{aguçamento}.
 
 \begin{table}[!htbp]
 \centering
@@ -1622,24 +1638,27 @@ SMOTE Visual                           & 78,811666                         & 70,
 \end{tabular}
 \end{table}
 
+\ref{tab:diffscore}
+
 \begin{table}[!htbp]
 \centering
-\caption{Média da diferença entre o método de rebalanceamento e a base desbalanceada, considerando todos os experimentos.}
+\caption{Diferença entre o método de rebalanceamento e a base desbalanceada, considerando todos os experimentos.}
+\label{tab:diffscore}
 \begin{tabular}{|l|c|c|}
 \hline
-\multicolumn{1}{|c|}{\textbf{Métodos}} & \textbf{Diferença média da melhoria} & \textbf{Desvio Padrão} \\ \hline
-Aguçamento                             & 16,860795                            & 2,206283     \\ \hline
-Limiares                               & 14,774237                            & 2,190548     \\ \hline
-Saliência                              & 13,078076                            & 2,544774     \\ \hline
-Composição 4                           & 9,512135                             & 1,525219     \\ \hline
-Composição 16                          & 8,439199                             & 1,351292     \\ \hline
-Mistura                                & 7,028758                             & 2,306720     \\ \hline
-Borramento                             & 4,267550                             & 0,819487     \\ \hline
-Desbalanceado                          & 0,000000                             & 0,000000     \\ \hline
-Todos                                  & -5,211596                            & 5,922549     \\ \hline
-Ruído                                  & -8,442906                            & 4,059528     \\ \hline
-SMOTE                                  & -16,033877                           & 9,002886     \\ \hline
-SMOTE Visual                           & -28,960951                           & 6,581923     \\ \hline
+\multicolumn{1}{|c|}{\textbf{Métodos}} & \textbf{Diferença da melhoria} \\ \hline
+Aguçamento                             & 16,860795                            \\ \hline
+Limiares                               & 14,774237                            \\ \hline
+Saliência                              & 13,078076                            \\ \hline
+Composição 4                           & 9,512135                             \\ \hline
+Composição 16                          & 8,439199                             \\ \hline
+Mistura                                & 7,028758                             \\ \hline
+Borramento                             & 4,267550                             \\ \hline
+Desbalanceado                          & 0,000000                             \\ \hline
+Todos                                  & -5,211596                            \\ \hline
+Ruído                                  & -8,442906                            \\ \hline
+SMOTE                                  & -16,033877                           \\ \hline
+SMOTE Visual                           & -28,960951                           \\ \hline
 \end{tabular}
 \end{table}
 
