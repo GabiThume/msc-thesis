@@ -342,10 +342,10 @@ A \emph{mistura limiarizada} é uma composição do fundo (\textit{background}) 
 
   $I_{cinza} \gets \textit{escala de cinza}(I)$\;
   $I_{threshold} \gets OTSU(I_{cinza})$\;
-  $I_{morfologica} \gets \textit{abertura e dilatação} (I_{threshold})$\;
-  $I_{foreground} \gets \textit{aplica máscara}(I_{morfologica}, I) $\;
-  $I_{morfologica} \gets \textit{oposto}(I_{morfologica})$\;
-  $I_{background} \gets \textit{aplica máscara}(I_{morfologica}, I_2) $\;
+  $I_{\textit{morfológica}} \gets \textit{abertura e dilatação} (I_{threshold})$\;
+  $I_{foreground} \gets \textit{aplica máscara}(I_{\textit{morfológica}}, I) $\;
+  $I_{\textit{morfológica}} \gets \textit{oposto}(I_{\textit{morfológica}})$\;
+  $I_{background} \gets \textit{aplica máscara}(I_{\textit{morfológica}}, I_2) $\;
   $I_{gerada} \gets I_{background} + I_{foreground}$\;
 \end{algorithm}
 
@@ -395,10 +395,10 @@ As operações aplicadas na imagem para extrair a região mais saliente são: se
   $I_{\text{rotulada por segmento}} \gets SLIC(I)$\;
   $I_{\text{mapa de saliência}} \gets \textit{rotulação por conectividade}(I_{\textit{rotulada por segmento}})$\;
   $I_{threshold} \gets OTSU(I_{\textit{mapa de saliência}})$\;
-  $I_{morfologica} \gets \textit{abertura e dilatação} (I_{threshold})$\;
-  $I_{foreground} \gets \textit{aplica máscara}(I_{morfologica}, I) $\;
-  $I_{morfologica} \gets \textit{oposto}(I_{morfologica})$\;
-  $I_{background} \gets \textit{aplica máscara}(I_{morfologica}, I_2) $\;
+  $I_{\textit{morfológica}} \gets \textit{abertura e dilatação} (I_{threshold})$\;
+  $I_{foreground} \gets \textit{aplica máscara}(I_{\textit{morfológica}}, I) $\;
+  $I_{\textit{morfológica}} \gets \textit{oposto}(I_{\textit{morfológica}})$\;
+  $I_{background} \gets \textit{aplica máscara}(I_{\textit{morfológica}}, I_2) $\;
   $I_{gerada} \gets I_{background} + I_{foreground}$\;
 \end{algorithm}
 
@@ -536,7 +536,7 @@ Procurando estabilidade dos resultados obtidos com a geração das imagens artif
 \label{fig:folds}
 \end{figure}
 
-A acurácia pode não refletir propriamente os resultados em um cenário de bases desbalanceadas. Isso se deve ao fato de que se a classe minoritária não obtiver nenhum resultado correto e a classe majoritária tiver 100\% de acertos, tal acurária poderá ser muito alta, mesmo considerando que nenhuma imagem da classe minoritária foi corretamente classificada. Dessa forma, considera que os erros são igualmente importantes. Pode-se estender essa medida obtendo-se a acurácia balanceada: medida de acerto baseada na divisão do conjunto de objetos em teste e treinamento, realizando a repetição dos experimentos $n$ vezes e obtendo a média e o desvio padrão. A acurácia de cada experimento é obtida por
+A acurácia pode não refletir propriamente os resultados em um cenário de bases desbalanceadas. Isso se deve ao fato de que se a classe minoritária não obtiver nenhum resultado correto e a classe majoritária tiver 100\% de acertos, tal acurácia poderá ser muito alta, mesmo considerando que nenhuma imagem da classe minoritária foi corretamente classificada. Dessa forma, considera que os erros são igualmente importantes. Pode-se estender essa medida obtendo-se a acurácia balanceada: medida de acerto baseada na divisão do conjunto de objetos em teste e treinamento, realizando a repetição dos experimentos $n$ vezes e obtendo a média e o desvio padrão. A acurácia de cada experimento é obtida por
 
 \begin{equation*}
   Acc = 1 - \frac{\sum_{i=1}^{c} E(i)}{2c},
@@ -1203,7 +1203,7 @@ Assim como no experimento da Seção \ref{subsec:corel}, a combinação de extra
 % \FloatBarrier
 \subsection{Experimento 4: classes naturalmente desbalanceadas}
 
-Os experimentos anteriores foram realizados em bases já balanceadas, com o desbalancemento sendo provocado. Este experimento utiliza duas combinações de classes de imagens naturalmente desbalanceadas.
+Os experimentos anteriores foram realizados em bases já balanceadas, com o desbalanceamento sendo provocado. Este experimento utiliza duas combinações de classes de imagens naturalmente desbalanceadas.
 
 % Os sub-experimentos foram realizados de forma diferente que os anteriores. Isso foi realizado indicando que o número de imagens faltantes são do \textit{fold} que não seria utilizado, caso fosse o caso de bases balanceadas (experimentos anteriores). Ou seja, todas as classes ainda continuam com \textit{5-folds} cada.
 
@@ -1391,7 +1391,7 @@ Por fim, este experimento foi realizado com duas classes contendo uma grande qua
     \includegraphics[width=.3\linewidth]{\detokenize{figuras/resultados/5/navio.png}}
   }
   \end{center}
-  \caption[Imagens representativas das classes \textit{Deer} e \textit{Ship}. São imagens em baixa resolução (32x32 pixels), o que dificulta o seu processamento e posterior clasificação.]{Imagens representativas das classes \textit{Deer} e \textit{Ship}. São imagens em baixa resolução (32x32 pixels), o que dificulta o seu processamento e posterior clasificação. \\ \textit{Fonte:~\citeonline{Krizhevsky2009}}.}
+  \caption[Imagens representativas das classes \textit{Deer} e \textit{Ship}. São imagens em baixa resolução (32x32 pixels), o que dificulta o seu processamento e posterior classificação.]{Imagens representativas das classes \textit{Deer} e \textit{Ship}. São imagens em baixa resolução (32x32 pixels), o que dificulta o seu processamento e posterior classificação. \\ \textit{Fonte:~\citeonline{Krizhevsky2009}}.}
   \label{fig:resultados:5.1:base}
 \end{figure}
 
@@ -1614,7 +1614,7 @@ Este capítulo descreveu como o rebalanceamento é realizado, através da geraç
 % \end{table}
 
 % Essa tabela considera que diferenças não significativas do valor do \textit{F1-Score} possuem o mesmo peso que diferenças significantes.
-A Tabela \ref{tab:allfscore} apresenta a média dos \textit{F1-Scores} para cada método. É possível verificar que, no cenário multiclasses, apesar de ter sido o melhor método em relação à sua posição, o SMOTE apresentou piores resultados mesmo comparando com as bases desbalanceadas. Nesse caso, o melhor método de rebalanceamento é a operação de geração de imagens artificiais com \textit{aguçamento}.
+A Tabela \ref{tab:allfscore} apresenta a média dos \textit{F1-Scores} para cada método. É possível verificar que, no cenário multiclasses, apesar de ter sido o melhor método em relação à sua posição, o SMOTE apresentou piores resultados mesmo comparando com as bases desbalanceadas. Nesse caso, o melhor método de rebalanceamento é a operação de geração de imagens artificiais com \textit{aguçamento}. Esse método também obteve o melhor resultado ao analisar a diferença média entre o \textit{F1-Score} dos rebalanceamentos e da classificação original (Tabela \ref{tab:diffscore}).
 
 \begin{table}[!htbp]
 \centering
@@ -1637,8 +1637,6 @@ SMOTE                                  & 79,085501                         & 73,
 SMOTE Visual                           & 78,811666                         & 70,439604                     & 75,090749      \\ \hline
 \end{tabular}
 \end{table}
-
-\ref{tab:diffscore}
 
 \begin{table}[!htbp]
 \centering
